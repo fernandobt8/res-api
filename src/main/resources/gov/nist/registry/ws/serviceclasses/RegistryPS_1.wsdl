@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://serviceclasses.ws.registry.nist.gov" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N4="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N3="http://www.w3.org/2006/05/addressing/wsdl" xmlns:WL5G3N2="http://serviceclasses.ws.registry.nist.gov" xmlns:WL5G3N0="http://schemas.xmlsoap.org/wsdl/" xmlns:WL5G3N1="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0">
+  <WL5G3N0:documentation>xdsregistryb</WL5G3N0:documentation>
+  <wsdl:types>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://registry.common2.registry.nist.gov/xsd" xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ax25="http://exception.common2.registry.nist.gov/xsd" xmlns:ax28="http://registry.common2.registry.nist.gov/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://serviceclasses.ws.registry.nist.gov" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:complexType name="Metadata">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="allDefinedIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="allLeafClasses" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="allObjects" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="allUids" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="assocReferences" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="associationIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="associations" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="classifications" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="documentUidMap" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="extrinsicObjectIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="extrinsicObjects" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="folderIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="folders" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="grokMetadata" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="idsOfReferencedObjects" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="leafClassObjects" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="majorObjects" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="metadata" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="metadataAsObjectRefs" nillable="true" type="ax28:Metadata"/>
+          <xs:element minOccurs="0" name="metadataDescription" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="nonObjectRefs" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="objectIdsToDeprecate" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="objectRefIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="objectRefs" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="objectRefsOnly" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="original" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="patientIdConsistent" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="patientIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="referencedObjectsThatMustHaveSamePatientId" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="registryPackageClassificationBroken" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="registryPackageIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="registryPackages" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="root" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="submissionSet" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="submissionSetId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="submissionSetIds" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="submissionSetPatientId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="submissionSetUniqueId" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="submissionSets" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="uidHashMap" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="uidMap" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="uriChunkSize" type="xs:int"/>
+          <xs:element minOccurs="0" name="v2" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="v2SubmitObjectsRequest" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="v3" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="v3SubmitObjectsRequest" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="version2" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="wrapper" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="Response">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="errorsAndWarnings" nillable="true" type="xs:string"/>
+          <xs:element minOccurs="0" name="response" nillable="true" type="xs:anyType"/>
+          <xs:element minOccurs="0" name="root" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://exception.common2.registry.nist.gov/xsd" xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ax25="http://exception.common2.registry.nist.gov/xsd" xmlns:ax26="http://serviceclasses.ws.registry.nist.gov" xmlns:ax28="http://registry.common2.registry.nist.gov/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://serviceclasses.ws.registry.nist.gov" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://serviceclasses.ws.registry.nist.gov"/>
+      <xs:complexType name="XdsException">
+        <xs:complexContent>
+          <xs:extension base="ax26:Exception">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+      <xs:complexType name="MetadataException">
+        <xs:complexContent>
+          <xs:extension base="ax25:XdsException">
+            <xs:sequence/>
+          </xs:extension>
+        </xs:complexContent>
+      </xs:complexType>
+    </xs:schema>
+    <xs:schema attributeFormDefault="qualified" elementFormDefault="qualified" targetNamespace="http://serviceclasses.ws.registry.nist.gov" xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ax25="http://exception.common2.registry.nist.gov/xsd" xmlns:ax27="http://exception.common2.registry.nist.gov/xsd" xmlns:ax28="http://registry.common2.registry.nist.gov/xsd" xmlns:ax29="http://registry.common2.registry.nist.gov/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://serviceclasses.ws.registry.nist.gov" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="http://exception.common2.registry.nist.gov/xsd"/>
+      <xs:import namespace="http://registry.common2.registry.nist.gov/xsd"/>
+      <xs:element name="getServiceNameResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" nillable="true" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:complexType name="Exception">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Exception" nillable="true" type="xs:anyType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="MetadataException">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="MetadataException" nillable="true" type="ax25:MetadataException"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="runContentValidationService">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="m" nillable="true" type="ax28:Metadata"/>
+            <xs:element minOccurs="0" name="response" nillable="true" type="ax28:Response"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="runContentValidationServiceResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+    <xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:WL5G3N5="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:WL5G3N6="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:ax25="http://exception.common2.registry.nist.gov/xsd" xmlns:ax28="http://registry.common2.registry.nist.gov/xsd" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns="http://serviceclasses.ws.registry.nist.gov" xmlns:ns1="http://org.apache.axis2/xsd" xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:rs="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" schemaLocation="RegistryPS.xsd"/>
+      <xs:import namespace="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" schemaLocation="RegistryPS_1_2.xsd"/>
+      <xs:complexType name="ResponseOptionType">
+        <xs:attribute default="RegistryObject" name="returnType">
+          <xs:simpleType>
+            <xs:restriction base="NCName">
+              <xs:enumeration value="ObjectRef"/>
+              <xs:enumeration value="RegistryObject"/>
+              <xs:enumeration value="LeafClass"/>
+              <xs:enumeration value="LeafClassWithRepositoryItem"/>
+            </xs:restriction>
+          </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute default="false" name="returnComposedObjects" type="boolean"/>
+      </xs:complexType>
+      <xs:element name="ResponseOption" type="tns:ResponseOptionType"/>
+      <xs:element name="AdhocQueryRequest">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">An Ad hoc query request
+						specifies an ad hoc query.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="rs:RegistryRequestType">
+              <xs:sequence>
+                <xs:element maxOccurs="1" minOccurs="1" ref="tns:ResponseOption"/>
+                <xs:element ref="rim:AdhocQuery"/>
+              </xs:sequence>
+              <xs:attribute default="false" name="federated" type="boolean" use="optional"/>
+              <xs:attribute name="federation" type="anyURI" use="optional"/>
+              <xs:attribute default="0" name="startIndex" type="integer"/>
+              <xs:attribute default="-1" name="maxResults" type="integer"/>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="AdhocQueryResponse">
+        <xs:annotation>
+          <xs:documentation xml:lang="en">The response includes a RegistryObjectList which has zero or more
+						RegistryObjects that match the query specified in
+						AdhocQueryRequest.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+          <xs:complexContent>
+            <xs:extension base="rs:RegistryResponseType">
+              <xs:sequence>
+                <xs:element ref="rim:RegistryObjectList"/>
+              </xs:sequence>
+              <xs:attribute default="0" name="startIndex" type="integer"/>
+              <xs:attribute name="totalResultCount" type="integer" use="optional"/>
+            </xs:extension>
+          </xs:complexContent>
+        </xs:complexType>
+      </xs:element>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="AdhocQueryRequestRequest">
+    <wsdl:part name="body" element="WL5G3N1:AdhocQueryRequest"/>
+  </wsdl:message>
+  <wsdl:message name="AdhocQueryRequestResponse">
+    <wsdl:part name="body" element="WL5G3N1:AdhocQueryResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="xdsregistrybPortType">
+    <wsdl:operation name="AdhocQueryRequest">
+      <wsdl:input message="WL5G3N2:AdhocQueryRequestRequest" WL5G3N3:Action="urn:ihe:iti:2007:ns:AdhocQueryRequestRequest"/>
+      <wsdl:output message="WL5G3N2:AdhocQueryRequestResponse" WL5G3N3:Action="urn:AdhocQueryRequestResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="xdsregistrybSoap12Binding" type="WL5G3N2:xdsregistrybPortType">
+    <WL5G3N4:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="AdhocQueryRequest">
+      <WL5G3N4:operation style="document" soapAction="urn:ihe:iti:2007:ns:AdhocQueryRequestRequest" soapActionRequired="false"/>
+      <wsdl:input>
+        <WL5G3N4:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <WL5G3N4:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="xdsregistryb">
+    <wsdl:port name="xdsregistrybHttpSoap12Endpoint" binding="WL5G3N2:xdsregistrybSoap12Binding">
+      <WL5G3N4:address location="https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
