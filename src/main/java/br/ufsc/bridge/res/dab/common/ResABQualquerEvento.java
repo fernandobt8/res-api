@@ -13,5 +13,5 @@ import lombok.Setter;
 public class ResABQualquerEvento {
 
 	@XmlElement(name = "time")
-	private ResABDateValueEHR value;
+	private ResABDateValueEHR time;
 }
