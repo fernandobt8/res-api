@@ -11,6 +11,9 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
+
+import org.apache.commons.lang3.StringUtils;
+
 import br.ufsc.bridge.res.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.util.RDateUtil;
@@ -125,40 +128,40 @@ public class RegistryResponseParser {
 	}
 
 	private static void filterValues(RegistryItem registry) throws InvalidRegistryException {
-		String message = "";
+		StringBuilder message = new StringBuilder();
 		boolean hasError = false;
 
-		if (!validateNotBlank(registry.getRepositoryUniqueId())) {
-			message += REPOSITORY_UNIQUE_ID + ": '" + registry.getRepositoryUniqueId() + "' ";
+		if (StringUtils.isBlank(registry.getRepositoryUniqueId())) {
+			message.append(REPOSITORY_UNIQUE_ID + ": '" + registry.getRepositoryUniqueId() + "' ");
 			hasError = true;
 		}
-		if (!validateNotBlank(registry.getDocumentUniqueId())) {
-			message += UUID_DOCUMENT_UNIQUE_ID + ": '" + registry.getDocumentUniqueId() + "' ";
+		if (StringUtils.isBlank(registry.getDocumentUniqueId())) {
+			message.append(UUID_DOCUMENT_UNIQUE_ID + ": '" + registry.getDocumentUniqueId() + "' ");
 			hasError = true;
 		}
-		if (!validateNotNull(registry.getServiceStartTime())) {
-			message += SERVICE_START_TIME + ": '" + registry.getServiceStartTime() + "' ";
+		if (registry.getServiceStartTime() == null) {
+			message.append(SERVICE_START_TIME + ": '" + registry.getServiceStartTime() + "' ");
 			hasError = true;
 		}
 
 		try {
 			registry.setCnesUnidadeSaude(filtertNumberValue(registry.getCnesUnidadeSaude()));
 		} catch (Exception e) {
-			message += AUTHOR_INSTITUTION + ": '" + registry.getCnesUnidadeSaude() + "' ";
+			message.append(AUTHOR_INSTITUTION + ": '" + registry.getCnesUnidadeSaude() + "' ");
 			hasError = true;
 		}
 
 		try {
 			registry.setCnsProfissional(filtertNumberValue(registry.getCnsProfissional()));
 		} catch (Exception e) {
-			message += AUTHOR_PERSON + ": '" + registry.getCnsProfissional() + "' ";
+			message.append(AUTHOR_PERSON + ": '" + registry.getCnsProfissional() + "' ");
 			hasError = true;
 		}
 
 		try {
 			registry.setCbo(filtertNumberValue(registry.getCbo()));
 		} catch (Exception e) {
-			message += AUTHOR_SPECIALTY + ": '" + registry.getCbo() + "' ";
+			message.append(AUTHOR_SPECIALTY + ": '" + registry.getCbo() + "' ");
 			hasError = true;
 		}
 
@@ -169,7 +172,7 @@ public class RegistryResponseParser {
 	}
 
 	private static String filtertNumberValue(String value) throws Exception {
-		if (validateNotNull(value) && value.contains("^") && validateOnlyNumbers(value.substring(0, value.indexOf("^")))) {
+		if (StringUtils.isNotBlank(value) && value.contains("^") && validateOnlyNumbers(value.substring(0, value.indexOf("^")))) {
 			return value.substring(0, value.indexOf("^"));
 		} else {
 			throw new Exception();
@@ -180,11 +183,4 @@ public class RegistryResponseParser {
 		return value.matches("\\d*");
 	}
 
-	private static boolean validateNotBlank(String value) {
-		return validateNotNull(value) && !value.trim().isEmpty();
-	}
-
-	private static boolean validateNotNull(Object value) {
-		return value != null;
-	}
 }
