@@ -28,13 +28,14 @@ public class RegistryResponseParserTest {
 	DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
 
 	@Test
-	public void testeUmDocumentoCompleto() {
+	public void testeDoisDocumentosValidos() {
 
 		RegistryItem documentoEsperado = this.createDocumentoValido();
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperado);
+		response.getRegistryObjectList().getIdentifiable().add(this.buildDocumento(documentoEsperado));
 
 		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
-		Assert.assertTrue(registryResponseEsperada.getItems().size() == 1);
+		Assert.assertTrue(registryResponseEsperada.getItems().size() == 2);
 
 		RegistryItem documentoAtual = registryResponseEsperada.getItems().get(0);
 		Assert.assertEquals(documentoEsperado.getRepositoryUniqueId(), documentoAtual.getRepositoryUniqueId());
@@ -44,6 +45,17 @@ public class RegistryResponseParserTest {
 		Assert.assertEquals(documentoEsperado.getCnsProfissional(), documentoAtual.getCnsProfissional());
 		Assert.assertEquals(documentoEsperado.getCbo(), documentoAtual.getCbo());
 
+	}
+
+	@Test
+	public void testeUmDocumentoValidoUmInvalido() {
+
+		RegistryItem documentoEsperado = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperado);
+		response.getRegistryObjectList().getIdentifiable().add(null);
+
+		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		Assert.assertTrue(registryResponseEsperada.getItems().size() == 1);
 	}
 
 	@Test
@@ -74,7 +86,7 @@ public class RegistryResponseParserTest {
 	}
 
 	@Test
-	public void testeUnidadaSaudeInvalidaRetornarNenhumDocumento() {
+	public void testeValorDosCamposInvalidosRetornarNenhumDocumento() {
 		RegistryItem documentoEsperado = this.createDocumentoValido();
 		documentoEsperado.setCnesUnidadeSaude("Nome unidade saúde");
 		this.verificaSeParseRetornaListaDocumentosVazia(documentoEsperado);
@@ -89,34 +101,69 @@ public class RegistryResponseParserTest {
 	}
 
 	@Test
-	public void testRegistryObjectListNullRetornarNenhumDocumento() {
+	public void test_AdhocQueryResponse_RegistryObjectList_Null_RetornarNenhumDocumento() {
 		AdhocQueryResponse response = new AdhocQueryResponse();
+		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
+	}
+
+	@Test
+	public void test_AdhocQueryResponse_RegistryObjectList_com_identifiable_JAXBElement_null_RetornarNenhumDocumento() {
+		RegistryItem documentoValido = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
+		response.getRegistryObjectList().getIdentifiable().clear();
+		response.getRegistryObjectList().getIdentifiable().add(null);
+
 		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
 	@Test
 	public void testValorDoJAXBElementNullRetornarNenhumDocumento() {
-		AdhocQueryResponse response = new AdhocQueryResponse();
-		JAXBElement<ExtrinsicObjectType> documento = new JAXBElement<ExtrinsicObjectType>(new QName(""), ExtrinsicObjectType.class, null, null);
-		RegistryObjectListType registryObjectListType = new RegistryObjectListType();
-		registryObjectListType.getIdentifiable().add(documento);
-		response.setRegistryObjectList(registryObjectListType);
+		RegistryItem documentoValido = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
+		response.getRegistryObjectList().getIdentifiable().get(0).setValue(null);
+
 		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
 	@Test
-	public void testeExtrinsicObject_getSlot_getValueListNullRetornarNenhumDocumento() {
-		AdhocQueryResponse response = new AdhocQueryResponse();
-		ExtrinsicObjectType extrinsicObjectType = new ExtrinsicObjectType();
+	public void teste_SlotType1_ValueList_Null_RetornarNenhumDocumento() {
+		RegistryItem documentoValido = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
+		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).setValueList(null);
 
-		extrinsicObjectType.getSlot().add(new SlotType1());
+		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
+	}
 
-		JAXBElement<ExtrinsicObjectType> documento = new JAXBElement<ExtrinsicObjectType>(new QName(""), ExtrinsicObjectType.class, null, extrinsicObjectType);
-		RegistryObjectListType registryObjectListType = new RegistryObjectListType();
-		registryObjectListType.getIdentifiable().add(documento);
-		response.setRegistryObjectList(registryObjectListType);
+	@Test
+	public void teste_SlotType1_ValueList_com_Value_vazio_RetornarNenhumDocumento() {
+		RegistryItem documentoValido = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
+		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).getValueList().getValue().clear();
+
+		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
+	}
+
+	@Test
+	public void teste_SlotType1_ValueList_com_itemDeValue_null_RetornarNenhumDocumento() {
+		RegistryItem documentoValido = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
+		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).getValueList().getValue().clear();
+		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).getValueList().getValue().add(null);
+
+		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
+	}
+
+	@Test
+	public void teste_SlotType1_com_Name_null_RetornarNenhumDocumento() {
+		RegistryItem documentoValido = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
+		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).setName(null);
 
 		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
@@ -142,6 +189,14 @@ public class RegistryResponseParserTest {
 
 	private AdhocQueryResponse buildAdhocQueryResponse(RegistryItem documentoItem) {
 		AdhocQueryResponse response = new AdhocQueryResponse();
+		JAXBElement<ExtrinsicObjectType> documento = this.buildDocumento(documentoItem);
+		RegistryObjectListType registryObjectListType = new RegistryObjectListType();
+		registryObjectListType.getIdentifiable().add(documento);
+		response.setRegistryObjectList(registryObjectListType);
+		return response;
+	}
+
+	private JAXBElement<ExtrinsicObjectType> buildDocumento(RegistryItem documentoItem) {
 		ExtrinsicObjectType extrinsicObjectType = new ExtrinsicObjectType();
 		extrinsicObjectType.getSlot().add(this.createSlot("repositoryUniqueId", documentoItem.getRepositoryUniqueId()));
 		extrinsicObjectType.getSlot().add(
@@ -149,10 +204,7 @@ public class RegistryResponseParserTest {
 		extrinsicObjectType.getExternalIdentifier().add(this.createExternalIdentifier(documentoItem.getDocumentUniqueId()));
 		extrinsicObjectType.getClassification().add(this.createClassification(documentoItem.getCnesUnidadeSaude(), documentoItem.getCnsProfissional(), documentoItem.getCbo()));
 		JAXBElement<ExtrinsicObjectType> documento = new JAXBElement<ExtrinsicObjectType>(new QName(""), ExtrinsicObjectType.class, null, extrinsicObjectType);
-		RegistryObjectListType registryObjectListType = new RegistryObjectListType();
-		registryObjectListType.getIdentifiable().add(documento);
-		response.setRegistryObjectList(registryObjectListType);
-		return response;
+		return documento;
 	}
 
 	private SlotType1 createSlot(String name, String value) {
