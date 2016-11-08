@@ -7,8 +7,7 @@ import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ValueListType;
+import br.ufsc.bridge.res.builder.SlotTypeBuilder;
 import br.ufsc.bridge.res.dto.header.Credential;
 import br.ufsc.bridge.res.dto.header.RegistryHeader;
 import br.ufsc.bridge.res.dto.registry.RegistryFilter;
@@ -49,29 +48,26 @@ public class RegistryService {
 
 		AdhocQueryType queryType = new AdhocQueryType();
 		queryType.setId("urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d");
-		queryType.getSlot().add(getSlot("$XDSDocumentEntryPatientId", "'" + filter.getCnsCidadao() + "^^^&2.16.840.1.113883.13.236&ISO'"));
-		if (filter.hasDataInicial()) {
-			queryType.getSlot().add(getSlot("$XDSDocumentEntryCreationTimeFrom", RDateUtil.fromDate(filter.getDataInicial())));
-		}
-		if (filter.hasDataFim()) {
-			queryType.getSlot().add(getSlot("$XDSDocumentEntryCreationTimeTo", RDateUtil.fromDate(filter.getDataFim())));
-		}
-		queryType.getSlot().add(getSlot("$XDSDocumentEntryStatus", "('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')"));
+
+		//@formatter:off
+		new SlotTypeBuilder<>(queryType.getSlot())
+				.name("$XDSDocumentEntryPatientId")
+				.value("'" + filter.getCnsCidadao() + "^^^&2.16.840.1.113883.13.236&ISO'")
+			.add()
+				.name("$XDSDocumentEntryCreationTimeFrom")
+				.value(RDateUtil.fromDate(filter.getDataInicial()))
+			.addIf(filter.hasDataInicial())
+				.name("$XDSDocumentEntryCreationTimeTo")
+				.value(RDateUtil.fromDate(filter.getDataFim()))
+			.addIf(filter.hasDataFim())
+				.name("$XDSDocumentEntryStatus")
+				.value("('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')")
+			.add();
+		//@formatter:on
 
 		AdhocQueryRequest adhocQueryRequest = new AdhocQueryRequest();
 		adhocQueryRequest.setResponseOption(responseOptionType);
 		adhocQueryRequest.setAdhocQuery(queryType);
 		return adhocQueryRequest;
 	}
-
-	private static SlotType1 getSlot(String name, String value) {
-		ValueListType listType = new ValueListType();
-		listType.getValue().add(value);
-
-		SlotType1 slotType1 = new SlotType1();
-		slotType1.setName(name);
-		slotType1.setValueList(listType);
-		return slotType1;
-	}
-
 }

@@ -37,10 +37,10 @@ public class RegistryResponseParser {
 				}
 				try {
 					RegistryItem registry = parseDocument((ExtrinsicObjectType) identifiable.getValue());
-					validateRegistry(registry);
+					filterValues(registry);
 					documents.add(registry);
 				} catch (InvalidRegistryException e) {
-					log.debug("Failed to parse.", e);
+					log.info("Failed to parse. " + e.getMessage());
 					continue;
 				}
 			}
@@ -50,7 +50,7 @@ public class RegistryResponseParser {
 
 	private static boolean validateElement(JAXBElement<?> identifiable) {
 		if (identifiable == null) {
-			log.debug("Ignored registry. JAXBElement to parse is null.");
+			log.info("Ignored registry. JAXBElement to parse is null.");
 			return false;
 		}
 		if (identifiable.getValue() == null || !(identifiable.getValue() instanceof ExtrinsicObjectType)) {
@@ -64,7 +64,7 @@ public class RegistryResponseParser {
 
 		RegistryItem registryItem = new RegistryItem();
 
-		log.debug("Parse started.");
+		log.info("Parse started.");
 		for (SlotType1 slot : extrinsicObject.getSlot()) {
 			loadSlotTypes(registryItem, slot);
 		}
@@ -76,7 +76,7 @@ public class RegistryResponseParser {
 		for (ClassificationType classification : extrinsicObject.getClassification()) {
 			loadClassificationTypesLotacao(registryItem, classification);
 		}
-		log.debug("Parse finished.");
+		log.info("Parse finished.");
 		return registryItem;
 	}
 
@@ -124,33 +124,67 @@ public class RegistryResponseParser {
 		}
 	}
 
-	private static void validateRegistry(RegistryItem registry) throws InvalidRegistryException {
-		validateNotBlank(registry.getRepositoryUniqueId(), REPOSITORY_UNIQUE_ID);
-		validateNotBlank(registry.getDocumentUniqueId(), UUID_DOCUMENT_UNIQUE_ID);
-		validateNotNull(registry.getServiceStartTime(), SERVICE_START_TIME);
-		validateOnlyNumbers(registry.getCnesUnidadeSaude(), AUTHOR_INSTITUTION);
-		validateOnlyNumbers(registry.getCnsProfissional(), AUTHOR_PERSON);
-		validateOnlyNumbers(registry.getCbo(), AUTHOR_SPECIALTY);
+	private static void filterValues(RegistryItem registry) throws InvalidRegistryException {
+		String message = "";
+		boolean hasError = false;
+
+		if (!validateNotBlank(registry.getRepositoryUniqueId())) {
+			message += REPOSITORY_UNIQUE_ID + ": '" + registry.getRepositoryUniqueId() + "' ";
+			hasError = true;
+		}
+		if (!validateNotBlank(registry.getDocumentUniqueId())) {
+			message += UUID_DOCUMENT_UNIQUE_ID + ": '" + registry.getDocumentUniqueId() + "' ";
+			hasError = true;
+		}
+		if (!validateNotNull(registry.getServiceStartTime())) {
+			message += SERVICE_START_TIME + ": '" + registry.getServiceStartTime() + "' ";
+			hasError = true;
+		}
+
+		try {
+			registry.setCnesUnidadeSaude(filtertNumberValue(registry.getCnesUnidadeSaude()));
+		} catch (Exception e) {
+			message += AUTHOR_INSTITUTION + ": '" + registry.getCnesUnidadeSaude() + "' ";
+			hasError = true;
+		}
+
+		try {
+			registry.setCnsProfissional(filtertNumberValue(registry.getCnsProfissional()));
+		} catch (Exception e) {
+			message += AUTHOR_PERSON + ": '" + registry.getCnsProfissional() + "' ";
+			hasError = true;
+		}
+
+		try {
+			registry.setCbo(filtertNumberValue(registry.getCbo()));
+		} catch (Exception e) {
+			message += AUTHOR_SPECIALTY + ": '" + registry.getCbo() + "' ";
+			hasError = true;
+		}
+
+		if (hasError) {
+			throw new InvalidRegistryException("Invalid values for: " + message);
+		}
+
 	}
 
-	private static void validateOnlyNumbers(String value, String slotDescription) throws InvalidRegistryException {
-		validateNotBlank(value, slotDescription);
-		if (!value.matches("\\d*")) {
-			throw new InvalidRegistryException("Invalid values for " + slotDescription + ": '" + value + "'");
+	private static String filtertNumberValue(String value) throws Exception {
+		if (validateNotNull(value) && value.contains("^") && validateOnlyNumbers(value.substring(0, value.indexOf("^")))) {
+			return value.substring(0, value.indexOf("^"));
+		} else {
+			throw new Exception();
 		}
 	}
 
-	private static void validateNotBlank(String value, String description) throws InvalidRegistryException {
-		validateNotNull(value, description);
-		if (value.trim().isEmpty()) {
-			throw new InvalidRegistryException("Invalid values for " + description + ": '" + value + "'");
-		}
+	private static boolean validateOnlyNumbers(String value) {
+		return value.matches("\\d*");
 	}
 
-	private static void validateNotNull(Object value, String description) throws InvalidRegistryException {
-		if (value == null) {
-			throw new InvalidRegistryException("Invalid values for " + description + ": '" + value + "'");
-		}
+	private static boolean validateNotBlank(String value) {
+		return validateNotNull(value) && !value.trim().isEmpty();
 	}
 
+	private static boolean validateNotNull(Object value) {
+		return value != null;
+	}
 }

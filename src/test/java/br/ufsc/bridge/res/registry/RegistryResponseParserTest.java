@@ -228,9 +228,9 @@ public class RegistryResponseParserTest {
 		classificationType.setClassificationScheme("urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d");
 
 		List<SlotType1> slots = classificationType.getSlot();
-		slots.add(this.createSlot("authorInstitution", authorInstitution));
-		slots.add(this.createSlot("authorPerson", authorPerson));
-		slots.add(this.createSlot("authorSpecialty", authorSpecialty));
+		slots.add(this.createSlot("authorInstitution", authorInstitution + "^"));
+		slots.add(this.createSlot("authorPerson", authorPerson + "^"));
+		slots.add(this.createSlot("authorSpecialty", authorSpecialty + "^"));
 		return classificationType;
 	}
 }
