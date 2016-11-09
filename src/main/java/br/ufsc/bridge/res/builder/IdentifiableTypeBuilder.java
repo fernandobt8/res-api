@@ -4,70 +4,67 @@ import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
-import lombok.AllArgsConstructor;
+import br.ufsc.bridge.res.builder.AssociationTypeBuilder.AssociationTypeBuilderWrapper;
+import br.ufsc.bridge.res.builder.ClassificationTypeBuilder.ClassificationTypeBuilderWrapper;
+import br.ufsc.bridge.res.builder.ExtrinsicObjectTypeBuilder.ExtrinsicObjectTypeBuilderWrapper;
+import br.ufsc.bridge.res.builder.RegistryPackageTypeBuilder.RegistryPackageTypeBuilderWrapper;
+import br.ufsc.bridge.res.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
 
 public class IdentifiableTypeBuilder {
 
-	private List<JAXBElement> identifiables;
+	private List<JAXBElement<?>> identifiables;
 
-	public IdentifiableTypeBuilder(List<JAXBElement> list) {
+	public IdentifiableTypeBuilder(List<JAXBElement<?>> list) {
 		this.identifiables = list;
 	}
 
-	public SlotTypeBuilderWrapper buildSlot() {
-		return new SlotTypeBuilderWrapper(this);
+	public SlotTypeBuilderWrapper<IdentifiableTypeBuilder> buildSlot() {
+		return new SlotTypeBuilderWrapper<IdentifiableTypeBuilder>(this, null) {
+			@Override
+			public SlotTypeBuilderWrapper<IdentifiableTypeBuilder> addSlot() {
+				IdentifiableTypeBuilder.this.identifiables.add(this.createElement());
+				return this;
+			}
+		};
 	}
 
-	public ClassificationTypeBuilderWrapper buildClassification() {
-		return new ClassificationTypeBuilderWrapper(this);
+	public ClassificationTypeBuilderWrapper<IdentifiableTypeBuilder> buildClassification() {
+		return new ClassificationTypeBuilderWrapper<IdentifiableTypeBuilder>(this, null, "") {
+			@Override
+			public ClassificationTypeBuilderWrapper<IdentifiableTypeBuilder> addClassification() {
+				IdentifiableTypeBuilder.this.identifiables.add(this.createElement());
+				return this;
+			}
+		};
 	}
 
-	public RegistryPackageTypeBuilderWrapper buildRegistryPackage() {
-		return new RegistryPackageTypeBuilderWrapper(this);
+	public RegistryPackageTypeBuilderWrapper<IdentifiableTypeBuilder> buildRegistryPackage() {
+		return new RegistryPackageTypeBuilderWrapper<IdentifiableTypeBuilder>(this, null) {
+			@Override
+			public RegistryPackageTypeBuilderWrapper<IdentifiableTypeBuilder> addRegistryPackage() {
+				IdentifiableTypeBuilder.this.identifiables.add(this.createElement());
+				return this;
+			}
+		};
 	}
 
-	@AllArgsConstructor
-	public class SlotTypeBuilderWrapper extends SlotTypeBuilder<SlotTypeBuilderWrapper> {
-		private IdentifiableTypeBuilder parent;
-
-		public SlotTypeBuilderWrapper addSlot() {
-			this.parent.identifiables.add(this.createElement());
-			return this;
-		}
-
-		public IdentifiableTypeBuilder addSlotEnd() {
-			this.parent.identifiables.add(this.createElement());
-			return this.parent;
-		}
+	public AssociationTypeBuilderWrapper<IdentifiableTypeBuilder> buildAssociation() {
+		return new AssociationTypeBuilderWrapper<IdentifiableTypeBuilder>(this, null) {
+			@Override
+			public AssociationTypeBuilder.AssociationTypeBuilderWrapper<IdentifiableTypeBuilder> addAssociation() {
+				IdentifiableTypeBuilder.this.identifiables.add(this.createElement());
+				return this;
+			}
+		};
 	}
 
-	@AllArgsConstructor
-	public class ClassificationTypeBuilderWrapper extends ClassificationTypeBuilder<ClassificationTypeBuilderWrapper> {
-		private IdentifiableTypeBuilder parent;
-
-		public ClassificationTypeBuilderWrapper addClassification() {
-			this.parent.identifiables.add(this.createElement());
-			return this;
-		}
-
-		public IdentifiableTypeBuilder addClassificationEnd() {
-			this.parent.identifiables.add(this.createElement());
-			return this.parent;
-		}
-	}
-
-	@AllArgsConstructor
-	public class RegistryPackageTypeBuilderWrapper extends RegistryPackageTypeBuilder<RegistryPackageTypeBuilderWrapper> {
-		private IdentifiableTypeBuilder parent;
-
-		public RegistryPackageTypeBuilderWrapper addClassification() {
-			this.parent.identifiables.add(this.createElement());
-			return this;
-		}
-
-		public IdentifiableTypeBuilder addClassificationEnd() {
-			this.parent.identifiables.add(this.createElement());
-			return this.parent;
-		}
+	public ExtrinsicObjectTypeBuilderWrapper<IdentifiableTypeBuilder> buildExtrinsicObject() {
+		return new ExtrinsicObjectTypeBuilderWrapper<IdentifiableTypeBuilder>(this, null) {
+			@Override
+			public ExtrinsicObjectTypeBuilderWrapper<IdentifiableTypeBuilder> addExtrinsicObject() {
+				IdentifiableTypeBuilder.this.identifiables.add(this.createElement());
+				return this;
+			}
+		};
 	}
 }

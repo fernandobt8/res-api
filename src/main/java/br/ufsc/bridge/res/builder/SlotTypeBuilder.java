@@ -1,37 +1,35 @@
 package br.ufsc.bridge.res.builder;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
-
-import lombok.NoArgsConstructor;
 
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectFactory;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ValueListType;
 
-@NoArgsConstructor
 @SuppressWarnings("unchecked")
 public class SlotTypeBuilder<T extends SlotTypeBuilder<T>> {
 
-	private List<SlotType1> list;
-	private String name;
-	private List<String> values;
+	private SlotType1 slot;
 
-	public SlotTypeBuilder(List<SlotType1> list) {
-		this.list = list;
-		this.values = new LinkedList<>();
+	public SlotTypeBuilder() {
+		this.clear();
+	}
+
+	protected void clear() {
+		this.slot = new SlotType1();
+		ValueListType listType = new ValueListType();
+		this.slot.setValueList(listType);
 	}
 
 	public T name(String name) {
-		this.name = name;
+		this.slot.setName(name);
 		return (T) this;
 	}
 
 	public T value(String value) {
-		this.values.add(value);
+		this.slot.getValueList().getValue().add(value);
 		return (T) this;
 	}
 
@@ -40,35 +38,42 @@ public class SlotTypeBuilder<T extends SlotTypeBuilder<T>> {
 		return new ObjectFactory().createSlot(this.createSlot());
 	}
 
-	public T add() {
-		return this.addIf(true);
-	}
-
-	public T addIf(boolean add) {
-		if (add) {
-			this.list.add(this.createSlot());
-		} else {
-			this.clear();
-		}
-		return (T) this;
-	}
-
 	public SlotType1 createSlot() {
-		ValueListType listType = new ValueListType();
-		listType.getValue().addAll(this.values);
-
-		SlotType1 slotType1 = new SlotType1();
-		slotType1.setName(this.name);
-		slotType1.setValueList(listType);
-
+		SlotType1 aux = this.slot;
 		this.clear();
-
-		return slotType1;
+		return aux;
 	}
 
-	private void clear() {
-		this.name = null;
-		this.values = new ArrayList<>();
+	public static class SlotTypeBuilderWrapper<PARENT> extends SlotTypeBuilder<SlotTypeBuilderWrapper<PARENT>> {
+		private PARENT parent;
+		private List<SlotType1> slots;
+
+		public SlotTypeBuilderWrapper(List<SlotType1> slots) {
+			this(null, slots);
+		}
+
+		public SlotTypeBuilderWrapper(PARENT parent, List<SlotType1> slots) {
+			this.slots = slots;
+			this.parent = parent;
+		}
+
+		public SlotTypeBuilderWrapper<PARENT> addSlot() {
+			return this.addSlotIf(true);
+		}
+
+		public SlotTypeBuilderWrapper<PARENT> addSlotIf(boolean add) {
+			if (add) {
+				this.slots.add(this.createSlot());
+			} else {
+				this.clear();
+			}
+			return this;
+		}
+
+		public PARENT addSlotEnd() {
+			this.addSlot();
+			return this.parent;
+		}
 	}
 
 }
