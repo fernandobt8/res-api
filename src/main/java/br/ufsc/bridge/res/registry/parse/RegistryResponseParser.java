@@ -48,7 +48,7 @@ public class RegistryResponseParser {
 				}
 			}
 		}
-		return new RegistryResponse(documents);
+		return new RegistryResponse(Boolean.TRUE, documents);
 	}
 
 	private static boolean validateElement(JAXBElement<?> identifiable) {

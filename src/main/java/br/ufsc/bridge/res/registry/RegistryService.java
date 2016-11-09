@@ -31,14 +31,19 @@ public class RegistryService {
 	}
 
 	public RegistryResponse getRegistries(RegistryFilter filter) {
-		AdhocQueryResponse queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter));
 
-		if (queryResponse.getStatus().equals(SUCCESS)) {
-			return RegistryResponseParser.parse(queryResponse);
-		} else {
-			log.error("erro no request");
+		try {
+			AdhocQueryResponse queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter));
+			if (queryResponse.getStatus().equals(SUCCESS)) {
+				return RegistryResponseParser.parse(queryResponse);
+			} else {
+				log.error("erro no request");
+				return new RegistryResponse(Boolean.FALSE);
+			}
+		} catch (Exception e) {
+			log.error("erro no request", e);
+			return new RegistryResponse(Boolean.FALSE);
 		}
-		return null; // TODO TRATAR RETORNO NULO E FALHA
 	}
 
 	private AdhocQueryRequest buildRequest(RegistryFilter filter) {
