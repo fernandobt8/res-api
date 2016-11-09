@@ -17,8 +17,8 @@ public class RegistryItem {
 	private String documentUniqueId;
 
 	private Date serviceStartTime;
-	private String nomeProfissional;
+	private String cnsProfissional;
 	private String cbo;
-	private String unidadeSaude;
+	private String cnesUnidadeSaude;
 
 }

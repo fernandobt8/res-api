@@ -6,6 +6,11 @@ import java.util.Date;
 public class RDateUtil {
 
 	public static String fromDate(Date date) {
+
+		if (date == null) {
+			return null;
+		}
+
 		Calendar c = Calendar.getInstance();
 		c.setTime(date);
 		int ano = c.get(Calendar.YEAR);
@@ -19,6 +24,11 @@ public class RDateUtil {
 	}
 
 	public static Date fromISO(String date) {
+
+		if (date == null || date.trim().isEmpty()) {
+			return null;
+		}
+
 		Calendar c = Calendar.getInstance();
 
 		String year = date.substring(0, 4);
