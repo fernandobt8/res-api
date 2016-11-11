@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dto.registry;
+package br.ufsc.bridge.res.service.dto.registry;
 
 import java.util.ArrayList;
 import java.util.List;

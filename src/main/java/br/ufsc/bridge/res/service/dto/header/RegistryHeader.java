@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dto.header;
+package br.ufsc.bridge.res.service.dto.header;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;

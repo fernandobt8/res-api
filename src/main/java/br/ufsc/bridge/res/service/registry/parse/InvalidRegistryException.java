@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.registry.parse;
+package br.ufsc.bridge.res.service.registry.parse;
 
 public class InvalidRegistryException extends Exception {
 

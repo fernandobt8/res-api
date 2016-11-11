@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.registry;
+package br.ufsc.bridge.res.service.registry;
 
 import gov.nist.registry.ws.serviceclasses.Xdsregistryb;
 import gov.nist.registry.ws.serviceclasses.XdsregistrybPortType;
@@ -7,12 +7,13 @@ import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
-import br.ufsc.bridge.res.builder.SlotTypeBuilder;
-import br.ufsc.bridge.res.dto.header.Credential;
-import br.ufsc.bridge.res.dto.header.RegistryHeader;
-import br.ufsc.bridge.res.dto.registry.RegistryFilter;
-import br.ufsc.bridge.res.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.registry.parse.RegistryResponseParser;
+
+import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
+import br.ufsc.bridge.res.service.dto.header.Credential;
+import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
+import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
+import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 @Slf4j
@@ -55,19 +56,19 @@ public class RegistryService {
 		queryType.setId("urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d");
 
 		//@formatter:off
-		new SlotTypeBuilder<>(queryType.getSlot())
+		new SlotTypeBuilderWrapper<>(queryType.getSlot())
 				.name("$XDSDocumentEntryPatientId")
 				.value("'" + filter.getCnsCidadao() + "^^^&2.16.840.1.113883.13.236&ISO'")
-			.add()
+			.addSlot()
 				.name("$XDSDocumentEntryCreationTimeFrom")
 				.value(RDateUtil.fromDate(filter.getDataInicial()))
-			.addIf(filter.hasDataInicial())
+			.addSlotIf(filter.hasDataInicial())
 				.name("$XDSDocumentEntryCreationTimeTo")
 				.value(RDateUtil.fromDate(filter.getDataFim()))
-			.addIf(filter.hasDataFim())
+			.addSlotIf(filter.hasDataFim())
 				.name("$XDSDocumentEntryStatus")
 				.value("('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')")
-			.add();
+			.addSlot();
 		//@formatter:on
 
 		AdhocQueryRequest adhocQueryRequest = new AdhocQueryRequest();

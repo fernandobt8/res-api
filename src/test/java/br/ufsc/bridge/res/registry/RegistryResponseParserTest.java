@@ -19,9 +19,9 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.ValueListType;
 
 import org.junit.Test;
 
-import br.ufsc.bridge.res.dto.registry.RegistryItem;
-import br.ufsc.bridge.res.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.registry.parse.RegistryResponseParser;
+import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
+import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 
 public class RegistryResponseParserTest {
 

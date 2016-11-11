@@ -1,24 +1,23 @@
-package br.ufsc.bridge.res.builder;
+package br.ufsc.bridge.res.service.builder;
 
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+
+import br.ufsc.bridge.res.service.builder.InternationalStringTypeBuilder.InternationalStringTypeBuilderWrapper;
+import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
 
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectFactory;
 
-@NoArgsConstructor
 @SuppressWarnings("unchecked")
 public class ClassificationTypeBuilder<T extends ClassificationTypeBuilder<T>> {
 
-	private List<JAXBElement> identifiables;
 	private ClassificationType classificationType;
 
-	public ClassificationTypeBuilder(List<JAXBElement> list) {
-		this.identifiables = list;
+	public ClassificationTypeBuilder() {
 		this.classificationType = new ClassificationType();
 	}
 
@@ -47,11 +46,6 @@ public class ClassificationTypeBuilder<T extends ClassificationTypeBuilder<T>> {
 		return (T) this;
 	}
 
-	public T add() {
-		this.identifiables.add(this.createElement());
-		return (T) this;
-	}
-
 	public JAXBElement<ClassificationType> createElement() {
 		return new ObjectFactory().createClassification(this.createClassification());
 	}
@@ -63,22 +57,28 @@ public class ClassificationTypeBuilder<T extends ClassificationTypeBuilder<T>> {
 		return aux;
 	}
 
-	public SlotTypeBuilderWrapper buildSlot() {
-		return new SlotTypeBuilderWrapper((T) this);
+	public SlotTypeBuilderWrapper<T> buildSlot() {
+		return new SlotTypeBuilderWrapper<>((T) this, this.classificationType.getSlot());
+	}
+
+	public InternationalStringTypeBuilderWrapper<T> buildInternationalString() {
+		return new InternationalStringTypeBuilderWrapper<>((T) this, this.classificationType);
 	}
 
 	@AllArgsConstructor
-	@SuppressWarnings("rawtypes")
-	public class SlotTypeBuilderWrapper extends SlotTypeBuilder<SlotTypeBuilderWrapper> {
-		private T parent;
+	public static class ClassificationTypeBuilderWrapper<PARENT> extends ClassificationTypeBuilder<ClassificationTypeBuilderWrapper<PARENT>> {
+		protected PARENT parent;
+		protected List<ClassificationType> classifications;
+		protected String classifiedObject;
 
-		public SlotTypeBuilderWrapper addSlot() {
-			((ClassificationTypeBuilder) this.parent).classificationType.getSlot().add(this.createSlot());
+		public ClassificationTypeBuilderWrapper<PARENT> addClassification() {
+			this.classifiedObject(this.classifiedObject);
+			this.classifications.add(this.createClassification());
 			return this;
 		}
 
-		public T addSlotEnd() {
-			((ClassificationTypeBuilder) this.parent).classificationType.getSlot().add(this.createSlot());
+		public PARENT addClassificationEnd() {
+			this.addClassification();
 			return this.parent;
 		}
 	}

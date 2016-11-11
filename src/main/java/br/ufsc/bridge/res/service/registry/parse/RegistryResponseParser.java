@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.registry.parse;
+package br.ufsc.bridge.res.service.registry.parse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +14,8 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.ufsc.bridge.res.dto.registry.RegistryItem;
-import br.ufsc.bridge.res.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
+import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 @Slf4j
