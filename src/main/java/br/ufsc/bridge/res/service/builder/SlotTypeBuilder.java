@@ -29,7 +29,23 @@ public class SlotTypeBuilder<T extends SlotTypeBuilder<T>> {
 	}
 
 	public T value(String value) {
-		this.slot.getValueList().getValue().add(value);
+		this.value(value, false);
+		return (T) this;
+	}
+
+	public T value(String value, boolean bracket) {
+		if (bracket) {
+			this.slot.getValueList().getValue().add("('" + value + "')");
+		} else {
+			this.slot.getValueList().getValue().add(value);
+		}
+		return (T) this;
+	}
+
+	public T value(List<String> values, boolean bracket) {
+		for (String value : values) {
+			this.value(value, bracket);
+		}
 		return (T) this;
 	}
 
