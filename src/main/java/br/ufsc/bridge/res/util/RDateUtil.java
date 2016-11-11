@@ -3,6 +3,8 @@ package br.ufsc.bridge.res.util;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class RDateUtil {
 
 	public static String fromDate(Date date) {
@@ -25,7 +27,7 @@ public class RDateUtil {
 
 	public static Date fromISO(String date) {
 
-		if (date == null || date.trim().isEmpty()) {
+		if (StringUtils.isBlank(date)) {
 			return null;
 		}
 

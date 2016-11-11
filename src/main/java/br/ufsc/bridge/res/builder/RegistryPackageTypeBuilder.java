@@ -16,12 +16,10 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryPackageType;
 @SuppressWarnings("unchecked")
 public class RegistryPackageTypeBuilder<T extends RegistryPackageTypeBuilder<T>> {
 
-	private static final String SS1 = "ss1";
 	private RegistryPackageType registryPackage;
 
 	public RegistryPackageTypeBuilder() {
 		this.registryPackage = new RegistryPackageType();
-		this.id(SS1);
 	}
 
 	public T id(String id) {
@@ -34,11 +32,11 @@ public class RegistryPackageTypeBuilder<T extends RegistryPackageTypeBuilder<T>>
 	}
 
 	public ClassificationTypeBuilderWrapper<T> buildClassification() {
-		return new ClassificationTypeBuilderWrapper<>((T) this, this.registryPackage.getClassification(), SS1);
+		return new ClassificationTypeBuilderWrapper<>((T) this, this.registryPackage.getClassification(), this.registryPackage.getId());
 	}
 
 	public ExternalIdentifierTypeBuilderWrapper<T> buildExternalIdentifier() {
-		return new ExternalIdentifierTypeBuilderWrapper<>((T) this, this.registryPackage.getExternalIdentifier(), SS1);
+		return new ExternalIdentifierTypeBuilderWrapper<>((T) this, this.registryPackage.getExternalIdentifier(), this.registryPackage.getId());
 	}
 
 	public JAXBElement<RegistryPackageType> createElement() {
