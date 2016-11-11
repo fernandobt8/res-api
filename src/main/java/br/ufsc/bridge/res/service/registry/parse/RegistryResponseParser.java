@@ -6,17 +6,18 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import lombok.extern.slf4j.Slf4j;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.util.RDateUtil;
+
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 @Slf4j
 public class RegistryResponseParser {
@@ -29,9 +30,9 @@ public class RegistryResponseParser {
 	private static final String UUID_CLASSIFICATION_SCHEME_LOTACAO = "urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d";
 	private static final String UUID_DOCUMENT_UNIQUE_ID = "urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab";
 
-	public static RegistryResponse parse(AdhocQueryResponse queryResponse) {
+	public static RegistryResponse<RegistryItem> parse(AdhocQueryResponse queryResponse) {
 
-		List<RegistryItem> documents = new ArrayList<RegistryItem>();
+		List<RegistryItem> documents = new ArrayList<>();
 
 		if (queryResponse.getRegistryObjectList() != null) {
 			for (JAXBElement<?> identifiable : queryResponse.getRegistryObjectList().getIdentifiable()) {
@@ -48,7 +49,7 @@ public class RegistryResponseParser {
 				}
 			}
 		}
-		return new RegistryResponse(Boolean.TRUE, documents);
+		return new RegistryResponse<>(Boolean.TRUE, documents);
 	}
 
 	private static boolean validateElement(JAXBElement<?> identifiable) {
