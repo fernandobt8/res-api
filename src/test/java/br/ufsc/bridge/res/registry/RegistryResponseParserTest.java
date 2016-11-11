@@ -8,6 +8,12 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
+import org.junit.Test;
+
+import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
+import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
+
 import junit.framework.Assert;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
@@ -16,12 +22,6 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryObjectListType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ValueListType;
-
-import org.junit.Test;
-
-import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
-import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 
 public class RegistryResponseParserTest {
 
@@ -34,7 +34,7 @@ public class RegistryResponseParserTest {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperado);
 		response.getRegistryObjectList().getIdentifiable().add(this.buildDocumento(documentoEsperado));
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 2);
 
 		RegistryItem documentoAtual = registryResponseEsperada.getItems().get(0);
@@ -54,7 +54,7 @@ public class RegistryResponseParserTest {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperado);
 		response.getRegistryObjectList().getIdentifiable().add(null);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 1);
 	}
 
@@ -103,7 +103,7 @@ public class RegistryResponseParserTest {
 	@Test
 	public void test_AdhocQueryResponse_RegistryObjectList_Null_RetornarNenhumDocumento() {
 		AdhocQueryResponse response = new AdhocQueryResponse();
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -114,7 +114,7 @@ public class RegistryResponseParserTest {
 		response.getRegistryObjectList().getIdentifiable().clear();
 		response.getRegistryObjectList().getIdentifiable().add(null);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -124,7 +124,7 @@ public class RegistryResponseParserTest {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
 		response.getRegistryObjectList().getIdentifiable().get(0).setValue(null);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -134,7 +134,7 @@ public class RegistryResponseParserTest {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
 		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).setValueList(null);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -144,7 +144,7 @@ public class RegistryResponseParserTest {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
 		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).getValueList().getValue().clear();
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -155,7 +155,7 @@ public class RegistryResponseParserTest {
 		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).getValueList().getValue().clear();
 		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).getValueList().getValue().add(null);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -165,14 +165,14 @@ public class RegistryResponseParserTest {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoValido);
 		response.getRegistryObjectList().getIdentifiable().get(0).getValue().getSlot().get(0).setName(null);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
 	private void verificaSeParseRetornaListaDocumentosVazia(RegistryItem documentoEsperado) {
 		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperado);
 
-		RegistryResponse registryResponseEsperada = RegistryResponseParser.parse(response);
+		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 0);
 	}
 
@@ -203,7 +203,7 @@ public class RegistryResponseParserTest {
 				this.createSlot("serviceStartTime", documentoItem.getServiceStartTime() != null ? this.dateFormat.format(documentoItem.getServiceStartTime()) : null));
 		extrinsicObjectType.getExternalIdentifier().add(this.createExternalIdentifier(documentoItem.getDocumentUniqueId()));
 		extrinsicObjectType.getClassification().add(this.createClassification(documentoItem.getCnesUnidadeSaude(), documentoItem.getCnsProfissional(), documentoItem.getCbo()));
-		JAXBElement<ExtrinsicObjectType> documento = new JAXBElement<ExtrinsicObjectType>(new QName(""), ExtrinsicObjectType.class, null, extrinsicObjectType);
+		JAXBElement<ExtrinsicObjectType> documento = new JAXBElement<>(new QName(""), ExtrinsicObjectType.class, null, extrinsicObjectType);
 		return documento;
 	}
 
