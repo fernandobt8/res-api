@@ -2,8 +2,8 @@ package br.ufsc.bridge.res.write;
 
 import org.junit.Test;
 
-import br.ufsc.bridge.res.dab.ResumoConsultaAB;
-import br.ufsc.bridge.res.dab.caracterizacaoconsulta.tipoatendimento.TipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.write.ResumoConsultaAB;
+import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.TipoAtendimentoEnum;
 
 public class ResumoConsultaABTest {
 
