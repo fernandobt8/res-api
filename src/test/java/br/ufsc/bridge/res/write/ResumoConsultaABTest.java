@@ -7,8 +7,8 @@ import org.junit.Test;
 import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
-import br.ufsc.bridge.res.dab.write.ResumoConsultaABBuilder;
-import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 
 public class ResumoConsultaABTest {
 
