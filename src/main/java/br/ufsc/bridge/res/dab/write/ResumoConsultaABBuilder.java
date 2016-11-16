@@ -5,6 +5,7 @@ import br.ufsc.bridge.res.dab.write.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.medicoesobservacoes.MedicoesObservacoesBuilder;
 import br.ufsc.bridge.res.dab.write.problema.ProblemaDiagnosticoAvaliadoBuilder;
+import br.ufsc.bridge.res.dab.write.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 
 public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsultaABBuilder> {
 
@@ -42,5 +43,9 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 
 	public AlergiaReacoesAdversasBuilder<ResumoConsultaABBuilder> alergiaReacaoAdversa() {
 		return new AlergiaReacoesAdversasBuilder<>(this);
+	}
+
+	public ProcedimentosPequenasCirurgiasBuilder<ResumoConsultaABBuilder> procedimentosPequenasCirurgias() {
+		return new ProcedimentosPequenasCirurgiasBuilder<>(this);
 	}
 }
