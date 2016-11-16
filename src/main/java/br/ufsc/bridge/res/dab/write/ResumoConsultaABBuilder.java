@@ -3,6 +3,7 @@ package br.ufsc.bridge.res.dab.write;
 import br.ufsc.bridge.res.dab.write.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.medicoesobservacoes.MedicoesObservacoesBuilder;
+import br.ufsc.bridge.res.dab.write.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 
 public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsultaABBuilder> {
 
@@ -32,5 +33,9 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 
 	public MedicoesObservacoesBuilder<ResumoConsultaABBuilder> medicoesObservacoes() {
 		return new MedicoesObservacoesBuilder<>(this);
+	}
+
+	public ProcedimentosPequenasCirurgiasBuilder<ResumoConsultaABBuilder> procedimentosPequenasCirurgias() {
+		return new ProcedimentosPequenasCirurgiasBuilder<>(this);
 	}
 }
