@@ -1,19 +1,34 @@
 package br.ufsc.bridge.res.dab.write.base;
 
-public abstract class ArquetypeWrapper {
+import lombok.NoArgsConstructor;
+
+import org.apache.commons.lang3.StringUtils;
+
+@NoArgsConstructor
+public abstract class ArquetypeWrapper<PARENT extends ParentArquetypeWrapper> {
+
+	protected PARENT parent;
+
+	public ArquetypeWrapper(PARENT parent) {
+		this.parent = parent;
+		parent.addChild(this);
+	}
 
 	protected abstract String openTags();
 
+	public abstract String getValue();
+
 	protected abstract String closeTags();
 
-	protected abstract String getContent();
-
 	public String getXmlContent() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(this.openTags());
-		sb.append(this.getContent());
-		sb.append(this.closeTags());
-		return sb.toString();
+		if (StringUtils.isNotBlank(this.getValue())) {
+			return this.openTags() + this.getValue() + this.closeTags();
+		}
+		return "";
+	}
+
+	public PARENT close() {
+		return this.parent;
 	}
 
 }

@@ -1,11 +1,18 @@
 package br.ufsc.bridge.res.dab.write.caracterizacaoconsulta;
 
-import br.ufsc.bridge.res.dab.write.base.TypedArquetypeWrapper;
+import lombok.Getter;
 
-public class CnesLocalAtendimento extends TypedArquetypeWrapper<String> {
+import br.ufsc.bridge.res.dab.write.base.ArquetypeWrapper;
+import br.ufsc.bridge.res.dab.write.base.ParentArquetypeWrapper;
 
-	public CnesLocalAtendimento(String value) {
-		super(value);
+@Getter
+public class CnesLocalAtendimentoBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ArquetypeWrapper<PARENT> {
+
+	private String value;
+
+	public CnesLocalAtendimentoBuilder(PARENT parent, String cnes) {
+		super(parent);
+		this.value = cnes;
 	}
 
 	@Override
@@ -18,10 +25,4 @@ public class CnesLocalAtendimento extends TypedArquetypeWrapper<String> {
 	protected String closeTags() {
 		return "</oe:value></value></CNES_do_local_do_atendimento></Estabelecimento_de_saúde></Localização_atribuída_ao_paciente>";
 	}
-
-	@Override
-	protected String getContent() {
-		return this.value;
-	}
-
 }

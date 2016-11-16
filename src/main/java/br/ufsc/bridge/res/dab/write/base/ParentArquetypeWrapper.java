@@ -1,16 +1,27 @@
 package br.ufsc.bridge.res.dab.write.base;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public abstract class ParentArquetypeWrapper extends ArquetypeWrapper {
+import lombok.NoArgsConstructor;
 
-	protected List<ArquetypeWrapper> childs = new ArrayList<>();
+@NoArgsConstructor
+public abstract class ParentArquetypeWrapper<PARENT extends ParentArquetypeWrapper> extends ArquetypeWrapper<PARENT> {
+
+	protected List<ArquetypeWrapper<?>> childs = new LinkedList<>();
+
+	public ParentArquetypeWrapper(PARENT parent) {
+		super(parent);
+	}
+
+	public void addChild(ArquetypeWrapper<?> child) {
+		this.childs.add(child);
+	}
 
 	@Override
-	protected String getContent() {
+	public String getValue() {
 		StringBuilder sb = new StringBuilder();
-		for (ArquetypeWrapper child : this.childs) {
+		for (ArquetypeWrapper<?> child : this.childs) {
 			sb.append(child.getXmlContent());
 		}
 		return sb.toString();

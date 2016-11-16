@@ -4,10 +4,18 @@ import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
 
 public class RDateUtil {
 
-	public static String fromDate(Date date) {
+	private static final DateTimeFormatter patternFormat = new DateTimeFormatterBuilder()
+			.appendPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+			.appendTimeZoneOffset("Z", true, 2, 2)
+			.toFormatter();
+
+	public static String dateToISOXDSb(Date date) {
 
 		if (date == null) {
 			return null;
@@ -25,7 +33,7 @@ public class RDateUtil {
 		return String.valueOf(ano * 10000000000L + mes * 100000000 + dia * 1000000 + hour * 10000 + min * 100 + sec);
 	}
 
-	public static Date fromISO(String date) {
+	public static Date isoXDSbToDate(String date) {
 
 		if (StringUtils.isBlank(date)) {
 			return null;
@@ -64,5 +72,13 @@ public class RDateUtil {
 		}
 
 		return c.getTime();
+	}
+
+	public static String dateToISOEHR(Date date) {
+		if (date != null) {
+			return new DateTime(date.getTime()).toString(patternFormat);
+		}
+
+		return null;
 	}
 }

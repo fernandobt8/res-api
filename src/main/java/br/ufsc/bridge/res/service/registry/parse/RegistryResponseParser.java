@@ -110,7 +110,7 @@ public class RegistryResponseParser {
 				break;
 			case SERVICE_START_TIME:
 				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setServiceStartTime(RDateUtil.fromISO(value));
+				registryItem.setServiceStartTime(RDateUtil.isoXDSbToDate(value));
 				break;
 			case AUTHOR_INSTITUTION:
 				log.debug("Parse slot " + slot.getName() + ".");

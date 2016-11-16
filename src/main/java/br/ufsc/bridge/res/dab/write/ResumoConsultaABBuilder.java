@@ -1,22 +1,10 @@
 package br.ufsc.bridge.res.dab.write;
 
 import br.ufsc.bridge.res.dab.write.base.ParentArquetypeWrapper;
-import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CaracterizacaoConsultaAB;
-import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CnesLocalAtendimento;
-import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.TipoAtendimentoAB;
-import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.TipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.write.medicoesobservacoes.MedicoesObservacoesBuilder;
 
-public class ResumoConsultaAB extends ParentArquetypeWrapper {
-
-	private ResumoConsultaAB(Builder builder) {
-		this.childs.add(new CaracterizacaoConsultaAB(new TipoAtendimentoAB(builder.tipoAtendimentoEnum)));
-		this.childs.add(new CnesLocalAtendimento(builder.cnesLocalAtendimento));
-	}
-
-	// @Override
-	// public String getContent() {
-	// return Base64.encodeBase64String(super.getContent().getBytes());
-	// }
+public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsultaABBuilder> {
 
 	@Override
 	protected String openTags() {
@@ -38,24 +26,11 @@ public class ResumoConsultaAB extends ParentArquetypeWrapper {
 		return "</Encontro>";
 	}
 
-	public static class Builder {
-
-		private final TipoAtendimentoEnum tipoAtendimentoEnum;
-		private String cnesLocalAtendimento;
-
-		public Builder(TipoAtendimentoEnum tipoAtendimentoEnum) {
-			this.tipoAtendimentoEnum = tipoAtendimentoEnum;
-		}
-
-		public Builder cnesLocalAtendimento(String cnesLocalAtendimento) {
-			this.cnesLocalAtendimento = cnesLocalAtendimento;
-			return this;
-		}
-
-		public ResumoConsultaAB build() {
-			return new ResumoConsultaAB(this);
-		}
-
+	public CaracterizacaoConsultaABBuilder<ResumoConsultaABBuilder> caracterizacaoConsulta() {
+		return new CaracterizacaoConsultaABBuilder<>(this);
 	}
 
+	public MedicoesObservacoesBuilder<ResumoConsultaABBuilder> medicoesObservacoes() {
+		return new MedicoesObservacoesBuilder<>(this);
+	}
 }
