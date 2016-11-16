@@ -21,12 +21,12 @@ public class AvaliacaoAntropometricaBuilder<PARENT extends ParentArquetypeWrappe
 	}
 
 	public AvaliacaoAntropometricaBuilder<PARENT> pesoCorporal(Date dataEvento, String peso) {
-		new PesoCorporalBuilder<>(this.parent, dataEvento, peso);
+		new PesoCorporalBuilder<>(this, dataEvento, peso);
 		return this;
 	}
 
 	public AvaliacaoAntropometricaBuilder<PARENT> altura(Date dataEvento, String altura) {
-		new AlturaComprimentoBuilder<>(this.parent, dataEvento, altura);
+		new AlturaComprimentoBuilder<>(this, dataEvento, altura);
 		return this;
 	}
 

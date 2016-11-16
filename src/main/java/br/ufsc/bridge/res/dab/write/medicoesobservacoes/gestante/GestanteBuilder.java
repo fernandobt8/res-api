@@ -21,17 +21,17 @@ public class GestanteBuilder<PARENT extends ParentArquetypeWrapper<?>> extends P
 	}
 
 	public GestanteBuilder<PARENT> cicloMenstrual(Date value, Date dataEvento) {
-		new CicloMenstrualBuilder<>(this.parent, value, dataEvento);
+		new CicloMenstrualBuilder<>(this, value, dataEvento);
 		return this;
 	}
 
 	public GestanteBuilder<PARENT> gestacao(String idadeGestacional, Date dataMedicao) {
-		new GestacaoBuilder<>(this.parent, idadeGestacional, dataMedicao);
+		new GestacaoBuilder<>(this, idadeGestacional, dataMedicao);
 		return this;
 	}
 
 	public GestanteBuilder<PARENT> sumarioObstetrico(String gestasPrevias, String partos) {
-		new SumarioObstetricoBuilder<>(this.parent, gestasPrevias, partos);
+		new SumarioObstetricoBuilder<>(this, gestasPrevias, partos);
 		return this;
 	}
 

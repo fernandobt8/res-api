@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
 import br.ufsc.bridge.res.dab.write.ResumoConsultaABBuilder;
@@ -38,8 +39,53 @@ public class ResumoConsultaABTest {
 					.gestacao("22", new Date())
 					.sumarioObstetrico("asdf", "fdas")
 				.close()
-
 			.close()
+			.problemaDiagnostico()
+				.problema()
+					.descricao("fdp")
+					.tipo("wtf")
+					.codigo("madafaka")
+				.close()
+				.problema()
+					.descricao("fdp2")
+					.tipo("wtf2")
+					.codigo("madafaka2")
+				.close()
+			.close()
+			.alergiaReacaoAdversa()
+				.alergia()
+					.agente("porcaria")
+					.categoria("filha da putagem")
+					.gravidade(ResABGravidadeEnum.ALTO)
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien")
+						.manifestacao("ser saindo do embigo")
+					.close()
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien predador")
+						.manifestacao("ser saindo do embigo com cara feia")
+					.close()
+				.close()
+				.alergia()
+					.agente("porcaria")
+					.categoria("filha da putagem")
+					.gravidade(ResABGravidadeEnum.ALTO)
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien")
+						.manifestacao("ser saindo do embigo")
+					.close()
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien predador")
+						.manifestacao("ser saindo do embigo com cara feia")
+					.close()
+				.close()
+
+
+
 
 				;
 		System.out.println(abBuilder.getXmlContent());
