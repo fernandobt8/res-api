@@ -27,7 +27,7 @@ public class ProcedimentoBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 				tagRresultadoObservacoes += " <Resultado_e_fslash_ou_observações_do_procedimento_ou_pequena_cirurgia><name>"
 						+ "<value>Resultado e/ou observações do procedimento ou pequena cirurgia</value></name><value><oe:value>";
 				tagRresultadoObservacoes += observacao;
-				tagRresultadoObservacoes += "</value></Resultado_e_fslash_ou_observações_do_procedimento_ou_pequena_cirurgia>";
+				tagRresultadoObservacoes += "</oe:value></value></Resultado_e_fslash_ou_observações_do_procedimento_ou_pequena_cirurgia>";
 			}
 		}
 

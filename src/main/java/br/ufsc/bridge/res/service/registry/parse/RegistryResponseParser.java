@@ -6,18 +6,17 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import lombok.extern.slf4j.Slf4j;
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.util.RDateUtil;
-
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 @Slf4j
 public class RegistryResponseParser {
@@ -115,10 +114,12 @@ public class RegistryResponseParser {
 			case AUTHOR_INSTITUTION:
 				log.debug("Parse slot " + slot.getName() + ".");
 				registryItem.setCnesUnidadeSaude(value);
+				registryItem.setNomeUnidadeSaude(value);
 				break;
 			case AUTHOR_PERSON:
 				log.debug("Parse slot " + slot.getName() + ".");
 				registryItem.setCnsProfissional(value);
+				registryItem.setNomeProfissional(value);
 				break;
 			case AUTHOR_SPECIALTY:
 				log.debug("Parse slot " + slot.getName() + ".");
@@ -146,18 +147,21 @@ public class RegistryResponseParser {
 		}
 
 		try {
-			registry.setCnesUnidadeSaude(filtertNumberValue(registry.getCnesUnidadeSaude()));
+			registry.setCnesUnidadeSaude(filterCnesUnidadeSaude(registry.getCnesUnidadeSaude()));
 		} catch (Exception e) {
 			message.append(AUTHOR_INSTITUTION + ": '" + registry.getCnesUnidadeSaude() + "' ");
 			hasError = true;
 		}
 
+		registry.setNomeUnidadeSaude(filterNomeUnidadeSaude(registry.getNomeUnidadeSaude()));
+
 		try {
-			registry.setCnsProfissional(filtertNumberValue(registry.getCnsProfissional()));
+			registry.setCnsProfissional(filtertCnsProfissional(registry.getCnsProfissional()));
 		} catch (Exception e) {
 			message.append(AUTHOR_PERSON + ": '" + registry.getCnsProfissional() + "' ");
 			hasError = true;
 		}
+		registry.setNomeProfissional(filtertNomeProfissional(registry.getNomeProfissional()));
 
 		try {
 			registry.setCbo(filtertNumberValue(registry.getCbo()));
@@ -172,6 +176,44 @@ public class RegistryResponseParser {
 
 	}
 
+	private static String filterCnesUnidadeSaude(String cnesUnidadeSaude) throws Exception {
+		if (StringUtils.isNotBlank(cnesUnidadeSaude) && cnesUnidadeSaude.contains("^")) {
+			String cnes = cnesUnidadeSaude.substring(cnesUnidadeSaude.lastIndexOf("^") + 1, cnesUnidadeSaude.length());
+			if (validateOnlyNumbers(cnes)) {
+				return cnes;
+			}
+		}
+		throw new Exception();
+	}
+
+	private static String filterNomeUnidadeSaude(String nomeUnidadeSaude) {
+		if (StringUtils.isNotBlank(nomeUnidadeSaude) && nomeUnidadeSaude.contains("^")) {
+			nomeUnidadeSaude = nomeUnidadeSaude.substring(0, nomeUnidadeSaude.indexOf("^"));
+			return StringUtils.isNotBlank(nomeUnidadeSaude) ? nomeUnidadeSaude : null;
+		}
+		return null;
+	}
+
+	private static String filtertCnsProfissional(String cnsProfissional) throws Exception {
+		if (StringUtils.isNotBlank(cnsProfissional) && cnsProfissional.contains("^")) {
+			String cns = cnsProfissional.substring(0, cnsProfissional.indexOf("^"));
+
+			if (validateOnlyNumbers(cns)) {
+				return cns;
+			}
+		}
+
+		throw new Exception();
+	}
+
+	private static String filtertNomeProfissional(String nomeProfissional) {
+		if (StringUtils.isNotBlank(nomeProfissional) && nomeProfissional.contains("^")) {
+			nomeProfissional = nomeProfissional.substring(nomeProfissional.lastIndexOf("^") + 1, nomeProfissional.length());
+			return StringUtils.isNotBlank(nomeProfissional) ? nomeProfissional : null;
+		}
+		return null;
+	}
+
 	private static String filtertNumberValue(String value) throws Exception {
 		if (StringUtils.isNotBlank(value) && value.contains("^") && validateOnlyNumbers(value.substring(0, value.indexOf("^")))) {
 			return value.substring(0, value.indexOf("^"));
@@ -181,7 +223,7 @@ public class RegistryResponseParser {
 	}
 
 	private static boolean validateOnlyNumbers(String value) {
-		return value.matches("\\d*");
+		return StringUtils.isNotBlank(value) && value.matches("\\d*");
 	}
 
 }

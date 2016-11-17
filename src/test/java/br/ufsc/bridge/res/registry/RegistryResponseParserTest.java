@@ -8,13 +8,6 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 import javax.xml.namespace.QName;
 
-import org.junit.Test;
-
-import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
-import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
-
-import junit.framework.Assert;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
@@ -23,6 +16,14 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryObjectListType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.ValueListType;
 
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Assert;
+import org.junit.Test;
+
+import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
+import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
+
 public class RegistryResponseParserTest {
 
 	DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmm");
@@ -30,20 +31,29 @@ public class RegistryResponseParserTest {
 	@Test
 	public void testeDoisDocumentosValidos() {
 
-		RegistryItem documentoEsperado = this.createDocumentoValido();
-		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperado);
-		response.getRegistryObjectList().getIdentifiable().add(this.buildDocumento(documentoEsperado));
+		RegistryItem documentoEsperadoUm = this.createDocumentoValido();
+		AdhocQueryResponse response = this.buildAdhocQueryResponse(documentoEsperadoUm);
+
+		RegistryItem documentoEsperadoDois = this.createDocumentoValido();
+		documentoEsperadoDois.setNomeProfissional(null);
+		documentoEsperadoDois.setNomeUnidadeSaude(null);
+		response.getRegistryObjectList().getIdentifiable().add(this.buildDocumento(documentoEsperadoDois));
 
 		RegistryResponse<RegistryItem> registryResponseEsperada = RegistryResponseParser.parse(response);
 		Assert.assertTrue(registryResponseEsperada.getItems().size() == 2);
 
 		RegistryItem documentoAtual = registryResponseEsperada.getItems().get(0);
-		Assert.assertEquals(documentoEsperado.getRepositoryUniqueId(), documentoAtual.getRepositoryUniqueId());
-		Assert.assertEquals(documentoEsperado.getDocumentUniqueId(), documentoAtual.getDocumentUniqueId());
-		Assert.assertEquals(this.dateFormat.format(documentoEsperado.getServiceStartTime()), this.dateFormat.format(documentoAtual.getServiceStartTime()));
-		Assert.assertEquals(documentoEsperado.getCnesUnidadeSaude(), documentoAtual.getCnesUnidadeSaude());
-		Assert.assertEquals(documentoEsperado.getCnsProfissional(), documentoAtual.getCnsProfissional());
-		Assert.assertEquals(documentoEsperado.getCbo(), documentoAtual.getCbo());
+		Assert.assertEquals(documentoEsperadoUm.getRepositoryUniqueId(), documentoAtual.getRepositoryUniqueId());
+		Assert.assertEquals(documentoEsperadoUm.getDocumentUniqueId(), documentoAtual.getDocumentUniqueId());
+		Assert.assertEquals(this.dateFormat.format(documentoEsperadoUm.getServiceStartTime()), this.dateFormat.format(documentoAtual.getServiceStartTime()));
+		Assert.assertEquals(documentoEsperadoUm.getCnesUnidadeSaude(), documentoAtual.getCnesUnidadeSaude());
+		Assert.assertEquals(documentoEsperadoUm.getNomeUnidadeSaude(), documentoAtual.getNomeUnidadeSaude());
+		Assert.assertEquals(documentoEsperadoUm.getCnsProfissional(), documentoAtual.getCnsProfissional());
+		Assert.assertEquals(documentoEsperadoUm.getNomeProfissional(), documentoAtual.getNomeProfissional());
+		Assert.assertEquals(documentoEsperadoUm.getCbo(), documentoAtual.getCbo());
+
+		Assert.assertNull(registryResponseEsperada.getItems().get(1).getNomeProfissional());
+		Assert.assertNull(registryResponseEsperada.getItems().get(1).getNomeUnidadeSaude());
 
 	}
 
@@ -182,7 +192,9 @@ public class RegistryResponseParserTest {
 		documentoEsperado.setDocumentUniqueId("1.42.20130403134532.123.1432167738");
 		documentoEsperado.setServiceStartTime(new Date());
 		documentoEsperado.setCnsProfissional("000000000000000");
+		documentoEsperado.setNomeProfissional("João da Silva");
 		documentoEsperado.setCnesUnidadeSaude("0123456");
+		documentoEsperado.setNomeUnidadeSaude("UBS Florianópolis");
 		documentoEsperado.setCbo("654321");
 		return documentoEsperado;
 	}
@@ -202,7 +214,7 @@ public class RegistryResponseParserTest {
 		extrinsicObjectType.getSlot().add(
 				this.createSlot("serviceStartTime", documentoItem.getServiceStartTime() != null ? this.dateFormat.format(documentoItem.getServiceStartTime()) : null));
 		extrinsicObjectType.getExternalIdentifier().add(this.createExternalIdentifier(documentoItem.getDocumentUniqueId()));
-		extrinsicObjectType.getClassification().add(this.createClassification(documentoItem.getCnesUnidadeSaude(), documentoItem.getCnsProfissional(), documentoItem.getCbo()));
+		extrinsicObjectType.getClassification().add(this.createClassification(documentoItem));
 		JAXBElement<ExtrinsicObjectType> documento = new JAXBElement<>(new QName(""), ExtrinsicObjectType.class, null, extrinsicObjectType);
 		return documento;
 	}
@@ -223,14 +235,22 @@ public class RegistryResponseParserTest {
 		return externalIdentifierType;
 	}
 
-	private ClassificationType createClassification(String authorInstitution, String authorPerson, String authorSpecialty) {
+	private ClassificationType createClassification(RegistryItem documentoItem) {
 		ClassificationType classificationType = new ClassificationType();
 		classificationType.setClassificationScheme("urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d");
 
 		List<SlotType1> slots = classificationType.getSlot();
-		slots.add(this.createSlot("authorInstitution", authorInstitution + "^"));
-		slots.add(this.createSlot("authorPerson", authorPerson + "^"));
-		slots.add(this.createSlot("authorSpecialty", authorSpecialty + "^"));
+
+		String authorInstitution = StringUtils.isNotBlank(documentoItem.getNomeUnidadeSaude()) ? documentoItem.getNomeUnidadeSaude() + "^" : "^";
+		authorInstitution = authorInstitution + (StringUtils.isNotBlank(documentoItem.getCnesUnidadeSaude()) ? documentoItem.getCnesUnidadeSaude() : "");
+
+		slots.add(this.createSlot("authorInstitution", authorInstitution));
+
+		String authorPerson = StringUtils.isNotBlank(documentoItem.getCnsProfissional()) ? documentoItem.getCnsProfissional() + "^" : "^";
+		authorPerson = authorPerson + (StringUtils.isNotBlank(documentoItem.getNomeProfissional()) ? documentoItem.getNomeProfissional() : "");
+
+		slots.add(this.createSlot("authorPerson", authorPerson));
+		slots.add(this.createSlot("authorSpecialty", documentoItem.getCbo() + "^"));
 		return classificationType;
 	}
 }
