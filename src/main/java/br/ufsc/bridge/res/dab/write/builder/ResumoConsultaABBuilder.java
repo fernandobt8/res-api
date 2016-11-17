@@ -3,10 +3,10 @@ package br.ufsc.bridge.res.dab.write.builder;
 import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilder;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.MedicoesObservacoesBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
-import br.ufsc.bridge.res.dab.write.listamedicamentos.ListaMedicamentosBuilder;
 
 public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsultaABBuilder> {
 

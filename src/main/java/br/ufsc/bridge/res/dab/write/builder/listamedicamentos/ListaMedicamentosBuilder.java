@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dab.write.listamedicamentos;
+package br.ufsc.bridge.res.dab.write.builder.listamedicamentos;
 
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 
