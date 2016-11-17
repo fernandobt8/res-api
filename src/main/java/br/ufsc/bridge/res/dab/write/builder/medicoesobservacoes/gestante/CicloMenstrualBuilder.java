@@ -11,7 +11,7 @@ public class CicloMenstrualBuilder<PARENT extends ParentArquetypeWrapper<?>> ext
 	private Date value;
 	private Date dataEvento;
 
-	public CicloMenstrualBuilder(PARENT parent, Date value, Date dataEvento) {
+	public CicloMenstrualBuilder(PARENT parent, Date dataEvento, Date value) {
 		super(parent);
 		this.value = value;
 		this.dataEvento = dataEvento;
@@ -33,7 +33,10 @@ public class CicloMenstrualBuilder<PARENT extends ParentArquetypeWrapper<?>> ext
 
 	@Override
 	public String getValue() {
-		return RDateUtil.dateToISOEHR(this.value);
+		if (this.value != null) {
+			return RDateUtil.dateToISOEHR(this.dataEvento) + this.openTagsDum() + RDateUtil.dateToISOEHR(this.value);
+		}
+		return null;
 	}
 
 	@Override
@@ -42,8 +45,4 @@ public class CicloMenstrualBuilder<PARENT extends ParentArquetypeWrapper<?>> ext
 				+ "</data><state/></Qualquer_evento_as_Point_Event></data></Ciclo_menstrual>";
 	}
 
-	@Override
-	public String getXmlContent() {
-		return this.openTags() + RDateUtil.dateToISOEHR(this.dataEvento) + this.openTagsDum() + this.getValue() + this.closeTags();
-	}
 }

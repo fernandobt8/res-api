@@ -41,8 +41,11 @@ public class PesoCorporalBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 	}
 
 	@Override
-	public String getXmlContent() {
-		return this.openTags() + RDateUtil.dateToISOEHR(this.dataEvento) + this.openTagPeso() + this.value + this.closeTags();
+	public String getValue() {
+		if (this.value != null) {
+			return RDateUtil.dateToISOEHR(this.dataEvento) + this.openTagPeso() + this.value;
+		}
+		return null;
 	}
 
 }

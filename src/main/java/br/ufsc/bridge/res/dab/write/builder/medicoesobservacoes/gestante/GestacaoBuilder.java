@@ -2,19 +2,16 @@ package br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.gestante;
 
 import java.util.Date;
 
-import lombok.Getter;
-
 import br.ufsc.bridge.res.dab.write.builder.base.ArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.util.RDateUtil;
 
-@Getter
 public class GestacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ArquetypeWrapper<PARENT> {
 
 	private String value;
 	private Date dataMedida;
 
-	public GestacaoBuilder(PARENT parent, String idadeGestacional, Date dataMedida) {
+	public GestacaoBuilder(PARENT parent, Date dataMedida, String idadeGestacional) {
 		super(parent);
 		this.value = idadeGestacional;
 		this.dataMedida = dataMedida;
@@ -39,7 +36,10 @@ public class GestacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> extends A
 	}
 
 	@Override
-	public String getXmlContent() {
-		return this.openTags() + RDateUtil.dateToISOEHR(this.dataMedida) + this.openTagsIdade() + this.getValue() + this.closeTags();
+	public String getValue() {
+		if (this.value != null) {
+			return RDateUtil.dateToISOEHR(this.dataMedida) + this.openTagsIdade() + this.value;
+		}
+		return null;
 	}
 }

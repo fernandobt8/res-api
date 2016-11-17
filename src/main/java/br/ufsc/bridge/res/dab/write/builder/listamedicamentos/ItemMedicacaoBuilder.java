@@ -60,15 +60,6 @@ public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 				+ "<value>Duração do tratamento</value></name><value><oe:value>";
 	}
 
-	private String openTagsDescricaoDetalheProcessoMedicacao() {
-		return "</oe:value></value></Duração_do_tratamento></Dose_estruturada><Detalhes_do_processo_medicação><name><value>Detalhes do processo medicação</value>"
-				+ "</name><Estado_do_medicamento><name><value>Estado do medicamento</value></name><value><defining_code><terminology_id><value>";
-	}
-
-	private String openTagsCodigoDetalheProcessoMedicacao() {
-		return "</value></terminology_id><code_string>";
-	}
-
 	@Override
 	protected String openTags() {
 		return "<Linha_de_Medicação><name><value>Linha de Medicação</value></name><language><terminology_id><value>ISO_639-1</value></terminology_id>"

@@ -41,8 +41,11 @@ public class AlturaComprimentoBuilder<PARENT extends ParentArquetypeWrapper<?>> 
 	}
 
 	@Override
-	public String getXmlContent() {
-		return this.openTags() + RDateUtil.dateToISOEHR(this.dataEvento) + this.openTagAltura() + this.value + this.closeTags();
+	public String getValue() {
+		if (this.value != null) {
+			return RDateUtil.dateToISOEHR(this.dataEvento) + this.openTagAltura() + this.value;
+		}
+		return null;
 	}
 
 }
