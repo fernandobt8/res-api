@@ -6,7 +6,6 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
@@ -15,6 +14,7 @@ import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilde
 import br.ufsc.bridge.res.dab.write.builder.alergia.RiscoReacaoAdversaBuilder;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.desfecho.DadosDesfechoBuilder;
+import br.ufsc.bridge.res.dab.write.builder.desfecho.SolicitacoesEncaminhamentoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
@@ -49,6 +49,8 @@ public class ResABResumoConsulta {
 	private List<ResABCondutaEnum> condutas = new ArrayList<>();
 
 	private List<ResABMedicamento> medicamentos = new ArrayList<>();
+
+	private List<String> encaminhamentos = new ArrayList<>();
 
 	public String getXml() {
 		ResumoConsultaABBuilder abBuilder = new ResumoConsultaABBuilder().data(this.dataAtendimento);
@@ -129,6 +131,11 @@ public class ResABResumoConsulta {
 			desfechoBuilder.conduta(conduta);
 		}
 
-		return "";
+		SolicitacoesEncaminhamentoBuilder<DadosDesfechoBuilder<ResumoConsultaABBuilder>> solicitacaoEncaminhamento = desfechoBuilder.solicitacoesEncaminhamento();
+		for (String encaminhamento : this.encaminhamentos) {
+				solicitacaoEncaminhamento.encaminhamento(encaminhamento);
+		}
+
+		return abBuilder.getXmlContent();
 	}
 }
