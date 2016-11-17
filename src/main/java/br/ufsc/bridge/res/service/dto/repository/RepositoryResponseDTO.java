@@ -14,7 +14,12 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RepositoryResponseDTO {
 
+	private boolean success;
 	private List<DocumentItem> documents = new ArrayList<>();
+
+	public RepositoryResponseDTO(boolean success) {
+		this.success = success;
+	}
 
 	@Getter
 	@Setter

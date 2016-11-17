@@ -10,7 +10,7 @@ import javax.xml.bind.JAXBElement;
 import lombok.extern.slf4j.Slf4j;
 
 import br.ufsc.bridge.res.service.builder.IdentifiableTypeBuilder;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryRegisterDocumentDTO;
+import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
@@ -26,7 +26,7 @@ public class DocumentParser {
 	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void parser(ProvideAndRegisterDocumentSetRequestType provideRegister, RepositoryRegisterDocumentDTO dto) {
+	public void parser(ProvideAndRegisterDocumentSetRequestType provideRegister, RepositorySaveDocumentDTO dto) {
 		String docId = "doc" + this.atomicLong.incrementAndGet();
 
 		Document document = new Document();

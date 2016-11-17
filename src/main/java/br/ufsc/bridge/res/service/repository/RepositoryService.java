@@ -7,13 +7,14 @@ import lombok.extern.slf4j.Slf4j;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.header.RepositoryHeader;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryRegisterDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryRegisterDocumentDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter.DocumentItemFilter;
+import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO.DocumentItem;
+import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
+import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.service.repository.parser.DocumentParser;
 import br.ufsc.bridge.res.service.repository.parser.SubmissionSetParser;
+import br.ufsc.bridge.res.util.ResLogError;
 
 import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
 import ihe.iti.xds_b._2007.DocumentRepositoryService;
@@ -34,11 +35,14 @@ public class RepositoryService {
 	private DocumentRepositoryPortType portSoap12;
 	private SubmissionSetParser submissionSetParser;
 	private DocumentParser documentParser;
+	private ResLogError printerResponseError;
 
 	public RepositoryService(Credential c) {
 		this.submissionSetParser = new SubmissionSetParser();
 
 		this.documentParser = new DocumentParser();
+
+		this.printerResponseError = new ResLogError();
 
 		DocumentRepositoryService repositoryService = new DocumentRepositoryService();
 		repositoryService.setHandlerResolver(new RepositoryHeader(c));
@@ -56,11 +60,16 @@ public class RepositoryService {
 			retrieveDocumentRequest.getDocumentRequest().add(documentRequest);
 		}
 
-		RetrieveDocumentSetResponseType response = this.portSoap12.documentRepositoryRetrieveDocumentSet(retrieveDocumentRequest);
-
-		RepositoryResponseDTO responseDTO = new RepositoryResponseDTO();
+		RetrieveDocumentSetResponseType response = null;
+		try {
+			response = this.portSoap12.documentRepositoryRetrieveDocumentSet(retrieveDocumentRequest);
+		} catch (Exception e) {
+			log.error("erro no request", e);
+			return new RepositoryResponseDTO(false);
+		}
 
 		if (response.getRegistryResponse().getStatus().equals(SUCCESS)) {
+			RepositoryResponseDTO responseDTO = new RepositoryResponseDTO(true);
 			for (DocumentResponse documentResponse : response.getDocumentResponse()) {
 				DocumentItem documentItem = new DocumentItem();
 				documentItem.setRepositoryUniqueId(documentResponse.getRepositoryUniqueId());
@@ -72,14 +81,14 @@ public class RepositoryService {
 				}
 				responseDTO.getDocuments().add(documentItem);
 			}
+			return responseDTO;
 		} else {
-			log.error("erro no request");
+			this.printerResponseError.printLogError(response.getRegistryResponse().getRegistryErrorList());
+			return new RepositoryResponseDTO(false);
 		}
-
-		return responseDTO;
 	}
 
-	public void save(RepositoryRegisterDTO dto) {
+	public boolean save(RepositorySaveDTO dto) {
 		ProvideAndRegisterDocumentSetRequestType provideRegister = new ProvideAndRegisterDocumentSetRequestType();
 
 		SubmitObjectsRequest objectRequest = new SubmitObjectsRequest();
@@ -89,11 +98,23 @@ public class RepositoryService {
 
 		this.submissionSetParser.parser(dto, provideRegister);
 
-		for (RepositoryRegisterDocumentDTO documentDTO : dto.getDocuments()) {
+		for (RepositorySaveDocumentDTO documentDTO : dto.getDocuments()) {
 			this.documentParser.parser(provideRegister, documentDTO);
 		}
 
-		RegistryResponseType response = this.portSoap12.documentRepositoryProvideAndRegisterDocumentSetB(provideRegister);
-		System.out.println(response.getStatus());
+		RegistryResponseType response = null;
+		try {
+			response = this.portSoap12.documentRepositoryProvideAndRegisterDocumentSetB(provideRegister);
+		} catch (Exception e) {
+			log.error("erro no request", e);
+			return false;
+		}
+
+		if (response.getStatus().equals(SUCCESS)) {
+			return true;
+		} else {
+			this.printerResponseError.printLogError(response.getRegistryErrorList());
+			return false;
+		}
 	}
 }
