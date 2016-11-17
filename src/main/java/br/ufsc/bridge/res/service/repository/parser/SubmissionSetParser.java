@@ -19,7 +19,7 @@ public class SubmissionSetParser {
 	public void parser(RepositoryRegisterDTO dto, ProvideAndRegisterDocumentSetRequestType provideRegister) {
 		List<JAXBElement<?>> identifiables = (List) provideRegister.getSubmitObjectsRequest().getRegistryObjectList().getIdentifiable();
 
-		String creationTime = RDateUtil.fromDate(new Date());
+		String creationTime = RDateUtil.dateToISOXDSb(new Date());
 		//@formatter:off
 		new IdentifiableTypeBuilder(identifiables)
 		.buildClassification()
