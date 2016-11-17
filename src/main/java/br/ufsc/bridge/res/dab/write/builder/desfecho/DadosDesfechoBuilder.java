@@ -24,7 +24,12 @@ public class DadosDesfechoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 		return "</data></Desfecho__fslash__alta_do_contato_assistencial></Dados_do_desfecho>";
 	}
 
-	public CondutaBuilder<DadosDesfechoBuilder<PARENT>> conduta(ResABCondutaEnum conduta) {
-		return new CondutaBuilder<>(this, conduta);
+	public DadosDesfechoBuilder<PARENT> conduta(ResABCondutaEnum conduta) {
+		new CondutaBuilder<>(this, conduta);
+		return this;
+	}
+
+	public SolicitacoesEncaminhamentoBuilder<DadosDesfechoBuilder<PARENT>> solicitacoesEncaminhamento() {
+		return new SolicitacoesEncaminhamentoBuilder<>(this);
 	}
 }
