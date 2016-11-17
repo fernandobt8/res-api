@@ -98,7 +98,14 @@ public class ResumoConsultaABTest {
 			.close()
 			.dadosDesfecho()
 				.conduta(ResABCondutaEnum.AGENDAMENTO_PARA_GRUPOS)
-				;
+				.solicitacoesEncaminhamento()
+					.encaminhamento("Interno no dia I")
+					.encaminhamento("Interno no dia II")
+				.close()
+				.solicitacoesEncaminhamento()
+					.encaminhamento("Testes II")
+				.close()
+			.close();
 		System.out.println(abBuilder.getXmlContent());
 
 
