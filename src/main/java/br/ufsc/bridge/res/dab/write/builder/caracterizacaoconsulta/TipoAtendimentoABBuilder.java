@@ -25,7 +25,10 @@ public class TipoAtendimentoABBuilder<PARENT extends ParentArquetypeWrapper<?>> 
 
 	@Override
 	public String getValue() {
-		return this.tipoAtendimento.getCodigo();
+		if (this.tipoAtendimento != null) {
+			return this.tipoAtendimento.getCodigo();
+		}
+		return null;
 	}
 
 }

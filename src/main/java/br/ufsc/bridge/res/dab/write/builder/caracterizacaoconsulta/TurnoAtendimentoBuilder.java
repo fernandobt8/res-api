@@ -22,7 +22,10 @@ public class TurnoAtendimentoBuilder<PARENT extends ParentArquetypeWrapper<?>> e
 
 	@Override
 	public String getValue() {
-		return this.value.getCodigo();
+		if (this.value != null) {
+			return this.value.getCodigo();
+		}
+		return null;
 	}
 
 	@Override

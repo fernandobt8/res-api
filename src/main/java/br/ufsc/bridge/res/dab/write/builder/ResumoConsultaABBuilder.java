@@ -73,10 +73,10 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 	public DadosDesfechoBuilder<ResumoConsultaABBuilder> dadosDesfecho() {
 		return new DadosDesfechoBuilder<>(this);
 	}
-
+	
 	@Override
 	public String getValue() {
-		return RDateUtil.dateToISOEHR(this.data) + this.closeTagsData() + super.getValue();
-
+		return RDateUtil.dateToISOEHR(data) + closeTagsData() + super.getValue();
+		
 	}
 }

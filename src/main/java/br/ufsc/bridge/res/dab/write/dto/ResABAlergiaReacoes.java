@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.write.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
@@ -13,5 +14,5 @@ public class ResABAlergiaReacoes {
 	private String agente;
 	private ResABGravidadeEnum gravidade;
 	private String categoria;
-	private List<ResABEventoReacao> eventoReacao;
+	private List<ResABEventoReacao> eventoReacao = new ArrayList<>();
 }
