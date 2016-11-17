@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.write;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import org.junit.Test;
@@ -39,12 +40,42 @@ public class ResumoConsultaABTest {
 					.sumarioObstetrico("asdf", "fdas")
 				.close()
 
-			.close()
+			.close();
+
+			abBuilder
+				.procedimentosPequenasCirurgias()
+					.procedimento()
+						.nome("CONSULTA MEDICA EM ATENÇAO BASICA")
+						.data(new Date())
+						.codigo("0301010064")
+						.resultadoObservacoes(Arrays.asList("nada consta"))
+					.close()
+					.procedimento()
+						.nome("AVALIAÇÃO ANTROPOMÉTRICA")
+						.data(new Date())
+						.codigo("122869004")
+						.resultadoObservacoes(Arrays.asList("nada consta1","nada consta2","nada consta3"))
+					.close();
+
+			abBuilder
+				.listaMedicamentos()
+					.itemMedicacao()
+						.medicamento("LAMIVUDINA 10 mg solução oral", "BR0328810")
+						.formaFarmaceutica("LAMIVUDINA 10 mg solução oral", "BR0328810")
+						.viaAdministracao("Oral", "25")
+						.dose("1 comp 30 min antes do almoço")
+						.doseEstruturada("P30D")
+					.close()
+					.itemMedicacao()
+						.medicamento("LERCANIDIPINO 10 mg comprimido", "BR0272229")
+						.formaFarmaceutica("LERCANIDIPINO 10 mg comprimido", "BR0272229")
+						.viaAdministracao("Oral", "25")
+						.dose("1 comp 30 min antes do almoço")
+						.doseEstruturada("P30D");
 
 				;
 		System.out.println(abBuilder.getXmlContent());
 
 
 	}
-
 }
