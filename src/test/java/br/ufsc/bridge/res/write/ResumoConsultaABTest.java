@@ -5,10 +5,11 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
-import br.ufsc.bridge.res.dab.write.ResumoConsultaABBuilder;
-import br.ufsc.bridge.res.dab.write.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 
 public class ResumoConsultaABTest {
 
@@ -40,10 +41,47 @@ public class ResumoConsultaABTest {
 					.sumarioObstetrico("asdf", "fdas")
 				.close()
 
-			.close();
-
-			abBuilder
-				.procedimentosPequenasCirurgias()
+			.close()
+				.problemaDiagnostico()
+					.problema()
+						.descricao("fdp2")
+						.tipo("wtf2")
+						.codigo("madafaka2")
+					.close()
+				.close()
+			.alergiaReacaoAdversa()
+				.alergia()
+					.agente("porcaria")
+					.categoria("filha da putagem")
+					.gravidade(ResABGravidadeEnum.ALTO)
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien")
+						.manifestacao("ser saindo do embigo")
+					.close()
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien predador")
+						.manifestacao("ser saindo do embigo com cara feia")
+					.close()
+				.close()
+				.alergia()
+					.agente("porcaria")
+					.categoria("filha da putagem")
+					.gravidade(ResABGravidadeEnum.ALTO)
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien")
+						.manifestacao("ser saindo do embigo")
+					.close()
+					.eventoReacao()
+						.dataInstalacao(new Date())
+						.evolucaoAlergia("evoluiu para um alien predador")
+						.manifestacao("ser saindo do embigo com cara feia")
+					.close()
+				.close()
+			.close()
+			.procedimentosPequenasCirurgias()
 					.procedimento()
 						.nome("CONSULTA MEDICA EM ATENÇAO BASICA")
 						.data(new Date())
@@ -55,9 +93,8 @@ public class ResumoConsultaABTest {
 						.data(new Date())
 						.codigo("122869004")
 						.resultadoObservacoes(Arrays.asList("nada consta1","nada consta2","nada consta3"))
-					.close();
-
-			abBuilder
+					.close()
+				.close()
 				.listaMedicamentos()
 					.itemMedicacao()
 						.medicamento("LAMIVUDINA 10 mg solução oral", "BR0328810")
@@ -71,8 +108,10 @@ public class ResumoConsultaABTest {
 						.formaFarmaceutica("LERCANIDIPINO 10 mg comprimido", "BR0272229")
 						.viaAdministracao("Oral", "25")
 						.dose("1 comp 30 min antes do almoço")
-						.doseEstruturada("P30D");
-
+						.doseEstruturada("P30D")
+					.close()
+				.close()
+			.close()
 				;
 		System.out.println(abBuilder.getXmlContent());
 

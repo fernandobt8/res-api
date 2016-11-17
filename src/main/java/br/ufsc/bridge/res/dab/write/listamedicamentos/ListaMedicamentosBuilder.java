@@ -1,6 +1,6 @@
 package br.ufsc.bridge.res.dab.write.listamedicamentos;
 
-import br.ufsc.bridge.res.dab.write.base.ParentArquetypeWrapper;
+import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 
 public class ListaMedicamentosBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
 
