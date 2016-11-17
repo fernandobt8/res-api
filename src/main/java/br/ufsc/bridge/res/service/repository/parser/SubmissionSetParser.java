@@ -37,7 +37,7 @@ public class SubmissionSetParser {
 				.id("sscl2")
 				.nodeRepresentation("")
 				.buildSlot()
-					.name("authorPerson").value(dto.getCnsPaciente() + "^^^^^^^^&1.2.840.113619.6.197&ISO")
+					.name("authorPerson").value(dto.getCnsProfissional() + "^^^^^^^^&1.2.840.113619.6.197&ISO")
 				.addSlot()
 				    .name("authorInstitution").value(dto.getNomeUnidadeSaude() + "^^^^^&1.2.3.4.5.678&ISO^^^^" + dto.getCnesUnidadeSaude())
 			    .addSlot()
