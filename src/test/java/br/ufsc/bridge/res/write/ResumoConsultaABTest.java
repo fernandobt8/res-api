@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
@@ -14,7 +15,7 @@ public class ResumoConsultaABTest {
 
 	@Test
 	public void test2() {
-		ResumoConsultaABBuilder abBuilder = new ResumoConsultaABBuilder();
+		ResumoConsultaABBuilder abBuilder = new ResumoConsultaABBuilder().data(new Date());
 		//@formatter:off
 		CaracterizacaoConsultaABBuilder<ResumoConsultaABBuilder> caracterizacaoConsulta = abBuilder.caracterizacaoConsulta();
 		caracterizacaoConsulta
@@ -83,6 +84,9 @@ public class ResumoConsultaABTest {
 						.manifestacao("ser saindo do embigo com cara feia")
 					.close()
 				.close()
+			.close()
+			.dadosDesfecho()
+				.conduta(ResABCondutaEnum.AGENDAMENTO_PARA_GRUPOS)
 
 
 
