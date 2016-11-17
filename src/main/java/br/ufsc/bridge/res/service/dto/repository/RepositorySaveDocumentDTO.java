@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RepositoryRegisterDocumentDTO {
+public class RepositorySaveDocumentDTO {
 
 	private Date dataInicioAtendimento;
 	private Date dataFimAtendimento;

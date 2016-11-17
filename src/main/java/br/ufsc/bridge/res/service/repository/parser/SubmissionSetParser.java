@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import br.ufsc.bridge.res.service.builder.IdentifiableTypeBuilder;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryRegisterDTO;
+import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
@@ -16,7 +16,7 @@ public class SubmissionSetParser {
 	public static String SUBMISSIONSET_ID = "ss1";
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public void parser(RepositoryRegisterDTO dto, ProvideAndRegisterDocumentSetRequestType provideRegister) {
+	public void parser(RepositorySaveDTO dto, ProvideAndRegisterDocumentSetRequestType provideRegister) {
 		List<JAXBElement<?>> identifiables = (List) provideRegister.getSubmitObjectsRequest().getRegistryObjectList().getIdentifiable();
 
 		String creationTime = RDateUtil.dateToISOXDSb(new Date());

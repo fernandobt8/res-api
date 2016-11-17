@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
 @NoArgsConstructor
-public abstract class ArquetypeWrapper<PARENT extends ParentArquetypeWrapper> {
+public abstract class ArquetypeWrapper<PARENT extends ParentArquetypeWrapper<?>> {
 
 	protected PARENT parent;
 

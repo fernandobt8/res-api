@@ -6,7 +6,7 @@ import java.util.List;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
-public abstract class ParentArquetypeWrapper<PARENT extends ParentArquetypeWrapper> extends ArquetypeWrapper<PARENT> {
+public abstract class ParentArquetypeWrapper<PARENT extends ParentArquetypeWrapper<?>> extends ArquetypeWrapper<PARENT> {
 
 	protected List<ArquetypeWrapper<?>> childs = new LinkedList<>();
 

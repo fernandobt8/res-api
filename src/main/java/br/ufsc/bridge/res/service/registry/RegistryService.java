@@ -14,6 +14,7 @@ import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.ResLogError;
 
 import gov.nist.registry.ws.serviceclasses.Xdsregistryb;
 import gov.nist.registry.ws.serviceclasses.XdsregistrybPortType;
@@ -31,47 +32,55 @@ public class RegistryService {
 
 	private XdsregistrybPortType endpoint;
 
+	private ResLogError printerResponseError;
+
 	public RegistryService(Credential c) {
 		Xdsregistryb xdsregistryb = new Xdsregistryb();
 		xdsregistryb.setHandlerResolver(new RegistryHeader(c));
+
+		this.printerResponseError = new ResLogError();
 
 		this.endpoint = xdsregistryb.getXdsregistrybHttpSoap12Endpoint();
 	}
 
 	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) {
+		AdhocQueryResponse queryResponse = null;
 		try {
-			AdhocQueryResponse queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "LeafClass"));
-			if (queryResponse.getStatus().equals(SUCCESS)) {
-				return RegistryResponseParser.parse(queryResponse);
-			} else {
-				log.error("erro no request");
-				return new RegistryResponse<>(Boolean.FALSE);
-			}
+			queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "LeafClass"));
 		} catch (Exception e) {
 			log.error("erro no request", e);
+			return new RegistryResponse<>(Boolean.FALSE);
+		}
+
+		if (queryResponse.getStatus().equals(SUCCESS)) {
+			return RegistryResponseParser.parse(queryResponse);
+		} else {
+			this.printerResponseError.printLogError(queryResponse.getRegistryErrorList());
 			return new RegistryResponse<>(Boolean.FALSE);
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
 	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) {
+		AdhocQueryResponse queryResponse = null;
 		try {
-			AdhocQueryResponse queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "ObjectRef"));
-			if (queryResponse.getStatus().equals(SUCCESS)) {
-				ArrayList<String> uuids = new ArrayList<>();
-				for (JAXBElement jaxbElement : queryResponse.getRegistryObjectList().getIdentifiable()) {
-					Object value = jaxbElement.getValue();
-					if (value instanceof ObjectRefType) {
-						uuids.add(((ObjectRefType) value).getId());
-					}
-				}
-				return new RegistryResponse<>(true, uuids);
-			} else {
-				log.error("erro no request");
-				return new RegistryResponse<>(Boolean.FALSE);
-			}
+			queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "ObjectRef"));
 		} catch (Exception e) {
 			log.error("erro no request", e);
+			return new RegistryResponse<>(Boolean.FALSE);
+		}
+
+		if (queryResponse.getStatus().equals(SUCCESS)) {
+			ArrayList<String> uuids = new ArrayList<>();
+			for (JAXBElement jaxbElement : queryResponse.getRegistryObjectList().getIdentifiable()) {
+				Object value = jaxbElement.getValue();
+				if (value instanceof ObjectRefType) {
+					uuids.add(((ObjectRefType) value).getId());
+				}
+			}
+			return new RegistryResponse<>(true, uuids);
+		} else {
+			this.printerResponseError.printLogError(queryResponse.getRegistryErrorList());
 			return new RegistryResponse<>(Boolean.FALSE);
 		}
 	}

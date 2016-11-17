@@ -7,7 +7,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class RepositoryRegisterDTO {
+public class RepositorySaveDTO {
 
 	private String cnsProfissional;
 	private String cboProfissional;
@@ -18,6 +18,6 @@ public class RepositoryRegisterDTO {
 	private String idInstalacao;
 	private String submissionSetId;
 
-	private List<RepositoryRegisterDocumentDTO> documents;
+	private List<RepositorySaveDocumentDTO> documents;
 
 }
