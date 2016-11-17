@@ -5,7 +5,6 @@ import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
-
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
 
@@ -37,4 +36,6 @@ public class ResABResumoConsulta {
 	private List<ResABProcedimento> procedimentos;
 
 	private List<ResABCondutaEnum> conduta;
+
+	private List<ResABMedicamento> medicamentos;
 }
