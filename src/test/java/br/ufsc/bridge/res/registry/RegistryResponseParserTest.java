@@ -192,7 +192,7 @@ public class RegistryResponseParserTest {
 		documentoEsperado.setDocumentUniqueId("1.42.20130403134532.123.1432167738");
 		documentoEsperado.setServiceStartTime(new Date());
 		documentoEsperado.setCnsProfissional("000000000000000");
-		documentoEsperado.setNomeProfissional("João da Silva");
+		documentoEsperado.setNomeProfissional("João Maria Silva");
 		documentoEsperado.setCnesUnidadeSaude("0123456");
 		documentoEsperado.setNomeUnidadeSaude("UBS Florianópolis");
 		documentoEsperado.setCbo("654321");
@@ -247,7 +247,11 @@ public class RegistryResponseParserTest {
 		slots.add(this.createSlot("authorInstitution", authorInstitution));
 
 		String authorPerson = StringUtils.isNotBlank(documentoItem.getCnsProfissional()) ? documentoItem.getCnsProfissional() + "^" : "^";
-		authorPerson = authorPerson + (StringUtils.isNotBlank(documentoItem.getNomeProfissional()) ? documentoItem.getNomeProfissional() : "");
+		if (StringUtils.isNotBlank(documentoItem.getNomeProfissional())) {
+			String[] values = documentoItem.getNomeProfissional().split(" ");
+			String nomeProf = values[2] + "^" + values[0] + "^" + values[1];
+			authorPerson = authorPerson + nomeProf;
+		}
 
 		slots.add(this.createSlot("authorPerson", authorPerson));
 		slots.add(this.createSlot("authorSpecialty", documentoItem.getCbo() + "^"));
