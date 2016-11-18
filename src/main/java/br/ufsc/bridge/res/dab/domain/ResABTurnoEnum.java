@@ -13,4 +13,13 @@ public enum ResABTurnoEnum {
 
 	private String codigo;
 
+	public static ResABTurnoEnum getByCodigo(String codigo) {
+		for (ResABTurnoEnum value : values()) {
+			if (value.getCodigo().equals(codigo)) {
+				return value;
+			}
+		}
+		return null;
+	}
+
 }

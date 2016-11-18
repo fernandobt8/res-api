@@ -14,4 +14,12 @@ public enum ResABTipoAtendimentoEnum {
 
 	private String codigo;
 
+	public static ResABTipoAtendimentoEnum getByCodigo(String codigo) {
+		for (ResABTipoAtendimentoEnum value : values()) {
+			if (value.getCodigo().equals(codigo)) {
+				return value;
+			}
+		}
+		return null;
+	}
 }

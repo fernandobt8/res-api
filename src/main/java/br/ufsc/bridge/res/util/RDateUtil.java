@@ -7,6 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
+import org.joda.time.format.ISODateTimeFormat;
 
 public class RDateUtil {
 
@@ -78,7 +79,13 @@ public class RDateUtil {
 		if (date != null) {
 			return new DateTime(date.getTime()).toString(patternFormat);
 		}
+		return null;
+	}
 
+	public static Date isoEHRToDate(String date) {
+		if (StringUtils.isNotBlank(date)) {
+			return new Date(ISODateTimeFormat.dateTimeParser().parseMillis(date));
+		}
 		return null;
 	}
 }

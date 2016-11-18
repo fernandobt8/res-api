@@ -10,4 +10,13 @@ public enum ResABGravidadeEnum {
 	ALTO("at0103");
 
 	private String codigo;
+
+	public static ResABGravidadeEnum getByCodigo(String codigo) {
+		for (ResABGravidadeEnum value : values()) {
+			if (value.getCodigo().equals(codigo)) {
+				return value;
+			}
+		}
+		return null;
+	}
 }
