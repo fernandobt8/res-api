@@ -28,7 +28,6 @@ public class ResABResumoConsulta {
 	private ResABTipoAtendimentoEnum tipoAtendimento;
 	private String cnes;
 	private String ine;
-	private Date dataAdmissao;
 	private ResABTurnoEnum turno;
 	private List<ResABIdentificacaoProfissional> profissionais;
 
@@ -70,24 +69,24 @@ public class ResABResumoConsulta {
 
 		caracterizacaoConsulta
 			.ine(this.ine)
-			.dataHoraAdmissao(this.dataAdmissao)
+			.dataHoraAdmissao(this.dataAtendimento)
 			.turnoAtendimento(this.turno)
 		.close()
 		.medicoesObservacoes()
 			.avaliacaoAntropometrica()
-				.pesoCorporal(this.dataAdmissao, this.peso)
-				.altura(this.dataAdmissao, this.altura)
+				.pesoCorporal(this.dataAtendimento, this.peso)
+				.altura(this.dataAtendimento, this.altura)
 			.close()
 			.gestante()
-				.cicloMenstrual(this.dataAdmissao, this.dum)
-				.gestacao(this.dataAdmissao, this.idadeGestacional)
+				.cicloMenstrual(this.dataAtendimento, this.dum)
+				.gestacao(this.dataAtendimento, this.idadeGestacional)
 				.sumarioObstetrico(this.gestasPrevias, this.partos);
 
 		ProblemaDiagnosticoAvaliadoBuilder<ResumoConsultaABBuilder> diagnosticoAvaliadoBuilder = abBuilder.problemaDiagnostico();
 		for (ResABProblemaDiagnostico diagnostico : this.problemaDiagnostico) {
 			diagnosticoAvaliadoBuilder.problema()
 				.descricao(diagnostico.getDescricao())
-				.tipo(diagnostico.getTipo())
+				.tipo(diagnostico.getTipo().getDescricao())
 				.codigo(diagnostico.getCodigo());
 		}
 
@@ -111,7 +110,7 @@ public class ResABResumoConsulta {
 		for (ResABProcedimento procedimento : this.procedimentos) {
 			procedimentosBuilder.procedimento()
 				.nome(procedimento.getNome())
-				.data(this.dataAdmissao)
+				.data(this.dataAtendimento)
 				.codigo(procedimento.getCodigo())
 				.resultadoObservacoes(procedimento.getResultadoObservacoes());
 		}
@@ -137,5 +136,10 @@ public class ResABResumoConsulta {
 		}
 
 		return abBuilder.getXmlContent();
+	}
+
+	public void setDataAtendimento(Date dataAtendimento) {
+		this.dataAtendimento = dataAtendimento;
+		this.turno = ResABTurnoEnum.getTurnoByHora(dataAtendimento);
 	}
 }
