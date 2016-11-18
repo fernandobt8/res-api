@@ -208,8 +208,14 @@ public class RegistryResponseParser {
 
 	private static String filtertNomeProfissional(String nomeProfissional) {
 		if (StringUtils.isNotBlank(nomeProfissional) && nomeProfissional.contains("^")) {
-			nomeProfissional = nomeProfissional.substring(nomeProfissional.lastIndexOf("^") + 1, nomeProfissional.length());
-			return StringUtils.isNotBlank(nomeProfissional) ? nomeProfissional : null;
+
+			String[] values = nomeProfissional.split("\\^");
+
+			String nome = values.length >= 3 ? values[2] : "";
+			String segundoNome = values.length >= 4 ? values[3] : "";
+			String ultimoNome = values.length >= 2 ? values[1] : "";
+			nomeProfissional = nome + " " + segundoNome + " " + ultimoNome;
+			return StringUtils.isNotBlank(nomeProfissional) ? nomeProfissional.trim() : null;
 		}
 		return null;
 	}
