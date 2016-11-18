@@ -18,7 +18,6 @@ import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
-import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
 import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
@@ -85,11 +84,7 @@ public class ResABResumoConsulta {
 			this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
 
 			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Identificação_do_profissional")) {
-				ResABIdentificacaoProfissional profissional = new ResABIdentificacaoProfissional();
-				profissional.setCns(xPathprofissional.getString("./CNS/value/value"));
-				profissional.setCbo(xPathprofissional.getString("./CBO/value/value"));
-				profissional.setResponsavel(xPathprofissional.getBoolean("./É_o_responsável_pelo_atendimento_quest_/value/value"));
-				this.profissionais.add(profissional);
+				this.profissionais.add(new ResABIdentificacaoProfissional(xPathprofissional));
 			}
 
 			XPathFactoryAssist xPathMedicoes = xPathRoot.getXPathAssist("//Medições_e_observações");
@@ -106,54 +101,22 @@ public class ResABResumoConsulta {
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas__fslash__diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema__fslash_Diagnóstico")) {
-				ResABProblemaDiagnostico diagnostico = new ResABProblemaDiagnostico();
-				diagnostico.setCodigo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/code_string"));
-				diagnostico.setDescricao(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/value"));
-				diagnostico.setTipo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/terminology_id/value"));
-				this.problemasDiagnosticos.add(diagnostico);
+				this.problemasDiagnosticos.add(new ResABProblemaDiagnostico(xPathDiagnostico));
 			}
 
 			XPathFactoryAssist xPathAlergias = xPathRoot.getXPathAssist("//Alergias_e_reações_adversas");
 			for (XPathFactoryAssist xPathAlergia : xPathAlergias.iterable(".//Risco_de_Reação_Adversa")) {
-				ResABAlergiaReacoes alergia = new ResABAlergiaReacoes();
-				alergia.setAgente(xPathAlergia.getString("./data/Agente__fslash__substância_específica/value/value"));
-				alergia.setCategoria(xPathAlergia.getString("./data/Categoria_do_agente_causador_da_alergia__fslash__reação_adversa/value/value"));
-				alergia.setGravidade(ResABGravidadeEnum.getByCodigo(xPathAlergia.getString("./data/Gravidade/value/defining_code/code_string")));
-
-				for (XPathFactoryAssist xPathEvento : xPathAlergia.iterable(".//Evento_da_reação")) {
-					ResABEventoReacao evento = new ResABEventoReacao();
-					evento.setDataInstalacao(xPathEvento.getDate("./Data_da_instalação_da_alergia__fslash__reação_adversa/value/value"));
-					evento.setEvolucaoAlergia(xPathEvento.getString("./Evolução_da_alergia__fslash__reação_adversa/value/value"));
-					evento.setManifestacao(xPathEvento.getString("./Manifestação/value/value"));
-					alergia.getEventoReacao().add(evento);
-				}
-				this.alergias.add(alergia);
+				this.alergias.add(new ResABAlergiaReacoes(xPathAlergia));
 			}
 
 			XPathFactoryAssist xPathProcedimentos = xPathRoot.getXPathAssist("//Procedimentos_ou_pequenas_cirurgias");
 			for (XPathFactoryAssist xPathProcedimento : xPathProcedimentos.iterable(".//Procedimento")) {
-				ResABProcedimento procedimento = new ResABProcedimento();
-				procedimento.setCodigo(xPathProcedimento.getString("./description/Procedimento_realizado/value/defining_code/code_string"));
-				procedimento.setNome(xPathProcedimento.getString("./description/Procedimento_realizado/value/value"));
-
-				for (XPathFactoryAssist xPathResultado : xPathProcedimento.iterable(".//description/Resultado_e_fslash_ou_observações_do_procedimento_ou_pequena_cirurgia")) {
-					procedimento.getResultadoObservacoes().add(xPathResultado.getString("./value/value"));
-				}
-				this.procedimentos.add(procedimento);
+				this.procedimentos.add(new ResABProcedimento(xPathProcedimento));
 			}
 
 			XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Lista_de_medicamentos");
 			for (XPathFactoryAssist xPathMedicamento : xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Item_de_medicação")) {
-				ResABMedicamento medicamento = new ResABMedicamento();
-				medicamento.setNomeMedicamento(xPathMedicamento.getString("./Medicamento/value/value"));
-				medicamento.setCodigoMedicamentoCatmat(xPathMedicamento.getString("./Medicamento/value/defining_code/code_string"));
-				medicamento.setDescricaoFormaFarmaceutica(xPathMedicamento.getString("./Forma_farmacêutica/value/value"));
-				medicamento.setCodigoFormaFarmaceutica(xPathMedicamento.getString("./Forma_farmacêutica/value/defining_code/code_string"));
-				medicamento.setDescricaoViaAdministracao(xPathMedicamento.getString("./Via_de_administração/value/value"));
-				medicamento.setCodigoViaAdministracao(xPathMedicamento.getString("./Via_de_administração/value/defining_code/code_string"));
-				medicamento.setDescricaoDose(xPathMedicamento.getString("./Dose/value/value"));
-				medicamento.setCodigoDoseEstruturada(xPathMedicamento.getString("./Dose_estruturada/Duração_do_tratamento/value/value"));
-				this.medicamentos.add(medicamento);
+				this.medicamentos.add(new ResABMedicamento(xPathMedicamento));
 			}
 
 			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
