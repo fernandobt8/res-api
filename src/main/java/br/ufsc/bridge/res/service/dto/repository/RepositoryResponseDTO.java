@@ -27,7 +27,7 @@ public class RepositoryResponseDTO {
 	@NoArgsConstructor
 	public static class DocumentItem {
 		private String repositoryUniqueId;
-		private String docucumentUniqueId;
+		private String documentUniqueId;
 		private String document;
 	}
 }

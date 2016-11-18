@@ -55,7 +55,7 @@ public class ResABResumoConsulta {
 	private String gestasPrevias;
 	private String partos;
 
-	private List<ResABProblemaDiagnostico> problemaDiagnostico = new ArrayList<>();
+	private List<ResABProblemaDiagnostico> problemasDiagnosticos = new ArrayList<>();
 
 	private List<ResABAlergiaReacoes> alergias = new ArrayList<>();
 
@@ -110,7 +110,7 @@ public class ResABResumoConsulta {
 				diagnostico.setCodigo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/code_string"));
 				diagnostico.setDescricao(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/value"));
 				diagnostico.setTipo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/terminology_id/value"));
-				this.problemaDiagnostico.add(diagnostico);
+				this.problemasDiagnosticos.add(diagnostico);
 			}
 
 			XPathFactoryAssist xPathAlergias = xPathRoot.getXPathAssist("//Alergias_e_reações_adversas");
@@ -140,6 +140,20 @@ public class ResABResumoConsulta {
 					procedimento.getResultadoObservacoes().add(xPathResultado.getString("./value/value"));
 				}
 				this.procedimentos.add(procedimento);
+			}
+
+			XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Lista_de_medicamentos");
+			for (XPathFactoryAssist xPathMedicamento : xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Item_de_medicação")) {
+				ResABMedicamento medicamento = new ResABMedicamento();
+				medicamento.setNomeMedicamento(xPathMedicamento.getString("./Medicamento/value/value"));
+				medicamento.setCodigoMedicamentoCatmat(xPathMedicamento.getString("./Medicamento/value/defining_code/code_string"));
+				medicamento.setDescricaoFormaFarmaceutica(xPathMedicamento.getString("./Forma_farmacêutica/value/value"));
+				medicamento.setCodigoFormaFarmaceutica(xPathMedicamento.getString("./Forma_farmacêutica/value/defining_code/code_string"));
+				medicamento.setDescricaoViaAdministracao(xPathMedicamento.getString("./Via_de_administração/value/value"));
+				medicamento.setCodigoViaAdministracao(xPathMedicamento.getString("./Via_de_administração/value/defining_code/code_string"));
+				medicamento.setDescricaoDose(xPathMedicamento.getString("./Dose/value/value"));
+				medicamento.setCodigoDoseEstruturada(xPathMedicamento.getString("./Dose_estruturada/Duração_do_tratamento/value/value"));
+				this.medicamentos.add(medicamento);
 			}
 
 			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
@@ -186,7 +200,7 @@ public class ResABResumoConsulta {
 				.sumarioObstetrico(this.gestasPrevias, this.partos);
 
 		ProblemaDiagnosticoAvaliadoBuilder<ResumoConsultaABBuilder> diagnosticoAvaliadoBuilder = abBuilder.problemaDiagnostico();
-		for (ResABProblemaDiagnostico diagnostico : this.problemaDiagnostico) {
+		for (ResABProblemaDiagnostico diagnostico : this.problemasDiagnosticos) {
 			diagnosticoAvaliadoBuilder.problema()
 				.descricao(diagnostico.getDescricao())
 				.tipo(diagnostico.getTipo())
@@ -221,7 +235,7 @@ public class ResABResumoConsulta {
 		ListaMedicamentosBuilder<ResumoConsultaABBuilder> medicamentosBuilder = abBuilder.listaMedicamentos();
 		for (ResABMedicamento medicamento : this.medicamentos) {
 			medicamentosBuilder.itemMedicacao()
-			.medicamento(medicamento.getNomeMedicamento(), medicamento.getCodigoMedicamentoCatmat())
+				.medicamento(medicamento.getNomeMedicamento(), medicamento.getCodigoMedicamentoCatmat())
 				.formaFarmaceutica(medicamento.getDescricaoFormaFarmaceutica(), medicamento.getCodigoFormaFarmaceutica())
 				.viaAdministracao(medicamento.getDescricaoViaAdministracao(), medicamento.getCodigoViaAdministracao())
 				.dose(medicamento.getDescricaoDose())
