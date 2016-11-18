@@ -73,7 +73,7 @@ public class RepositoryService {
 			for (DocumentResponse documentResponse : response.getDocumentResponse()) {
 				DocumentItem documentItem = new DocumentItem();
 				documentItem.setRepositoryUniqueId(documentResponse.getRepositoryUniqueId());
-				documentItem.setDocucumentUniqueId(documentResponse.getDocumentUniqueId());
+				documentItem.setDocumentUniqueId(documentResponse.getDocumentUniqueId());
 				try {
 					documentItem.setDocument(new String(documentResponse.getDocument(), "UTF-8"));
 				} catch (UnsupportedEncodingException e) {
