@@ -13,4 +13,13 @@ public enum ResABCondutaEnum {
 	ALTA_DO_EPISODIO("Alta do episódio");
 
 	private String descricao;
+
+	public static ResABCondutaEnum getByCodigo(String codigo) {
+		for (ResABCondutaEnum value : values()) {
+			if (value.getDescricao().equals(codigo)) {
+				return value;
+			}
+		}
+		return null;
+	}
 }
