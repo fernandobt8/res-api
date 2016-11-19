@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import br.ufsc.bridge.res.service.builder.IdentifiableTypeBuilder;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.XDSbUtil;
 
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType.Document;
@@ -41,6 +42,7 @@ public class DocumentParser {
 
 		List<JAXBElement<?>> identifiables = (List) provideRegister.getSubmitObjectsRequest().getRegistryObjectList().getIdentifiable();
 
+		String[] nomeProf = XDSbUtil.nameToXDSbName(dto.getNomeProfissional());
 		//@formatter:off
 		new IdentifiableTypeBuilder(identifiables)
 		.buildAssociation()
@@ -78,7 +80,7 @@ public class DocumentParser {
 				.id("cl" + this.atomicLong.incrementAndGet())
 				.nodeRepresentation("")
 				.buildSlot()
-					.name("authorPerson").value(dto.getCnsProfissional() + "^^^^^^^^&1.2.840.113619.6.197&ISO")
+				.name("authorPerson").value(dto.getCnsProfissional() + "^" + nomeProf[2] + "^" + nomeProf[0] + "^" + nomeProf[1] + "^^^^^&1.2.840.113619.6.197&ISO")
 				.addSlot()
 				    .name("authorInstitution").value(dto.getNomeUnidadeSaude() + "^^^^^&1.2.3.4.5.678&ISO^^^^" + dto.getCnesUnidadeSaude())
 			    .addSlot()
