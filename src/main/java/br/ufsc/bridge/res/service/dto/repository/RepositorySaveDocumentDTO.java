@@ -15,6 +15,7 @@ public class RepositorySaveDocumentDTO {
 	private String cnsPaciente;
 
 	private String cnsProfissional;
+	private String nomeProfissional;
 	private String cboProfissional;
 	private String descricaoCboProfissional;
 	private String cnesUnidadeSaude;

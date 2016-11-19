@@ -6,17 +6,19 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import lombok.extern.slf4j.Slf4j;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.XDSbUtil;
+
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 @Slf4j
 public class RegistryResponseParser {
@@ -161,7 +163,7 @@ public class RegistryResponseParser {
 			message.append(AUTHOR_PERSON + ": '" + registry.getCnsProfissional() + "' ");
 			hasError = true;
 		}
-		registry.setNomeProfissional(filtertNomeProfissional(registry.getNomeProfissional()));
+		registry.setNomeProfissional(XDSbUtil.xdsbNameToName(registry.getNomeProfissional()));
 
 		try {
 			registry.setCbo(filtertNumberValue(registry.getCbo()));
@@ -204,20 +206,6 @@ public class RegistryResponseParser {
 		}
 
 		throw new Exception();
-	}
-
-	private static String filtertNomeProfissional(String nomeProfissional) {
-		if (StringUtils.isNotBlank(nomeProfissional) && nomeProfissional.contains("^")) {
-
-			String[] values = nomeProfissional.split("\\^");
-
-			String nome = values.length >= 3 ? values[2] : "";
-			String segundoNome = values.length >= 4 ? values[3] : "";
-			String ultimoNome = values.length >= 2 ? values[1] : "";
-			nomeProfissional = nome + " " + segundoNome + " " + ultimoNome;
-			return StringUtils.isNotBlank(nomeProfissional) ? nomeProfissional.trim() : null;
-		}
-		return null;
 	}
 
 	private static String filtertNumberValue(String value) throws Exception {
