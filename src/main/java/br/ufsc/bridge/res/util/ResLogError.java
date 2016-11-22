@@ -1,11 +1,10 @@
 package br.ufsc.bridge.res.util;
 
 import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.lang3.StringUtils;
-
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryError;
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryErrorList;
+
+import org.apache.commons.lang3.StringUtils;
 
 @Slf4j
 public class ResLogError {
