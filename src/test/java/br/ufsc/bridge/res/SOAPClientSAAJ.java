@@ -7,6 +7,7 @@ import java.util.Date;
 
 import javax.xml.bind.JAXBException;
 
+import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
@@ -88,7 +89,7 @@ public class SOAPClientSAAJ {
 		}
 	}
 
-	private static void repository(Credential credential) {
+	private static void repository(Credential credential) throws ResABXMLParserException {
 		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositoryFilter repositoryFilter = new RepositoryFilter();
@@ -100,7 +101,7 @@ public class SOAPClientSAAJ {
 		}
 	}
 
-	private static RegistryResponse registry(Credential credential) {
+	private static RegistryResponse registry(Credential credential) throws ResABXMLParserException {
 		RegistryService registryService = new RegistryService(credential);
 
 		RegistryFilter registryFilter = new RegistryFilter();

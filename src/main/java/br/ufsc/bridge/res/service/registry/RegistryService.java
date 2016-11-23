@@ -1,11 +1,19 @@
 package br.ufsc.bridge.res.service.registry;
 
+import gov.nist.registry.ws.serviceclasses.Xdsregistryb;
+import gov.nist.registry.ws.serviceclasses.XdsregistrybPortType;
+
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBElement;
 
 import lombok.extern.slf4j.Slf4j;
-
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
+import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectRefType;
+import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
@@ -13,22 +21,15 @@ import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
+import br.ufsc.bridge.res.service.repository.RepositoryService;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResLogError;
-
-import gov.nist.registry.ws.serviceclasses.Xdsregistryb;
-import gov.nist.registry.ws.serviceclasses.XdsregistrybPortType;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectRefType;
 
 @Slf4j
 public class RegistryService {
 
 	private static final String SUCCESS = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success";
-	// private static final String FAILURE = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Failure";
+	public static final String SERVICO_RES_INDISPONIVEL = "Serviço RES-nacional não disponínel. Tente novamente.";
 
 	private XdsregistrybPortType endpoint;
 
@@ -43,31 +44,31 @@ public class RegistryService {
 		this.endpoint = xdsregistryb.getXdsregistrybHttpSoap12Endpoint();
 	}
 
-	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) {
+	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) throws ResABXMLParserException {
 		AdhocQueryResponse queryResponse = null;
 		try {
 			queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "LeafClass"));
 		} catch (Exception e) {
 			log.error("erro no request", e);
-			return new RegistryResponse<>(Boolean.FALSE);
+			throw new ResABXMLParserException(SERVICO_RES_INDISPONIVEL);
 		}
 
 		if (queryResponse.getStatus().equals(SUCCESS)) {
 			return RegistryResponseParser.parse(queryResponse);
 		} else {
 			this.printerResponseError.printLogError(queryResponse.getRegistryErrorList());
-			return new RegistryResponse<>(Boolean.FALSE);
+			throw new ResABXMLParserException(queryResponse.getRegistryErrorList());
 		}
 	}
 
 	@SuppressWarnings("rawtypes")
-	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) {
+	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) throws ResABXMLParserException {
 		AdhocQueryResponse queryResponse = null;
 		try {
 			queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "ObjectRef"));
 		} catch (Exception e) {
 			log.error("erro no request", e);
-			return new RegistryResponse<>(Boolean.FALSE);
+			throw new ResABXMLParserException(RepositoryService.SERVICO_RES_INDISPONIVEL);
 		}
 
 		if (queryResponse.getStatus().equals(SUCCESS)) {
@@ -78,10 +79,10 @@ public class RegistryService {
 					uuids.add(((ObjectRefType) value).getId());
 				}
 			}
-			return new RegistryResponse<>(true, uuids);
+			return new RegistryResponse<>(uuids);
 		} else {
 			this.printerResponseError.printLogError(queryResponse.getRegistryErrorList());
-			return new RegistryResponse<>(Boolean.FALSE);
+			throw new ResABXMLParserException(queryResponse.getRegistryErrorList());
 		}
 	}
 

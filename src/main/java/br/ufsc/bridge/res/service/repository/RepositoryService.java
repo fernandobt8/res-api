@@ -1,9 +1,20 @@
 package br.ufsc.bridge.res.service.repository;
 
+import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
+import ihe.iti.xds_b._2007.DocumentRepositoryService;
+import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
+import ihe.iti.xds_b._2007.RetrieveDocumentSetRequestType;
+import ihe.iti.xds_b._2007.RetrieveDocumentSetRequestType.DocumentRequest;
+import ihe.iti.xds_b._2007.RetrieveDocumentSetResponseType;
+import ihe.iti.xds_b._2007.RetrieveDocumentSetResponseType.DocumentResponse;
+
 import java.io.UnsupportedEncodingException;
 
 import lombok.extern.slf4j.Slf4j;
-
+import oasis.names.tc.ebxml_regrep.xsd.lcm._3.SubmitObjectsRequest;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryObjectListType;
+import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
+import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.dab.exception.ResABXMLWriterException;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.header.RepositoryHeader;
@@ -16,17 +27,6 @@ import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.service.repository.parser.DocumentParser;
 import br.ufsc.bridge.res.service.repository.parser.SubmissionSetParser;
 import br.ufsc.bridge.res.util.ResLogError;
-
-import ihe.iti.xds_b._2007.DocumentRepositoryPortType;
-import ihe.iti.xds_b._2007.DocumentRepositoryService;
-import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
-import ihe.iti.xds_b._2007.RetrieveDocumentSetRequestType;
-import ihe.iti.xds_b._2007.RetrieveDocumentSetRequestType.DocumentRequest;
-import ihe.iti.xds_b._2007.RetrieveDocumentSetResponseType;
-import ihe.iti.xds_b._2007.RetrieveDocumentSetResponseType.DocumentResponse;
-import oasis.names.tc.ebxml_regrep.xsd.lcm._3.SubmitObjectsRequest;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryObjectListType;
-import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 
 @Slf4j
 public class RepositoryService {
@@ -52,7 +52,7 @@ public class RepositoryService {
 		this.portSoap12 = repositoryService.getDocumentRepositoryPortSoap12();
 	}
 
-	public RepositoryResponseDTO getDocuments(RepositoryFilter filter) {
+	public RepositoryResponseDTO getDocuments(RepositoryFilter filter) throws ResABXMLParserException {
 		RetrieveDocumentSetRequestType retrieveDocumentRequest = new RetrieveDocumentSetRequestType();
 
 		for (DocumentItemFilter document : filter.getDocuments()) {
@@ -66,8 +66,7 @@ public class RepositoryService {
 		try {
 			response = this.portSoap12.documentRepositoryRetrieveDocumentSet(retrieveDocumentRequest);
 		} catch (Exception e) {
-			log.error("erro no request", e);
-			return new RepositoryResponseDTO(false);
+			throw new ResABXMLParserException(SERVICO_RES_INDISPONIVEL);
 		}
 
 		if (response.getRegistryResponse().getStatus().equals(SUCCESS)) {
@@ -79,14 +78,14 @@ public class RepositoryService {
 				try {
 					documentItem.setDocument(new String(documentResponse.getDocument(), "UTF-8"));
 				} catch (UnsupportedEncodingException e) {
-					log.error("UTF-8 unsupported", e);
+					throw new ResABXMLParserException();
 				}
 				responseDTO.getDocuments().add(documentItem);
 			}
 			return responseDTO;
 		} else {
 			this.printerResponseError.printLogError(response.getRegistryResponse().getRegistryErrorList());
-			return new RepositoryResponseDTO(false);
+			throw new ResABXMLParserException(response.getRegistryResponse().getRegistryErrorList());
 		}
 	}
 

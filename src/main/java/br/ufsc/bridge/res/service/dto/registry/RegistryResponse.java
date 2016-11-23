@@ -14,10 +14,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class RegistryResponse<T> {
 
-	private boolean status;
 	private List<T> items = new ArrayList<>();
 
-	public RegistryResponse(boolean status) {
-		this.status = status;
-	}
 }
