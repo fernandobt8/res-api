@@ -5,8 +5,8 @@ import java.util.Date;
 import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilder;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
-import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.desfecho.DadosDesfechoBuilder;
+import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.MedicoesObservacoesBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
@@ -19,8 +19,8 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 	@Override
 	protected String openTags() {
 		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Encontro xmlns:oe=\"http://schemas.openehr.org/v1\""
-				+ "xmlns=\"http://schemas.oceanehr.com/templates\"xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
-				+ "\"xsi:schemaLocation=\"http://schemas.oceanehr.com/templates CN1.xsd\" template_id=\""
+				+ " xmlns=\"http://schemas.oceanehr.com/templates\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
+				+ "\" xsi:schemaLocation=\"http://schemas.oceanehr.com/templates CN1.xsd\" template_id=\""
 				+ "Resumo de consulta ab_CN1_v1\"><name><value>Encontro</value></name><language><terminology_id>"
 				+ "<value>ISO_639-1</value></terminology_id><code_string>pt</code_string></language><territory>"
 				+ "<terminology_id><value>ISO_3166-1</value></terminology_id><code_string>BR</code_string></territory>"
@@ -73,10 +73,10 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 	public DadosDesfechoBuilder<ResumoConsultaABBuilder> dadosDesfecho() {
 		return new DadosDesfechoBuilder<>(this);
 	}
-	
+
 	@Override
 	public String getValue() {
-		return RDateUtil.dateToISOEHR(data) + closeTagsData() + super.getValue();
-		
+		return RDateUtil.dateToISOEHR(this.data) + this.closeTagsData() + super.getValue();
+
 	}
 }

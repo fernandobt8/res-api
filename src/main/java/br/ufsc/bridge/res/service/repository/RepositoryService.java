@@ -4,6 +4,7 @@ import java.io.UnsupportedEncodingException;
 
 import lombok.extern.slf4j.Slf4j;
 
+import br.ufsc.bridge.res.dab.exception.ResABXMLWriterException;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.header.RepositoryHeader;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter;
@@ -31,6 +32,7 @@ import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryResponseType;
 public class RepositoryService {
 
 	private static final String SUCCESS = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success";
+	public static final String SERVICO_RES_INDISPONIVEL = "Serviço RES-nacional não disponínel. Tente novamente.";
 
 	private DocumentRepositoryPortType portSoap12;
 	private SubmissionSetParser submissionSetParser;
@@ -88,7 +90,7 @@ public class RepositoryService {
 		}
 	}
 
-	public boolean save(RepositorySaveDTO dto) {
+	public void save(RepositorySaveDTO dto) throws ResABXMLWriterException {
 		ProvideAndRegisterDocumentSetRequestType provideRegister = new ProvideAndRegisterDocumentSetRequestType();
 
 		SubmitObjectsRequest objectRequest = new SubmitObjectsRequest();
@@ -106,15 +108,12 @@ public class RepositoryService {
 		try {
 			response = this.portSoap12.documentRepositoryProvideAndRegisterDocumentSetB(provideRegister);
 		} catch (Exception e) {
-			log.error("erro no request", e);
-			return false;
+			throw new ResABXMLWriterException(SERVICO_RES_INDISPONIVEL);
 		}
 
-		if (response.getStatus().equals(SUCCESS)) {
-			return true;
-		} else {
+		if (!response.getStatus().equals(SUCCESS)) {
 			this.printerResponseError.printLogError(response.getRegistryErrorList());
-			return false;
+			throw new ResABXMLWriterException(response.getRegistryErrorList());
 		}
 	}
 }

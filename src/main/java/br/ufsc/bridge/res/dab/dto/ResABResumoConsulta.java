@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.dto;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,7 +14,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -68,7 +68,7 @@ public class ResABResumoConsulta {
 	public ResABResumoConsulta(String xml) throws ResABXMLParserException {
 		Document document;
 		try {
-			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(IOUtils.toInputStream(xml));
+			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			throw new ResABXMLParserException("Erro no parser do XML para document", e);
 		}

@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.service.dto.header;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -18,8 +19,6 @@ import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
 
 import lombok.extern.slf4j.Slf4j;
-
-import org.apache.commons.io.output.ByteArrayOutputStream;
 
 @Slf4j
 public class RepositoryHeader implements SOAPHandler<SOAPMessageContext>, HandlerResolver {
