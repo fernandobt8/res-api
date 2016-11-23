@@ -7,9 +7,6 @@ import java.util.Date;
 
 import javax.xml.bind.JAXBException;
 
-import org.apache.commons.io.IOUtils;
-
-import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
@@ -74,7 +71,7 @@ public class SOAPClientSAAJ {
 		documentDTO.setDataFimAtendimento(new Date());
 		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.45");
 		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc2.xml").openStream();
-		documentDTO.setDocument(IOUtils.toString(resourceAsStream));
+		// documentDTO.setDocument(IOUtils.toString(resourceAsStream));
 
 		registerDTO.getDocuments().add(documentDTO);
 		repositoryService.save(registerDTO);
@@ -84,8 +81,8 @@ public class SOAPClientSAAJ {
 		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
 
 		try {
-			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-			System.out.println(resumoConsulta.getXml());
+			// ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
+			// System.out.println(resumoConsulta.getXml());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
