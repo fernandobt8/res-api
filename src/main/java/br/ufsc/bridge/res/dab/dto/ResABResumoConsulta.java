@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathExpressionException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -32,6 +33,7 @@ import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliado
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.XPathFactoryAssist;
 
+@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor
@@ -70,7 +72,8 @@ public class ResABResumoConsulta {
 		try {
 			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
 		} catch (SAXException | IOException | ParserConfigurationException e) {
-			throw new ResABXMLParserException("Erro no parser do XML para document", e);
+			log.info("Erro no parser do XML para document", e);
+			throw new ResABXMLParserException();
 		}
 
 		XPathFactoryAssist xPathRoot = new XPathFactoryAssist(document);
@@ -126,7 +129,8 @@ public class ResABResumoConsulta {
 				this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
 			}
 		} catch (XPathExpressionException e) {
-			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
+			log.info("Erro no parser do XML para o DTO", e);
+			throw new ResABXMLParserException();
 		}
 	}
 
