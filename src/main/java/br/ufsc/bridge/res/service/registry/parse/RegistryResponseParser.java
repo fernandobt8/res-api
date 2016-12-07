@@ -6,11 +6,6 @@ import java.util.List;
 import javax.xml.bind.JAXBElement;
 
 import lombok.extern.slf4j.Slf4j;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,9 +14,16 @@ import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.XDSbUtil;
 
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
+
 @Slf4j
 public class RegistryResponseParser {
 
+	private static final String URI = "URI";
 	private static final String AUTHOR_SPECIALTY = "authorSpecialty";
 	private static final String AUTHOR_PERSON = "authorPerson";
 	private static final String AUTHOR_INSTITUTION = "authorInstitution";
@@ -125,6 +127,10 @@ public class RegistryResponseParser {
 			case AUTHOR_SPECIALTY:
 				log.debug("Parse slot " + slot.getName() + ".");
 				registryItem.setCbo(value);
+				break;
+			case URI:
+				log.debug("Parse slot " + slot.getName() + ".");
+				registryItem.setRepositoryURL(value);
 				break;
 			}
 		}

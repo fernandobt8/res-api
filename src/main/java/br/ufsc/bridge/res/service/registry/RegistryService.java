@@ -1,19 +1,14 @@
 package br.ufsc.bridge.res.service.registry;
 
-import gov.nist.registry.ws.serviceclasses.Xdsregistryb;
-import gov.nist.registry.ws.serviceclasses.XdsregistrybPortType;
-
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.xml.bind.JAXBElement;
 
 import lombok.extern.slf4j.Slf4j;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectRefType;
+
 import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
+import br.ufsc.bridge.res.http.ResHttpClient;
 import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
@@ -25,32 +20,39 @@ import br.ufsc.bridge.res.service.repository.RepositoryService;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResLogError;
 
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
+import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
+import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
+import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectRefType;
+
 @Slf4j
 public class RegistryService {
 
 	private static final String SUCCESS = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success";
 	public static final String SERVICO_RES_INDISPONIVEL = "Serviço RES-nacional não disponínel. Tente novamente.";
 
-	private XdsregistrybPortType endpoint;
-
 	private ResLogError printerResponseError;
+	private ResHttpClient httpClient;
 
 	public RegistryService(Credential c) {
-		Xdsregistryb xdsregistryb = new Xdsregistryb();
-		xdsregistryb.setHandlerResolver(new RegistryHeader(c));
-
+		this.httpClient = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:ns:AdhocQueryRequestRequest");
+		try {
+			this.httpClient.setUrl("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS");
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		this.printerResponseError = new ResLogError();
-
-		this.endpoint = xdsregistryb.getXdsregistrybHttpSoap12Endpoint();
 	}
 
 	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) throws ResABXMLParserException {
 		AdhocQueryResponse queryResponse = null;
 		try {
-			queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "LeafClass"));
+			queryResponse = this.httpClient.send(this.buildRequest(filter, "LeafClass"), AdhocQueryResponse.class);
 		} catch (Exception e) {
 			log.error("erro no request", e);
-			throw new ResABXMLParserException(SERVICO_RES_INDISPONIVEL);
+			throw new ResABXMLParserException(SERVICO_RES_INDISPONIVEL, e);
 		}
 
 		if (queryResponse.getStatus().equals(SUCCESS)) {
@@ -65,10 +67,10 @@ public class RegistryService {
 	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) throws ResABXMLParserException {
 		AdhocQueryResponse queryResponse = null;
 		try {
-			queryResponse = this.endpoint.adhocQueryRequest(this.buildRequest(filter, "ObjectRef"));
+			queryResponse = this.httpClient.send(this.buildRequest(filter, "ObjectRef"), AdhocQueryResponse.class);
 		} catch (Exception e) {
 			log.error("erro no request", e);
-			throw new ResABXMLParserException(RepositoryService.SERVICO_RES_INDISPONIVEL);
+			throw new ResABXMLParserException(RepositoryService.SERVICO_RES_INDISPONIVEL, e);
 		}
 
 		if (queryResponse.getStatus().equals(SUCCESS)) {

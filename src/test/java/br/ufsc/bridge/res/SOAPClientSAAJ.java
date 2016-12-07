@@ -7,6 +7,8 @@ import java.util.Date;
 
 import javax.xml.bind.JAXBException;
 
+import lombok.extern.slf4j.Slf4j;
+
 import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
@@ -21,6 +23,7 @@ import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.service.registry.RegistryService;
 import br.ufsc.bridge.res.service.repository.RepositoryService;
 
+@Slf4j
 public class SOAPClientSAAJ {
 
 	/**
@@ -29,18 +32,22 @@ public class SOAPClientSAAJ {
 	 * @throws IOException
 	 * @throws JAXBException
 	 */
-	public static void main(String args[]) throws Exception {
+	public static void main(String args[]) {
 		Credential credential = new Credential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
 
-		// repository(credential);
+		try {
+			repository(credential);
 
-		// registry(credential);
+			// registry(credential);
 
-		// testeXml();
+			// testeXml();
 
-		save(credential);
+			// save(credential);
 
-		// testeXml2();
+			// testeXml2();
+		} catch (Exception e) {
+			log.error("", e);
+		}
 	}
 
 	private static void save(Credential credential) throws Exception {
@@ -93,11 +100,12 @@ public class SOAPClientSAAJ {
 		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositoryFilter repositoryFilter = new RepositoryFilter();
-
+		repositoryFilter.setRepositoryURL("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RepositoryPS");
 		repositoryFilter.getDocuments().add(new DocumentItemFilter("2.16.840.1.113883.3.711.2.1.4.5.11601", "1.42.20130403134532.123.1475256277528.2"));
 
 		RepositoryResponseDTO documents = repositoryService.getDocuments(repositoryFilter);
 		for (DocumentItem item : documents.getDocuments()) {
+			System.out.println(item.getDocumentUniqueId());
 		}
 	}
 

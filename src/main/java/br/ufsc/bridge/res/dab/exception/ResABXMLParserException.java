@@ -1,8 +1,9 @@
 package br.ufsc.bridge.res.dab.exception;
 
+import br.ufsc.bridge.res.service.repository.RepositoryService;
+
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryError;
 import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryErrorList;
-import br.ufsc.bridge.res.service.repository.RepositoryService;
 
 public class ResABXMLParserException extends Exception {
 
@@ -11,12 +12,12 @@ public class ResABXMLParserException extends Exception {
 	private static final String CODIGO_ERRO_INTERNO_INSTABILIDADE_RES_NACIONAL = "BEA-380002";
 	private static final String MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL = "Ocorreu um erro inesperado ao pesquisar informações no RES-nacional.";
 
-	public ResABXMLParserException() {
-		super(MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL);
+	public ResABXMLParserException(Throwable e) {
+		super(MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL, e);
 	}
 
-	public ResABXMLParserException(String message) {
-		super(message);
+	public ResABXMLParserException(String message, Throwable e) {
+		super(message, e);
 	}
 
 	public ResABXMLParserException(RegistryErrorList registryErrorList) {

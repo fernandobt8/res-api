@@ -1,27 +1,31 @@
 package br.ufsc.bridge.res.service.dto.header;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.io.IOException;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.soap.MessageFactory;
+import javax.xml.soap.SOAPBody;
+import javax.xml.soap.SOAPConstants;
 import javax.xml.soap.SOAPElement;
-import javax.xml.soap.SOAPEnvelope;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPHeader;
-import javax.xml.ws.handler.HandlerResolver;
-import javax.xml.ws.handler.MessageContext;
-import javax.xml.ws.handler.PortInfo;
-import javax.xml.ws.handler.soap.SOAPHandler;
-import javax.xml.ws.handler.soap.SOAPMessageContext;
+import javax.xml.soap.SOAPMessage;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.w3c.dom.Document;
+
+import br.ufsc.bridge.res.http.CreateSOAPMessage;
+
 @Slf4j
-public class RepositoryHeader implements SOAPHandler<SOAPMessageContext>, HandlerResolver {
+public class RepositoryHeader implements CreateSOAPMessage {
 	private Credential c;
 
 	public RepositoryHeader(Credential c) {
@@ -29,69 +33,63 @@ public class RepositoryHeader implements SOAPHandler<SOAPMessageContext>, Handle
 	}
 
 	@Override
-	public boolean handleMessage(SOAPMessageContext context) {
-		Boolean outboundProperty = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-		if (outboundProperty.booleanValue()) {
+	public SOAPMessage create(Object data) throws SOAPException, JAXBException, ParserConfigurationException {
+		SOAPMessage message = null;
+		message = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL).createMessage();
+
+		SOAPFactory factory = SOAPFactory.newInstance();
+		String prefix = "wsse";
+		String uri = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
+		SOAPElement securityElem = factory.createElement("Security", prefix, uri);
+
+		SOAPElement tokenElem = factory.createElement("UsernameToken", prefix, uri);
+		tokenElem.addAttribute(QName.valueOf("wsu:Id"), "UsernameToken-2");
+		tokenElem.addAttribute(QName.valueOf("xmlns:wsu"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
+
+		SOAPElement aElem = factory.createElement("Username", prefix, uri);
+		aElem.addTextNode(this.c.getUsername());
+
+		SOAPElement bElem = factory.createElement("Password", prefix, uri);
+		bElem.addTextNode(this.c.getPassword());
+		bElem.addAttribute(QName.valueOf("Type"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
+
+		tokenElem.addChildElement(aElem);
+		tokenElem.addChildElement(bElem);
+		securityElem.addChildElement(tokenElem);
+
+		SOAPHeader header = message.getSOAPHeader();
+		if (header == null) {
+			header = message.getSOAPPart().getEnvelope().addHeader();
+		}
+		header.addChildElement(securityElem);
+
+		SOAPBody body = message.getSOAPBody();
+		body.addDocument(this.jaxbObjectToDocument(data));
+
+		this.addAdditionalElements(header);
+
+		if (log.isDebugEnabled()) {
 			try {
-				SOAPEnvelope envelope = context.getMessage().getSOAPPart().getEnvelope();
-				SOAPFactory factory = SOAPFactory.newInstance();
-				String prefix = "wsse";
-				String uri = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
-				SOAPElement securityElem = factory.createElement("Security", prefix, uri);
-
-				SOAPElement tokenElem = factory.createElement("UsernameToken", prefix, uri);
-				tokenElem.addAttribute(QName.valueOf("wsu:Id"), "UsernameToken-2");
-				tokenElem.addAttribute(QName.valueOf("xmlns:wsu"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
-
-				SOAPElement aElem = factory.createElement("Username", prefix, uri);
-				aElem.addTextNode(this.c.getUsername());
-
-				SOAPElement bElem = factory.createElement("Password", prefix, uri);
-				bElem.addTextNode(this.c.getPassword());
-				bElem.addAttribute(QName.valueOf("Type"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
-
-				tokenElem.addChildElement(aElem);
-				tokenElem.addChildElement(bElem);
-				securityElem.addChildElement(tokenElem);
-
-				SOAPHeader header = envelope.getHeader();
-				if (header == null) {
-					header = envelope.addHeader();
-				}
-				header.addChildElement(securityElem);
-
-				this.addAdditionalElements(header);
-
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				context.getMessage().writeTo(outputStream);
+				message.writeTo(outputStream);
 				log.debug("Soap Envelope: " + outputStream.toString("UTF-8"));
-			} catch (Exception e) {
-				log.error("Erro ao montar header soap", e);
+			} catch (IOException e) {
+				log.debug("Error debug writeTo Soap Envelope");
 			}
 		}
-		return true;
+		return message;
+	}
+
+	private Document jaxbObjectToDocument(Object data) throws JAXBException, ParserConfigurationException {
+		JAXBContext jc = JAXBContext.newInstance(data.getClass());
+
+		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+
+		Marshaller marshaller = jc.createMarshaller();
+		marshaller.marshal(data, document);
+		return document;
 	}
 
 	protected void addAdditionalElements(SOAPHeader header) throws SOAPException {
-	}
-
-	@Override
-	public Set<QName> getHeaders() {
-		return new TreeSet<>();
-	}
-
-	@Override
-	public boolean handleFault(SOAPMessageContext context) {
-		return false;
-	}
-
-	@Override
-	public void close(MessageContext context) {
-	}
-
-	@Override
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public List getHandlerChain(PortInfo portInfo) {
-		return Arrays.asList(this);
 	}
 }

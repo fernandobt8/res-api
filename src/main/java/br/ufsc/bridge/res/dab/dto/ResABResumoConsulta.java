@@ -73,7 +73,7 @@ public class ResABResumoConsulta {
 			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
 		} catch (SAXException | IOException | ParserConfigurationException e) {
 			log.info("Erro no parser do XML para document", e);
-			throw new ResABXMLParserException();
+			throw new ResABXMLParserException(e);
 		}
 
 		XPathFactoryAssist xPathRoot = new XPathFactoryAssist(document);
@@ -130,7 +130,7 @@ public class ResABResumoConsulta {
 			}
 		} catch (XPathExpressionException e) {
 			log.info("Erro no parser do XML para o DTO", e);
-			throw new ResABXMLParserException();
+			throw new ResABXMLParserException(e);
 		}
 	}
 
