@@ -5,6 +5,7 @@ import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPHeader;
+import javax.xml.soap.SOAPMessage;
 
 public class RegistryHeader extends RepositoryHeader {
 
@@ -13,16 +14,18 @@ public class RegistryHeader extends RepositoryHeader {
 	}
 
 	@Override
-	protected void addAdditionalElements(SOAPHeader header) throws SOAPException {
+	protected void addAdditionalElements(SOAPMessage message) throws SOAPException {
+		String envelopePrefix = message.getSOAPPart().getEnvelope().getPrefix();
+
 		SOAPFactory factory = SOAPFactory.newInstance();
 		String prefix = "a";
 		String uri = "http://www.w3.org/2005/08/addressing";
 		SOAPElement action = factory.createElement("Action", prefix, uri);
-		action.addAttribute(QName.valueOf("S:mustUnderstand"), "1");
+		action.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
 		action.addTextNode("urn:ihe:iti:2007:RegistryStoredQuery");
 
-		SOAPElement message = factory.createElement("MessageID", prefix, uri);
-		message.addTextNode("urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055");
+		SOAPElement messageID = factory.createElement("MessageID", prefix, uri);
+		messageID.addTextNode("urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055");
 
 		SOAPElement replyTo = factory.createElement("ReplyTo", prefix, uri);
 
@@ -31,11 +34,12 @@ public class RegistryHeader extends RepositoryHeader {
 		replyTo.addChildElement(adress);
 
 		SOAPElement to = factory.createElement("To", prefix, uri);
-		to.addAttribute(QName.valueOf("S:mustUnderstand"), "1");
+		to.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
 		to.addTextNode("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS");
 
+		SOAPHeader header = message.getSOAPHeader();
 		header.addChildElement(action);
-		header.addChildElement(message);
+		header.addChildElement(messageID);
 		header.addChildElement(replyTo);
 		header.addChildElement(to);
 	}

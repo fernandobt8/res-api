@@ -9,7 +9,9 @@ import javax.xml.bind.JAXBException;
 
 import lombok.extern.slf4j.Slf4j;
 
-import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
+import org.apache.commons.io.IOUtils;
+
+import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
@@ -42,9 +44,10 @@ public class SOAPClientSAAJ {
 
 			// testeXml();
 
+			// testeXml2();
+
 			// save(credential);
 
-			// testeXml2();
 		} catch (Exception e) {
 			log.error("", e);
 		}
@@ -85,18 +88,18 @@ public class SOAPClientSAAJ {
 		repositoryService.save(registerDTO);
 	}
 
-	private static void testeXml2() throws IOException {
+	private static void testeXml2() throws Exception {
 		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
 
 		try {
-			// ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-			// System.out.println(resumoConsulta.getXml());
+			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
+			System.out.println(resumoConsulta.getXml());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	private static void repository(Credential credential) throws ResABXMLParserException {
+	private static void repository(Credential credential) throws Exception {
 		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositoryFilter repositoryFilter = new RepositoryFilter();
@@ -105,11 +108,11 @@ public class SOAPClientSAAJ {
 
 		RepositoryResponseDTO documents = repositoryService.getDocuments(repositoryFilter);
 		for (DocumentItem item : documents.getDocuments()) {
-			System.out.println(item.getDocumentUniqueId());
+			System.out.println(item.getDocument());
 		}
 	}
 
-	private static RegistryResponse registry(Credential credential) throws ResABXMLParserException {
+	private static RegistryResponse registry(Credential credential) throws Exception {
 		RegistryService registryService = new RegistryService(credential);
 
 		RegistryFilter registryFilter = new RegistryFilter();

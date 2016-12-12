@@ -3,88 +3,93 @@ package br.ufsc.bridge.res.service.registry;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBElement;
+import javax.xml.xpath.XPathExpressionException;
 
-import lombok.extern.slf4j.Slf4j;
+import org.w3c.dom.Document;
 
-import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.http.ResHttpClient;
+import br.ufsc.bridge.res.http.exception.ResHttpConnectionException;
+import br.ufsc.bridge.res.http.exception.ResHttpRequestResponseException;
 import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
+import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
 import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
+import br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.exception.ResServiceFatalException;
+import br.ufsc.bridge.res.service.exception.ResServiceSevereException;
+import br.ufsc.bridge.res.service.exception.ResXDSbException;
 import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
-import br.ufsc.bridge.res.service.repository.RepositoryService;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResLogError;
+import br.ufsc.bridge.res.util.XPathFactoryAssist;
 
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
 import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectRefType;
 
-@Slf4j
 public class RegistryService {
-
-	private static final String SUCCESS = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success";
-	public static final String SERVICO_RES_INDISPONIVEL = "Serviço RES-nacional não disponínel. Tente novamente.";
 
 	private ResLogError printerResponseError;
 	private ResHttpClient httpClient;
 
-	public RegistryService(Credential c) {
+	public RegistryService(Credential c) throws ResServiceFatalException {
 		this.httpClient = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:ns:AdhocQueryRequestRequest");
 		try {
 			this.httpClient.setUrl("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS");
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new ResServiceFatalException("Invalid Registry URL", e);
 		}
 		this.printerResponseError = new ResLogError();
 	}
 
-	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) throws ResABXMLParserException {
-		AdhocQueryResponse queryResponse = null;
+	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
+		AdhocQueryResponseXPath queryResponse = null;
+		Document response;
 		try {
-			queryResponse = this.httpClient.send(this.buildRequest(filter, "LeafClass"), AdhocQueryResponse.class);
-		} catch (Exception e) {
-			log.error("erro no request", e);
-			throw new ResABXMLParserException(SERVICO_RES_INDISPONIVEL, e);
-		}
+			response = this.httpClient.send(this.buildRequest(filter, "LeafClass"));
+			queryResponse = new AdhocQueryResponseXPath(response);
 
-		if (queryResponse.getStatus().equals(SUCCESS)) {
-			return RegistryResponseParser.parse(queryResponse);
-		} else {
-			this.printerResponseError.printLogError(queryResponse.getRegistryErrorList());
-			throw new ResABXMLParserException(queryResponse.getRegistryErrorList());
+			if (queryResponse.isSuccess()) {
+				return RegistryResponseParser.parse(queryResponse);
+			} else {
+				this.printerResponseError.parserException(new RegistryErrorListXPath(response));
+				return null;
+			}
+		} catch (ResHttpConnectionException e) {
+			throw new ResServiceSevereException(e);
+		} catch (XPathExpressionException e) {
+			throw new ResServiceFatalException("Error parsing \"AdhocQueryResponse\"", e);
+		} catch (ResHttpRequestResponseException | ResXDSbException e) {
+			throw new ResServiceFatalException(e);
 		}
 	}
 
-	@SuppressWarnings("rawtypes")
-	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) throws ResABXMLParserException {
-		AdhocQueryResponse queryResponse = null;
+	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
+		AdhocQueryResponseXPath queryResponse = null;
+		Document response;
 		try {
-			queryResponse = this.httpClient.send(this.buildRequest(filter, "ObjectRef"), AdhocQueryResponse.class);
-		} catch (Exception e) {
-			log.error("erro no request", e);
-			throw new ResABXMLParserException(RepositoryService.SERVICO_RES_INDISPONIVEL, e);
-		}
+			response = this.httpClient.send(this.buildRequest(filter, "ObjectRef"));
+			queryResponse = new AdhocQueryResponseXPath(response);
 
-		if (queryResponse.getStatus().equals(SUCCESS)) {
-			ArrayList<String> uuids = new ArrayList<>();
-			for (JAXBElement jaxbElement : queryResponse.getRegistryObjectList().getIdentifiable()) {
-				Object value = jaxbElement.getValue();
-				if (value instanceof ObjectRefType) {
-					uuids.add(((ObjectRefType) value).getId());
+			if (queryResponse.isSuccess()) {
+				ArrayList<String> uuids = new ArrayList<>();
+				for (XPathFactoryAssist refs : queryResponse.getObjectRefs()) {
+					uuids.add(refs.getString("./@id"));
 				}
+				return new RegistryResponse<>(uuids);
+			} else {
+				this.printerResponseError.parserException(new RegistryErrorListXPath(response));
+				return null;
 			}
-			return new RegistryResponse<>(uuids);
-		} else {
-			this.printerResponseError.printLogError(queryResponse.getRegistryErrorList());
-			throw new ResABXMLParserException(queryResponse.getRegistryErrorList());
+		} catch (ResHttpConnectionException e) {
+			throw new ResServiceSevereException(e);
+		} catch (XPathExpressionException e) {
+			throw new ResServiceFatalException("Error parsing \"AdhocQueryResponse\"", e);
+		} catch (ResHttpRequestResponseException | ResXDSbException e) {
+			throw new ResServiceFatalException(e);
 		}
 	}
 

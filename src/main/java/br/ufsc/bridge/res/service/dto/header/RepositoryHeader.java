@@ -66,7 +66,7 @@ public class RepositoryHeader implements CreateSOAPMessage {
 		SOAPBody body = message.getSOAPBody();
 		body.addDocument(this.jaxbObjectToDocument(data));
 
-		this.addAdditionalElements(header);
+		this.addAdditionalElements(message);
 
 		if (log.isDebugEnabled()) {
 			try {
@@ -90,6 +90,6 @@ public class RepositoryHeader implements CreateSOAPMessage {
 		return document;
 	}
 
-	protected void addAdditionalElements(SOAPHeader header) throws SOAPException {
+	protected void addAdditionalElements(SOAPMessage message) throws SOAPException {
 	}
 }

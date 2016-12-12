@@ -3,140 +3,56 @@ package br.ufsc.bridge.res.service.registry.parse;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBElement;
+import javax.xml.xpath.XPathExpressionException;
 
 import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.service.exception.ResInvalidRegistryException;
 import br.ufsc.bridge.res.util.XDSbUtil;
-
-import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryResponse;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ClassificationType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExternalIdentifierType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.ExtrinsicObjectType;
-import oasis.names.tc.ebxml_regrep.xsd.rim._3.SlotType1;
+import br.ufsc.bridge.res.util.XPathFactoryAssist;
 
 @Slf4j
 public class RegistryResponseParser {
 
-	private static final String URI = "URI";
 	private static final String AUTHOR_SPECIALTY = "authorSpecialty";
 	private static final String AUTHOR_PERSON = "authorPerson";
 	private static final String AUTHOR_INSTITUTION = "authorInstitution";
 	private static final String SERVICE_START_TIME = "serviceStartTime";
 	private static final String REPOSITORY_UNIQUE_ID = "repositoryUniqueId";
-	private static final String UUID_CLASSIFICATION_SCHEME_LOTACAO = "urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d";
 	private static final String UUID_DOCUMENT_UNIQUE_ID = "urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab";
 
-	public static RegistryResponse<RegistryItem> parse(AdhocQueryResponse queryResponse) {
-
+	public static RegistryResponse<RegistryItem> parse(AdhocQueryResponseXPath queryResponse) {
 		List<RegistryItem> documents = new ArrayList<>();
+		for (XPathFactoryAssist header : queryResponse.getHeaders()) {
+			try {
+				RegistryItem registryItem = new RegistryItem();
+				registryItem.setRepositoryUniqueId(queryResponse.getHeaderRepositoryUniqueId(header));
+				registryItem.setServiceStartTime(queryResponse.getHeaderServiceStartTime(header));
+				registryItem.setCnesUnidadeSaude(queryResponse.getHeaderUnidadeSaude(header));
+				registryItem.setNomeUnidadeSaude(registryItem.getCnesUnidadeSaude());
+				registryItem.setCnsProfissional(queryResponse.getHeaderAuthor(header));
+				registryItem.setNomeProfissional(registryItem.getCnsProfissional());
+				registryItem.setCbo(queryResponse.getHeaderCbo(header));
+				registryItem.setRepositoryURL(queryResponse.getHeaderRepositoryURL(header));
+				registryItem.setDocumentUniqueId(queryResponse.getDocumentUniqueId(header));
 
-		if (queryResponse.getRegistryObjectList() != null) {
-			for (JAXBElement<?> identifiable : queryResponse.getRegistryObjectList().getIdentifiable()) {
-				if (!validateElement(identifiable)) {
-					continue;
-				}
-				try {
-					RegistryItem registry = parseDocument((ExtrinsicObjectType) identifiable.getValue());
-					filterValues(registry);
-					documents.add(registry);
-				} catch (InvalidRegistryException e) {
-					log.info("Failed to parse. " + e.getMessage());
-					continue;
-				}
+				filterValues(registryItem);
+				documents.add(registryItem);
+			} catch (ResInvalidRegistryException e) {
+				log.info("Failed to parse. " + e.getMessage());
+			} catch (XPathExpressionException e) {
+				log.info("Failed to parse. " + e.getMessage());
 			}
 		}
 		return new RegistryResponse<>(documents);
 	}
 
-	private static boolean validateElement(JAXBElement<?> identifiable) {
-		if (identifiable == null) {
-			log.info("Ignored registry. JAXBElement to parse is null.");
-			return false;
-		}
-		if (identifiable.getValue() == null || !(identifiable.getValue() instanceof ExtrinsicObjectType)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	private static RegistryItem parseDocument(ExtrinsicObjectType extrinsicObject) throws InvalidRegistryException {
-
-		RegistryItem registryItem = new RegistryItem();
-
-		log.info("Parse started.");
-		for (SlotType1 slot : extrinsicObject.getSlot()) {
-			loadSlotTypes(registryItem, slot);
-		}
-
-		for (ExternalIdentifierType identifier : extrinsicObject.getExternalIdentifier()) {
-			loadExternalIdentifierTypes(registryItem, identifier);
-		}
-
-		for (ClassificationType classification : extrinsicObject.getClassification()) {
-			loadClassificationTypesLotacao(registryItem, classification);
-		}
-		log.info("Parse finished.");
-		return registryItem;
-	}
-
-	private static void loadClassificationTypesLotacao(RegistryItem registryItem, ClassificationType classification) {
-		if (UUID_CLASSIFICATION_SCHEME_LOTACAO.equals(classification.getClassificationScheme())) {
-			for (SlotType1 slot : classification.getSlot()) {
-				loadSlotTypes(registryItem, slot);
-			}
-		}
-	}
-
-	private static void loadExternalIdentifierTypes(RegistryItem registryItem, ExternalIdentifierType identifier) {
-		if (UUID_DOCUMENT_UNIQUE_ID.equals(identifier.getIdentificationScheme())) {
-			log.debug("Parse IdentificationScheme " + UUID_DOCUMENT_UNIQUE_ID + ".");
-			registryItem.setDocumentUniqueId(identifier.getValue());
-		}
-	}
-
-	private static void loadSlotTypes(RegistryItem registryItem, SlotType1 slot) {
-
-		if (slot.getValueList() != null && slot.getName() != null) {
-			String value = slot.getValueList().getValue().isEmpty() ? null : slot.getValueList().getValue().get(0);
-			switch (slot.getName()) {
-			case REPOSITORY_UNIQUE_ID:
-				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setRepositoryUniqueId(value);
-				break;
-			case SERVICE_START_TIME:
-				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setServiceStartTime(RDateUtil.isoXDSbToDate(value));
-				break;
-			case AUTHOR_INSTITUTION:
-				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setCnesUnidadeSaude(value);
-				registryItem.setNomeUnidadeSaude(value);
-				break;
-			case AUTHOR_PERSON:
-				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setCnsProfissional(value);
-				registryItem.setNomeProfissional(value);
-				break;
-			case AUTHOR_SPECIALTY:
-				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setCbo(value);
-				break;
-			case URI:
-				log.debug("Parse slot " + slot.getName() + ".");
-				registryItem.setRepositoryURL(value);
-				break;
-			}
-		}
-	}
-
-	private static void filterValues(RegistryItem registry) throws InvalidRegistryException {
+	private static void filterValues(RegistryItem registry) throws ResInvalidRegistryException {
 		StringBuilder message = new StringBuilder();
 		boolean hasError = false;
 
@@ -152,16 +68,13 @@ public class RegistryResponseParser {
 			message.append(SERVICE_START_TIME + ": '" + registry.getServiceStartTime() + "' ");
 			hasError = true;
 		}
-
 		try {
 			registry.setCnesUnidadeSaude(filterCnesUnidadeSaude(registry.getCnesUnidadeSaude()));
 		} catch (Exception e) {
 			message.append(AUTHOR_INSTITUTION + ": '" + registry.getCnesUnidadeSaude() + "' ");
 			hasError = true;
 		}
-
 		registry.setNomeUnidadeSaude(filterNomeUnidadeSaude(registry.getNomeUnidadeSaude()));
-
 		try {
 			registry.setCnsProfissional(filtertCnsProfissional(registry.getCnsProfissional()));
 		} catch (Exception e) {
@@ -169,18 +82,15 @@ public class RegistryResponseParser {
 			hasError = true;
 		}
 		registry.setNomeProfissional(XDSbUtil.xdsbNameToName(registry.getNomeProfissional()));
-
 		try {
 			registry.setCbo(filtertNumberValue(registry.getCbo()));
 		} catch (Exception e) {
 			message.append(AUTHOR_SPECIALTY + ": '" + registry.getCbo() + "' ");
 			hasError = true;
 		}
-
 		if (hasError) {
-			throw new InvalidRegistryException("Invalid values for: " + message);
+			throw new ResInvalidRegistryException("Invalid values for: " + message);
 		}
-
 	}
 
 	private static String filterCnesUnidadeSaude(String cnesUnidadeSaude) throws Exception {
@@ -204,12 +114,10 @@ public class RegistryResponseParser {
 	private static String filtertCnsProfissional(String cnsProfissional) throws Exception {
 		if (StringUtils.isNotBlank(cnsProfissional) && cnsProfissional.contains("^")) {
 			String cns = cnsProfissional.substring(0, cnsProfissional.indexOf("^"));
-
 			if (validateOnlyNumbers(cns)) {
 				return cns;
 			}
 		}
-
 		throw new Exception();
 	}
 
@@ -224,5 +132,4 @@ public class RegistryResponseParser {
 	private static boolean validateOnlyNumbers(String value) {
 		return StringUtils.isNotBlank(value) && value.matches("\\d*");
 	}
-
 }

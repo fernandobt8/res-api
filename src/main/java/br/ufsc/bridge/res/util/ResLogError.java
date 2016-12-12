@@ -1,28 +1,44 @@
 package br.ufsc.bridge.res.util;
 
-import lombok.extern.slf4j.Slf4j;
-import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryError;
-import oasis.names.tc.ebxml_regrep.xsd.rs._3.RegistryErrorList;
+import javax.xml.xpath.XPathExpressionException;
 
-import org.apache.commons.lang3.StringUtils;
+import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
+import br.ufsc.bridge.res.service.exception.ResServiceSevereException;
+import br.ufsc.bridge.res.service.exception.ResXDSbException;
 
-@Slf4j
 public class ResLogError {
 
-	public void printLogError(RegistryErrorList error) {
-		for (RegistryError registryError : error.getRegistryError()) {
-			log.error("------- Registry Error -------");
-			this.print("codeContext", registryError.getCodeContext());
-			this.print("errorCode", registryError.getErrorCode());
-			this.print("location", registryError.getLocation());
-			this.print("severity", registryError.getSeverity());
-			this.print("value", registryError.getValue());
-		}
-	}
+	private static final String CODIGO_ERRO_INTERNO_INSTABILIDADE_RES_NACIONAL = "BEA-380002";
 
-	private void print(String tag, String value) {
-		if (StringUtils.isNotBlank(value)) {
-			log.error(tag + " = " + value);
+	private static final String MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL = "Ocorreu um erro inesperado ao pesquisar informações no RES-nacional.";
+	private static final String MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL_E = "Ocorreu um erro inesperado ao enviar este registro para o RES-nacional.";
+
+	public static final String SERVICO_RES_INDISPONIVEL = "Serviço RES-nacional não disponínel. Tente novamente.";
+
+	public void parserException(RegistryErrorListXPath errorXPath) throws ResXDSbException, ResServiceSevereException {
+		boolean fatalError = true;
+		String value = "";
+		try {
+			for (XPathFactoryAssist element : errorXPath.getErrors()) {
+				if (errorXPath.getErrorCodeContext(element).contains(CODIGO_ERRO_INTERNO_INSTABILIDADE_RES_NACIONAL)) {
+					fatalError = false;
+				}
+				value += "------- Registry Error -------\n";
+				value += "codeContext: " + errorXPath.getErrorCodeContext(element) + "\n";
+				value += "errorCode: " + errorXPath.getErrorErrorCode(element) + "\n";
+				value += "location: " + errorXPath.getErrorLocation(element) + "\n";
+				value += "severity: " + errorXPath.getErrorServerity(element) + "\n";
+				value += "value: " + errorXPath.getErrorValue(element) + "\n";
+			}
+
+		} catch (XPathExpressionException e) {
+			throw new ResXDSbException("Error parsing \"RegistryErrorList\"");
+		}
+
+		if (fatalError) {
+			throw new ResXDSbException(value);
+		} else {
+			throw new ResServiceSevereException(value);
 		}
 	}
 }
