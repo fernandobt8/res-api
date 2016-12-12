@@ -13,7 +13,6 @@ import javax.xml.xpath.XPathExpressionException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -33,7 +32,6 @@ import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliado
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.XPathFactoryAssist;
 
-@Slf4j
 @Getter
 @Setter
 @NoArgsConstructor
@@ -72,8 +70,7 @@ public class ResABResumoConsulta {
 		try {
 			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
 		} catch (SAXException | IOException | ParserConfigurationException e) {
-			log.info("Erro no parser do XML para document", e);
-			throw new ResABXMLParserException();
+			throw new ResABXMLParserException("Erro no parser do XML para \"Document\"", e);
 		}
 
 		XPathFactoryAssist xPathRoot = new XPathFactoryAssist(document);
@@ -82,7 +79,7 @@ public class ResABResumoConsulta {
 			this.tipoAtendimento = ResABTipoAtendimentoEnum.getByCodigo(xPathAdmissao.getString("./Tipo_de_atendimento//code_string"));
 			this.cnes = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//value/value");
 			this.ine = xPathAdmissao.getString("./Identificação_da_equipe_de_saúde/value/value");
-			this.dataAtendimento = xPathAdmissao.getDate("./Data_fslash_hora_da_admissão/value/value");
+			this.dataAtendimento = xPathAdmissao.getDateEHR("./Data_fslash_hora_da_admissão/value/value");
 			this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
 
 			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Identificação_do_profissional")) {
@@ -94,7 +91,7 @@ public class ResABResumoConsulta {
 			this.altura = xPathMedicoes.getString("./Avaliação_antropométrica/Altura__fslash__comprimento//Altura__fslash__comprimento/value/magnitude");
 
 			XPathFactoryAssist xPathGestante = xPathMedicoes.getXPathAssist(".//Gestante");
-			this.dum = xPathGestante.getDate("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value");
+			this.dum = xPathGestante.getDateEHR("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value");
 			this.idadeGestacional = xPathGestante.getString("./Gestação//Idade_gestacional/value/value");
 
 			XPathFactoryAssist xPathSumarioObstetrico = xPathGestante.getXPathAssist(".//Sumário_obstétrico/data");
@@ -129,8 +126,7 @@ public class ResABResumoConsulta {
 				this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
 			}
 		} catch (XPathExpressionException e) {
-			log.info("Erro no parser do XML para o DTO", e);
-			throw new ResABXMLParserException();
+			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}
 	}
 

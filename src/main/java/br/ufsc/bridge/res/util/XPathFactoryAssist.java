@@ -26,15 +26,23 @@ public class XPathFactoryAssist {
 	}
 
 	public XPathFactoryAssist getXPathAssist(String expression) throws XPathExpressionException {
-		return new XPathFactoryAssist((Node) this.xPath.compile(expression).evaluate(this.node, XPathConstants.NODE));
+		return new XPathFactoryAssist(this.getNode(expression));
+	}
+
+	public Node getNode(String expression) throws XPathExpressionException {
+		return (Node) this.xPath.compile(expression).evaluate(this.node, XPathConstants.NODE);
 	}
 
 	public Long count(String expression) throws XPathExpressionException {
 		return Long.valueOf(this.xPath.compile("count(" + expression + ")").evaluate(this.node));
 	}
 
-	public Date getDate(String expression) throws XPathExpressionException {
+	public Date getDateEHR(String expression) throws XPathExpressionException {
 		return RDateUtil.isoEHRToDate(this.getString(expression));
+	}
+
+	public Date getDateXDSb(String expression) throws XPathExpressionException {
+		return RDateUtil.isoXDSbToDate(this.getString(expression));
 	}
 
 	public Boolean getBoolean(String expression) throws XPathExpressionException {

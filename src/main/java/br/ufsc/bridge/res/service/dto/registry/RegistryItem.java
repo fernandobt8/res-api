@@ -22,5 +22,6 @@ public class RegistryItem {
 	private String cbo;
 	private String cnesUnidadeSaude;
 	private String nomeUnidadeSaude;
+	private String repositoryURL;
 
 }

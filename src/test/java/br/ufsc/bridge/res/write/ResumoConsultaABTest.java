@@ -106,8 +106,6 @@ public class ResumoConsultaABTest {
 					.encaminhamento("Testes II")
 				.close()
 			.close();
-		System.out.println(abBuilder.getXmlContent());
-
 
 	}
 }
