@@ -10,11 +10,6 @@ public class ResLogError {
 
 	private static final String CODIGO_ERRO_INTERNO_INSTABILIDADE_RES_NACIONAL = "BEA-380002";
 
-	private static final String MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL = "Ocorreu um erro inesperado ao pesquisar informações no RES-nacional.";
-	private static final String MSG_ERRO_INTERNO_INESPERADO_RES_NACIONAL_E = "Ocorreu um erro inesperado ao enviar este registro para o RES-nacional.";
-
-	public static final String SERVICO_RES_INDISPONIVEL = "Serviço RES-nacional não disponínel. Tente novamente.";
-
 	public void parserException(RegistryErrorListXPath errorXPath) throws ResXDSbException, ResServiceSevereException {
 		boolean fatalError = true;
 		String value = "";
