@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
@@ -25,44 +26,104 @@ public class TestConvertXMLToResABResumoConsult {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 			Assert.assertEquals(ResABTipoAtendimentoEnum.CONSULTA_AGENDADA, resumoConsulta.getTipoAtendimento());
 			Assert.assertEquals("4254160", resumoConsulta.getCnes());
+
+			Assert.assertEquals("1282844269", resumoConsulta.getIne());
+
 			Assert.assertEquals("703006821796679", resumoConsulta.getProfissionais().get(0).getCns());
 			Assert.assertEquals("2235-65", resumoConsulta.getProfissionais().get(0).getCbo());
-			Assert.assertEquals("703006821796679", resumoConsulta.getProfissionais().get(0).getCns());
-			Assert.assertEquals("2235-65", resumoConsulta.getProfissionais().get(0).getCbo());
+			Assert.assertEquals(true, resumoConsulta.getProfissionais().get(0).isResponsavel());
+
 			Assert.assertEquals("707000801749036", resumoConsulta.getProfissionais().get(1).getCns());
 			Assert.assertEquals("2236-05", resumoConsulta.getProfissionais().get(1).getCbo());
+			Assert.assertEquals(false, resumoConsulta.getProfissionais().get(1).isResponsavel());
+
 			Assert.assertEquals("898001153249911", resumoConsulta.getProfissionais().get(2).getCns());
 			Assert.assertEquals("2235-64", resumoConsulta.getProfissionais().get(2).getCbo());
+			Assert.assertEquals(true, resumoConsulta.getProfissionais().get(2).isResponsavel());
+
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 			String dateInString = "2016-05-23T15:00:00.000-03:00";
 			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getDataAtendimento());
+
 			Assert.assertEquals(ResABTurnoEnum.NOITE, resumoConsulta.getTurno());
+
 			Assert.assertEquals("994.250", resumoConsulta.getPeso());
 			Assert.assertEquals("987.55", resumoConsulta.getAltura());
+
 			formatter = new SimpleDateFormat("yyyy-MM-dd");
 			dateInString = "2016-03-16";
 			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getDum());
+
 			Assert.assertEquals("P9W5D", resumoConsulta.getIdadeGestacional());
 			Assert.assertEquals("2", resumoConsulta.getGestasPrevias());
 			Assert.assertEquals("1", resumoConsulta.getPartos());
+
 			Assert.assertEquals("A920", resumoConsulta.getProblemasDiagnosticos().get(0).getCodigo());
 			Assert.assertEquals("Febre de Chikungunya", resumoConsulta.getProblemasDiagnosticos().get(0).getDescricao());
 			Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resumoConsulta.getProblemasDiagnosticos().get(0).getTipo());
+
 			Assert.assertEquals("T28", resumoConsulta.getProblemasDiagnosticos().get(1).getCodigo());
 			Assert.assertEquals("LIMITAÇÃO FUNCIONAL/INCAPACIDADE", resumoConsulta.getProblemasDiagnosticos().get(1).getDescricao());
 			Assert.assertEquals(ResABTipoProblemaDiagnostico.CIAP, resumoConsulta.getProblemasDiagnosticos().get(1).getTipo());
+
 			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(2).getCodigo());
 			Assert.assertEquals("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.",
 					resumoConsulta.getProblemasDiagnosticos().get(2).getDescricao());
 			Assert.assertEquals(null, resumoConsulta.getProblemasDiagnosticos().get(2).getTipo());
 
-			resumoConsulta.getAlergias();
-			resumoConsulta.getCondutas();
-			resumoConsulta.getEncaminhamentos();
-			resumoConsulta.getIne();
+			Assert.assertEquals(ResABGravidadeEnum.BAIXO, resumoConsulta.getAlergias().get(0).getGravidade());
+			Assert.assertEquals("Alimento", resumoConsulta.getAlergias().get(0).getCategoria());
+			Assert.assertEquals("leite", resumoConsulta.getAlergias().get(0).getAgente());
+
+			formatter = new SimpleDateFormat("yyyy-MM");
+			dateInString = "2014-05";
+			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getDataInstalacao());
+			Assert.assertEquals("sob controle", resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getEvolucaoAlergia());
+			Assert.assertEquals("início há 2 anos, percebeu mau estar após ingestão de leite e derivados",
+					resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getManifestacao());
+
+			formatter = new SimpleDateFormat("yyyy-MM-dd");
+			dateInString = "2016-07-09";
+			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getAlergias().get(0).getEventoReacao().get(1).getDataInstalacao());
+			Assert.assertEquals("sob cautela", resumoConsulta.getAlergias().get(0).getEventoReacao().get(1).getEvolucaoAlergia());
+			Assert.assertEquals("início mês passado, percebeu piora após ingestão de leite e derivados",
+					resumoConsulta.getAlergias().get(0).getEventoReacao().get(1).getManifestacao());
+
+			Assert.assertEquals(ResABGravidadeEnum.ALTO, resumoConsulta.getAlergias().get(1).getGravidade());
+			Assert.assertEquals("Remedio", resumoConsulta.getAlergias().get(1).getCategoria());
+			Assert.assertEquals("metamizol", resumoConsulta.getAlergias().get(1).getAgente());
+
+			formatter = new SimpleDateFormat("yyyy-MM");
+			dateInString = "2013-09";
+			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getDataInstalacao());
+			Assert.assertEquals("situação de alto risco", resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getEvolucaoAlergia());
+			Assert.assertEquals("início há 3 anos, percebeu mau estar após utilização do componente",
+					resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getManifestacao());
+
+			Assert.assertNull(resumoConsulta.getAlergias().get(1).getEventoReacao().get(1).getDataInstalacao());
+			Assert.assertEquals("sob atenção", resumoConsulta.getAlergias().get(1).getEventoReacao().get(1).getEvolucaoAlergia());
+			Assert.assertEquals("piora nos meses seguintes", resumoConsulta.getAlergias().get(1).getEventoReacao().get(1).getManifestacao());
+
+			Assert.assertEquals("18512000", resumoConsulta.getProcedimentos().get(0).getCodigo());
+			Assert.assertEquals("TERAPIA INDIVIDUAL", resumoConsulta.getProcedimentos().get(0).getNome());
+
+			Assert.assertEquals("167376008", resumoConsulta.getProcedimentos().get(1).getCodigo());
+			Assert.assertEquals("TESTE RÁPIDO DE GRAVIDEZ", resumoConsulta.getProcedimentos().get(1).getNome());
+
+			Assert.assertEquals("122869004", resumoConsulta.getProcedimentos().get(2).getCodigo());
+			Assert.assertEquals("AVALIAÇÃO ANTROPOMÉTRICA", resumoConsulta.getProcedimentos().get(2).getNome());
+
+			Assert.assertEquals("433465004", resumoConsulta.getProcedimentos().get(3).getCodigo());
+			Assert.assertEquals("COLETA DE MATERIAL P/ EXAME LABORATORIAL", resumoConsulta.getProcedimentos().get(3).getNome());
+
 			resumoConsulta.getMedicamentos();
 
-			resumoConsulta.getProcedimentos();
+			Assert.assertEquals("Retorno para cuidado continuado/programado", resumoConsulta.getCondutas().get(0).getDescricao());
+			Assert.assertEquals("Alta do episódio", resumoConsulta.getCondutas().get(1).getDescricao());
+
+			Assert.assertEquals("Interno no dia", resumoConsulta.getEncaminhamentos().get(0));
+			Assert.assertEquals("Externo no dia", resumoConsulta.getEncaminhamentos().get(1));
+			Assert.assertEquals("Agendamento", resumoConsulta.getEncaminhamentos().get(2));
 
 		} catch (Exception e) {
 			e.printStackTrace();

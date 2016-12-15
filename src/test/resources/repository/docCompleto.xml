@@ -179,7 +179,7 @@
                             <value>É o responsável pelo atendimento</value>
                         </name>
                         <value>
-                            <oe:value>false</oe:value>
+                            <oe:value>true</oe:value>
                         </value>
                     </É_o_responsável_pelo_atendimento_quest_>
                 </Identificação_do_profissional>
@@ -188,7 +188,7 @@
                         <value>Identificação da equipe de saúde</value>
                     </name>
                     <value>
-                        <oe:value>1282844260</oe:value>
+                        <oe:value>1282844269</oe:value>
                     </value>
                 </Identificação_da_equipe_de_saúde>
                 <Data_fslash_hora_da_admissão>
@@ -674,6 +674,19 @@
                         <oe:value>leite</oe:value>
                     </value>
                 </Agente__fslash__substância_específica>
+                <Gravidade>
+                    <name>
+                        <value>Gravidade</value>
+                    </name>
+                    <value>
+                        <defining_code>
+                            <terminology_id>
+                                <value>local</value>
+                            </terminology_id>
+                            <code_string>at0102</code_string>
+                        </defining_code>
+                    </value>
+                </Gravidade>
                 <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
                     <name>
                         <value>Categoria do agente causador da alergia / reação adversa</value>
@@ -709,6 +722,139 @@
                         <value>
                             <oe:value>2014-05</oe:value>
                         </value>
+                    </Data_da_instalação_da_alergia__fslash__reação_adversa>
+                </Evento_da_reação>
+                <Evento_da_reação>
+                    <name>
+                        <value>Evento da reação</value>
+                    </name>
+                    <Manifestação>
+                        <name>
+                            <value>Manifestação</value>
+                        </name>
+                        <value>
+                            <oe:value>início mês passado, percebeu piora após ingestão de leite e derivados</oe:value>
+                        </value>
+                    </Manifestação>
+                    <Evolução_da_alergia__fslash__reação_adversa>
+                        <name>
+                            <value>Evolução da alergia / reação adversa</value>
+                        </name>
+                        <value>
+                            <oe:value>sob cautela</oe:value>
+                        </value>
+                    </Evolução_da_alergia__fslash__reação_adversa>
+                    <Data_da_instalação_da_alergia__fslash__reação_adversa>
+                        <name>
+                            <value>Data da instalação da alergia / reação adversa</value>
+                        </name>
+                        <value>
+                            <oe:value>2016-07-09</oe:value>
+                        </value>
+                    </Data_da_instalação_da_alergia__fslash__reação_adversa>
+                </Evento_da_reação>
+            </data>
+        </Risco_de_Reação_Adversa>
+        <Risco_de_Reação_Adversa>
+            <name>
+                <value>Risco de Reação Adversa</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Agente__fslash__substância_específica>
+                    <name>
+                        <value>Agente / substância específica</value>
+                    </name>
+                    <value>
+                        <oe:value>metamizol</oe:value>
+                    </value>
+                </Agente__fslash__substância_específica>
+                <Gravidade>
+                    <name>
+                        <value>Gravidade</value>
+                    </name>
+                    <value>
+                        <defining_code>
+                            <terminology_id>
+                                <value>local</value>
+                            </terminology_id>
+                            <code_string>at0103</code_string>
+                        </defining_code>
+                    </value>
+                </Gravidade>
+                <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+                    <name>
+                        <value>Categoria do agente causador da alergia / reação adversa</value>
+                    </name>
+                    <value>
+                        <oe:value>Remedio</oe:value>
+                    </value>
+                </Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+                <Evento_da_reação>
+                    <name>
+                        <value>Evento da reação</value>
+                    </name>
+                    <Manifestação>
+                        <name>
+                            <value>Manifestação</value>
+                        </name>
+                        <value>
+                            <oe:value>início há 3 anos, percebeu mau estar após utilização do componente</oe:value>
+                        </value>
+                    </Manifestação>
+                    <Evolução_da_alergia__fslash__reação_adversa>
+                        <name>
+                            <value>Evolução da alergia / reação adversa</value>
+                        </name>
+                        <value>
+                            <oe:value>situação de alto risco</oe:value>
+                        </value>
+                    </Evolução_da_alergia__fslash__reação_adversa>
+                    <Data_da_instalação_da_alergia__fslash__reação_adversa>
+                        <name>
+                            <value>Data da instalação da alergia / reação adversa</value>
+                        </name>
+                        <value>
+                            <oe:value>2013-09</oe:value>
+                        </value>
+                    </Data_da_instalação_da_alergia__fslash__reação_adversa>
+                </Evento_da_reação>
+                <Evento_da_reação>
+                    <name>
+                        <value>Evento da reação</value>
+                    </name>
+                    <Manifestação>
+                        <name>
+                            <value>Manifestação</value>
+                        </name>
+                        <value>
+                            <oe:value>piora nos meses seguintes</oe:value>
+                        </value>
+                    </Manifestação>
+                    <Evolução_da_alergia__fslash__reação_adversa>
+                        <name>
+                            <value>Evolução da alergia / reação adversa</value>
+                        </name>
+                        <value>
+                            <oe:value>sob atenção</oe:value>
+                        </value>
+                    </Evolução_da_alergia__fslash__reação_adversa>
+                    <Data_da_instalação_da_alergia__fslash__reação_adversa>
+                        <name>
+                            <value>Data da instalação da alergia / reação adversa</value>
+                        </name>
                     </Data_da_instalação_da_alergia__fslash__reação_adversa>
                 </Evento_da_reação>
             </data>
@@ -1158,6 +1304,14 @@
                         <value>Retorno para cuidado continuado/programado</value>
                     </value>
                 </Conduta>
+                <Conduta>
+                    <name>
+                        <value>Conduta</value>
+                    </name>
+                    <value>
+                        <value>Alta do episódio</value>
+                    </value>
+                </Conduta>
                 <Solicitações_de_encaminhamentos>
                     <name>
                         <value>Solicitações de encaminhamentos</value>
@@ -1168,6 +1322,22 @@
                         </name>
                         <value>
                             <oe:value>Interno no dia</oe:value>
+                        </value>
+                    </Encaminhamento>
+                    <Encaminhamento>
+                        <name>
+                            <value>Encaminhamento</value>
+                        </name>
+                        <value>
+                            <oe:value>Externo no dia</oe:value>
+                        </value>
+                    </Encaminhamento>
+                    <Encaminhamento>
+                        <name>
+                            <value>Encaminhamento</value>
+                        </name>
+                        <value>
+                            <oe:value>Agendamento</oe:value>
                         </value>
                     </Encaminhamento>
                 </Solicitações_de_encaminhamentos>

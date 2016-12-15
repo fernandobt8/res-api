@@ -413,9 +413,6 @@
                     <name>
                         <value>Agente / substância específica</value>
                     </name>
-                    <value>
-                        <oe:value>leite</oe:value>
-                    </value>
                 </Agente__fslash__substância_específica>
                 <Gravidade>
                     <name>
@@ -479,159 +476,6 @@
                     <name>
                         <value>Procedimento realizado</value>
                     </name>
-                    <value>
-                        <value>TERAPIA INDIVIDUAL</value>
-                        <defining_code>
-                            <terminology_id>
-                                <value>SNOMEDCT_RESCONSAB_PROCAB</value>
-                            </terminology_id>
-                            <code_string>18512000</code_string>
-                        </defining_code>
-                    </value>
-                </Procedimento_realizado>
-            </description>
-            <ism_transition>
-                <current_state>
-                    <oe:value></oe:value>
-                    <oe:defining_code>
-                        <oe:terminology_id>
-                            <oe:value>openehr</oe:value>
-                        </oe:terminology_id>
-                        <oe:code_string>524</oe:code_string>
-                    </oe:defining_code>
-                </current_state>
-            </ism_transition>
-        </Procedimento>
-        <Procedimento>
-            <name>
-                <value>Procedimento</value>
-            </name>
-            <language>
-                <terminology_id>
-                    <value>ISO_639-1</value>
-                </terminology_id>
-                <code_string>pt</code_string>
-            </language>
-            <encoding>
-                <terminology_id>
-                    <value>IANA_character-sets</value>
-                </terminology_id>
-                <code_string>UTF-8</code_string>
-            </encoding>
-            <subject></subject>
-            <time>
-                <oe:value>2016-10-28T15:00:00.000-03:00</oe:value>
-            </time>
-            <description>
-                <Procedimento_realizado>
-                    <name>
-                        <value>Procedimento realizado</value>
-                    </name>
-                    <value>
-                        <value>TESTE RÁPIDO DE GRAVIDEZ</value>
-                        <defining_code>
-                            <terminology_id>
-                                <value>SNOMEDCT_RESCONSAB_PROCAB</value>
-                            </terminology_id>
-                            <code_string>167376008</code_string>
-                        </defining_code>
-                    </value>
-                </Procedimento_realizado>
-            </description>
-            <ism_transition>
-                <current_state>
-                    <oe:value></oe:value>
-                    <oe:defining_code>
-                        <oe:terminology_id>
-                            <oe:value>openehr</oe:value>
-                        </oe:terminology_id>
-                        <oe:code_string>524</oe:code_string>
-                    </oe:defining_code>
-                </current_state>
-            </ism_transition>
-        </Procedimento>
-        <Procedimento>
-            <name>
-                <value>Procedimento</value>
-            </name>
-            <language>
-                <terminology_id>
-                    <value>ISO_639-1</value>
-                </terminology_id>
-                <code_string>pt</code_string>
-            </language>
-            <encoding>
-                <terminology_id>
-                    <value>IANA_character-sets</value>
-                </terminology_id>
-                <code_string>UTF-8</code_string>
-            </encoding>
-            <subject></subject>
-            <time>
-                <oe:value>2016-10-28T15:00:00.000-03:00</oe:value>
-            </time>
-            <description>
-                <Procedimento_realizado>
-                    <name>
-                        <value>Procedimento realizado</value>
-                    </name>
-                    <value>
-                        <value>AVALIAÇÃO ANTROPOMÉTRICA</value>
-                        <defining_code>
-                            <terminology_id>
-                                <value>SNOMEDCT_RESCONSAB_PROCAB</value>
-                            </terminology_id>
-                            <code_string>122869004</code_string>
-                        </defining_code>
-                    </value>
-                </Procedimento_realizado>
-            </description>
-            <ism_transition>
-                <current_state>
-                    <oe:value></oe:value>
-                    <oe:defining_code>
-                        <oe:terminology_id>
-                            <oe:value>openehr</oe:value>
-                        </oe:terminology_id>
-                        <oe:code_string>524</oe:code_string>
-                    </oe:defining_code>
-                </current_state>
-            </ism_transition>
-        </Procedimento>
-        <Procedimento>
-            <name>
-                <value>Procedimento</value>
-            </name>
-            <language>
-                <terminology_id>
-                    <value>ISO_639-1</value>
-                </terminology_id>
-                <code_string>pt</code_string>
-            </language>
-            <encoding>
-                <terminology_id>
-                    <value>IANA_character-sets</value>
-                </terminology_id>
-                <code_string>UTF-8</code_string>
-            </encoding>
-            <subject></subject>
-            <time>
-                <oe:value>2016-10-28T15:00:00.000-03:00</oe:value>
-            </time>
-            <description>
-                <Procedimento_realizado>
-                    <name>
-                        <value>Procedimento realizado</value>
-                    </name>
-                    <value>
-                        <value>COLETA DE MATERIAL P/ EXAME LABORATORIAL</value>
-                        <defining_code>
-                            <terminology_id>
-                                <value>SNOMEDCT_RESCONSAB_PROCAB</value>
-                            </terminology_id>
-                            <code_string>433465004</code_string>
-                        </defining_code>
-                    </value>
                 </Procedimento_realizado>
             </description>
             <ism_transition>
@@ -677,51 +521,21 @@
                         <name>
                             <value>Medicamento</value>
                         </name>
-                        <value>
-                            <value>ALBENDAZOL 200 mg comprimido</value>
-                            <defining_code>
-                                <terminology_id>
-                                    <value>HORUS</value>
-                                </terminology_id>
-                                <code_string>BR0269628</code_string>
-                            </defining_code>
-                        </value>
                     </Medicamento>
                     <Forma_farmacêutica>
                         <name>
                             <value>Forma farmacêutica</value>
                         </name>
-                        <value>
-                            <value>ALBENDAZOL 200 mg comprimido</value>
-                            <defining_code>
-                                <terminology_id>
-                                    <value>HORUS</value>
-                                </terminology_id>
-                                <code_string>BR0269628</code_string>
-                            </defining_code>
-                        </value>
                     </Forma_farmacêutica>
                     <Via_de_administração>
                         <name>
                             <value>Via de administração</value>
                         </name>
-                        <value>
-                            <value>Oral</value>
-                            <defining_code>
-                                <terminology_id>
-                                    <value>ANVISA-VIAS-ADM</value>
-                                </terminology_id>
-                                <code_string>25</code_string>
-                            </defining_code>
-                        </value>
                     </Via_de_administração>
                     <Dose>
                         <name>
                             <value>Dose</value>
                         </name>
-                        <value>
-                            <oe:value>1 comp 30 min antes do almoço</oe:value>
-                        </value>
                     </Dose>
                     <Dose_estruturada>
                         <name>
@@ -731,9 +545,66 @@
                             <name>
                                 <value>Duração do tratamento</value>
                             </name>
-                            <value>
-                                <oe:value>P30D</oe:value>
-                            </value>
+                        </Duração_do_tratamento>
+                    </Dose_estruturada>
+                    <Detalhes_do_processo_medicação>
+                        <name>
+                            <value>Detalhes do processo medicação</value>
+                        </name>
+                    </Detalhes_do_processo_medicação>
+                </Item_de_medicação>
+            </data>
+        </Linha_de_Medicação>
+        <Linha_de_Medicação>
+            <name>
+                <value>Linha de Medicação</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Item_de_medicação>
+                    <name>
+                        <value>Item de medicação</value>
+                    </name>
+                    <Medicamento>
+                        <name>
+                            <value>Medicamento</value>
+                        </name>
+                    </Medicamento>
+                    <Forma_farmacêutica>
+                        <name>
+                            <value>Forma farmacêutica</value>
+                        </name>
+                    </Forma_farmacêutica>
+                    <Via_de_administração>
+                        <name>
+                            <value>Via de administração</value>
+                        </name>
+                    </Via_de_administração>
+                    <Dose>
+                        <name>
+                            <value>Dose</value>
+                        </name>
+                    </Dose>
+                    <Dose_estruturada>
+                        <name>
+                            <value>Dose estruturada</value>
+                        </name>
+                        <Duração_do_tratamento>
+                            <name>
+                                <value>Duração do tratamento</value>
+                            </name>
                         </Duração_do_tratamento>
                     </Dose_estruturada>
                     <Detalhes_do_processo_medicação>
@@ -744,14 +615,6 @@
                             <name>
                                 <value>Estado do medicamento</value>
                             </name>
-                            <value>
-                                <defining_code>
-                                    <terminology_id>
-                                        <value>local</value>
-                                    </terminology_id>
-                                    <code_string>at0050</code_string>
-                                </defining_code>
-                            </value>
                         </Estado_do_medicamento>
                     </Detalhes_do_processo_medicação>
                 </Item_de_medicação>
@@ -784,12 +647,12 @@
                             <value>Medicamento</value>
                         </name>
                         <value>
-                            <value>ACITRETINA 10 mg cápsula</value>
+                            <value>ALBENDAZOL 200 mg comprimido</value>
                             <defining_code>
                                 <terminology_id>
                                     <value>HORUS</value>
                                 </terminology_id>
-                                <code_string>BR038719</code_string>
+                                <code_string>BR0269628</code_string>
                             </defining_code>
                         </value>
                     </Medicamento>
@@ -798,12 +661,12 @@
                             <value>Forma farmacêutica</value>
                         </name>
                         <value>
-                            <value>ACITRETINA 10 mg cápsula</value>
+                            <value>ALBENDAZOL 200 mg comprimido</value>
                             <defining_code>
                                 <terminology_id>
                                     <value>HORUS</value>
                                 </terminology_id>
-                                <code_string>BR038719</code_string>
+                                <code_string>BR0269628</code_string>
                             </defining_code>
                         </value>
                     </Forma_farmacêutica>
@@ -829,39 +692,27 @@
                             <oe:value>1 comp 30 min antes do almoço</oe:value>
                         </value>
                     </Dose>
-                    <Dose_estruturada>
-                        <name>
-                            <value>Dose estruturada</value>
-                        </name>
-                        <Duração_do_tratamento>
-                            <name>
-                                <value>Duração do tratamento</value>
-                            </name>
-                            <value>
-                                <oe:value>P30D</oe:value>
-                            </value>
-                        </Duração_do_tratamento>
-                    </Dose_estruturada>
-                    <Detalhes_do_processo_medicação>
-                        <name>
-                            <value>Detalhes do processo medicação</value>
-                        </name>
-                        <Estado_do_medicamento>
-                            <name>
-                                <value>Estado do medicamento</value>
-                            </name>
-                            <value>
-                                <defining_code>
-                                    <terminology_id>
-                                        <value>local</value>
-                                    </terminology_id>
-                                    <code_string>at0050</code_string>
-                                </defining_code>
-                            </value>
-                        </Estado_do_medicamento>
-                    </Detalhes_do_processo_medicação>
                 </Item_de_medicação>
             </data>
+        </Linha_de_Medicação>
+        <Linha_de_Medicação>
+            <name>
+                <value>Linha de Medicação</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data></data>
         </Linha_de_Medicação>
     </Lista_de_medicamentos>
     <Dados_do_desfecho>
@@ -890,9 +741,6 @@
                     <name>
                         <value>Conduta</value>
                     </name>
-                    <value>
-                        <value>Retorno para cuidado continuado/programado</value>
-                    </value>
                 </Conduta>
                 <Solicitações_de_encaminhamentos>
                     <name>
@@ -902,9 +750,6 @@
                         <name>
                             <value>Encaminhamento</value>
                         </name>
-                        <value>
-                            <oe:value>Interno no dia</oe:value>
-                        </value>
                     </Encaminhamento>
                 </Solicitações_de_encaminhamentos>
             </data>
