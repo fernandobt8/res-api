@@ -78,11 +78,6 @@
                         </defining_code>
                     </value>
                 </Tipo_de_atendimento>
-                <Localização_atribuída_ao_paciente>
-                    <name>
-                        <value>Localização atribuída ao paciente</value>
-                    </name>
-                </Localização_atribuída_ao_paciente>
                 <Identificação_do_profissional>
                     <name>
                         <value>Identificação do profissional</value>
@@ -91,11 +86,17 @@
                         <name>
                             <value>CNS</value>
                         </name>
+                        <value>
+                            <oe:value>703006821796679</oe:value>
+                        </value>
                     </CNS>
                     <CBO>
                         <name>
                             <value>CBO</value>
                         </name>
+                        <value>
+                            <oe:value>2235-65</oe:value>
+                        </value>
                     </CBO>
                     <É_o_responsável_pelo_atendimento_quest_>
                         <name>
@@ -106,21 +107,72 @@
                         </value>
                     </É_o_responsável_pelo_atendimento_quest_>
                 </Identificação_do_profissional>
-                <Identificação_da_equipe_de_saúde>
+                                <Identificação_do_profissional>
                     <name>
-                        <value>Identificação da equipe de saúde</value>
+                        <value>Identificação do profissional</value>
                     </name>
-                </Identificação_da_equipe_de_saúde>
+                    <CNS>
+                        <name>
+                            <value>CNS</value>
+                        </name>
+                        <value>
+                            <oe:value>703006821796679</oe:value>
+                        </value>
+                    </CNS>
+                    <CBO>
+                        <name>
+                            <value>CBO</value>
+                        </name>
+                        <value>
+                            <oe:value>2235-65</oe:value>
+                        </value>
+                    </CBO>
+                    <É_o_responsável_pelo_atendimento_quest_>
+                        <name>
+                            <value>É o responsável pelo atendimento</value>
+                        </name>
+                        <value>
+                            <oe:value>true</oe:value>
+                        </value>
+                    </É_o_responsável_pelo_atendimento_quest_>
+                </Identificação_do_profissional>
+                <Identificação_do_profissional>
+                    <name>
+                        <value>Identificação do profissional</value>
+                    </name>
+                    <CNS>
+                        <name>
+                            <value>CNS</value>
+                        </name>
+                        <value>
+                            <oe:value>898001153249911</oe:value>
+                        </value>
+                    </CNS>
+                    <CBO>
+                        <name>
+                            <value>CBO</value>
+                        </name>
+                        <value>
+                            <oe:value>2235-65</oe:value>
+                        </value>
+                    </CBO>
+                    <É_o_responsável_pelo_atendimento_quest_>
+                        <name>
+                            <value>É o responsável pelo atendimento</value>
+                        </name>
+                        <value>
+                            <oe:value>false</oe:value>
+                        </value>
+                    </É_o_responsável_pelo_atendimento_quest_>
+                </Identificação_do_profissional>
                 <Data_fslash_hora_da_admissão>
                     <name>
                         <value>Data/hora da admissão</value>
                     </name>
+                    <value>
+                        <oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
+                    </value>
                 </Data_fslash_hora_da_admissão>
-                <Turno_de_atendimento>
-                    <name>
-                        <value>Turno de atendimento</value>
-                    </name>
-                </Turno_de_atendimento>
             </data>
         </Admissão_do_paciente>
     </Caracterização_da_consulta>
@@ -128,189 +180,6 @@
         <name>
             <value>Medições e observações</value>
         </name>
-        <Avaliação_antropométrica>
-            <name>
-                <value>Avaliação antropométrica</value>
-            </name>
-            <Peso_corporal>
-                <name>
-                    <value>Peso corporal</value>
-                </name>
-                <language>
-                    <terminology_id>
-                        <value>ISO_639-1</value>
-                    </terminology_id>
-                    <code_string>pt</code_string>
-                </language>
-                <encoding>
-                    <terminology_id>
-                        <value>IANA_character-sets</value>
-                    </terminology_id>
-                    <code_string>UTF-8</code_string>
-                </encoding>
-                <subject></subject>
-                <data>
-                    <Qualquer_evento_as_Point_Event>
-                        <name>
-                            <value>Qualquer evento</value>
-                        </name>
-                        <time>
-                            <oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
-                        </time>
-                        <data>
-                            <Peso>
-                                <name>
-                                    <value>Peso</value>
-                                </name>
-                            </Peso>
-                        </data>
-                        <state/>
-                    </Qualquer_evento_as_Point_Event>
-                </data>
-            </Peso_corporal>
-            <Altura__fslash__comprimento>
-                <name>
-                    <value>Altura / comprimento</value>
-                </name>
-                <language>
-                    <terminology_id>
-                        <value>ISO_639-1</value>
-                    </terminology_id>
-                    <code_string>pt</code_string>
-                </language>
-                <encoding>
-                    <terminology_id>
-                        <value>IANA_character-sets</value>
-                    </terminology_id>
-                    <code_string>UTF-8</code_string>
-                </encoding>
-                <subject></subject>
-                <data>
-                    <Qualquer_evento_as_Point_Event>
-                        <name>
-                            <value>Qualquer evento</value>
-                        </name>
-                        <time>
-                            <oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
-                        </time>
-                        <data>
-                            <Altura__fslash__comprimento>
-                                <name>
-                                    <value>Altura / comprimento</value>
-                                </name>
-                            </Altura__fslash__comprimento>
-                        </data>
-                        <state/>
-                    </Qualquer_evento_as_Point_Event>
-                </data>
-            </Altura__fslash__comprimento>
-        </Avaliação_antropométrica>
-        <Gestante>
-            <name>
-                <value>Gestante</value>
-            </name>
-            <Ciclo_menstrual>
-                <name>
-                    <value>Ciclo menstrual</value>
-                </name>
-                <language>
-                    <terminology_id>
-                        <value>ISO_639-1</value>
-                    </terminology_id>
-                    <code_string>pt</code_string>
-                </language>
-                <encoding>
-                    <terminology_id>
-                        <value>IANA_character-sets</value>
-                    </terminology_id>
-                    <code_string>UTF-8</code_string>
-                </encoding>
-                <subject></subject>
-                <data>
-                    <Qualquer_evento_as_Point_Event>
-                        <name>
-                            <value>Qualquer evento</value>
-                        </name>
-                        <time>
-                            <oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
-                        </time>
-                        <data>
-                            <DUM__openBrkt_Data_da_última_menstruação_closeBrkt_>
-                                <name>
-                                    <value>DUM (Data da última menstruação)</value>
-                                </name>
-                            </DUM__openBrkt_Data_da_última_menstruação_closeBrkt_>
-                        </data>
-                        <state/>
-                    </Qualquer_evento_as_Point_Event>
-                </data>
-            </Ciclo_menstrual>
-            <Gestação>
-                <name>
-                    <value>Gestação</value>
-                </name>
-                <language>
-                    <terminology_id>
-                        <value>ISO_639-1</value>
-                    </terminology_id>
-                    <code_string>pt</code_string>
-                </language>
-                <encoding>
-                    <terminology_id>
-                        <value>IANA_character-sets</value>
-                    </terminology_id>
-                    <code_string>UTF-8</code_string>
-                </encoding>
-                <subject></subject>
-                <data>
-                    <Data_da_medida>
-                        <name>
-                            <value>Data da medida</value>
-                        </name>
-                        <time>
-                            <oe:value>2016-05-23</oe:value>
-                        </time>
-                        <data>
-                            <Idade_gestacional>
-                                <name>
-                                    <value>Idade gestacional</value>
-                                </name>
-                            </Idade_gestacional>
-                        </data>
-                    </Data_da_medida>
-                </data>
-            </Gestação>
-            <Sumário_obstétrico>
-                <name>
-                    <value>Sumário obstétrico</value>
-                </name>
-                <language>
-                    <terminology_id>
-                        <value>ISO_639-1</value>
-                    </terminology_id>
-                    <code_string>pt</code_string>
-                </language>
-                <encoding>
-                    <terminology_id>
-                        <value>IANA_character-sets</value>
-                    </terminology_id>
-                    <code_string>UTF-8</code_string>
-                </encoding>
-                <subject></subject>
-                <data>
-                    <Gestas_prévias>
-                        <name>
-                            <value>Gestas prévias</value>
-                        </name>
-                    </Gestas_prévias>
-                    <Partos>
-                        <name>
-                            <value>Partos</value>
-                        </name>
-                    </Partos>
-                </data>
-            </Sumário_obstétrico>
-        </Gestante>
     </Medições_e_observações>
     <Problemas__fslash__diagnósticos_avaliados>
         <name>
@@ -339,21 +208,6 @@
                         <value>Problema / Diagnóstico</value>
                     </name>
                 </Problema__fslash__Diagnóstico>
-                <Estado_do_Problema__fslash__Diagnóstico>
-                    <name>
-                        <value>Estado do Problema / Diagnóstico</value>
-                    </name>
-                    <Estado_do_problema_no_final_da_consulta>
-                        <name>
-                            <value>Estado do problema no final da consulta</value>
-                        </name>
-                    </Estado_do_problema_no_final_da_consulta>
-                    <Estado_de_resolução_do_problema>
-                        <name>
-                            <value>Estado de resolução do problema</value>
-                        </name>
-                    </Estado_de_resolução_do_problema>
-                </Estado_do_Problema__fslash__Diagnóstico>
             </data>
         </Problema__fslash_Diagnóstico>
         <Problema__fslash_Diagnóstico>
@@ -378,6 +232,15 @@
                     <name>
                         <value>Problema / Diagnóstico</value>
                     </name>
+                    <value>
+                        <value>Febre de Chikungunya</value>
+                        <defining_code>
+                            <terminology_id>
+                                <value>CID10</value>
+                            </terminology_id>
+                            <code_string>A920</code_string>
+                        </defining_code>
+                    </value>
                 </Problema__fslash__Diagnóstico>
                 <Estado_do_Problema__fslash__Diagnóstico>
                     <name>
@@ -417,19 +280,42 @@
                         <oe:value>leite</oe:value>
                     </value>
                 </Agente__fslash__substância_específica>
-                <Gravidade>
+                <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
                     <name>
-                        <value>Gravidade</value>
+                        <value>Categoria do agente causador da alergia / reação adversa</value>
                     </name>
                     <value>
-                        <defining_code>
-                            <terminology_id>
-                                <value>local</value>
-                            </terminology_id>
-                            <code_string>at0102</code_string>
-                        </defining_code>
+                        <oe:value>Alimento</oe:value>
                     </value>
-                </Gravidade>
+                </Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+            </data>
+        </Risco_de_Reação_Adversa>
+        <Risco_de_Reação_Adversa>
+            <name>
+                <value>Risco de Reação Adversa</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Agente__fslash__substância_específica>
+                    <name>
+                        <value>Agente / substância específica</value>
+                    </name>
+                    <value>
+                        <oe:value>leite</oe:value>
+                    </value>
+                </Agente__fslash__substância_específica>
                 <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
                     <name>
                         <value>Categoria do agente causador da alergia / reação adversa</value>
@@ -442,30 +328,6 @@
                     <name>
                         <value>Evento da reação</value>
                     </name>
-                    <Manifestação>
-                        <name>
-                            <value>Manifestação</value>
-                        </name>
-                        <value>
-                            <oe:value>início há 2 anos, percebeu mau estar após ingestão de leite e derivados</oe:value>
-                        </value>
-                    </Manifestação>
-                    <Evolução_da_alergia__fslash__reação_adversa>
-                        <name>
-                            <value>Evolução da alergia / reação adversa</value>
-                        </name>
-                        <value>
-                            <oe:value>sob controle</oe:value>
-                        </value>
-                    </Evolução_da_alergia__fslash__reação_adversa>
-                    <Data_da_instalação_da_alergia__fslash__reação_adversa>
-                        <name>
-                            <value>Data da instalação da alergia / reação adversa</value>
-                        </name>
-                        <value>
-                            <oe:value>2014-05</oe:value>
-                        </value>
-                    </Data_da_instalação_da_alergia__fslash__reação_adversa>
                 </Evento_da_reação>
             </data>
         </Risco_de_Reação_Adversa>

@@ -513,6 +513,136 @@
                 </Estado_do_Problema__fslash__Diagnóstico>
             </data>
         </Problema__fslash_Diagnóstico>
+        <Problema__fslash_Diagnóstico>
+            <name>
+                <value>Problema /Diagnóstico</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Problema / Diagnóstico</value>
+                    </name>
+                    <value>
+                        <value>LIMITAÇÃO FUNCIONAL/INCAPACIDADE</value>
+                        <defining_code>
+                            <terminology_id>
+                                <value>CIAP2</value>
+                            </terminology_id>
+                            <code_string>T28</code_string>
+                        </defining_code>
+                    </value>
+                </Problema__fslash__Diagnóstico>
+                <Estado_do_Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Estado do Problema / Diagnóstico</value>
+                    </name>
+                    <Estado_do_problema_no_final_da_consulta>
+                        <name>
+                            <value>Estado do problema no final da consulta</value>
+                        </name>
+                        <value>
+                            <defining_code>
+                                <terminology_id>
+                                    <value>local</value>
+                                </terminology_id>
+                                <code_string>at0027</code_string>
+                            </defining_code>
+                        </value>
+                    </Estado_do_problema_no_final_da_consulta>
+                    <Estado_de_resolução_do_problema>
+                        <name>
+                            <value>Estado de resolução do problema</value>
+                        </name>
+                        <value>
+                            <defining_code>
+                                <terminology_id>
+                                    <value>local</value>
+                                </terminology_id>
+                                <code_string>at0084</code_string>
+                            </defining_code>
+                        </value>
+                    </Estado_de_resolução_do_problema>
+                </Estado_do_Problema__fslash__Diagnóstico>
+            </data>
+        </Problema__fslash_Diagnóstico>
+        <Problema__fslash_Diagnóstico>
+            <name>
+                <value>Problema /Diagnóstico</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Problema / Diagnóstico</value>
+                    </name>
+                    <value>
+                        <value>ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.</value>
+                        <defining_code>
+                            <terminology_id>
+                                <value></value>
+                            </terminology_id>
+                            <code_string></code_string>
+                        </defining_code>
+                    </value>
+                </Problema__fslash__Diagnóstico>
+                <Estado_do_Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Estado do Problema / Diagnóstico</value>
+                    </name>
+                    <Estado_do_problema_no_final_da_consulta>
+                        <name>
+                            <value>Estado do problema no final da consulta</value>
+                        </name>
+                        <value>
+                            <defining_code>
+                                <terminology_id>
+                                    <value>local</value>
+                                </terminology_id>
+                                <code_string>at0026</code_string>
+                            </defining_code>
+                        </value>
+                    </Estado_do_problema_no_final_da_consulta>
+                    <Estado_de_resolução_do_problema>
+                        <name>
+                            <value>Estado de resolução do problema</value>
+                        </name>
+                        <value>
+                            <defining_code>
+                                <terminology_id>
+                                    <value>local</value>
+                                </terminology_id>
+                                <code_string>at0087</code_string>
+                            </defining_code>
+                        </value>
+                    </Estado_de_resolução_do_problema>
+                </Estado_do_Problema__fslash__Diagnóstico>
+            </data>
+        </Problema__fslash_Diagnóstico>
     </Problemas__fslash__diagnósticos_avaliados>
     <Alergias_e_reações_adversas>
         <name>
@@ -544,19 +674,6 @@
                         <oe:value>leite</oe:value>
                     </value>
                 </Agente__fslash__substância_específica>
-                <Gravidade>
-                    <name>
-                        <value>Gravidade</value>
-                    </name>
-                    <value>
-                        <defining_code>
-                            <terminology_id>
-                                <value>local</value>
-                            </terminology_id>
-                            <code_string>at0102</code_string>
-                        </defining_code>
-                    </value>
-                </Gravidade>
                 <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
                     <name>
                         <value>Categoria do agente causador da alergia / reação adversa</value>
