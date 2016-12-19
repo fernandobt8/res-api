@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
@@ -124,6 +125,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("25", resumoConsulta.getMedicamentos().get(0).getCodigoViaAdministracao());
 			Assert.assertEquals("1 comp 30 min antes do almoço", resumoConsulta.getMedicamentos().get(0).getDescricaoDose());
 			Assert.assertEquals("P30D", resumoConsulta.getMedicamentos().get(0).getDuracaoTratamento());
+			Assert.assertEquals(ResABEstadoMedicamentoEnum.ATIVA, resumoConsulta.getMedicamentos().get(0).getEstadoMedicamento());
 
 			Assert.assertEquals("ACITRETINA 10 mg cápsula", resumoConsulta.getMedicamentos().get(1).getNomeMedicamento());
 			Assert.assertEquals("BR038719", resumoConsulta.getMedicamentos().get(1).getCodigoMedicamentoCatmat());
@@ -133,6 +135,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("29", resumoConsulta.getMedicamentos().get(1).getCodigoViaAdministracao());
 			Assert.assertEquals("1 comp intervalo 3", resumoConsulta.getMedicamentos().get(1).getDescricaoDose());
 			Assert.assertEquals("P5W", resumoConsulta.getMedicamentos().get(1).getDuracaoTratamento());
+			Assert.assertEquals(ResABEstadoMedicamentoEnum.TRATAMENTO_COMPLETO, resumoConsulta.getMedicamentos().get(1).getEstadoMedicamento());
 
 			Assert.assertEquals("Retorno para cuidado continuado/programado", resumoConsulta.getCondutas().get(0).getDescricao());
 			Assert.assertEquals("Alta do episódio", resumoConsulta.getCondutas().get(1).getDescricao());

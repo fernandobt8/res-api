@@ -855,6 +855,7 @@
                         <name>
                             <value>Data da instalação da alergia / reação adversa</value>
                         </name>
+                        <null_flavour></null_flavour>
                     </Data_da_instalação_da_alergia__fslash__reação_adversa>
                 </Evento_da_reação>
             </data>
@@ -1265,7 +1266,7 @@
                                     <terminology_id>
                                         <value>local</value>
                                     </terminology_id>
-                                    <code_string>at0051</code_string>
+                                    <code_string>at0053</code_string>
                                 </defining_code>
                             </value>
                         </Estado_do_medicamento>

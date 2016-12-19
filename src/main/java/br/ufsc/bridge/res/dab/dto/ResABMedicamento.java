@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.util.XPathFactoryAssist;
 
 @Getter
@@ -20,6 +21,7 @@ public class ResABMedicamento {
 	private String codigoViaAdministracao;
 	private String descricaoDose;
 	private String duracaoTratamento;
+	private ResABEstadoMedicamentoEnum estadoMedicamento;
 
 	public ResABMedicamento(XPathFactoryAssist xPathMedicamento) throws XPathExpressionException {
 		this.nomeMedicamento = xPathMedicamento.getString("./Medicamento/value/value");
@@ -30,5 +32,7 @@ public class ResABMedicamento {
 		this.codigoViaAdministracao = xPathMedicamento.getString("./Via_de_administração/value/defining_code/code_string");
 		this.descricaoDose = xPathMedicamento.getString("./Dose/value/value");
 		this.duracaoTratamento = xPathMedicamento.getString("./Dose_estruturada/Duração_do_tratamento/value/value");
+		this.estadoMedicamento = ResABEstadoMedicamentoEnum
+				.getByCodigo(xPathMedicamento.getString("./Detalhes_do_processo_medicação/Estado_do_medicamento/value/defining_code/code_string"));
 	}
 }
