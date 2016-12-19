@@ -19,7 +19,7 @@ public class ResABMedicamento {
 	private String descricaoViaAdministracao;
 	private String codigoViaAdministracao;
 	private String descricaoDose;
-	private String codigoDoseEstruturada;
+	private String duracaoTratamento;
 
 	public ResABMedicamento(XPathFactoryAssist xPathMedicamento) throws XPathExpressionException {
 		this.nomeMedicamento = xPathMedicamento.getString("./Medicamento/value/value");
@@ -29,6 +29,6 @@ public class ResABMedicamento {
 		this.descricaoViaAdministracao = xPathMedicamento.getString("./Via_de_administração/value/value");
 		this.codigoViaAdministracao = xPathMedicamento.getString("./Via_de_administração/value/defining_code/code_string");
 		this.descricaoDose = xPathMedicamento.getString("./Dose/value/value");
-		this.codigoDoseEstruturada = xPathMedicamento.getString("./Dose_estruturada/Duração_do_tratamento/value/value");
+		this.duracaoTratamento = xPathMedicamento.getString("./Dose_estruturada/Duração_do_tratamento/value/value");
 	}
 }

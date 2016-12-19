@@ -123,7 +123,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("Oral", resumoConsulta.getMedicamentos().get(0).getDescricaoViaAdministracao());
 			Assert.assertEquals("25", resumoConsulta.getMedicamentos().get(0).getCodigoViaAdministracao());
 			Assert.assertEquals("1 comp 30 min antes do almoço", resumoConsulta.getMedicamentos().get(0).getDescricaoDose());
-			Assert.assertEquals("P30D", resumoConsulta.getMedicamentos().get(0).getCodigoDoseEstruturada());
+			Assert.assertEquals("P30D", resumoConsulta.getMedicamentos().get(0).getDuracaoTratamento());
 
 			Assert.assertEquals("ACITRETINA 10 mg cápsula", resumoConsulta.getMedicamentos().get(1).getNomeMedicamento());
 			Assert.assertEquals("BR038719", resumoConsulta.getMedicamentos().get(1).getCodigoMedicamentoCatmat());
@@ -132,7 +132,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("NASAL", resumoConsulta.getMedicamentos().get(1).getDescricaoViaAdministracao());
 			Assert.assertEquals("29", resumoConsulta.getMedicamentos().get(1).getCodigoViaAdministracao());
 			Assert.assertEquals("1 comp intervalo 3", resumoConsulta.getMedicamentos().get(1).getDescricaoDose());
-			Assert.assertEquals("P5W", resumoConsulta.getMedicamentos().get(1).getCodigoDoseEstruturada());
+			Assert.assertEquals("P5W", resumoConsulta.getMedicamentos().get(1).getDuracaoTratamento());
 
 			Assert.assertEquals("Retorno para cuidado continuado/programado", resumoConsulta.getCondutas().get(0).getDescricao());
 			Assert.assertEquals("Alta do episódio", resumoConsulta.getCondutas().get(1).getDescricao());
