@@ -1102,12 +1102,12 @@
                             <value>Forma farmacêutica</value>
                         </name>
                         <value>
-                            <value>ALBENDAZOL 200 mg comprimido</value>
+                            <value>ALBENDAZOL 200 mg cmp FF</value>
                             <defining_code>
                                 <terminology_id>
                                     <value>HORUS</value>
                                 </terminology_id>
-                                <code_string>BR0269628</code_string>
+                                <code_string>BR0269629</code_string>
                             </defining_code>
                         </value>
                     </Forma_farmacêutica>
@@ -1208,12 +1208,12 @@
                             <value>Forma farmacêutica</value>
                         </name>
                         <value>
-                            <value>ACITRETINA 10 mg cápsula</value>
+                            <value>ACITRETINA</value>
                             <defining_code>
                                 <terminology_id>
                                     <value>HORUS</value>
                                 </terminology_id>
-                                <code_string>BR038719</code_string>
+                                <code_string>BR038720</code_string>
                             </defining_code>
                         </value>
                     </Forma_farmacêutica>
@@ -1222,12 +1222,12 @@
                             <value>Via de administração</value>
                         </name>
                         <value>
-                            <value>Oral</value>
+                            <value>NASAL</value>
                             <defining_code>
                                 <terminology_id>
                                     <value>ANVISA-VIAS-ADM</value>
                                 </terminology_id>
-                                <code_string>25</code_string>
+                                <code_string>29</code_string>
                             </defining_code>
                         </value>
                     </Via_de_administração>
@@ -1236,7 +1236,7 @@
                             <value>Dose</value>
                         </name>
                         <value>
-                            <oe:value>1 comp 30 min antes do almoço</oe:value>
+                            <oe:value>1 comp intervalo 3</oe:value>
                         </value>
                     </Dose>
                     <Dose_estruturada>
@@ -1248,7 +1248,7 @@
                                 <value>Duração do tratamento</value>
                             </name>
                             <value>
-                                <oe:value>P30D</oe:value>
+                                <oe:value>P5W</oe:value>
                             </value>
                         </Duração_do_tratamento>
                     </Dose_estruturada>
@@ -1265,7 +1265,7 @@
                                     <terminology_id>
                                         <value>local</value>
                                     </terminology_id>
-                                    <code_string>at0050</code_string>
+                                    <code_string>at0051</code_string>
                                 </defining_code>
                             </value>
                         </Estado_do_medicamento>

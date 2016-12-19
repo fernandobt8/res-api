@@ -116,7 +116,23 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("433465004", resumoConsulta.getProcedimentos().get(3).getCodigo());
 			Assert.assertEquals("COLETA DE MATERIAL P/ EXAME LABORATORIAL", resumoConsulta.getProcedimentos().get(3).getNome());
 
-			resumoConsulta.getMedicamentos();
+			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resumoConsulta.getMedicamentos().get(0).getNomeMedicamento());
+			Assert.assertEquals("BR0269628", resumoConsulta.getMedicamentos().get(0).getCodigoMedicamentoCatmat());
+			Assert.assertEquals("ALBENDAZOL 200 mg cmp FF", resumoConsulta.getMedicamentos().get(0).getDescricaoFormaFarmaceutica());
+			Assert.assertEquals("BR0269629", resumoConsulta.getMedicamentos().get(0).getCodigoFormaFarmaceutica());
+			Assert.assertEquals("Oral", resumoConsulta.getMedicamentos().get(0).getDescricaoViaAdministracao());
+			Assert.assertEquals("25", resumoConsulta.getMedicamentos().get(0).getCodigoViaAdministracao());
+			Assert.assertEquals("1 comp 30 min antes do almoço", resumoConsulta.getMedicamentos().get(0).getDescricaoDose());
+			Assert.assertEquals("P30D", resumoConsulta.getMedicamentos().get(0).getCodigoDoseEstruturada());
+
+			Assert.assertEquals("ACITRETINA 10 mg cápsula", resumoConsulta.getMedicamentos().get(1).getNomeMedicamento());
+			Assert.assertEquals("BR038719", resumoConsulta.getMedicamentos().get(1).getCodigoMedicamentoCatmat());
+			Assert.assertEquals("ACITRETINA", resumoConsulta.getMedicamentos().get(1).getDescricaoFormaFarmaceutica());
+			Assert.assertEquals("BR038720", resumoConsulta.getMedicamentos().get(1).getCodigoFormaFarmaceutica());
+			Assert.assertEquals("NASAL", resumoConsulta.getMedicamentos().get(1).getDescricaoViaAdministracao());
+			Assert.assertEquals("29", resumoConsulta.getMedicamentos().get(1).getCodigoViaAdministracao());
+			Assert.assertEquals("1 comp intervalo 3", resumoConsulta.getMedicamentos().get(1).getDescricaoDose());
+			Assert.assertEquals("P5W", resumoConsulta.getMedicamentos().get(1).getCodigoDoseEstruturada());
 
 			Assert.assertEquals("Retorno para cuidado continuado/programado", resumoConsulta.getCondutas().get(0).getDescricao());
 			Assert.assertEquals("Alta do episódio", resumoConsulta.getCondutas().get(1).getDescricao());
@@ -124,7 +140,6 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("Interno no dia", resumoConsulta.getEncaminhamentos().get(0));
 			Assert.assertEquals("Externo no dia", resumoConsulta.getEncaminhamentos().get(1));
 			Assert.assertEquals("Agendamento", resumoConsulta.getEncaminhamentos().get(2));
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
