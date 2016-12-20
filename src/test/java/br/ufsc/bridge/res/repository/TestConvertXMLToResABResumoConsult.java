@@ -8,11 +8,18 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
+import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
+import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
+import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
+import br.ufsc.bridge.res.dab.dto.ResABMedicamento;
+import br.ufsc.bridge.res.dab.dto.ResABProblemaDiagnostico;
+import br.ufsc.bridge.res.dab.dto.ResABProcedimento;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 
 public class TestConvertXMLToResABResumoConsult {
@@ -28,22 +35,24 @@ public class TestConvertXMLToResABResumoConsult {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 			Assert.assertEquals(ResABTipoAtendimentoEnum.CONSULTA_AGENDADA, resumoConsulta.getTipoAtendimento());
 			Assert.assertEquals("4254160", resumoConsulta.getCnes());
-
 			Assert.assertEquals("1282844269", resumoConsulta.getIne());
 
 			Assert.assertEquals(3, resumoConsulta.getProfissionais().size());
 
-			Assert.assertEquals("703006821796679", resumoConsulta.getProfissionais().get(0).getCns());
-			Assert.assertEquals("2235-65", resumoConsulta.getProfissionais().get(0).getCbo());
-			Assert.assertEquals(true, resumoConsulta.getProfissionais().get(0).isResponsavel());
+			ResABIdentificacaoProfissional resABProfissional1 = resumoConsulta.getProfissionais().get(0);
+			Assert.assertEquals("703006821796679", resABProfissional1.getCns());
+			Assert.assertEquals("2235-65", resABProfissional1.getCbo());
+			Assert.assertEquals(true, resABProfissional1.isResponsavel());
 
-			Assert.assertEquals("707000801749036", resumoConsulta.getProfissionais().get(1).getCns());
-			Assert.assertEquals("2236-05", resumoConsulta.getProfissionais().get(1).getCbo());
-			Assert.assertEquals(false, resumoConsulta.getProfissionais().get(1).isResponsavel());
+			ResABIdentificacaoProfissional resABProfissional2 = resumoConsulta.getProfissionais().get(1);
+			Assert.assertEquals("707000801749036", resABProfissional2.getCns());
+			Assert.assertEquals("2236-05", resABProfissional2.getCbo());
+			Assert.assertEquals(false, resABProfissional2.isResponsavel());
 
-			Assert.assertEquals("898001153249911", resumoConsulta.getProfissionais().get(2).getCns());
-			Assert.assertEquals("2235-64", resumoConsulta.getProfissionais().get(2).getCbo());
-			Assert.assertEquals(true, resumoConsulta.getProfissionais().get(2).isResponsavel());
+			ResABIdentificacaoProfissional resABProfissional3 = resumoConsulta.getProfissionais().get(2);
+			Assert.assertEquals("898001153249911", resABProfissional3.getCns());
+			Assert.assertEquals("2235-64", resABProfissional3.getCbo());
+			Assert.assertEquals(true, resABProfissional3.isResponsavel());
 
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 			String dateInString = "2016-05-23T15:00:00.000-03:00";
@@ -64,94 +73,107 @@ public class TestConvertXMLToResABResumoConsult {
 
 			Assert.assertEquals(3, resumoConsulta.getProblemasDiagnosticos().size());
 
-			Assert.assertEquals("A920", resumoConsulta.getProblemasDiagnosticos().get(0).getCodigo());
-			Assert.assertEquals("Febre de Chikungunya", resumoConsulta.getProblemasDiagnosticos().get(0).getDescricao());
-			Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resumoConsulta.getProblemasDiagnosticos().get(0).getTipo());
+			ResABProblemaDiagnostico resABProblemaDiagnostico1 = resumoConsulta.getProblemasDiagnosticos().get(0);
+			Assert.assertEquals("A920", resABProblemaDiagnostico1.getCodigo());
+			Assert.assertEquals("Febre de Chikungunya", resABProblemaDiagnostico1.getDescricao());
+			Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico1.getTipo());
 
-			Assert.assertEquals("T28", resumoConsulta.getProblemasDiagnosticos().get(1).getCodigo());
-			Assert.assertEquals("LIMITAÇÃO FUNCIONAL/INCAPACIDADE", resumoConsulta.getProblemasDiagnosticos().get(1).getDescricao());
-			Assert.assertEquals(ResABTipoProblemaDiagnostico.CIAP, resumoConsulta.getProblemasDiagnosticos().get(1).getTipo());
+			ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
+			Assert.assertEquals("T28", resABProblemaDiagnostico2.getCodigo());
+			Assert.assertEquals("LIMITAÇÃO FUNCIONAL/INCAPACIDADE", resABProblemaDiagnostico2.getDescricao());
+			Assert.assertEquals(ResABTipoProblemaDiagnostico.CIAP, resABProblemaDiagnostico2.getTipo());
 
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(2).getCodigo());
-			Assert.assertEquals("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.",
-					resumoConsulta.getProblemasDiagnosticos().get(2).getDescricao());
-			Assert.assertEquals(null, resumoConsulta.getProblemasDiagnosticos().get(2).getTipo());
+			ResABProblemaDiagnostico resABProblemaDiagnostico3 = resumoConsulta.getProblemasDiagnosticos().get(2);
+			Assert.assertNull(resABProblemaDiagnostico3.getCodigo());
+			Assert.assertEquals("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.", resABProblemaDiagnostico3.getDescricao());
+			Assert.assertNull(resABProblemaDiagnostico3.getTipo());
 
 			Assert.assertEquals(2, resumoConsulta.getAlergias().size());
 
-			Assert.assertEquals(ResABGravidadeEnum.BAIXO, resumoConsulta.getAlergias().get(0).getGravidade());
-			Assert.assertEquals("Alimento", resumoConsulta.getAlergias().get(0).getCategoria());
-			Assert.assertEquals("leite", resumoConsulta.getAlergias().get(0).getAgente());
+			ResABAlergiaReacoes resABAlergiaReacoes1 = resumoConsulta.getAlergias().get(0);
+			Assert.assertEquals(ResABGravidadeEnum.BAIXO, resABAlergiaReacoes1.getGravidade());
+			Assert.assertEquals("Alimento", resABAlergiaReacoes1.getCategoria());
+			Assert.assertEquals("leite", resABAlergiaReacoes1.getAgente());
 
 			formatter = new SimpleDateFormat("yyyy-MM");
 			dateInString = "2014-05";
-			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getDataInstalacao());
-			Assert.assertEquals("sob controle", resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getEvolucaoAlergia());
-			Assert.assertEquals("início há 2 anos, percebeu mau estar após ingestão de leite e derivados",
-					resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getManifestacao());
+			ResABEventoReacao resABAlergia1EventoReacao1 = resABAlergiaReacoes1.getEventoReacao().get(0);
+			Assert.assertEquals(formatter.parse(dateInString), resABAlergia1EventoReacao1.getDataInstalacao());
+			Assert.assertEquals("sob controle", resABAlergia1EventoReacao1.getEvolucaoAlergia());
+			Assert.assertEquals("início há 2 anos, percebeu mau estar após ingestão de leite e derivados", resABAlergia1EventoReacao1.getManifestacao());
 
 			formatter = new SimpleDateFormat("yyyy-MM-dd");
 			dateInString = "2016-07-09";
-			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getAlergias().get(0).getEventoReacao().get(1).getDataInstalacao());
-			Assert.assertEquals("sob cautela", resumoConsulta.getAlergias().get(0).getEventoReacao().get(1).getEvolucaoAlergia());
-			Assert.assertEquals("início mês passado, percebeu piora após ingestão de leite e derivados",
-					resumoConsulta.getAlergias().get(0).getEventoReacao().get(1).getManifestacao());
+			ResABEventoReacao resABAlergia1EventoReacao2 = resABAlergiaReacoes1.getEventoReacao().get(1);
+			Assert.assertEquals(formatter.parse(dateInString), resABAlergia1EventoReacao2.getDataInstalacao());
+			Assert.assertEquals("sob cautela", resABAlergia1EventoReacao2.getEvolucaoAlergia());
+			Assert.assertEquals("início mês passado, percebeu piora após ingestão de leite e derivados", resABAlergia1EventoReacao2.getManifestacao());
 
-			Assert.assertEquals(ResABGravidadeEnum.ALTO, resumoConsulta.getAlergias().get(1).getGravidade());
-			Assert.assertEquals("Remedio", resumoConsulta.getAlergias().get(1).getCategoria());
-			Assert.assertEquals("metamizol", resumoConsulta.getAlergias().get(1).getAgente());
+			ResABAlergiaReacoes resABAlergiaReacoes2 = resumoConsulta.getAlergias().get(1);
+			Assert.assertEquals(ResABGravidadeEnum.ALTO, resABAlergiaReacoes2.getGravidade());
+			Assert.assertEquals("Remedio", resABAlergiaReacoes2.getCategoria());
+			Assert.assertEquals("metamizol", resABAlergiaReacoes2.getAgente());
 
 			formatter = new SimpleDateFormat("yyyy-MM");
 			dateInString = "2013-09";
-			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getDataInstalacao());
-			Assert.assertEquals("situação de alto risco", resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getEvolucaoAlergia());
-			Assert.assertEquals("início há 3 anos, percebeu mau estar após utilização do componente",
-					resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getManifestacao());
+			ResABEventoReacao resABAlergia2EventoReacao1 = resABAlergiaReacoes2.getEventoReacao().get(0);
+			Assert.assertEquals(formatter.parse(dateInString), resABAlergia2EventoReacao1.getDataInstalacao());
+			Assert.assertEquals("situação de alto risco", resABAlergia2EventoReacao1.getEvolucaoAlergia());
+			Assert.assertEquals("início há 3 anos, percebeu mau estar após utilização do componente", resABAlergia2EventoReacao1.getManifestacao());
 
-			Assert.assertNull(resumoConsulta.getAlergias().get(1).getEventoReacao().get(1).getDataInstalacao());
-			Assert.assertEquals("sob atenção", resumoConsulta.getAlergias().get(1).getEventoReacao().get(1).getEvolucaoAlergia());
-			Assert.assertEquals("piora nos meses seguintes", resumoConsulta.getAlergias().get(1).getEventoReacao().get(1).getManifestacao());
+			ResABEventoReacao resABAlergia2EventoReacao2 = resABAlergiaReacoes2.getEventoReacao().get(1);
+			Assert.assertNull(resABAlergia2EventoReacao2.getDataInstalacao());
+			Assert.assertEquals("sob atenção", resABAlergia2EventoReacao2.getEvolucaoAlergia());
+			Assert.assertEquals("piora nos meses seguintes", resABAlergia2EventoReacao2.getManifestacao());
 
 			Assert.assertEquals(4, resumoConsulta.getProcedimentos().size());
 
-			Assert.assertEquals("18512000", resumoConsulta.getProcedimentos().get(0).getCodigo());
-			Assert.assertEquals("TERAPIA INDIVIDUAL", resumoConsulta.getProcedimentos().get(0).getNome());
+			ResABProcedimento resABProcedimento1 = resumoConsulta.getProcedimentos().get(0);
+			Assert.assertEquals("18512000", resABProcedimento1.getCodigo());
+			Assert.assertEquals("TERAPIA INDIVIDUAL", resABProcedimento1.getNome());
 
-			Assert.assertEquals("167376008", resumoConsulta.getProcedimentos().get(1).getCodigo());
-			Assert.assertEquals("TESTE RÁPIDO DE GRAVIDEZ", resumoConsulta.getProcedimentos().get(1).getNome());
+			ResABProcedimento resABProcedimento2 = resumoConsulta.getProcedimentos().get(1);
+			Assert.assertEquals("167376008", resABProcedimento2.getCodigo());
+			Assert.assertEquals("TESTE RÁPIDO DE GRAVIDEZ", resABProcedimento2.getNome());
 
-			Assert.assertEquals("122869004", resumoConsulta.getProcedimentos().get(2).getCodigo());
-			Assert.assertEquals("AVALIAÇÃO ANTROPOMÉTRICA", resumoConsulta.getProcedimentos().get(2).getNome());
+			ResABProcedimento resABProcedimento3 = resumoConsulta.getProcedimentos().get(2);
+			Assert.assertEquals("122869004", resABProcedimento3.getCodigo());
+			Assert.assertEquals("AVALIAÇÃO ANTROPOMÉTRICA", resABProcedimento3.getNome());
 
-			Assert.assertEquals("433465004", resumoConsulta.getProcedimentos().get(3).getCodigo());
-			Assert.assertEquals("COLETA DE MATERIAL P/ EXAME LABORATORIAL", resumoConsulta.getProcedimentos().get(3).getNome());
+			ResABProcedimento resABProcedimento4 = resumoConsulta.getProcedimentos().get(3);
+			Assert.assertEquals("433465004", resABProcedimento4.getCodigo());
+			Assert.assertEquals("COLETA DE MATERIAL P/ EXAME LABORATORIAL", resABProcedimento4.getNome());
 
 			Assert.assertEquals(2, resumoConsulta.getMedicamentos().size());
 
-			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resumoConsulta.getMedicamentos().get(0).getNomeMedicamento());
-			Assert.assertEquals("BR0269628", resumoConsulta.getMedicamentos().get(0).getCodigoMedicamentoCatmat());
-			Assert.assertEquals("ALBENDAZOL 200 mg cmp FF", resumoConsulta.getMedicamentos().get(0).getDescricaoFormaFarmaceutica());
-			Assert.assertEquals("BR0269629", resumoConsulta.getMedicamentos().get(0).getCodigoFormaFarmaceutica());
-			Assert.assertEquals("Oral", resumoConsulta.getMedicamentos().get(0).getDescricaoViaAdministracao());
-			Assert.assertEquals("25", resumoConsulta.getMedicamentos().get(0).getCodigoViaAdministracao());
-			Assert.assertEquals("1 comp 30 min antes do almoço", resumoConsulta.getMedicamentos().get(0).getDescricaoDose());
-			Assert.assertEquals("P30D", resumoConsulta.getMedicamentos().get(0).getDuracaoTratamento());
-			Assert.assertEquals(ResABEstadoMedicamentoEnum.ATIVA, resumoConsulta.getMedicamentos().get(0).getEstadoMedicamento());
+			ResABMedicamento resABMedicamento1 = resumoConsulta.getMedicamentos().get(0);
+			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resABMedicamento1.getNomeMedicamento());
+			Assert.assertEquals("BR0269628", resABMedicamento1.getCodigoMedicamentoCatmat());
+			Assert.assertEquals("ALBENDAZOL 200 mg cmp FF", resABMedicamento1.getDescricaoFormaFarmaceutica());
+			Assert.assertEquals("BR0269629", resABMedicamento1.getCodigoFormaFarmaceutica());
+			Assert.assertEquals("Oral", resABMedicamento1.getDescricaoViaAdministracao());
+			Assert.assertEquals("25", resABMedicamento1.getCodigoViaAdministracao());
+			Assert.assertEquals("1 comp 30 min antes do almoço", resABMedicamento1.getDescricaoDose());
+			Assert.assertEquals("P30D", resABMedicamento1.getDuracaoTratamento());
+			Assert.assertEquals(ResABEstadoMedicamentoEnum.ATIVA, resABMedicamento1.getEstadoMedicamento());
 
-			Assert.assertEquals("ACITRETINA 10 mg cápsula", resumoConsulta.getMedicamentos().get(1).getNomeMedicamento());
-			Assert.assertEquals("BR038719", resumoConsulta.getMedicamentos().get(1).getCodigoMedicamentoCatmat());
-			Assert.assertEquals("ACITRETINA", resumoConsulta.getMedicamentos().get(1).getDescricaoFormaFarmaceutica());
-			Assert.assertEquals("BR038720", resumoConsulta.getMedicamentos().get(1).getCodigoFormaFarmaceutica());
-			Assert.assertEquals("NASAL", resumoConsulta.getMedicamentos().get(1).getDescricaoViaAdministracao());
-			Assert.assertEquals("29", resumoConsulta.getMedicamentos().get(1).getCodigoViaAdministracao());
-			Assert.assertEquals("1 comp intervalo 3", resumoConsulta.getMedicamentos().get(1).getDescricaoDose());
-			Assert.assertEquals("P5W", resumoConsulta.getMedicamentos().get(1).getDuracaoTratamento());
-			Assert.assertEquals(ResABEstadoMedicamentoEnum.TRATAMENTO_COMPLETO, resumoConsulta.getMedicamentos().get(1).getEstadoMedicamento());
+			ResABMedicamento resABMedicamento2 = resumoConsulta.getMedicamentos().get(1);
+			Assert.assertEquals("ACITRETINA 10 mg cápsula", resABMedicamento2.getNomeMedicamento());
+			Assert.assertEquals("BR038719", resABMedicamento2.getCodigoMedicamentoCatmat());
+			Assert.assertEquals("ACITRETINA", resABMedicamento2.getDescricaoFormaFarmaceutica());
+			Assert.assertEquals("BR038720", resABMedicamento2.getCodigoFormaFarmaceutica());
+			Assert.assertEquals("NASAL", resABMedicamento2.getDescricaoViaAdministracao());
+			Assert.assertEquals("29", resABMedicamento2.getCodigoViaAdministracao());
+			Assert.assertEquals("1 comp intervalo 3", resABMedicamento2.getDescricaoDose());
+			Assert.assertEquals("P5W", resABMedicamento2.getDuracaoTratamento());
+			Assert.assertEquals(ResABEstadoMedicamentoEnum.TRATAMENTO_COMPLETO, resABMedicamento2.getEstadoMedicamento());
 
 			Assert.assertEquals(2, resumoConsulta.getCondutas().size());
 
-			Assert.assertEquals("Retorno para cuidado continuado/programado", resumoConsulta.getCondutas().get(0).getDescricao());
-			Assert.assertEquals("Alta do episódio", resumoConsulta.getCondutas().get(1).getDescricao());
+			ResABCondutaEnum resABConduta1 = resumoConsulta.getCondutas().get(0);
+			Assert.assertEquals("Retorno para cuidado continuado/programado", resABConduta1.getDescricao());
+			ResABCondutaEnum resABCondutaEnum2 = resumoConsulta.getCondutas().get(1);
+			Assert.assertEquals("Alta do episódio", resABCondutaEnum2.getDescricao());
 
 			Assert.assertEquals(3, resumoConsulta.getEncaminhamentos().size());
 
@@ -170,85 +192,95 @@ public class TestConvertXMLToResABResumoConsult {
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		try {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-			Assert.assertNull("Turno", resumoConsulta.getTurno());
-			Assert.assertEquals("", resumoConsulta.getCnes());
+			Assert.assertNull(resumoConsulta.getTurno());
+			Assert.assertNull(resumoConsulta.getCnes());
 
-			Assert.assertEquals("Profissional", 1, resumoConsulta.getProfissionais().size());
-			Assert.assertEquals("", resumoConsulta.getProfissionais().get(0).getCns());
-			Assert.assertEquals("", resumoConsulta.getProfissionais().get(0).getCbo());
-			Assert.assertEquals(true, resumoConsulta.getProfissionais().get(0).isResponsavel());
+			Assert.assertEquals(1, resumoConsulta.getProfissionais().size());
+			ResABIdentificacaoProfissional resABProfissional1 = resumoConsulta.getProfissionais().get(0);
+			Assert.assertNull(resABProfissional1.getCns());
+			Assert.assertNull(resABProfissional1.getCbo());
+			Assert.assertEquals(true, resABProfissional1.isResponsavel());
+
 			Assert.assertNull(resumoConsulta.getDataAtendimento());
 
-			Assert.assertEquals("Alergias", 1, resumoConsulta.getAlergias().size());
+			Assert.assertEquals(1, resumoConsulta.getAlergias().size());
 
-			Assert.assertNull(resumoConsulta.getAlergias().get(0).getGravidade());
-			Assert.assertEquals("", resumoConsulta.getAlergias().get(0).getCategoria());
-			Assert.assertEquals("", resumoConsulta.getAlergias().get(0).getAgente());
-			Assert.assertEquals(1, resumoConsulta.getAlergias().get(0).getEventoReacao().size());
-			Assert.assertNull(resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getDataInstalacao());
-			Assert.assertEquals("", resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getEvolucaoAlergia());
-			Assert.assertNull(resumoConsulta.getAlergias().get(0).getEventoReacao().get(0).getDataInstalacao());
+			ResABAlergiaReacoes resABAlergiaReacoes1 = resumoConsulta.getAlergias().get(0);
+			Assert.assertNull(resABAlergiaReacoes1.getGravidade());
+			Assert.assertNull(resABAlergiaReacoes1.getCategoria());
+			Assert.assertNull(resABAlergiaReacoes1.getAgente());
+			Assert.assertEquals(1, resABAlergiaReacoes1.getEventoReacao().size());
+			ResABEventoReacao resABAlergia1EventoReacao1 = resABAlergiaReacoes1.getEventoReacao().get(0);
+			Assert.assertNull(resABAlergia1EventoReacao1.getDataInstalacao());
+			Assert.assertNull(resABAlergia1EventoReacao1.getEvolucaoAlergia());
+			Assert.assertNull(resABAlergia1EventoReacao1.getDataInstalacao());
 
-			Assert.assertEquals("", resumoConsulta.getAltura());
+			Assert.assertNull(resumoConsulta.getAltura());
 			Assert.assertEquals(1, resumoConsulta.getCondutas().size());
 			Assert.assertNull(resumoConsulta.getCondutas().get(0));
 
-			Assert.assertNull("DUM", resumoConsulta.getDum());
+			Assert.assertNull(resumoConsulta.getDum());
 
 			Assert.assertEquals(1, resumoConsulta.getEncaminhamentos().size());
-			Assert.assertEquals("", resumoConsulta.getEncaminhamentos().get(0));
+			Assert.assertNull(resumoConsulta.getEncaminhamentos().get(0));
 
-			Assert.assertEquals("", resumoConsulta.getGestasPrevias());
-			Assert.assertEquals("", resumoConsulta.getIdadeGestacional());
-			Assert.assertEquals("", resumoConsulta.getIne());
-			Assert.assertEquals("", resumoConsulta.getPartos());
+			Assert.assertNull(resumoConsulta.getGestasPrevias());
+			Assert.assertNull(resumoConsulta.getIdadeGestacional());
+			Assert.assertNull(resumoConsulta.getIne());
+			Assert.assertNull(resumoConsulta.getPartos());
 
-			Assert.assertEquals("", resumoConsulta.getPeso());
+			Assert.assertNull(resumoConsulta.getPeso());
 
-			Assert.assertEquals("Problemas", 2, resumoConsulta.getProblemasDiagnosticos().size());
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(0).getCodigo());
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(0).getDescricao());
-			Assert.assertNull(resumoConsulta.getProblemasDiagnosticos().get(0).getTipo());
+			Assert.assertEquals(2, resumoConsulta.getProblemasDiagnosticos().size());
+			ResABProblemaDiagnostico resABProblemaDiagnostico1 = resumoConsulta.getProblemasDiagnosticos().get(0);
+			Assert.assertNull(resABProblemaDiagnostico1.getCodigo());
+			Assert.assertNull(resABProblemaDiagnostico1.getDescricao());
+			Assert.assertNull(resABProblemaDiagnostico1.getTipo());
 
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(1).getCodigo());
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(1).getDescricao());
-			Assert.assertNull(resumoConsulta.getProblemasDiagnosticos().get(1).getTipo());
+			ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
+			Assert.assertNull(resABProblemaDiagnostico2.getCodigo());
+			Assert.assertNull(resABProblemaDiagnostico2.getDescricao());
+			Assert.assertNull(resABProblemaDiagnostico2.getTipo());
 
-			Assert.assertEquals("Procedimentos", 1, resumoConsulta.getProcedimentos().size());
-			Assert.assertEquals("", resumoConsulta.getProcedimentos().get(0).getCodigo());
-			Assert.assertEquals("", resumoConsulta.getProcedimentos().get(0).getNome());
-			Assert.assertEquals(0, resumoConsulta.getProcedimentos().get(0).getResultadoObservacoes().size());
+			Assert.assertEquals(1, resumoConsulta.getProcedimentos().size());
+			ResABProcedimento resABProcedimento1 = resumoConsulta.getProcedimentos().get(0);
+			Assert.assertNull(resABProcedimento1.getCodigo());
+			Assert.assertNull(resABProcedimento1.getNome());
+			Assert.assertEquals(0, resABProcedimento1.getResultadoObservacoes().size());
 
 			Assert.assertEquals("Medicamentos", 3, resumoConsulta.getMedicamentos().size());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getNomeMedicamento());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getCodigoMedicamentoCatmat());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getDescricaoFormaFarmaceutica());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getCodigoFormaFarmaceutica());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getDescricaoViaAdministracao());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getCodigoViaAdministracao());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getDescricaoDose());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(0).getDuracaoTratamento());
-			Assert.assertNull(resumoConsulta.getMedicamentos().get(0).getEstadoMedicamento());
+			ResABMedicamento resABMedicamento1 = resumoConsulta.getMedicamentos().get(0);
+			Assert.assertNull(resABMedicamento1.getNomeMedicamento());
+			Assert.assertNull(resABMedicamento1.getCodigoMedicamentoCatmat());
+			Assert.assertNull(resABMedicamento1.getDescricaoFormaFarmaceutica());
+			Assert.assertNull(resABMedicamento1.getCodigoFormaFarmaceutica());
+			Assert.assertNull(resABMedicamento1.getDescricaoViaAdministracao());
+			Assert.assertNull(resABMedicamento1.getCodigoViaAdministracao());
+			Assert.assertNull(resABMedicamento1.getDescricaoDose());
+			Assert.assertNull(resABMedicamento1.getDuracaoTratamento());
+			Assert.assertNull(resABMedicamento1.getEstadoMedicamento());
 
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getNomeMedicamento());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getCodigoMedicamentoCatmat());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getDescricaoFormaFarmaceutica());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getCodigoFormaFarmaceutica());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getDescricaoViaAdministracao());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getCodigoViaAdministracao());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getDescricaoDose());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(1).getDuracaoTratamento());
-			Assert.assertNull(resumoConsulta.getMedicamentos().get(1).getEstadoMedicamento());
+			ResABMedicamento resABMedicamento2 = resumoConsulta.getMedicamentos().get(1);
+			Assert.assertNull(resABMedicamento2.getNomeMedicamento());
+			Assert.assertNull(resABMedicamento2.getCodigoMedicamentoCatmat());
+			Assert.assertNull(resABMedicamento2.getDescricaoFormaFarmaceutica());
+			Assert.assertNull(resABMedicamento2.getCodigoFormaFarmaceutica());
+			Assert.assertNull(resABMedicamento2.getDescricaoViaAdministracao());
+			Assert.assertNull(resABMedicamento2.getCodigoViaAdministracao());
+			Assert.assertNull(resABMedicamento2.getDescricaoDose());
+			Assert.assertNull(resABMedicamento2.getDuracaoTratamento());
+			Assert.assertNull(resABMedicamento2.getEstadoMedicamento());
 
-			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resumoConsulta.getMedicamentos().get(2).getNomeMedicamento());
-			Assert.assertEquals("BR0269628", resumoConsulta.getMedicamentos().get(2).getCodigoMedicamentoCatmat());
-			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resumoConsulta.getMedicamentos().get(2).getDescricaoFormaFarmaceutica());
-			Assert.assertEquals("BR0269628", resumoConsulta.getMedicamentos().get(2).getCodigoFormaFarmaceutica());
-			Assert.assertEquals("Oral", resumoConsulta.getMedicamentos().get(2).getDescricaoViaAdministracao());
-			Assert.assertEquals("25", resumoConsulta.getMedicamentos().get(2).getCodigoViaAdministracao());
-			Assert.assertEquals("1 comp 30 min antes do almoço", resumoConsulta.getMedicamentos().get(2).getDescricaoDose());
-			Assert.assertEquals("", resumoConsulta.getMedicamentos().get(2).getDuracaoTratamento());
-			Assert.assertNull(resumoConsulta.getMedicamentos().get(2).getEstadoMedicamento());
+			ResABMedicamento resABMedicamento3 = resumoConsulta.getMedicamentos().get(2);
+			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resABMedicamento3.getNomeMedicamento());
+			Assert.assertEquals("BR0269628", resABMedicamento3.getCodigoMedicamentoCatmat());
+			Assert.assertEquals("ALBENDAZOL 200 mg comprimido", resABMedicamento3.getDescricaoFormaFarmaceutica());
+			Assert.assertEquals("BR0269628", resABMedicamento3.getCodigoFormaFarmaceutica());
+			Assert.assertEquals("Oral", resABMedicamento3.getDescricaoViaAdministracao());
+			Assert.assertEquals("25", resABMedicamento3.getCodigoViaAdministracao());
+			Assert.assertEquals("1 comp 30 min antes do almoço", resABMedicamento3.getDescricaoDose());
+			Assert.assertNull(resABMedicamento3.getDuracaoTratamento());
+			Assert.assertNull(resABMedicamento3.getEstadoMedicamento());
 
 			Assert.assertEquals(ResABTipoAtendimentoEnum.CONSULTA_AGENDADA_PROGRAMADA_CUIDADO_CONTINUADO, resumoConsulta.getTipoAtendimento());
 
@@ -264,24 +296,24 @@ public class TestConvertXMLToResABResumoConsult {
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		try {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-			Assert.assertNull("Turno", resumoConsulta.getTurno());
-			Assert.assertNull("CNES", resumoConsulta.getCnes());
-			Assert.assertEquals("Profissional", 0, resumoConsulta.getProfissionais().size());
-			Assert.assertNull("Data de Atendimento", resumoConsulta.getDataAtendimento());
-			Assert.assertEquals("Alergias", 0, resumoConsulta.getAlergias().size());
-			Assert.assertNull("Altura", resumoConsulta.getAltura());
-			Assert.assertEquals("Condutas", 0, resumoConsulta.getCondutas().size());
-			Assert.assertNull("DUM", resumoConsulta.getDum());
-			Assert.assertNull("Atendimento", resumoConsulta.getTipoAtendimento());
-			Assert.assertEquals("Encaminhamentos", 0, resumoConsulta.getEncaminhamentos().size());
-			Assert.assertNull("Gestas Previas", resumoConsulta.getGestasPrevias());
-			Assert.assertNull("Idade Gestacional", resumoConsulta.getIdadeGestacional());
-			Assert.assertNull("INE", resumoConsulta.getIne());
-			Assert.assertNull("Partos", resumoConsulta.getPartos());
-			Assert.assertEquals("Medicamentos", 0, resumoConsulta.getMedicamentos().size());
-			Assert.assertNull("Peso", resumoConsulta.getPeso());
-			Assert.assertEquals("Problemas", 0, resumoConsulta.getProblemasDiagnosticos().size());
-			Assert.assertEquals("Procedimentos", 0, resumoConsulta.getProcedimentos().size());
+			Assert.assertNull(resumoConsulta.getTurno());
+			Assert.assertNull(resumoConsulta.getCnes());
+			Assert.assertNull(resumoConsulta.getDataAtendimento());
+			Assert.assertNull(resumoConsulta.getAltura());
+			Assert.assertNull(resumoConsulta.getDum());
+			Assert.assertNull(resumoConsulta.getTipoAtendimento());
+			Assert.assertNull(resumoConsulta.getPeso());
+			Assert.assertNull(resumoConsulta.getGestasPrevias());
+			Assert.assertNull(resumoConsulta.getIdadeGestacional());
+			Assert.assertNull(resumoConsulta.getIne());
+			Assert.assertNull(resumoConsulta.getPartos());
+			Assert.assertEquals(0, resumoConsulta.getEncaminhamentos().size());
+			Assert.assertEquals(0, resumoConsulta.getAlergias().size());
+			Assert.assertEquals(0, resumoConsulta.getCondutas().size());
+			Assert.assertEquals(0, resumoConsulta.getMedicamentos().size());
+			Assert.assertEquals(0, resumoConsulta.getProfissionais().size());
+			Assert.assertEquals(0, resumoConsulta.getProblemasDiagnosticos().size());
+			Assert.assertEquals(0, resumoConsulta.getProcedimentos().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -294,58 +326,67 @@ public class TestConvertXMLToResABResumoConsult {
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		try {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-			Assert.assertNull("Turno", resumoConsulta.getTurno());
-			Assert.assertEquals("", resumoConsulta.getCnes());
 
-			Assert.assertEquals("Profissional", 1, resumoConsulta.getProfissionais().size());
-			Assert.assertEquals("703006821798000", resumoConsulta.getProfissionais().get(0).getCns());
-			Assert.assertEquals("1235-65", resumoConsulta.getProfissionais().get(0).getCbo());
-			Assert.assertEquals(false, resumoConsulta.getProfissionais().get(0).isResponsavel());
+			Assert.assertEquals(ResABTipoAtendimentoEnum.DEMANDA_ESPONTANEA_CONSULTA_NO_DIA, resumoConsulta.getTipoAtendimento());
+			Assert.assertNull(resumoConsulta.getTurno());
+			Assert.assertNull(resumoConsulta.getCnes());
+
+			Assert.assertEquals(1, resumoConsulta.getProfissionais().size());
+			ResABIdentificacaoProfissional resABIdentificacaoProfissional1 = resumoConsulta.getProfissionais().get(0);
+			Assert.assertEquals("703006821798000", resABIdentificacaoProfissional1.getCns());
+			Assert.assertEquals("1235-65", resABIdentificacaoProfissional1.getCbo());
+			Assert.assertEquals(false, resABIdentificacaoProfissional1.isResponsavel());
 
 			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
 			String dateInString = "2016-05-20T15:00:00.000-03:00";
 			Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getDataAtendimento());
 
-			Assert.assertEquals("Alergias", 2, resumoConsulta.getAlergias().size());
+			Assert.assertEquals(2, resumoConsulta.getAlergias().size());
 
-			Assert.assertNull(resumoConsulta.getAlergias().get(0).getGravidade());
-			Assert.assertEquals("Alimento", resumoConsulta.getAlergias().get(0).getCategoria());
-			Assert.assertEquals("leite", resumoConsulta.getAlergias().get(0).getAgente());
-			Assert.assertEquals(0, resumoConsulta.getAlergias().get(0).getEventoReacao().size());
+			ResABAlergiaReacoes resABAlergiaReacoes1 = resumoConsulta.getAlergias().get(0);
+			Assert.assertNull(resABAlergiaReacoes1.getGravidade());
+			Assert.assertEquals("Alimento", resABAlergiaReacoes1.getCategoria());
+			Assert.assertEquals("leite", resABAlergiaReacoes1.getAgente());
+			Assert.assertEquals(0, resABAlergiaReacoes1.getEventoReacao().size());
 
-			Assert.assertNull(resumoConsulta.getAlergias().get(1).getGravidade());
-			Assert.assertEquals("Remédio", resumoConsulta.getAlergias().get(1).getCategoria());
-			Assert.assertEquals("engove", resumoConsulta.getAlergias().get(1).getAgente());
-			Assert.assertEquals(1, resumoConsulta.getAlergias().get(1).getEventoReacao().size());
-			Assert.assertEquals("", resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getEvolucaoAlergia());
-			Assert.assertNull(resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getDataInstalacao());
-			Assert.assertEquals("", resumoConsulta.getAlergias().get(1).getEventoReacao().get(0).getManifestacao());
+			ResABAlergiaReacoes resABAlergiaReacoes2 = resumoConsulta.getAlergias().get(1);
+			Assert.assertNull(resABAlergiaReacoes2.getGravidade());
+			Assert.assertEquals("Remédio", resABAlergiaReacoes2.getCategoria());
+			Assert.assertEquals("engove", resABAlergiaReacoes2.getAgente());
+			Assert.assertEquals(1, resABAlergiaReacoes2.getEventoReacao().size());
 
-			Assert.assertEquals("", resumoConsulta.getAltura());
-			Assert.assertEquals("Condutas", 0, resumoConsulta.getCondutas().size());
-			Assert.assertNull("DUM", resumoConsulta.getDum());
-			Assert.assertEquals(ResABTipoAtendimentoEnum.DEMANDA_ESPONTANEA_CONSULTA_NO_DIA, resumoConsulta.getTipoAtendimento());
+			ResABEventoReacao resABAlergia2EventoReacao1 = resABAlergiaReacoes2.getEventoReacao().get(0);
+			Assert.assertNull(resABAlergia2EventoReacao1.getEvolucaoAlergia());
+			Assert.assertNull(resABAlergia2EventoReacao1.getDataInstalacao());
+			Assert.assertNull(resABAlergia2EventoReacao1.getManifestacao());
 
-			Assert.assertEquals("Encaminhamentos", 0, resumoConsulta.getEncaminhamentos().size());
+			Assert.assertNull(resumoConsulta.getAltura());
+			Assert.assertEquals(0, resumoConsulta.getCondutas().size());
+			Assert.assertNull(resumoConsulta.getDum());
 
-			Assert.assertNull("Gestas Previas", resumoConsulta.getGestasPrevias());
-			Assert.assertNull("Idade Gestacional", resumoConsulta.getIdadeGestacional());
-			Assert.assertEquals("", resumoConsulta.getIne());
-			Assert.assertNull("Partos", resumoConsulta.getPartos());
+			Assert.assertEquals(0, resumoConsulta.getEncaminhamentos().size());
 
-			Assert.assertEquals("Medicamentos", 0, resumoConsulta.getMedicamentos().size());
-			Assert.assertEquals("", resumoConsulta.getPeso());
+			Assert.assertNull(resumoConsulta.getGestasPrevias());
+			Assert.assertNull(resumoConsulta.getIdadeGestacional());
+			Assert.assertNull(resumoConsulta.getIne());
+			Assert.assertNull(resumoConsulta.getPartos());
 
-			Assert.assertEquals("Problemas", 2, resumoConsulta.getProblemasDiagnosticos().size());
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(0).getCodigo());
-			Assert.assertEquals("", resumoConsulta.getProblemasDiagnosticos().get(0).getDescricao());
-			Assert.assertNull(resumoConsulta.getProblemasDiagnosticos().get(0).getTipo());
+			Assert.assertEquals(0, resumoConsulta.getMedicamentos().size());
+			Assert.assertNull(resumoConsulta.getPeso());
 
-			Assert.assertEquals("A920", resumoConsulta.getProblemasDiagnosticos().get(1).getCodigo());
-			Assert.assertEquals("Febre de Chikungunya", resumoConsulta.getProblemasDiagnosticos().get(1).getDescricao());
-			Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resumoConsulta.getProblemasDiagnosticos().get(1).getTipo());
+			Assert.assertEquals(2, resumoConsulta.getProblemasDiagnosticos().size());
 
-			Assert.assertEquals("Procedimentos", 0, resumoConsulta.getProcedimentos().size());
+			ResABProblemaDiagnostico resABProblemaDiagnostico1 = resumoConsulta.getProblemasDiagnosticos().get(0);
+			Assert.assertNull(resABProblemaDiagnostico1.getCodigo());
+			Assert.assertNull(resABProblemaDiagnostico1.getDescricao());
+			Assert.assertNull(resABProblemaDiagnostico1.getTipo());
+
+			ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
+			Assert.assertEquals("A920", resABProblemaDiagnostico2.getCodigo());
+			Assert.assertEquals("Febre de Chikungunya", resABProblemaDiagnostico2.getDescricao());
+			Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico2.getTipo());
+
+			Assert.assertEquals(0, resumoConsulta.getProcedimentos().size());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

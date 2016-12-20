@@ -11,6 +11,7 @@ import javax.xml.xpath.XPathFactory;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Node;
 
 public class XPathFactoryAssist {
@@ -57,7 +58,8 @@ public class XPathFactoryAssist {
 
 	public String getString(String expression) throws XPathExpressionException {
 		if (this.hasNode()) {
-			return this.xPath.compile(expression).evaluate(this.node);
+			String value = this.xPath.compile(expression).evaluate(this.node);
+			return StringUtils.isBlank(value) ? null : value;
 		}
 		return null;
 	}
