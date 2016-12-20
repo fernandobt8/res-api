@@ -11,6 +11,7 @@ import javax.xml.xpath.XPathFactory;
 import lombok.AllArgsConstructor;
 
 import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.w3c.dom.Node;
 
 public class XPathFactoryAssist {
@@ -30,11 +31,17 @@ public class XPathFactoryAssist {
 	}
 
 	public Node getNode(String expression) throws XPathExpressionException {
-		return (Node) this.xPath.compile(expression).evaluate(this.node, XPathConstants.NODE);
+		if (this.hasNode()) {
+			return (Node) this.xPath.compile(expression).evaluate(this.node, XPathConstants.NODE);
+		}
+		return null;
 	}
 
 	public Long count(String expression) throws XPathExpressionException {
-		return Long.valueOf(this.xPath.compile("count(" + expression + ")").evaluate(this.node));
+		if (this.hasNode()) {
+			return Long.valueOf(this.xPath.compile("count(" + expression + ")").evaluate(this.node));
+		}
+		return 0L;
 	}
 
 	public Date getDateEHR(String expression) throws XPathExpressionException {
@@ -50,7 +57,11 @@ public class XPathFactoryAssist {
 	}
 
 	public String getString(String expression) throws XPathExpressionException {
-		return this.xPath.compile(expression).evaluate(this.node);
+		if (this.hasNode()) {
+			String value = this.xPath.compile(expression).evaluate(this.node);
+			return StringUtils.isBlank(value) ? null : value;
+		}
+		return null;
 	}
 
 	public Iterable<XPathFactoryAssist> iterable(String expression) {
@@ -65,6 +76,10 @@ public class XPathFactoryAssist {
 		public Iterator<XPathFactoryAssist> iterator() {
 			return new Itr(this.expression);
 		}
+	}
+
+	public boolean hasNode() {
+		return this.node != null;
 	}
 
 	private class Itr implements Iterator<XPathFactoryAssist> {

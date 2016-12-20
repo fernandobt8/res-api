@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Encontro xmlns:oe="http://schemas.openehr.org/v1"
+ xmlns="http://schemas.oceanehr.com/templates"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://schemas.oceanehr.com/templates CN1.xsd" template_id="Resumo de consulta ab_CN1_v1">
+    <name>
+        <value>Encontro</value>
+    </name>
+    <language>
+        <terminology_id>
+            <value>ISO_639-1</value>
+        </terminology_id>
+        <code_string>pt</code_string>
+    </language>
+    <territory>
+        <terminology_id>
+            <value>ISO_3166-1</value>
+        </terminology_id>
+        <code_string>BR</code_string>
+    </territory>
+    <category>
+        <value>event</value>
+        <defining_code>
+            <terminology_id>
+                <value>openehr</value>
+            </terminology_id>
+            <code_string>433</code_string>
+        </defining_code>
+    </category>
+    <composer xsi:type="oe:PARTY_SELF">
+    </composer>
+    <context>
+        <start_time>
+            <oe:value>2016-10-28T15:00:00.000-03:00</oe:value>
+        </start_time>
+        <setting>
+            <oe:value>other care</oe:value>
+            <oe:defining_code>
+                <oe:terminology_id>
+                    <oe:value>openehr</oe:value>
+                </oe:terminology_id>
+                <oe:code_string>238</oe:code_string>
+            </oe:defining_code>
+        </setting>
+    </context>
+    <Caracterização_da_consulta>
+        <name>
+            <value>Caracterização da consulta</value>
+        </name>
+        <Admissão_do_paciente>
+            <name>
+                <value>Admissão do paciente</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Tipo_de_atendimento>
+                    <name>
+                        <value>Tipo de atendimento</value>
+                    </name>
+                    <value>
+                        <defining_code>
+                            <terminology_id>
+                                <value>local</value>
+                            </terminology_id>
+                            <code_string>at0.143</code_string>
+                        </defining_code>
+                    </value>
+                </Tipo_de_atendimento>
+                <Identificação_do_profissional>
+                    <name>
+                        <value>Identificação do profissional</value>
+                    </name>
+                    <CNS>
+                        <name>
+                            <value>CNS</value>
+                        </name>
+                        <value>
+                            <oe:value>703006821798000</oe:value>
+                        </value>
+                    </CNS>
+                    <CBO>
+                        <name>
+                            <value>CBO</value>
+                        </name>
+                        <value>
+                            <oe:value>1235-65</oe:value>
+                        </value>
+                    </CBO>
+                    <É_o_responsável_pelo_atendimento_quest_>
+                        <name>
+                            <value>É o responsável pelo atendimento</value>
+                        </name>
+                        <value>
+                            <oe:value>false</oe:value>
+                        </value>
+                    </É_o_responsável_pelo_atendimento_quest_>
+                </Identificação_do_profissional>
+                <Data_fslash_hora_da_admissão>
+                    <name>
+                        <value>Data/hora da admissão</value>
+                    </name>
+                    <value>
+                        <oe:value>2016-05-20T15:00:00.000-03:00</oe:value>
+                    </value>
+                </Data_fslash_hora_da_admissão>
+            </data>
+        </Admissão_do_paciente>
+    </Caracterização_da_consulta>
+    <Medições_e_observações>
+        <name>
+            <value>Medições e observações</value>
+        </name>
+    </Medições_e_observações>
+    <Problemas__fslash__diagnósticos_avaliados>
+        <name>
+            <value>Problemas / diagnósticos avaliados</value>
+        </name>
+        <Problema__fslash_Diagnóstico>
+            <name>
+                <value>Problema /Diagnóstico</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Problema / Diagnóstico</value>
+                    </name>
+                </Problema__fslash__Diagnóstico>
+            </data>
+        </Problema__fslash_Diagnóstico>
+        <Problema__fslash_Diagnóstico>
+            <name>
+                <value>Problema /Diagnóstico</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Problema / Diagnóstico</value>
+                    </name>
+                    <value>
+                        <value>Febre de Chikungunya</value>
+                        <defining_code>
+                            <terminology_id>
+                                <value>CID10</value>
+                            </terminology_id>
+                            <code_string>A920</code_string>
+                        </defining_code>
+                    </value>
+                </Problema__fslash__Diagnóstico>
+                <Estado_do_Problema__fslash__Diagnóstico>
+                    <name>
+                        <value>Estado do Problema / Diagnóstico</value>
+                    </name>
+                </Estado_do_Problema__fslash__Diagnóstico>
+            </data>
+        </Problema__fslash_Diagnóstico>
+    </Problemas__fslash__diagnósticos_avaliados>
+    <Alergias_e_reações_adversas>
+        <name>
+            <value>Alergias e reações adversas</value>
+        </name>
+        <Risco_de_Reação_Adversa>
+            <name>
+                <value>Risco de Reação Adversa</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Agente__fslash__substância_específica>
+                    <name>
+                        <value>Agente / substância específica</value>
+                    </name>
+                    <value>
+                        <oe:value>leite</oe:value>
+                    </value>
+                </Agente__fslash__substância_específica>
+                <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+                    <name>
+                        <value>Categoria do agente causador da alergia / reação adversa</value>
+                    </name>
+                    <value>
+                        <oe:value>Alimento</oe:value>
+                    </value>
+                </Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+            </data>
+        </Risco_de_Reação_Adversa>
+        <Risco_de_Reação_Adversa>
+            <name>
+                <value>Risco de Reação Adversa</value>
+            </name>
+            <language>
+                <terminology_id>
+                    <value>ISO_639-1</value>
+                </terminology_id>
+                <code_string>pt</code_string>
+            </language>
+            <encoding>
+                <terminology_id>
+                    <value>IANA_character-sets</value>
+                </terminology_id>
+                <code_string>UTF-8</code_string>
+            </encoding>
+            <subject></subject>
+            <data>
+                <Agente__fslash__substância_específica>
+                    <name>
+                        <value>Agente / substância específica</value>
+                    </name>
+                    <value>
+                        <oe:value>engove</oe:value>
+                    </value>
+                </Agente__fslash__substância_específica>
+                <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+                    <name>
+                        <value>Categoria do agente causador da alergia / reação adversa</value>
+                    </name>
+                    <value>
+                        <oe:value>Remédio</oe:value>
+                    </value>
+                </Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
+                <Evento_da_reação>
+                    <name>
+                        <value>Evento da reação</value>
+                    </name>
+                </Evento_da_reação>
+            </data>
+        </Risco_de_Reação_Adversa>
+    </Alergias_e_reações_adversas>
+    <Procedimentos_ou_pequenas_cirurgias>
+        <name>
+            <value>Procedimentos ou pequenas cirurgias</value>
+        </name>
+    </Procedimentos_ou_pequenas_cirurgias>
+    <Lista_de_medicamentos>
+        <name>
+            <value>Lista de medicamentos</value>
+        </name>
+    </Lista_de_medicamentos>
+    <Dados_do_desfecho>
+        <name>
+            <value>Dados do desfecho</value>
+        </name>
+    </Dados_do_desfecho>
+</Encontro>

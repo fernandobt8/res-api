@@ -201,7 +201,7 @@ public class ResABResumoConsulta {
 				.formaFarmaceutica(medicamento.getDescricaoFormaFarmaceutica(), medicamento.getCodigoFormaFarmaceutica())
 				.viaAdministracao(medicamento.getDescricaoViaAdministracao(), medicamento.getCodigoViaAdministracao())
 				.dose(medicamento.getDescricaoDose())
-				.doseEstruturada(medicamento.getCodigoDoseEstruturada());
+				.doseEstruturada(medicamento.getDuracaoTratamento());
 		}
 
 		DadosDesfechoBuilder<ResumoConsultaABBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
