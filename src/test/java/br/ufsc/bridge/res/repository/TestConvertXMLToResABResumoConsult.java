@@ -62,6 +62,7 @@ public class TestConvertXMLToResABResumoConsult {
 
 			Assert.assertEquals("994.250", resumoConsulta.getPeso());
 			Assert.assertEquals("987.55", resumoConsulta.getAltura());
+			Assert.assertEquals("43", resumoConsulta.getPerimetroCefalico());
 
 			formatter = new SimpleDateFormat("yyyy-MM-dd");
 			dateInString = "2016-03-16";
@@ -216,6 +217,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertNull(resABAlergia1EventoReacao1.getDataInstalacao());
 
 			Assert.assertNull(resumoConsulta.getAltura());
+			Assert.assertNull(resumoConsulta.getPerimetroCefalico());
 			Assert.assertEquals(1, resumoConsulta.getCondutas().size());
 			Assert.assertNull(resumoConsulta.getCondutas().get(0));
 
@@ -248,7 +250,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertNull(resABProcedimento1.getNome());
 			Assert.assertEquals(0, resABProcedimento1.getResultadoObservacoes().size());
 
-			Assert.assertEquals("Medicamentos", 3, resumoConsulta.getMedicamentos().size());
+			Assert.assertEquals(3, resumoConsulta.getMedicamentos().size());
 			ResABMedicamento resABMedicamento1 = resumoConsulta.getMedicamentos().get(0);
 			Assert.assertNull(resABMedicamento1.getNomeMedicamento());
 			Assert.assertNull(resABMedicamento1.getCodigoMedicamentoCatmat());
@@ -300,6 +302,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertNull(resumoConsulta.getCnes());
 			Assert.assertNull(resumoConsulta.getDataAtendimento());
 			Assert.assertNull(resumoConsulta.getAltura());
+			Assert.assertNull(resumoConsulta.getPerimetroCefalico());
 			Assert.assertNull(resumoConsulta.getDum());
 			Assert.assertNull(resumoConsulta.getTipoAtendimento());
 			Assert.assertNull(resumoConsulta.getPeso());
@@ -361,6 +364,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertNull(resABAlergia2EventoReacao1.getManifestacao());
 
 			Assert.assertNull(resumoConsulta.getAltura());
+			Assert.assertNull(resumoConsulta.getPerimetroCefalico());
 			Assert.assertEquals(0, resumoConsulta.getCondutas().size());
 			Assert.assertNull(resumoConsulta.getDum());
 

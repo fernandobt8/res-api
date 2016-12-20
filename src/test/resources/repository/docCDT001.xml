@@ -324,6 +324,47 @@
 
                 </data>
             </Altura__fslash__comprimento>
+            <Perímetro_cefálico>
+                <name>
+                    <value>Perímetro cefálico</value>
+                </name>
+                <language>
+                    <terminology_id>
+                        <value>ISO_639-1</value>
+                    </terminology_id>
+                    <code_string>pt</code_string>
+                </language>
+                <encoding>
+                    <terminology_id>
+                        <value>IANA_character-sets</value>
+                    </terminology_id>
+                    <code_string>UTF-8</code_string>
+                </encoding>
+                <subject></subject>
+                <data>
+                    <Qualquer_ponto_de_tempo_no_evento_prd_>
+                        <name>
+                            <value>Qualquer ponto de tempo no evento.</value>
+                        </name>
+                        <time>
+                            <oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
+                        </time>
+                        <data>
+                            <_exclm___-__Perímetro_cefálico>
+                                <name>
+                                    <value>! - Perímetro cefálico</value>
+                                </name>
+                                <value>
+                                    <magnitude>43</magnitude>
+                                    <precision>1</precision>
+                                    <units>cm</units>
+                                </value>
+                            </_exclm___-__Perímetro_cefálico>
+                        </data>
+                        <state></state>
+                    </Qualquer_ponto_de_tempo_no_evento_prd_>
+                </data>
+            </Perímetro_cefálico>
         </Avaliação_antropométrica>
         <Gestante>
             <name>

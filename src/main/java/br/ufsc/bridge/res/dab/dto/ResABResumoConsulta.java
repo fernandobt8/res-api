@@ -47,6 +47,7 @@ public class ResABResumoConsulta {
 
 	private String peso;
 	private String altura;
+	private String perimetroCefalico;
 
 	private Date dum;
 	private String idadeGestacional;
@@ -89,6 +90,8 @@ public class ResABResumoConsulta {
 			XPathFactoryAssist xPathMedicoes = xPathRoot.getXPathAssist("//Medições_e_observações");
 			this.peso = xPathMedicoes.getString("./Avaliação_antropométrica/Peso_corporal//Peso/value/magnitude");
 			this.altura = xPathMedicoes.getString("./Avaliação_antropométrica/Altura__fslash__comprimento//Altura__fslash__comprimento/value/magnitude");
+			this.perimetroCefalico = xPathMedicoes
+					.getString("./Avaliação_antropométrica/Perímetro_cefálico//Qualquer_ponto_de_tempo_no_evento_prd_//_exclm___-__Perímetro_cefálico/value/magnitude");
 
 			XPathFactoryAssist xPathGestante = xPathMedicoes.getXPathAssist(".//Gestante");
 			this.dum = xPathGestante.getDateEHR("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value");
@@ -155,6 +158,7 @@ public class ResABResumoConsulta {
 			.avaliacaoAntropometrica()
 				.pesoCorporal(this.dataAtendimento, this.peso)
 				.altura(this.dataAtendimento, this.altura)
+				.perimetroCefalico(this.dataAtendimento, this.perimetroCefalico)
 			.close()
 			.gestante()
 				.cicloMenstrual(this.dataAtendimento, this.dum)
