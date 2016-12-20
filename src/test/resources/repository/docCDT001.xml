@@ -855,7 +855,10 @@
                         <name>
                             <value>Data da instalação da alergia / reação adversa</value>
                         </name>
-                        <null_flavour></null_flavour>
+                        <null_flavour>
+                        	<value>
+                        	</value>
+                        </null_flavour>
                     </Data_da_instalação_da_alergia__fslash__reação_adversa>
                 </Evento_da_reação>
             </data>

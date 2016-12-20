@@ -74,7 +74,7 @@
                             <terminology_id>
                                 <value>local</value>
                             </terminology_id>
-                            <code_string>at0.141</code_string>
+                            <code_string>at0.143</code_string>
                         </defining_code>
                     </value>
                 </Tipo_de_atendimento>
@@ -87,7 +87,7 @@
                             <value>CNS</value>
                         </name>
                         <value>
-                            <oe:value>703006821796679</oe:value>
+                            <oe:value>703006821798000</oe:value>
                         </value>
                     </CNS>
                     <CBO>
@@ -95,65 +95,7 @@
                             <value>CBO</value>
                         </name>
                         <value>
-                            <oe:value>2235-65</oe:value>
-                        </value>
-                    </CBO>
-                    <É_o_responsável_pelo_atendimento_quest_>
-                        <name>
-                            <value>É o responsável pelo atendimento</value>
-                        </name>
-                        <value>
-                            <oe:value>true</oe:value>
-                        </value>
-                    </É_o_responsável_pelo_atendimento_quest_>
-                </Identificação_do_profissional>
-                                <Identificação_do_profissional>
-                    <name>
-                        <value>Identificação do profissional</value>
-                    </name>
-                    <CNS>
-                        <name>
-                            <value>CNS</value>
-                        </name>
-                        <value>
-                            <oe:value>703006821796679</oe:value>
-                        </value>
-                    </CNS>
-                    <CBO>
-                        <name>
-                            <value>CBO</value>
-                        </name>
-                        <value>
-                            <oe:value>2235-65</oe:value>
-                        </value>
-                    </CBO>
-                    <É_o_responsável_pelo_atendimento_quest_>
-                        <name>
-                            <value>É o responsável pelo atendimento</value>
-                        </name>
-                        <value>
-                            <oe:value>true</oe:value>
-                        </value>
-                    </É_o_responsável_pelo_atendimento_quest_>
-                </Identificação_do_profissional>
-                <Identificação_do_profissional>
-                    <name>
-                        <value>Identificação do profissional</value>
-                    </name>
-                    <CNS>
-                        <name>
-                            <value>CNS</value>
-                        </name>
-                        <value>
-                            <oe:value>898001153249911</oe:value>
-                        </value>
-                    </CNS>
-                    <CBO>
-                        <name>
-                            <value>CBO</value>
-                        </name>
-                        <value>
-                            <oe:value>2235-65</oe:value>
+                            <oe:value>1235-65</oe:value>
                         </value>
                     </CBO>
                     <É_o_responsável_pelo_atendimento_quest_>
@@ -170,7 +112,7 @@
                         <value>Data/hora da admissão</value>
                     </name>
                     <value>
-                        <oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
+                        <oe:value>2016-05-20T15:00:00.000-03:00</oe:value>
                     </value>
                 </Data_fslash_hora_da_admissão>
             </data>
@@ -313,7 +255,7 @@
                         <value>Agente / substância específica</value>
                     </name>
                     <value>
-                        <oe:value>leite</oe:value>
+                        <oe:value>engove</oe:value>
                     </value>
                 </Agente__fslash__substância_específica>
                 <Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
@@ -321,7 +263,7 @@
                         <value>Categoria do agente causador da alergia / reação adversa</value>
                     </name>
                     <value>
-                        <oe:value>Alimento</oe:value>
+                        <oe:value>Remédio</oe:value>
                     </value>
                 </Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
                 <Evento_da_reação>
@@ -341,7 +283,6 @@
         <name>
             <value>Lista de medicamentos</value>
         </name>
-        <data><</data>
     </Lista_de_medicamentos>
     <Dados_do_desfecho>
         <name>
