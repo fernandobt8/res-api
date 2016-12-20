@@ -38,13 +38,13 @@ public class SOAPClientSAAJ {
 		Credential credential = new Credential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
 
 		try {
-			// repository(credential);
+			repository(credential);
 
 			// registry(credential);
 
 			// testeXml();
 
-			testeXml2();
+			// testeXml2();
 
 			// save(credential);
 
@@ -93,7 +93,6 @@ public class SOAPClientSAAJ {
 
 		try {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-			// aqui criar um arquivo XML contendo os dados do atendimento clinico e fazer assert equals com o DTO
 			System.out.println(resumoConsulta.getXml());
 		} catch (Exception e) {
 			e.printStackTrace();
