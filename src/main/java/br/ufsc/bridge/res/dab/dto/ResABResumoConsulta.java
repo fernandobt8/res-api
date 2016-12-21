@@ -17,6 +17,7 @@ import lombok.Setter;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
@@ -48,6 +49,7 @@ public class ResABResumoConsulta {
 	private String peso;
 	private String altura;
 	private String perimetroCefalico;
+	private ResABAleitamentoMaternoEnum aleitamentoMaterno;
 
 	private Date dum;
 	private String idadeGestacional;
@@ -100,6 +102,10 @@ public class ResABResumoConsulta {
 			XPathFactoryAssist xPathSumarioObstetrico = xPathGestante.getXPathAssist(".//Sumário_obstétrico/data");
 			this.gestasPrevias = xPathSumarioObstetrico.getString("./Gestas_prévias/value/magnitude");
 			this.partos = xPathSumarioObstetrico.getString("./Partos/value/magnitude");
+
+			XPathFactoryAssist xPathCrianca = xPathMedicoes.getXPathAssist(".//Criança");
+			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum
+					.getByCodigo(xPathCrianca.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data/Aleitamento_materno/value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas__fslash__diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema__fslash_Diagnóstico")) {
@@ -163,7 +169,10 @@ public class ResABResumoConsulta {
 			.gestante()
 				.cicloMenstrual(this.dataAtendimento, this.dum)
 				.gestacao(this.dataAtendimento, this.idadeGestacional)
-				.sumarioObstetrico(this.gestasPrevias, this.partos);
+				.sumarioObstetrico(this.gestasPrevias, this.partos)
+			.close()
+			.crianca()
+				.aleitamentoMaterno(this.dataAtendimento, this.aleitamentoMaterno);
 
 		ProblemaDiagnosticoAvaliadoBuilder<ResumoConsultaABBuilder> diagnosticoAvaliadoBuilder = abBuilder.problemaDiagnostico();
 		for (ResABProblemaDiagnostico diagnostico : this.problemasDiagnosticos) {
