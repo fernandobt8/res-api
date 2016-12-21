@@ -8,6 +8,7 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
@@ -63,6 +64,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertEquals("994.250", resumoConsulta.getPeso());
 			Assert.assertEquals("987.55", resumoConsulta.getAltura());
 			Assert.assertEquals("43", resumoConsulta.getPerimetroCefalico());
+			Assert.assertEquals(ResABAleitamentoMaternoEnum.EXCLUSIVO, resumoConsulta.getAleitamentoMaterno());
 
 			formatter = new SimpleDateFormat("yyyy-MM-dd");
 			dateInString = "2016-03-16";
@@ -218,6 +220,7 @@ public class TestConvertXMLToResABResumoConsult {
 
 			Assert.assertNull(resumoConsulta.getAltura());
 			Assert.assertNull(resumoConsulta.getPerimetroCefalico());
+			Assert.assertNull(resumoConsulta.getAleitamentoMaterno());
 			Assert.assertEquals(1, resumoConsulta.getCondutas().size());
 			Assert.assertNull(resumoConsulta.getCondutas().get(0));
 
@@ -306,6 +309,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertNull(resumoConsulta.getDum());
 			Assert.assertNull(resumoConsulta.getTipoAtendimento());
 			Assert.assertNull(resumoConsulta.getPeso());
+			Assert.assertNull(resumoConsulta.getAleitamentoMaterno());
 			Assert.assertNull(resumoConsulta.getGestasPrevias());
 			Assert.assertNull(resumoConsulta.getIdadeGestacional());
 			Assert.assertNull(resumoConsulta.getIne());
@@ -364,6 +368,7 @@ public class TestConvertXMLToResABResumoConsult {
 			Assert.assertNull(resABAlergia2EventoReacao1.getManifestacao());
 
 			Assert.assertNull(resumoConsulta.getAltura());
+			Assert.assertNull(resumoConsulta.getAleitamentoMaterno());
 			Assert.assertNull(resumoConsulta.getPerimetroCefalico());
 			Assert.assertEquals(0, resumoConsulta.getCondutas().size());
 			Assert.assertNull(resumoConsulta.getDum());

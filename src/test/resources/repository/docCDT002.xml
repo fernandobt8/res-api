@@ -348,6 +348,46 @@
             </Sumário_obstétrico>
         </Gestante>
     </Medições_e_observações>
+    <Criança>
+        	<name>
+            	<value>Criança</value>
+            </name>
+            <Alimentação_da_criança_menor_de_2_anos>
+            	<name>
+                	<value>Alimentação da criança menor de 2 anos</value>
+                </name>
+                <language>
+                	<terminology_id>
+                    	<value>ISO_639-1</value>
+                    </terminology_id>
+                    <code_string>pt</code_string>
+                </language>
+                <encoding>
+                    <terminology_id>
+                        <value>IANA_character-sets</value>
+                    </terminology_id>
+                    <code_string>UTF-8</code_string>
+                </encoding>
+                <subject></subject>
+                <data>
+                    <Qualquer_evento_as_Point_Event>
+                        <name>
+                            <value>Qualquer evento</value>
+                        </name>
+                        <time>
+                            <oe:value>2016-05-23</oe:value>
+                        </time>
+                        <data>
+                            <Aleitamento_materno>
+                                <name>
+                                    <value>Aleitamento materno</value>
+                                </name>
+                            </Aleitamento_materno>
+                        </data>
+                    </Qualquer_evento_as_Point_Event>
+                </data>
+            </Alimentação_da_criança_menor_de_2_anos>
+       </Criança>
     <Problemas__fslash__diagnósticos_avaliados>
         <name>
             <value>Problemas / diagnósticos avaliados</value>
