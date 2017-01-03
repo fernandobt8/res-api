@@ -45,13 +45,21 @@ public class ResHttpClient {
 	public ResHttpClient(CreateSOAPMessage soapMessage, String action) {
 		this.soapMessage = soapMessage;
 
-		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(60000).setConnectTimeout(30000).setExpectContinueEnabled(false).setRedirectsEnabled(true).build();
+		RequestConfig requestConfig = RequestConfig.custom()
+				.setSocketTimeout(60000)
+				.setConnectTimeout(30000)
+				.setExpectContinueEnabled(false)
+				.setRedirectsEnabled(true)
+				.build();
 
 		PoolingHttpClientConnectionManager cm = new PoolingHttpClientConnectionManager();
 		cm.setValidateAfterInactivity(10000);
 		cm.setDefaultSocketConfig(SocketConfig.custom().setTcpNoDelay(true).build());
 
-		this.httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig).setConnectionManager(cm).build();
+		this.httpClient = HttpClients.custom()
+				.setDefaultRequestConfig(requestConfig)
+				.setConnectionManager(cm)
+				.build();
 
 		this.customHeaders = new HashMap<>();
 		this.putHeader("Content-Type", "application/soap+xml;charset=UTF-8");
@@ -83,9 +91,8 @@ public class ResHttpClient {
 			HttpResponse response = this.httpClient.execute(this.host, httpPost);
 			int responseCode = response.getStatusLine().getStatusCode();
 			if (responseCode == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
-				String string = IOUtils.toString(is = response.getEntity().getContent());
-				log.error(string);
-				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode);
+				String error = IOUtils.toString(is = response.getEntity().getContent());
+				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode + " | error:" + error);
 			} else if (responseCode != HttpStatus.SC_OK) {
 				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode);
 			}

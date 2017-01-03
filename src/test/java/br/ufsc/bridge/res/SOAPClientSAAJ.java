@@ -38,7 +38,7 @@ public class SOAPClientSAAJ {
 		Credential credential = new Credential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
 
 		try {
-			repository(credential);
+			// repository(credential);
 
 			// registry(credential);
 
@@ -46,7 +46,7 @@ public class SOAPClientSAAJ {
 
 			// testeXml2();
 
-			// save(credential);
+			save(credential);
 
 		} catch (Exception e) {
 			log.error("", e);
@@ -66,7 +66,7 @@ public class SOAPClientSAAJ {
 
 		registerDTO.setCnsPaciente("898004405760294");
 		registerDTO.setIdInstalacao("1.3.6.1.4.1.21367.2010.1.2");
-		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.45");
+		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.457635");
 		registerDTO.setDocuments(new ArrayList<RepositorySaveDocumentDTO>());
 
 		RepositorySaveDocumentDTO documentDTO = new RepositorySaveDocumentDTO();
@@ -80,9 +80,9 @@ public class SOAPClientSAAJ {
 		documentDTO.setCnsPaciente("898004405760294");
 		documentDTO.setDataInicioAtendimento(new Date());
 		documentDTO.setDataFimAtendimento(new Date());
-		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.45");
-		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc2.xml").openStream();
-		// documentDTO.setDocument(IOUtils.toString(resourceAsStream));
+		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.457633");
+		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
+		documentDTO.setDocument(IOUtils.toString(resourceAsStream));
 
 		registerDTO.getDocuments().add(documentDTO);
 		repositoryService.save(registerDTO);
