@@ -15,6 +15,7 @@ import javax.xml.soap.SOAPException;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -89,7 +90,10 @@ public class ResHttpClient {
 
 			HttpResponse response = this.httpClient.execute(this.host, httpPost);
 			int responseCode = response.getStatusLine().getStatusCode();
-			if (responseCode != HttpStatus.SC_OK) {
+			if (responseCode == HttpStatus.SC_INTERNAL_SERVER_ERROR) {
+				String error = IOUtils.toString(is = response.getEntity().getContent());
+				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode + " | error:" + error);
+			} else if (responseCode != HttpStatus.SC_OK) {
 				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode);
 			}
 
