@@ -34,7 +34,7 @@ public class TestConvertResABResumoConsultaToXML {
 	public void CDT001() throws Exception {
 		// Dados minimos de um atendimento
 
-		String pathFile = this.PATH_TEST_RESOURCE + "docMin.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT001.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
 		ResABResumoConsulta resABResumoConsulta = new ResABResumoConsulta();
@@ -63,7 +63,7 @@ public class TestConvertResABResumoConsultaToXML {
 	@Test
 	public void CDT002() throws Exception {
 		// Dados completos de um atendimento
-		String pathFile = this.PATH_TEST_RESOURCE + "docCDT001.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "atendimentoCompleto.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta();
@@ -89,7 +89,7 @@ public class TestConvertResABResumoConsultaToXML {
 
 		resumoConsulta.setIdadeGestacional("P9W5D");
 		resumoConsulta.setGestasPrevias("2");
-		resumoConsulta.setPartos("1");
+		resumoConsulta.setPartos("5");
 
 		resumoConsulta.setProblemasDiagnosticos(this.getProblemasCDT002());
 		resumoConsulta.setAlergias(this.getAlergiasCDT002());
