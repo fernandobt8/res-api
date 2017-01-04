@@ -14,7 +14,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RepositoryFilter {
 
-	private String repositoryURL;
 	private List<DocumentItemFilter> documents = new ArrayList<>();
 
 	@Getter
@@ -22,6 +21,7 @@ public class RepositoryFilter {
 	@AllArgsConstructor
 	@NoArgsConstructor
 	public static class DocumentItemFilter {
+		private String repositoryURL;
 		private String repositoryUniqueId;
 		private String documentUniqueId;
 	}
