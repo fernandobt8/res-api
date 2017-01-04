@@ -4,6 +4,9 @@ import static br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath.is
 
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -62,34 +65,33 @@ public class RepositoryService {
 	}
 
 	public RepositoryResponseDTO getDocuments(RepositoryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
-		RetrieveDocumentSetRequestType retrieveDocumentRequest = new RetrieveDocumentSetRequestType();
+		Map<String, RetrieveDocumentSetRequestType> requests = new HashMap<>();
 
 		for (DocumentItemFilter document : filter.getDocuments()) {
-			DocumentRequest documentRequest = new RetrieveDocumentSetRequestType.DocumentRequest();
-			documentRequest.setRepositoryUniqueId(document.getRepositoryUniqueId());
-			documentRequest.setDocumentUniqueId(document.getDocumentUniqueId());
-			retrieveDocumentRequest.getDocumentRequest().add(documentRequest);
+			this.addDocumentRequest(requests, document);
 		}
 
 		try {
-			this.httpClientRetrive.setUrl(filter.getRepositoryURL());
-			Document response = this.httpClientRetrive.send(retrieveDocumentRequest);
+			RepositoryResponseDTO responseDTO = new RepositoryResponseDTO(true);
+			for (Entry<String, RetrieveDocumentSetRequestType> entry : requests.entrySet()) {
+				this.httpClientRetrive.setUrl(entry.getKey());
+				Document response = this.httpClientRetrive.send(entry.getValue());
 
-			XPathFactoryAssist xPathResponse = new XPathFactoryAssist(response);
-			if (isSuccess(xPathResponse.getString("//RegistryResponse/@status"))) {
-				RepositoryResponseDTO responseDTO = new RepositoryResponseDTO(true);
-				for (XPathFactoryAssist xPathDocument : xPathResponse.iterable("//Body//DocumentResponse")) {
-					DocumentItem documentItem = new DocumentItem();
-					documentItem.setRepositoryUniqueId(xPathDocument.getString("./RepositoryUniqueId"));
-					documentItem.setDocumentUniqueId(xPathDocument.getString("./DocumentUniqueId"));
-					documentItem.setDocument(new String(Base64.decodeBase64(xPathDocument.getString("./Document")), "UTF-8"));
-					responseDTO.getDocuments().add(documentItem);
+				XPathFactoryAssist xPathResponse = new XPathFactoryAssist(response);
+				if (isSuccess(xPathResponse.getString("//RegistryResponse/@status"))) {
+					for (XPathFactoryAssist xPathDocument : xPathResponse.iterable("//Body//DocumentResponse")) {
+						DocumentItem documentItem = new DocumentItem();
+						documentItem.setRepositoryUniqueId(xPathDocument.getString("./RepositoryUniqueId"));
+						documentItem.setDocumentUniqueId(xPathDocument.getString("./DocumentUniqueId"));
+						documentItem.setDocument(new String(Base64.decodeBase64(xPathDocument.getString("./Document")), "UTF-8"));
+						responseDTO.getDocuments().add(documentItem);
+					}
+				} else {
+					this.printerResponseError.parserException(new RegistryErrorListXPath(response));
+					return null;
 				}
-				return responseDTO;
-			} else {
-				this.printerResponseError.parserException(new RegistryErrorListXPath(response));
-				return null;
 			}
+			return responseDTO;
 		} catch (ResHttpConnectionException e) {
 			throw new ResServiceSevereException(e);
 		} catch (ResHttpRequestResponseException | ResXDSbException e) {
@@ -101,6 +103,18 @@ public class RepositoryService {
 		} catch (UnsupportedEncodingException e) {
 			throw new ResServiceFatalException("Error coverting openEHR document from base64", e);
 		}
+	}
+
+	private void addDocumentRequest(Map<String, RetrieveDocumentSetRequestType> requests, DocumentItemFilter document) {
+		RetrieveDocumentSetRequestType requestType = requests.get(document.getRepositoryURL());
+		if (requestType == null) {
+			requestType = new RetrieveDocumentSetRequestType();
+			requests.put(document.getRepositoryURL(), requestType);
+		}
+		DocumentRequest documentRequest = new RetrieveDocumentSetRequestType.DocumentRequest();
+		documentRequest.setRepositoryUniqueId(document.getRepositoryUniqueId());
+		documentRequest.setDocumentUniqueId(document.getDocumentUniqueId());
+		requestType.getDocumentRequest().add(documentRequest);
 	}
 
 	public void save(RepositorySaveDTO dto) throws ResServiceSevereException, ResServiceFatalException {

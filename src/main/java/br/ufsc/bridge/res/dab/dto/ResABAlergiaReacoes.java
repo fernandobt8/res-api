@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,9 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResABAlergiaReacoes {
+public class ResABAlergiaReacoes implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private String agente;
 	private ResABGravidadeEnum gravidade;
 	private String categoria;

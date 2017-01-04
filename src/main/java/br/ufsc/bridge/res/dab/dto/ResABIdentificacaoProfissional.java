@@ -1,5 +1,7 @@
 package br.ufsc.bridge.res.dab.dto;
 
+import java.io.Serializable;
+
 import javax.xml.xpath.XPathExpressionException;
 
 import lombok.EqualsAndHashCode;
@@ -13,7 +15,8 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
-public class ResABIdentificacaoProfissional {
+public class ResABIdentificacaoProfissional implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private String cns;
 	private String cbo;

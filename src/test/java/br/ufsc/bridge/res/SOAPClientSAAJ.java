@@ -66,7 +66,7 @@ public class SOAPClientSAAJ {
 
 		registerDTO.setCnsPaciente("898004405760294");
 		registerDTO.setIdInstalacao("1.3.6.1.4.1.21367.2010.1.2");
-		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.930");
+		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.4635");
 		registerDTO.setDocuments(new ArrayList<RepositorySaveDocumentDTO>());
 
 		RepositorySaveDocumentDTO documentDTO = new RepositorySaveDocumentDTO();
@@ -80,7 +80,7 @@ public class SOAPClientSAAJ {
 		documentDTO.setCnsPaciente("898004405760294");
 		documentDTO.setDataInicioAtendimento(new Date());
 		documentDTO.setDataFimAtendimento(new Date());
-		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.930");
+		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.4633");
 		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
 		documentDTO.setDocument(IOUtils.toString(resourceAsStream));
 
@@ -103,8 +103,8 @@ public class SOAPClientSAAJ {
 		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositoryFilter repositoryFilter = new RepositoryFilter();
-		repositoryFilter.setRepositoryURL("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RepositoryPS");
-		repositoryFilter.getDocuments().add(new DocumentItemFilter("2.16.840.1.113883.3.711.2.1.4.5.11601", "1.42.20130403134532.123.1475256277528.2"));
+		repositoryFilter.getDocuments().add(new DocumentItemFilter("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RepositoryPS", "2.16.840.1.113883.3.711.2.1.4.5.11601",
+				"1.42.20130403134532.123.1475256277528.2"));
 
 		RepositoryResponseDTO documents = repositoryService.getDocuments(repositoryFilter);
 		for (DocumentItem item : documents.getDocuments()) {
