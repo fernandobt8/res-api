@@ -89,7 +89,7 @@ public class TestConvertResABResumoConsultaToXML {
 
 		resumoConsulta.setIdadeGestacional("P9W5D");
 		resumoConsulta.setGestasPrevias("2");
-		resumoConsulta.setPartos("5");
+		resumoConsulta.setPartos("1");
 
 		resumoConsulta.setProblemasDiagnosticos(this.getProblemasCDT002());
 		resumoConsulta.setAlergias(this.getAlergiasCDT002());
