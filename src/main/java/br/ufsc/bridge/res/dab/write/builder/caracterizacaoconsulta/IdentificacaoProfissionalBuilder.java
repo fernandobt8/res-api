@@ -39,9 +39,7 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 	}
 
 	private String openTagResponsavel() {
-		return "</oe:value></value></CBO><É_o_responsável_pelo_atendimento_quest_><name>" +
-				"<value>É o responsável pelo atendimento</value></name>\n" +
-				"<value><oe:value>";
+		return "</oe:value></value></CBO><É_o_responsável_pelo_atendimento_quest_><name><value>É o responsável pelo atendimento</value></name><value><oe:value>";
 	}
 
 	@Override

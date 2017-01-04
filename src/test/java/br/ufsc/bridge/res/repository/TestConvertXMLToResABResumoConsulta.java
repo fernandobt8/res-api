@@ -86,9 +86,9 @@ public class TestConvertXMLToResABResumoConsulta {
 		Assert.assertEquals(ResABTipoProblemaDiagnostico.CIAP, resABProblemaDiagnostico2.getTipo());
 
 		ResABProblemaDiagnostico resABProblemaDiagnostico3 = resumoConsulta.getProblemasDiagnosticos().get(2);
-		Assert.assertNull(resABProblemaDiagnostico3.getCodigo());
+		Assert.assertEquals("O038", resABProblemaDiagnostico3.getCodigo());
 		Assert.assertEquals("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.", resABProblemaDiagnostico3.getDescricao());
-		Assert.assertNull(resABProblemaDiagnostico3.getTipo());
+		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico3.getTipo());
 
 		Assert.assertEquals(2, resumoConsulta.getAlergias().size());
 
@@ -97,8 +97,8 @@ public class TestConvertXMLToResABResumoConsulta {
 		Assert.assertEquals("Alimento", resABAlergiaReacoes1.getCategoria());
 		Assert.assertEquals("leite", resABAlergiaReacoes1.getAgente());
 
-		formatter = new SimpleDateFormat("yyyy-MM");
-		dateInString = "2014-05";
+		formatter = new SimpleDateFormat("yyyy-MM-dd");
+		dateInString = "2014-05-01";
 		ResABEventoReacao resABAlergia1EventoReacao1 = resABAlergiaReacoes1.getEventoReacao().get(0);
 		Assert.assertEquals(formatter.parse(dateInString), resABAlergia1EventoReacao1.getDataInstalacao());
 		Assert.assertEquals("sob controle", resABAlergia1EventoReacao1.getEvolucaoAlergia());
@@ -116,8 +116,8 @@ public class TestConvertXMLToResABResumoConsulta {
 		Assert.assertEquals("Remedio", resABAlergiaReacoes2.getCategoria());
 		Assert.assertEquals("metamizol", resABAlergiaReacoes2.getAgente());
 
-		formatter = new SimpleDateFormat("yyyy-MM");
-		dateInString = "2013-09";
+		formatter = new SimpleDateFormat("yyyy-MM-dd");
+		dateInString = "2013-09-01";
 		ResABEventoReacao resABAlergia2EventoReacao1 = resABAlergiaReacoes2.getEventoReacao().get(0);
 		Assert.assertEquals(formatter.parse(dateInString), resABAlergia2EventoReacao1.getDataInstalacao());
 		Assert.assertEquals("situação de alto risco", resABAlergia2EventoReacao1.getEvolucaoAlergia());

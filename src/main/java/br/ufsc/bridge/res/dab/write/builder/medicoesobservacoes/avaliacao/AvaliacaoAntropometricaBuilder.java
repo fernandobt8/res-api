@@ -31,7 +31,7 @@ public class AvaliacaoAntropometricaBuilder<PARENT extends ParentArquetypeWrappe
 	}
 
 	public AvaliacaoAntropometricaBuilder<PARENT> perimetroCefalico(Date dataEvento, String perimetroCefalico) {
-		new PerimetroCefalicoBuilder<>(this.parent, dataEvento, perimetroCefalico);
+		new PerimetroCefalicoBuilder<>(this, dataEvento, perimetroCefalico);
 		return this;
 	}
 

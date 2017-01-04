@@ -30,13 +30,12 @@ public class AleitamentoMaternoBuilder<PARENT extends ParentArquetypeWrapper<?>>
 	}
 
 	private String openTagAleitamentoMaterno() {
-		return "</oe:value></time><data><Aleitamento_materno><name><value>";
+		return "</oe:value></time><data><Aleitamento_materno><name><value>Aleitamento materno</value></name><value><value>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</value></name><value><value>Exclusivo</value></value></Aleitamento_materno></data></Qualquer_evento_as_Point_Event></data>"
-				+ "</Alimentação_da_criança_menor_de_2_anos>";
+		return "</value></value></Aleitamento_materno></data></Qualquer_evento_as_Point_Event></data>" + "</Alimentação_da_criança_menor_de_2_anos>";
 	}
 
 	@Override
