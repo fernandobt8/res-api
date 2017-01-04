@@ -2,6 +2,7 @@ package br.ufsc.bridge.res.dab.dto;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,8 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResABResumoConsulta {
+public class ResABResumoConsulta implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private Date dataAtendimento;
 

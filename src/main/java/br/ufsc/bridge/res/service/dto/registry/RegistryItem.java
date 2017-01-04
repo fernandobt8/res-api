@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.service.dto.registry;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -11,7 +12,8 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegistryItem {
+public class RegistryItem implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private String repositoryUniqueId;
 	private String documentUniqueId;

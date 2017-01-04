@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -13,7 +14,9 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResABEventoReacao {
+public class ResABEventoReacao implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private String manifestacao;
 	private Date dataInstalacao;
 	private String evolucaoAlergia;
