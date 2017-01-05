@@ -2,6 +2,7 @@ package br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes;
 
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.avaliacao.AvaliacaoAntropometricaBuilder;
+import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.crianca.CriancaBuilder;
 import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.gestante.GestanteBuilder;
 
 public class MedicoesObservacoesBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
@@ -26,6 +27,10 @@ public class MedicoesObservacoesBuilder<PARENT extends ParentArquetypeWrapper<?>
 
 	public GestanteBuilder<MedicoesObservacoesBuilder<PARENT>> gestante() {
 		return new GestanteBuilder<>(this);
+	}
+
+	public CriancaBuilder<MedicoesObservacoesBuilder<PARENT>> crianca() {
+		return new CriancaBuilder<>(this);
 	}
 
 }

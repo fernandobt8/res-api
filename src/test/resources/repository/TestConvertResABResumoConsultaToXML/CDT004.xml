@@ -122,6 +122,11 @@
         <name>
             <value>Medições e observações</value>
         </name>
+        <Criança>
+        	<name>
+            	<value>Criança</value>
+            </name>
+        </Criança>    
     </Medições_e_observações>
     <Problemas__fslash__diagnósticos_avaliados>
         <name>

@@ -11,6 +11,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +19,7 @@ import lombok.Setter;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
+import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
@@ -36,6 +38,7 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ResABResumoConsulta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -49,6 +52,8 @@ public class ResABResumoConsulta implements Serializable {
 
 	private String peso;
 	private String altura;
+	private String perimetroCefalico;
+	private ResABAleitamentoMaternoEnum aleitamentoMaterno;
 
 	private Date dum;
 	private String idadeGestacional;
@@ -91,6 +96,8 @@ public class ResABResumoConsulta implements Serializable {
 			XPathFactoryAssist xPathMedicoes = xPathRoot.getXPathAssist("//Medições_e_observações");
 			this.peso = xPathMedicoes.getString("./Avaliação_antropométrica/Peso_corporal//Peso/value/magnitude");
 			this.altura = xPathMedicoes.getString("./Avaliação_antropométrica/Altura__fslash__comprimento//Altura__fslash__comprimento/value/magnitude");
+			this.perimetroCefalico = xPathMedicoes
+					.getString("./Avaliação_antropométrica/Perímetro_cefálico//Qualquer_ponto_de_tempo_no_evento_prd_//_exclm___-__Perímetro_cefálico/value/magnitude");
 
 			XPathFactoryAssist xPathGestante = xPathMedicoes.getXPathAssist(".//Gestante");
 			this.dum = xPathGestante.getDateEHR("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value");
@@ -99,6 +106,10 @@ public class ResABResumoConsulta implements Serializable {
 			XPathFactoryAssist xPathSumarioObstetrico = xPathGestante.getXPathAssist(".//Sumário_obstétrico/data");
 			this.gestasPrevias = xPathSumarioObstetrico.getString("./Gestas_prévias/value/magnitude");
 			this.partos = xPathSumarioObstetrico.getString("./Partos/value/magnitude");
+
+			XPathFactoryAssist xPathCrianca = xPathMedicoes.getXPathAssist(".//Criança");
+			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum
+					.getByCodigo(xPathCrianca.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data/Aleitamento_materno/value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas__fslash__diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema__fslash_Diagnóstico")) {
@@ -157,11 +168,15 @@ public class ResABResumoConsulta implements Serializable {
 			.avaliacaoAntropometrica()
 				.pesoCorporal(this.dataAtendimento, this.peso)
 				.altura(this.dataAtendimento, this.altura)
+				.perimetroCefalico(this.dataAtendimento, this.perimetroCefalico)
 			.close()
 			.gestante()
 				.cicloMenstrual(this.dataAtendimento, this.dum)
 				.gestacao(this.dataAtendimento, this.idadeGestacional)
-				.sumarioObstetrico(this.gestasPrevias, this.partos);
+				.sumarioObstetrico(this.gestasPrevias, this.partos)
+			.close()
+			.crianca()
+				.aleitamentoMaterno(this.dataAtendimento, this.aleitamentoMaterno);
 
 		ProblemaDiagnosticoAvaliadoBuilder<ResumoConsultaABBuilder> diagnosticoAvaliadoBuilder = abBuilder.problemaDiagnostico();
 		for (ResABProblemaDiagnostico diagnostico : this.problemasDiagnosticos) {
