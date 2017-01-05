@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ResABProblemaDiagnostico implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,6 +17,7 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
 public class ResABAlergiaReacoes implements Serializable {
 	private static final long serialVersionUID = 1L;
 
