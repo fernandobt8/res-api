@@ -249,6 +249,7 @@ public class TestConvertResABResumoConsultaToXML {
 		List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
 		profissional.setCns("703006821796679");
 		profissional.setCbo("2235-65");
+		profissional.setNome("Pedro Henrique");
 		profissional.setResponsavel(true);
 		profissionais.add(profissional);
 
@@ -261,6 +262,7 @@ public class TestConvertResABResumoConsultaToXML {
 		profissional = new ResABIdentificacaoProfissional();
 		profissional.setCns("898001153249911");
 		profissional.setCbo("2235-64");
+		profissional.setNome("João da Silva");
 		profissional.setResponsavel(true);
 		profissionais.add(profissional);
 		return profissionais;

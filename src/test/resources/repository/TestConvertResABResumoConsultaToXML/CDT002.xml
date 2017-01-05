@@ -92,6 +92,11 @@
                             <value>CNS</value>
                         </name>
                     </CNS>
+                    <Nome>
+                        <name>
+                            <value>Nome</value>
+                        </name>
+                    </Nome>
                     <CBO>
                         <name>
                             <value>CBO</value>

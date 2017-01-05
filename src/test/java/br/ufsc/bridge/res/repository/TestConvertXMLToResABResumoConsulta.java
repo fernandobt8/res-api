@@ -42,16 +42,19 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABIdentificacaoProfissional resABProfissional1 = resumoConsulta.getProfissionais().get(0);
 		Assert.assertEquals("703006821796679", resABProfissional1.getCns());
 		Assert.assertEquals("2235-65", resABProfissional1.getCbo());
+		Assert.assertEquals("Pedro Henrique", resABProfissional1.getNome());
 		Assert.assertEquals(true, resABProfissional1.isResponsavel());
 
 		ResABIdentificacaoProfissional resABProfissional2 = resumoConsulta.getProfissionais().get(1);
 		Assert.assertEquals("707000801749036", resABProfissional2.getCns());
 		Assert.assertEquals("2236-05", resABProfissional2.getCbo());
+		Assert.assertNull(resABProfissional2.getNome());
 		Assert.assertEquals(false, resABProfissional2.isResponsavel());
 
 		ResABIdentificacaoProfissional resABProfissional3 = resumoConsulta.getProfissionais().get(2);
 		Assert.assertEquals("898001153249911", resABProfissional3.getCns());
 		Assert.assertEquals("2235-64", resABProfissional3.getCbo());
+		Assert.assertEquals("João da Silva", resABProfissional3.getNome());
 		Assert.assertEquals(true, resABProfissional3.isResponsavel());
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -197,6 +200,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABIdentificacaoProfissional resABProfissional1 = resumoConsulta.getProfissionais().get(0);
 		Assert.assertNull(resABProfissional1.getCns());
 		Assert.assertNull(resABProfissional1.getCbo());
+		Assert.assertNull(resABProfissional1.getNome());
 		Assert.assertEquals(true, resABProfissional1.isResponsavel());
 
 		Assert.assertNull(resumoConsulta.getDataAtendimento());
@@ -329,6 +333,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABIdentificacaoProfissional resABIdentificacaoProfissional1 = resumoConsulta.getProfissionais().get(0);
 		Assert.assertEquals("703006821798000", resABIdentificacaoProfissional1.getCns());
 		Assert.assertEquals("1235-65", resABIdentificacaoProfissional1.getCbo());
+		Assert.assertNull(resABIdentificacaoProfissional1.getNome());
 		Assert.assertEquals(false, resABIdentificacaoProfissional1.isResponsavel());
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");

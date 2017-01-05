@@ -41,12 +41,12 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 		return "<Identificação_do_profissional><name><value>Identificação do profissional</value></name><CNS><name><value>CNS</value></name><value><oe:value>";
 	}
 
-	private String openTagCbo() {
-		return "</oe:value></value></CNS><CBO><name>" + "<value>CBO</value></name><value><oe:value>";
+	private String closeTagCNS() {
+		return "</oe:value></value></CNS>";
 	}
 
-	private String closeTagCbo() {
-		return "</oe:value></value></CBO>";
+	private String openTagCbo() {
+		return "<CBO><name>" + "<value>CBO</value></name><value><oe:value>";
 	}
 
 	private String openTagNome() {
@@ -58,7 +58,7 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 	}
 
 	private String openTagResponsavel() {
-		return "<É_o_responsável_pelo_atendimento_quest_><name><value>É o responsável pelo atendimento</value></name><value><oe:value>";
+		return "</oe:value></value></CBO><É_o_responsável_pelo_atendimento_quest_><name><value>É o responsável pelo atendimento</value></name><value><oe:value>";
 	}
 
 	@Override
@@ -69,10 +69,10 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 	@Override
 	public String getValue() {
 		if (StringUtils.isNotBlank(this.nome)) {
-			return this.cns + this.openTagCbo() + this.cbo + this.closeTagCbo() + this.openTagNome() + this.nome + this.closeTagNome() + this.openTagResponsavel()
+			return this.cns + this.closeTagCNS() + this.openTagNome() + this.nome + this.closeTagNome() + this.openTagCbo() + this.cbo + this.openTagResponsavel()
 					+ this.responsavel;
 		} else {
-			return this.cns + this.openTagCbo() + this.cbo + this.closeTagCbo() + this.openTagResponsavel() + this.responsavel;
+			return this.cns + this.closeTagCNS() + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
 		}
 	}
 }
