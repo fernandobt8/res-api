@@ -164,6 +164,14 @@
 							<oe:value>898001153249911</oe:value>
 						</value>
 					</CNS>
+					<Nome>
+						<name>
+							<value>Nome</value>
+						</name>
+						<value>
+							<oe:value>João da Silva</oe:value>
+						</value>
+					</Nome>
 					<CBO>
 						<name>
 							<value>CBO</value>

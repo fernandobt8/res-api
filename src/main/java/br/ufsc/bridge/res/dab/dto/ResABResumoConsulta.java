@@ -155,6 +155,7 @@ public class ResABResumoConsulta implements Serializable {
 		for (ResABIdentificacaoProfissional profissional : this.profissionais) {
 			caracterizacaoConsulta.identificacaoProfissional()
 				.cns(profissional.getCns())
+				.nome(profissional.getNome())
 				.cbo(profissional.getCbo())
 				.responsavel(profissional.isResponsavel());
 		}
