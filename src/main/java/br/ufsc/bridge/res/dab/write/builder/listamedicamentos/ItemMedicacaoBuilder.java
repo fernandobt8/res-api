@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.write.builder.listamedicamentos;
 
+import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 
 public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
@@ -12,6 +13,7 @@ public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 	private String codigoViaAdministracao;
 	private String descricaoDose;
 	private String codigoDoseEstruturada;
+	private ResABEstadoMedicamentoEnum estadoMedicamento;
 
 	public ItemMedicacaoBuilder(PARENT parent) {
 		super(parent);
@@ -19,14 +21,10 @@ public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 
 	@Override
 	public String getValue() {
-		return this.nomeMedicamento
-				+ this.openTagsCodigoMedicamento() + this.codigoMedicamentoCatmat
-				+ this.openTagsDescricaoFormaFarmaceutica() + this.descricaoFormaFarmaceutica
-				+ this.openTagsCodigoFormaFarmaceutica() + this.codigoFormaFarmaceutica
-				+ this.openTagsDescricaoViaAdministracao() + this.descricaoViaAdministracao
-				+ this.openTagsCodigoViaAdministracao() + this.codigoViaAdministracao
-				+ this.openTagsDescricaoDose() + this.descricaoDose
-				+ this.openTagsCodigoDoseEstruturada() + this.codigoDoseEstruturada;
+		return this.nomeMedicamento + this.openTagsCodigoMedicamento() + this.codigoMedicamentoCatmat + this.openTagsDescricaoFormaFarmaceutica() + this.descricaoFormaFarmaceutica
+				+ this.openTagsCodigoFormaFarmaceutica() + this.codigoFormaFarmaceutica + this.openTagsDescricaoViaAdministracao() + this.descricaoViaAdministracao
+				+ this.openTagsCodigoViaAdministracao() + this.codigoViaAdministracao + this.openTagsDescricaoDose() + this.descricaoDose + this.openTagsCodigoDoseEstruturada()
+				+ this.codigoDoseEstruturada;
 	}
 
 	private String openTagsCodigoMedicamento() {
@@ -34,8 +32,7 @@ public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 	}
 
 	private String openTagsDescricaoFormaFarmaceutica() {
-		return "</code_string></defining_code></value></Medicamento><Forma_farmacêutica><name><value>Forma farmacêutica</value>"
-				+ "</name><value><value>";
+		return "</code_string></defining_code></value></Medicamento><Forma_farmacêutica><name><value>Forma farmacêutica</value></name><value><value>";
 	}
 
 	private String openTagsCodigoFormaFarmaceutica() {
@@ -43,8 +40,7 @@ public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 	}
 
 	private String openTagsDescricaoViaAdministracao() {
-		return "</code_string></defining_code></value></Forma_farmacêutica><Via_de_administração><name><value>Via de administração</value>"
-				+ "</name><value><value>";
+		return "</code_string></defining_code></value></Forma_farmacêutica><Via_de_administração><name><value>Via de administração</value></name><value><value>";
 	}
 
 	private String openTagsCodigoViaAdministracao() {

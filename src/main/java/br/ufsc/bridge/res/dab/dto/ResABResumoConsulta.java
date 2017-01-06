@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -15,6 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -39,6 +41,7 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class ResABResumoConsulta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -62,15 +65,15 @@ public class ResABResumoConsulta implements Serializable {
 
 	private List<ResABProblemaDiagnostico> problemasDiagnosticos = new ArrayList<>();
 
-	private List<ResABAlergiaReacoes> alergias = new ArrayList<>();
+	private List<ResABAlergiaReacoes> alergias = new LinkedList<>();
 
-	private List<ResABProcedimento> procedimentos = new ArrayList<>();
+	private List<ResABProcedimento> procedimentos = new LinkedList<>();
 
-	private List<ResABMedicamento> medicamentos = new ArrayList<>();
+	private List<ResABMedicamento> medicamentos = new LinkedList<>();
 
-	private List<ResABCondutaEnum> condutas = new ArrayList<>();
+	private List<ResABCondutaEnum> condutas = new LinkedList<>();
 
-	private List<String> encaminhamentos = new ArrayList<>();
+	private List<String> encaminhamentos = new LinkedList<>();
 
 	public ResABResumoConsulta(String xml) throws ResABXMLParserException {
 		Document document;

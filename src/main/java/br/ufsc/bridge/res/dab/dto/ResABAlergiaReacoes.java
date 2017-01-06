@@ -10,6 +10,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import br.ufsc.bridge.res.dab.domain.ResABGravidadeEnum;
 import br.ufsc.bridge.res.util.XPathFactoryAssist;
@@ -18,6 +19,7 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class ResABAlergiaReacoes implements Serializable {
 	private static final long serialVersionUID = 1L;
 

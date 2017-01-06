@@ -4,7 +4,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -46,7 +46,7 @@ public class TestConvertResABResumoConsultaToXML {
 		resABResumoConsulta.setTipoAtendimento(ResABTipoAtendimentoEnum.DEMANDA_ESPONTANEA_CONSULTA_NO_DIA);
 
 		ResABIdentificacaoProfissional profissional = new ResABIdentificacaoProfissional();
-		List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
+		List<ResABIdentificacaoProfissional> profissionais = new LinkedList<>();
 		profissional.setCns("123456");
 		profissional.setCbo("654321");
 		profissional.setResponsavel(true);
@@ -96,12 +96,12 @@ public class TestConvertResABResumoConsultaToXML {
 		resumoConsulta.setProcedimentos(this.getProcedimentosCDT002());
 		resumoConsulta.setMedicamentos(this.getMedicamentosCDT002());
 
-		List<ResABCondutaEnum> condutas = new ArrayList<>();
+		List<ResABCondutaEnum> condutas = new LinkedList<>();
 		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
 		condutas.add(ResABCondutaEnum.ALTA_DO_EPISODIO);
 		resumoConsulta.setCondutas(condutas);
 
-		List<String> encaminhamentos = new ArrayList<>();
+		List<String> encaminhamentos = new LinkedList<>();
 		encaminhamentos.add("Interno no dia");
 		encaminhamentos.add("Externo no dia");
 		encaminhamentos.add("Agendamento");
@@ -115,7 +115,7 @@ public class TestConvertResABResumoConsultaToXML {
 	}
 
 	private List<ResABMedicamento> getMedicamentosCDT002() {
-		List<ResABMedicamento> medicamentos = new ArrayList<>();
+		List<ResABMedicamento> medicamentos = new LinkedList<>();
 		ResABMedicamento medicamento = new ResABMedicamento();
 		medicamento.setNomeMedicamento("ALBENDAZOL 200 mg comprimido");
 		medicamento.setCodigoMedicamentoCatmat("BR0269628");
@@ -143,7 +143,7 @@ public class TestConvertResABResumoConsultaToXML {
 	}
 
 	private List<ResABProcedimento> getProcedimentosCDT002() {
-		List<ResABProcedimento> procedimentos = new ArrayList<>();
+		List<ResABProcedimento> procedimentos = new LinkedList<>();
 		ResABProcedimento procedimento = new ResABProcedimento();
 
 		procedimento.setCodigo("18512000");
@@ -170,14 +170,14 @@ public class TestConvertResABResumoConsultaToXML {
 	private List<ResABAlergiaReacoes> getAlergiasCDT002() throws ParseException {
 		SimpleDateFormat formatter;
 		String dateInString;
-		List<ResABAlergiaReacoes> alergias = new ArrayList<>();
+		List<ResABAlergiaReacoes> alergias = new LinkedList<>();
 
 		ResABAlergiaReacoes alergia1 = new ResABAlergiaReacoes();
 		alergia1.setAgente("leite");
 		alergia1.setCategoria("Alimento");
 		alergia1.setGravidade(ResABGravidadeEnum.BAIXO);
 
-		List<ResABEventoReacao> reacoesAlergia1 = new ArrayList<>();
+		List<ResABEventoReacao> reacoesAlergia1 = new LinkedList<>();
 		ResABEventoReacao reacao1Alergia1 = new ResABEventoReacao();
 		formatter = new SimpleDateFormat("yyyy-MM");
 		dateInString = "2014-05";
@@ -202,7 +202,7 @@ public class TestConvertResABResumoConsultaToXML {
 		alergia2.setCategoria("Remedio");
 		alergia2.setGravidade(ResABGravidadeEnum.ALTO);
 
-		List<ResABEventoReacao> reacoesAlergia2 = new ArrayList<>();
+		List<ResABEventoReacao> reacoesAlergia2 = new LinkedList<>();
 		ResABEventoReacao reacao1Alergia2 = new ResABEventoReacao();
 		formatter = new SimpleDateFormat("yyyy-MM");
 		dateInString = "2013-09";
@@ -222,7 +222,7 @@ public class TestConvertResABResumoConsultaToXML {
 	}
 
 	private List<ResABProblemaDiagnostico> getProblemasCDT002() {
-		List<ResABProblemaDiagnostico> problemas = new ArrayList<>();
+		List<ResABProblemaDiagnostico> problemas = new LinkedList<>();
 		ResABProblemaDiagnostico problema = new ResABProblemaDiagnostico();
 
 		problema.setCodigo("A920");
@@ -246,7 +246,7 @@ public class TestConvertResABResumoConsultaToXML {
 
 	private List<ResABIdentificacaoProfissional> getProfissionaisCDT002() {
 		ResABIdentificacaoProfissional profissional = new ResABIdentificacaoProfissional();
-		List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
+		List<ResABIdentificacaoProfissional> profissionais = new LinkedList<>();
 		profissional.setCns("703006821796679");
 		profissional.setCbo("2235-65");
 		profissional.setNome("Pedro Henrique");
