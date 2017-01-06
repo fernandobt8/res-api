@@ -5,15 +5,19 @@ import java.util.Date;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import br.ufsc.bridge.res.util.XPathFactoryAssist;
 
 @Getter
 @Setter
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class ResABEventoReacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 

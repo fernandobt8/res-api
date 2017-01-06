@@ -34,7 +34,7 @@ public class TestConvertResABResumoConsultaToXML {
 	public void CDT001() throws Exception {
 		// Dados minimos de um atendimento
 
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT001.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT001.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
 		ResABResumoConsulta resABResumoConsulta = new ResABResumoConsulta();

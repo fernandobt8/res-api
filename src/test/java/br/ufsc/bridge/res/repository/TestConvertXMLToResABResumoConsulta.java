@@ -190,7 +190,7 @@ public class TestConvertXMLToResABResumoConsulta {
 	@Test
 	public void CDT002() throws Exception {
 		// XML sem as tags de value
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT002.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT002.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 		Assert.assertNull(resumoConsulta.getTurno());
@@ -293,7 +293,7 @@ public class TestConvertXMLToResABResumoConsulta {
 	@Test
 	public void CDT003() throws Exception {
 		// XML apenas com as TAGs obrigatorias
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT003.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT003.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 		Assert.assertNull(resumoConsulta.getTurno());
@@ -321,7 +321,7 @@ public class TestConvertXMLToResABResumoConsulta {
 	@Test
 	public void CDT004() throws Exception {
 		// Arquivo XML sem algumas tags
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT004.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT004.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 

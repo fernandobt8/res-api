@@ -222,7 +222,8 @@ public class ResABResumoConsulta implements Serializable {
 				.formaFarmaceutica(medicamento.getDescricaoFormaFarmaceutica(), medicamento.getCodigoFormaFarmaceutica())
 				.viaAdministracao(medicamento.getDescricaoViaAdministracao(), medicamento.getCodigoViaAdministracao())
 				.dose(medicamento.getDescricaoDose())
-				.doseEstruturada(medicamento.getDuracaoTratamento());
+				.doseEstruturada(medicamento.getDuracaoTratamento())
+				.estadoMedicamento(medicamento.getEstadoMedicamento());
 		}
 
 		DadosDesfechoBuilder<ResumoConsultaABBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
