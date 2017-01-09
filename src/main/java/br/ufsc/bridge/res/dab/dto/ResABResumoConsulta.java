@@ -109,7 +109,7 @@ public class ResABResumoConsulta implements Serializable {
 
 			XPathFactoryAssist xPathCrianca = xPathMedicoes.getXPathAssist(".//Criança");
 			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum
-					.getByCodigo(xPathCrianca.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data/Aleitamento_materno/value/value"));
+					.getByDescricao(xPathCrianca.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data/Aleitamento_materno/value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas__fslash__diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema__fslash_Diagnóstico")) {
