@@ -117,7 +117,7 @@ public class TestConvertResABResumoConsultaToXML {
 	@Test
 	public void CDT003() throws Exception {
 		// Dados de atendimento sem algumas informacoes
-		String pathFile = this.PATH_TEST_RESOURCE + "atendimentoCompleto.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT003.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta();

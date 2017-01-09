@@ -68,11 +68,14 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 
 	@Override
 	public String getValue() {
-		if (StringUtils.isNotBlank(this.nome)) {
-			return this.cns + this.closeTagCNS() + this.openTagNome() + this.nome + this.closeTagNome() + this.openTagCbo() + this.cbo + this.openTagResponsavel()
-					+ this.responsavel;
-		} else {
-			return this.cns + this.closeTagCNS() + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
+		if (this.cns != null || this.nome != null || this.cbo != null || this.responsavel != false) {
+			if (StringUtils.isNotBlank(this.nome)) {
+				return this.cns + this.closeTagCNS() + this.openTagNome() + this.nome + this.closeTagNome() + this.openTagCbo() + this.cbo + this.openTagResponsavel()
+						+ this.responsavel;
+			} else {
+				return this.cns + this.closeTagCNS() + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
+			}
 		}
+		return null;
 	}
 }

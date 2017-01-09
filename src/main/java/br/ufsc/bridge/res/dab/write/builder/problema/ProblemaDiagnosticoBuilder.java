@@ -30,8 +30,7 @@ public class ProblemaDiagnosticoBuilder<PARENT extends ParentArquetypeWrapper<?>
 
 	@Override
 	protected String openTags() {
-		return "<Problema__fslash_Diagnóstico><name><value>Problema /Diagnóstico</value></name>"
-				+ "<language><terminology_id><value>ISO_639-1</value></terminology_id>"
+		return "<Problema__fslash_Diagnóstico><name><value>Problema /Diagnóstico</value></name>" + "<language><terminology_id><value>ISO_639-1</value></terminology_id>"
 				+ "<code_string>pt</code_string></language><encoding><terminology_id><value>IANA_character-sets"
 				+ "</value></terminology_id><code_string>UTF-8</code_string></encoding><subject></subject>"
 				+ "<data><Problema__fslash__Diagnóstico><name><value>Problema / Diagnóstico</value></name><value><value>";
@@ -52,7 +51,10 @@ public class ProblemaDiagnosticoBuilder<PARENT extends ParentArquetypeWrapper<?>
 
 	@Override
 	public String getValue() {
-		return this.descricao + this.openTagsTipo() + this.tipo + this.openTagsCodigo() + this.codigo;
+		if (this.descricao != null || this.tipo != null || this.codigo != null) {
+			return this.descricao + this.openTagsTipo() + this.tipo + this.openTagsCodigo() + this.codigo;
+		}
+		return null;
 	}
 
 }

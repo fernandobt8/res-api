@@ -25,6 +25,9 @@ public class CondutaBuilder<PARENT extends ParentArquetypeWrapper<?>> extends Ar
 
 	@Override
 	public String getValue() {
-		return this.conduta.getDescricao();
+		if (this.conduta != null) {
+			return this.conduta.getDescricao();
+		}
+		return null;
 	}
 }

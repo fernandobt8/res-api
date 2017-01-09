@@ -186,7 +186,7 @@ public class ResABResumoConsulta implements Serializable {
 		for (ResABProblemaDiagnostico diagnostico : this.problemasDiagnosticos) {
 			diagnosticoAvaliadoBuilder.problema()
 				.descricao(diagnostico.getDescricao())
-				.tipo(diagnostico.getTipo().getTipo())
+				.tipo(diagnostico.getTipoProblemaDiagnostico())
 				.codigo(diagnostico.getCodigo());
 		}
 

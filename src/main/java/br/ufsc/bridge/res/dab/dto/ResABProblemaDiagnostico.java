@@ -30,4 +30,11 @@ public class ResABProblemaDiagnostico implements Serializable {
 		this.descricao = xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/value");
 		this.tipo = ResABTipoProblemaDiagnostico.getByTipo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/terminology_id/value"));
 	}
+
+	public String getTipoProblemaDiagnostico() {
+		if (this.tipo != null) {
+			return this.tipo.getTipo();
+		}
+		return null;
+	}
 }

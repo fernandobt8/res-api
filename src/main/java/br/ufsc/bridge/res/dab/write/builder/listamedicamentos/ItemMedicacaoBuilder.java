@@ -21,32 +21,37 @@ public class ItemMedicacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 
 	@Override
 	public String getValue() {
-		StringBuilder xmlMedicao = new StringBuilder();
-		xmlMedicao.append(this.nomeMedicamento);
-		xmlMedicao.append(this.openTagsCodigoMedicamento());
-		xmlMedicao.append(this.codigoMedicamentoCatmat);
-		xmlMedicao.append(this.openTagsDescricaoFormaFarmaceutica());
-		xmlMedicao.append(this.descricaoFormaFarmaceutica);
-		xmlMedicao.append(this.openTagsCodigoFormaFarmaceutica());
-		xmlMedicao.append(this.codigoFormaFarmaceutica);
-		xmlMedicao.append(this.openTagsDescricaoViaAdministracao());
-		xmlMedicao.append(this.descricaoViaAdministracao);
-		xmlMedicao.append(this.openTagsCodigoViaAdministracao());
-		xmlMedicao.append(this.codigoViaAdministracao);
-		xmlMedicao.append(this.openTagsDescricaoDose());
-		xmlMedicao.append(this.descricaoDose);
-		xmlMedicao.append(this.closeTagsDescricaoDose());
-		if (this.duracaoTratamento != null) {
-			xmlMedicao.append(this.openTagsCodigoDoseEstruturada());
-			xmlMedicao.append(this.duracaoTratamento);
-			xmlMedicao.append(this.closeTagsCodigoDoseEstruturada());
+		if (this.nomeMedicamento != null || this.codigoMedicamentoCatmat != null || this.descricaoFormaFarmaceutica != null || this.codigoFormaFarmaceutica != null
+				|| this.descricaoViaAdministracao != null || this.codigoViaAdministracao != null || this.descricaoDose != null || this.duracaoTratamento != null
+				|| this.estadoMedicamento != null) {
+			StringBuilder xmlMedicao = new StringBuilder();
+			xmlMedicao.append(this.nomeMedicamento);
+			xmlMedicao.append(this.openTagsCodigoMedicamento());
+			xmlMedicao.append(this.codigoMedicamentoCatmat);
+			xmlMedicao.append(this.openTagsDescricaoFormaFarmaceutica());
+			xmlMedicao.append(this.descricaoFormaFarmaceutica);
+			xmlMedicao.append(this.openTagsCodigoFormaFarmaceutica());
+			xmlMedicao.append(this.codigoFormaFarmaceutica);
+			xmlMedicao.append(this.openTagsDescricaoViaAdministracao());
+			xmlMedicao.append(this.descricaoViaAdministracao);
+			xmlMedicao.append(this.openTagsCodigoViaAdministracao());
+			xmlMedicao.append(this.codigoViaAdministracao);
+			xmlMedicao.append(this.openTagsDescricaoDose());
+			xmlMedicao.append(this.descricaoDose);
+			xmlMedicao.append(this.closeTagsDescricaoDose());
+			if (this.duracaoTratamento != null) {
+				xmlMedicao.append(this.openTagsCodigoDoseEstruturada());
+				xmlMedicao.append(this.duracaoTratamento);
+				xmlMedicao.append(this.closeTagsCodigoDoseEstruturada());
+			}
+			if (this.estadoMedicamento != null) {
+				xmlMedicao.append(this.openTagsDetalhesDoProcessoMedicao());
+				xmlMedicao.append(this.estadoMedicamento.getCodigo());
+				xmlMedicao.append(this.closeTagsDetalhesDoProcessoMedicao());
+			}
+			return xmlMedicao.toString();
 		}
-		if (this.estadoMedicamento != null) {
-			xmlMedicao.append(this.openTagsDetalhesDoProcessoMedicao());
-			xmlMedicao.append(this.estadoMedicamento.getCodigo());
-			xmlMedicao.append(this.closeTagsDetalhesDoProcessoMedicao());
-		}
-		return xmlMedicao.toString();
+		return null;
 	}
 
 	private String openTagsCodigoMedicamento() {
