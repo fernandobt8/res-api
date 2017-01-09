@@ -114,6 +114,55 @@ public class TestConvertResABResumoConsultaToXML {
 		Assert.assertEquals(resumoConsulta, resABResumoConsultaRecuperado);
 	}
 
+	@Test
+	public void CDT003() throws Exception {
+		// Dados de atendimento sem algumas informacoes
+		String pathFile = this.PATH_TEST_RESOURCE + "atendimentoCompleto.xml";
+		InputStream resourceAsStream = new FileInputStream(pathFile);
+
+		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta();
+		resumoConsulta.setTipoAtendimento(ResABTipoAtendimentoEnum.DEMANDA_ESPONTANEA_ATENDIMENTO_DE_URGENCIA);
+		resumoConsulta.setIne("7782844269");
+
+		resumoConsulta.setProfissionais(this.getProfissionaisCDT003());
+
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+		String dateInString = "2016-05-23T15:16:00.000-03:00";
+		resumoConsulta.setDataAtendimento(formatter.parse(dateInString));
+		resumoConsulta.setPeso("29");
+
+		resumoConsulta.setAltura(null);
+		resumoConsulta.setPerimetroCefalico(null);
+		resumoConsulta.setAleitamentoMaterno(null);
+		resumoConsulta.setDum(null);
+		resumoConsulta.setIdadeGestacional(null);
+		resumoConsulta.setPartos(null);
+
+		resumoConsulta.setGestasPrevias("1");
+
+		resumoConsulta.setProblemasDiagnosticos(this.getProblemasCDT003());
+		resumoConsulta.setAlergias(this.getAlergiasCDT003());
+		resumoConsulta.setProcedimentos(this.getProcedimentosCDT003());
+		resumoConsulta.setMedicamentos(this.getMedicamentosCDT003());
+
+		List<ResABCondutaEnum> condutas = new LinkedList<>();
+		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
+		condutas.add(null);
+		resumoConsulta.setCondutas(condutas);
+
+		List<String> encaminhamentos = new LinkedList<>();
+		encaminhamentos.add("Interno no dia");
+		encaminhamentos.add(null);
+		resumoConsulta.setEncaminhamentos(encaminhamentos);
+
+		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), resumoConsulta.getXml());
+
+		ResABResumoConsulta resABResumoConsultaRecuperado = new ResABResumoConsulta(resumoConsulta.getXml());
+
+		Assert.assertEquals(resumoConsulta, resABResumoConsultaRecuperado);
+
+	}
+
 	private List<ResABMedicamento> getMedicamentosCDT002() {
 		List<ResABMedicamento> medicamentos = new LinkedList<>();
 		ResABMedicamento medicamento = new ResABMedicamento();
@@ -267,4 +316,107 @@ public class TestConvertResABResumoConsultaToXML {
 		profissionais.add(profissional);
 		return profissionais;
 	}
+
+	private List<ResABIdentificacaoProfissional> getProfissionaisCDT003() {
+		ResABIdentificacaoProfissional profissional = new ResABIdentificacaoProfissional();
+		List<ResABIdentificacaoProfissional> profissionais = new LinkedList<>();
+		profissional = new ResABIdentificacaoProfissional();
+		profissional.setCns("707000801749099");
+		profissional.setCbo("2255-05");
+		profissional.setResponsavel(false);
+		profissionais.add(profissional);
+
+		profissional = new ResABIdentificacaoProfissional();
+		profissionais.add(profissional);
+		return profissionais;
+	}
+
+	private List<ResABProblemaDiagnostico> getProblemasCDT003() {
+		List<ResABProblemaDiagnostico> problemas = new LinkedList<>();
+		ResABProblemaDiagnostico problema = new ResABProblemaDiagnostico();
+
+		problema.setCodigo("S08");
+		problema.setDescricao("AMPUTAÇÃO TRAUMÁTICA DE PARTE DA CABEÇA");
+		problema.setTipo(ResABTipoProblemaDiagnostico.CID10);
+		problemas.add(problema);
+
+		problema = new ResABProblemaDiagnostico();
+		problema.setCodigo("A01");
+		problema.setDescricao("DOR GENERALIZADA /MÚLTIPLA");
+		problema.setTipo(ResABTipoProblemaDiagnostico.CIAP);
+		problemas.add(problema);
+
+		problema = new ResABProblemaDiagnostico();
+		problemas.add(problema);
+		return problemas;
+	}
+
+	private List<ResABAlergiaReacoes> getAlergiasCDT003() throws ParseException {
+		List<ResABAlergiaReacoes> alergias = new LinkedList<>();
+
+		ResABAlergiaReacoes alergia1 = new ResABAlergiaReacoes();
+		alergia1.setAgente("Sol");
+		alergia1.setCategoria("Outros");
+		alergias.add(alergia1);
+
+		ResABAlergiaReacoes alergia2 = new ResABAlergiaReacoes();
+		alergia2.setAgente("Engove");
+		alergia2.setCategoria("Remédio");
+		alergia2.setGravidade(ResABGravidadeEnum.ALTO);
+
+		List<ResABEventoReacao> reacoesAlergia2 = new LinkedList<>();
+		ResABEventoReacao reacao1Alergia2 = new ResABEventoReacao();
+		reacao1Alergia2.setManifestacao("Ao tomar o remédio");
+		reacoesAlergia2.add(reacao1Alergia2);
+
+		ResABEventoReacao reacao2Alergia2 = new ResABEventoReacao();
+		reacao2Alergia2.setEvolucaoAlergia("Leve piora");
+		reacoesAlergia2.add(reacao2Alergia2);
+
+		alergia2.setEventoReacao(reacoesAlergia2);
+		alergias.add(alergia2);
+
+		ResABAlergiaReacoes alergia3 = new ResABAlergiaReacoes();
+		alergias.add(alergia3);
+		return alergias;
+
+	}
+
+	private List<ResABProcedimento> getProcedimentosCDT003() {
+		List<ResABProcedimento> procedimentos = new LinkedList<>();
+		ResABProcedimento procedimento = new ResABProcedimento();
+
+		procedimento.setCodigo("0101010044");
+		procedimento.setNome("PRÁTICAS CORPORAIS EM MEDICINA TRADICIONAL CHINESA");
+		procedimentos.add(procedimento);
+
+		procedimento = new ResABProcedimento();
+		procedimento.setCodigo("0101010028");
+		procedimento.setNome("ATIVIDADE EDUCATIVA / ORIENTAÇÃO EM GRUPO NA ATENÇÃO ESPECIALIZADA");
+		procedimentos.add(procedimento);
+
+		procedimento = new ResABProcedimento();
+		procedimentos.add(procedimento);
+
+		return procedimentos;
+	}
+
+	private List<ResABMedicamento> getMedicamentosCDT003() {
+		List<ResABMedicamento> medicamentos = new LinkedList<>();
+		ResABMedicamento medicamento = new ResABMedicamento();
+		medicamento.setNomeMedicamento("ALBENDAZOL 200 mg comprimido");
+		medicamento.setCodigoMedicamentoCatmat("BR0269628");
+		medicamento.setDescricaoFormaFarmaceutica("ALBENDAZOL 200 mg cmp FF");
+		medicamento.setCodigoFormaFarmaceutica("BR0269629");
+		medicamento.setDescricaoViaAdministracao("Oral");
+		medicamento.setCodigoViaAdministracao("25");
+		medicamento.setDescricaoDose("1 comp 30 min antes do almoço");
+		medicamento.setDuracaoTratamento(null);
+		medicamento.setEstadoMedicamento(null);
+		medicamentos.add(medicamento);
+		medicamento = new ResABMedicamento();
+		medicamentos.add(medicamento);
+		return medicamentos;
+	}
+
 }
