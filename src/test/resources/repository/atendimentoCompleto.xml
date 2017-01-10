@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Encontro xmlns:oe="http://schemas.openehr.org/v1" xmlns="http://schemas.oceanehr.com/templates" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.oceanehr.com/templates CN1.xsd"
-	template_id="Resumo de consulta ab_CN1_v1">
+	 template_id="Resumo de consulta ab_CN1_v1">
 	<name>
 		<value>Encontro</value>
 	</name>
@@ -106,6 +106,14 @@
 							<oe:value>703006821796679</oe:value>
 						</value>
 					</CNS>
+					<Nome>
+						<name>
+							<value>Nome</value>
+						</name>
+						<value>
+							<oe:value>Pedro Henrique</oe:value>
+						</value>
+					</Nome>
 					<CBO>
 						<name>
 							<value>CBO</value>
@@ -164,6 +172,14 @@
 							<oe:value>898001153249911</oe:value>
 						</value>
 					</CNS>
+					<Nome>
+						<name>
+							<value>Nome</value>
+						</name>
+						<value>
+							<oe:value>João da Silva</oe:value>
+						</value>
+					</Nome>
 					<CBO>
 						<name>
 							<value>CBO</value>
@@ -257,7 +273,7 @@
 								</value>
 							</Peso>
 						</data>
-						<state />
+						<state/>
 					</Qualquer_evento_as_Point_Event>
 				</data>
 			</Peso_corporal>
@@ -382,7 +398,7 @@
 								</value>
 							</DUM__openBrkt_Data_da_última_menstruação_closeBrkt_>
 						</data>
-						<state />
+						<state/>
 					</Qualquer_evento_as_Point_Event>
 				</data>
 			</Ciclo_menstrual>

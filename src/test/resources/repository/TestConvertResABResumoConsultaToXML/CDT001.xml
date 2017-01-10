@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Encontro xmlns:oe="http://schemas.openehr.org/v1" xmlns="http://schemas.oceanehr.com/templates" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.oceanehr.com/templates CN1.xsd" 
-	template_id="Resumo de consulta ab_CN1_v1">
+<Encontro xmlns:oe="http://schemas.openehr.org/v1" xmlns="http://schemas.oceanehr.com/templates" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.oceanehr.com/templates CN1.xsd"
+	 template_id="Resumo de consulta ab_CN1_v1">
 	<name>
 		<value>Encontro</value>
 	</name>

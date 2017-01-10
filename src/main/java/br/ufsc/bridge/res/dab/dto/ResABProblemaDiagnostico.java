@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.util.XPathFactoryAssist;
@@ -16,6 +17,7 @@ import br.ufsc.bridge.res.util.XPathFactoryAssist;
 @Setter
 @NoArgsConstructor
 @EqualsAndHashCode
+@ToString
 public class ResABProblemaDiagnostico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
@@ -27,5 +29,12 @@ public class ResABProblemaDiagnostico implements Serializable {
 		this.codigo = xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/code_string");
 		this.descricao = xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/value");
 		this.tipo = ResABTipoProblemaDiagnostico.getByTipo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/terminology_id/value"));
+	}
+
+	public String getTipoProblemaDiagnostico() {
+		if (this.tipo != null) {
+			return this.tipo.getTipo();
+		}
+		return null;
 	}
 }

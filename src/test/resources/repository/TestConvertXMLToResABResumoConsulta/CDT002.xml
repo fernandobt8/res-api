@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Encontro xmlns:oe="http://schemas.openehr.org/v1" xmlns="http://schemas.oceanehr.com/templates" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://schemas.oceanehr.com/templates CN1.xsd"
-	 template_id="Resumo de consulta ab_CN1_v1">
+	template_id="Resumo de consulta ab_CN1_v1">
 	<name>
 		<value>Encontro</value>
 	</name>
@@ -29,7 +29,7 @@
 	</composer>
 	<context>
 		<start_time>
-			<oe:value>2016-05-23T15:16:00.000-03:00</oe:value>
+			<oe:value>2016-10-28T15:00:00.000-03:00</oe:value>
 		</start_time>
 		<setting>
 			<oe:value>other care</oe:value>
@@ -72,10 +72,15 @@
 							<terminology_id>
 								<value>local</value>
 							</terminology_id>
-							<code_string>at0.144</code_string>
+							<code_string>at0.140</code_string>
 						</defining_code>
 					</value>
 				</Tipo_de_atendimento>
+				<Localização_atribuída_ao_paciente>
+					<name>
+						<value>Localização atribuída ao paciente</value>
+					</name>
+				</Localização_atribuída_ao_paciente>
 				<Identificação_do_profissional>
 					<name>
 						<value>Identificação do profissional</value>
@@ -84,24 +89,23 @@
 						<name>
 							<value>CNS</value>
 						</name>
-						<value>
-							<oe:value>707000801749099</oe:value>
-						</value>
 					</CNS>
+					<Nome>
+						<name>
+							<value>Nome</value>
+						</name>
+					</Nome>
 					<CBO>
 						<name>
 							<value>CBO</value>
 						</name>
-						<value>
-							<oe:value>2255-05</oe:value>
-						</value>
 					</CBO>
 					<É_o_responsável_pelo_atendimento_quest_>
 						<name>
 							<value>É o responsável pelo atendimento</value>
 						</name>
 						<value>
-							<oe:value>false</oe:value>
+							<oe:value>true</oe:value>
 						</value>
 					</É_o_responsável_pelo_atendimento_quest_>
 				</Identificação_do_profissional>
@@ -109,30 +113,16 @@
 					<name>
 						<value>Identificação da equipe de saúde</value>
 					</name>
-					<value>
-						<oe:value>7782844269</oe:value>
-					</value>
 				</Identificação_da_equipe_de_saúde>
 				<Data_fslash_hora_da_admissão>
 					<name>
 						<value>Data/hora da admissão</value>
 					</name>
-					<value>
-						<oe:value>2016-05-23T15:16:00.000-03:00</oe:value>
-					</value>
 				</Data_fslash_hora_da_admissão>
 				<Turno_de_atendimento>
 					<name>
 						<value>Turno de atendimento</value>
 					</name>
-					<value>
-						<defining_code>
-							<terminology_id>
-								<value>local</value>
-							</terminology_id>
-							<code_string>at0.167</code_string>
-						</defining_code>
-					</value>
 				</Turno_de_atendimento>
 			</data>
 		</Admissão_do_paciente>
@@ -168,28 +158,167 @@
 							<value>Qualquer evento</value>
 						</name>
 						<time>
-							<oe:value>2016-05-23T15:16:00.000-03:00</oe:value>
+							<oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
 						</time>
 						<data>
 							<Peso>
 								<name>
 									<value>Peso</value>
 								</name>
-								<value>
-									<magnitude>29</magnitude>
-									<units>kg</units>
-								</value>
 							</Peso>
 						</data>
-						<state/>
+						<state />
 					</Qualquer_evento_as_Point_Event>
 				</data>
 			</Peso_corporal>
+			<Altura__fslash__comprimento>
+				<name>
+					<value>Altura / comprimento</value>
+				</name>
+				<language>
+					<terminology_id>
+						<value>ISO_639-1</value>
+					</terminology_id>
+					<code_string>pt</code_string>
+				</language>
+				<encoding>
+					<terminology_id>
+						<value>IANA_character-sets</value>
+					</terminology_id>
+					<code_string>UTF-8</code_string>
+				</encoding>
+				<subject></subject>
+				<data>
+					<Qualquer_evento_as_Point_Event>
+						<name>
+							<value>Qualquer evento</value>
+						</name>
+						<time>
+							<oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
+						</time>
+						<data>
+							<Altura__fslash__comprimento>
+								<name>
+									<value>Altura / comprimento</value>
+								</name>
+							</Altura__fslash__comprimento>
+						</data>
+						<state />
+					</Qualquer_evento_as_Point_Event>
+				</data>
+			</Altura__fslash__comprimento>
+			<Perímetro_cefálico>
+				<name>
+					<value>Perímetro cefálico</value>
+				</name>
+				<language>
+					<terminology_id>
+						<value>ISO_639-1</value>
+					</terminology_id>
+					<code_string>pt</code_string>
+				</language>
+				<encoding>
+					<terminology_id>
+						<value>IANA_character-sets</value>
+					</terminology_id>
+					<code_string>UTF-8</code_string>
+				</encoding>
+				<subject></subject>
+				<data>
+					<Qualquer_ponto_de_tempo_no_evento_prd_>
+						<name>
+							<value>Qualquer ponto de tempo no evento.</value>
+						</name>
+						<time>
+							<oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
+						</time>
+						<data>
+							<_exclm___-__Perímetro_cefálico>
+								<name>
+									<value>! - Perímetro cefálico</value>
+								</name>
+							</_exclm___-__Perímetro_cefálico>
+						</data>
+						<state></state>
+					</Qualquer_ponto_de_tempo_no_evento_prd_>
+				</data>
+			</Perímetro_cefálico>
 		</Avaliação_antropométrica>
 		<Gestante>
 			<name>
 				<value>Gestante</value>
 			</name>
+			<Ciclo_menstrual>
+				<name>
+					<value>Ciclo menstrual</value>
+				</name>
+				<language>
+					<terminology_id>
+						<value>ISO_639-1</value>
+					</terminology_id>
+					<code_string>pt</code_string>
+				</language>
+				<encoding>
+					<terminology_id>
+						<value>IANA_character-sets</value>
+					</terminology_id>
+					<code_string>UTF-8</code_string>
+				</encoding>
+				<subject></subject>
+				<data>
+					<Qualquer_evento_as_Point_Event>
+						<name>
+							<value>Qualquer evento</value>
+						</name>
+						<time>
+							<oe:value>2016-05-23T15:00:00.000-03:00</oe:value>
+						</time>
+						<data>
+							<DUM__openBrkt_Data_da_última_menstruação_closeBrkt_>
+								<name>
+									<value>DUM (Data da última menstruação)</value>
+								</name>
+							</DUM__openBrkt_Data_da_última_menstruação_closeBrkt_>
+						</data>
+						<state />
+					</Qualquer_evento_as_Point_Event>
+				</data>
+			</Ciclo_menstrual>
+			<Gestação>
+				<name>
+					<value>Gestação</value>
+				</name>
+				<language>
+					<terminology_id>
+						<value>ISO_639-1</value>
+					</terminology_id>
+					<code_string>pt</code_string>
+				</language>
+				<encoding>
+					<terminology_id>
+						<value>IANA_character-sets</value>
+					</terminology_id>
+					<code_string>UTF-8</code_string>
+				</encoding>
+				<subject></subject>
+				<data>
+					<Data_da_medida>
+						<name>
+							<value>Data da medida</value>
+						</name>
+						<time>
+							<oe:value>2016-05-23</oe:value>
+						</time>
+						<data>
+							<Idade_gestacional>
+								<name>
+									<value>Idade gestacional</value>
+								</name>
+							</Idade_gestacional>
+						</data>
+					</Data_da_medida>
+				</data>
+			</Gestação>
 			<Sumário_obstétrico>
 				<name>
 					<value>Sumário obstétrico</value>
@@ -212,14 +341,56 @@
 						<name>
 							<value>Gestas prévias</value>
 						</name>
-						<value>
-							<magnitude>1</magnitude>
-						</value>
 					</Gestas_prévias>
+					<Partos>
+						<name>
+							<value>Partos</value>
+						</name>
+					</Partos>
 				</data>
 			</Sumário_obstétrico>
 		</Gestante>
 	</Medições_e_observações>
+	<Criança>
+		<name>
+			<value>Criança</value>
+		</name>
+		<Alimentação_da_criança_menor_de_2_anos>
+			<name>
+				<value>Alimentação da criança menor de 2 anos</value>
+			</name>
+			<language>
+				<terminology_id>
+					<value>ISO_639-1</value>
+				</terminology_id>
+				<code_string>pt</code_string>
+			</language>
+			<encoding>
+				<terminology_id>
+					<value>IANA_character-sets</value>
+				</terminology_id>
+				<code_string>UTF-8</code_string>
+			</encoding>
+			<subject></subject>
+			<data>
+				<Qualquer_evento_as_Point_Event>
+					<name>
+						<value>Qualquer evento</value>
+					</name>
+					<time>
+						<oe:value>2016-05-23</oe:value>
+					</time>
+					<data>
+						<Aleitamento_materno>
+							<name>
+								<value>Aleitamento materno</value>
+							</name>
+						</Aleitamento_materno>
+					</data>
+				</Qualquer_evento_as_Point_Event>
+			</data>
+		</Alimentação_da_criança_menor_de_2_anos>
+	</Criança>
 	<Problemas__fslash__diagnósticos_avaliados>
 		<name>
 			<value>Problemas / diagnósticos avaliados</value>
@@ -246,16 +417,22 @@
 					<name>
 						<value>Problema / Diagnóstico</value>
 					</name>
-					<value>
-						<value>AMPUTAÇÃO TRAUMÁTICA DE PARTE DA CABEÇA</value>
-						<defining_code>
-							<terminology_id>
-								<value>CID10</value>
-							</terminology_id>
-							<code_string>S08</code_string>
-						</defining_code>
-					</value>
 				</Problema__fslash__Diagnóstico>
+				<Estado_do_Problema__fslash__Diagnóstico>
+					<name>
+						<value>Estado do Problema / Diagnóstico</value>
+					</name>
+					<Estado_do_problema_no_final_da_consulta>
+						<name>
+							<value>Estado do problema no final da consulta</value>
+						</name>
+					</Estado_do_problema_no_final_da_consulta>
+					<Estado_de_resolução_do_problema>
+						<name>
+							<value>Estado de resolução do problema</value>
+						</name>
+					</Estado_de_resolução_do_problema>
+				</Estado_do_Problema__fslash__Diagnóstico>
 			</data>
 		</Problema__fslash_Diagnóstico>
 		<Problema__fslash_Diagnóstico>
@@ -280,16 +457,12 @@
 					<name>
 						<value>Problema / Diagnóstico</value>
 					</name>
-					<value>
-						<value>DOR GENERALIZADA /MÚLTIPLA</value>
-						<defining_code>
-							<terminology_id>
-								<value>CIAP2</value>
-							</terminology_id>
-							<code_string>A01</code_string>
-						</defining_code>
-					</value>
 				</Problema__fslash__Diagnóstico>
+				<Estado_do_Problema__fslash__Diagnóstico>
+					<name>
+						<value>Estado do Problema / Diagnóstico</value>
+					</name>
+				</Estado_do_Problema__fslash__Diagnóstico>
 			</data>
 		</Problema__fslash_Diagnóstico>
 	</Problemas__fslash__diagnósticos_avaliados>
@@ -319,66 +492,16 @@
 					<name>
 						<value>Agente / substância específica</value>
 					</name>
-					<value>
-						<oe:value>Sol</oe:value>
-					</value>
-				</Agente__fslash__substância_específica>
-				<Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
-					<name>
-						<value>Categoria do agente causador da alergia / reação adversa</value>
-					</name>
-					<value>
-						<oe:value>Outros</oe:value>
-					</value>
-				</Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
-			</data>
-		</Risco_de_Reação_Adversa>
-		<Risco_de_Reação_Adversa>
-			<name>
-				<value>Risco de Reação Adversa</value>
-			</name>
-			<language>
-				<terminology_id>
-					<value>ISO_639-1</value>
-				</terminology_id>
-				<code_string>pt</code_string>
-			</language>
-			<encoding>
-				<terminology_id>
-					<value>IANA_character-sets</value>
-				</terminology_id>
-				<code_string>UTF-8</code_string>
-			</encoding>
-			<subject></subject>
-			<data>
-				<Agente__fslash__substância_específica>
-					<name>
-						<value>Agente / substância específica</value>
-					</name>
-					<value>
-						<oe:value>Engove</oe:value>
-					</value>
 				</Agente__fslash__substância_específica>
 				<Gravidade>
 					<name>
 						<value>Gravidade</value>
 					</name>
-					<value>
-						<defining_code>
-							<terminology_id>
-								<value>local</value>
-							</terminology_id>
-							<code_string>at0103</code_string>
-						</defining_code>
-					</value>
 				</Gravidade>
 				<Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
 					<name>
 						<value>Categoria do agente causador da alergia / reação adversa</value>
 					</name>
-					<value>
-						<oe:value>Remédio</oe:value>
-					</value>
 				</Categoria_do_agente_causador_da_alergia__fslash__reação_adversa>
 				<Evento_da_reação>
 					<name>
@@ -388,23 +511,17 @@
 						<name>
 							<value>Manifestação</value>
 						</name>
-						<value>
-							<oe:value>Ao tomar o remédio</oe:value>
-						</value>
 					</Manifestação>
-				</Evento_da_reação>
-				<Evento_da_reação>
-					<name>
-						<value>Evento da reação</value>
-					</name>
 					<Evolução_da_alergia__fslash__reação_adversa>
 						<name>
 							<value>Evolução da alergia / reação adversa</value>
 						</name>
-						<value>
-							<oe:value>Leve piora</oe:value>
-						</value>
 					</Evolução_da_alergia__fslash__reação_adversa>
+					<Data_da_instalação_da_alergia__fslash__reação_adversa>
+						<name>
+							<value>Data da instalação da alergia / reação adversa</value>
+						</name>
+					</Data_da_instalação_da_alergia__fslash__reação_adversa>
 				</Evento_da_reação>
 			</data>
 		</Risco_de_Reação_Adversa>
@@ -431,70 +548,13 @@
 			</encoding>
 			<subject></subject>
 			<time>
-				<oe:value>2016-05-23T15:16:00.000-03:00</oe:value>
+				<oe:value>2016-10-28T15:00:00.000-03:00</oe:value>
 			</time>
 			<description>
 				<Procedimento_realizado>
 					<name>
 						<value>Procedimento realizado</value>
 					</name>
-					<value>
-						<value>PRÁTICAS CORPORAIS EM MEDICINA TRADICIONAL CHINESA</value>
-						<defining_code>
-							<terminology_id>
-								<value>SNOMEDCT_RESCONSAB_PROCAB</value>
-							</terminology_id>
-							<code_string>0101010044</code_string>
-						</defining_code>
-					</value>
-				</Procedimento_realizado>
-			</description>
-			<ism_transition>
-				<current_state>
-					<oe:value></oe:value>
-					<oe:defining_code>
-						<oe:terminology_id>
-							<oe:value>openehr</oe:value>
-						</oe:terminology_id>
-						<oe:code_string>524</oe:code_string>
-					</oe:defining_code>
-				</current_state>
-			</ism_transition>
-		</Procedimento>
-		<Procedimento>
-			<name>
-				<value>Procedimento</value>
-			</name>
-			<language>
-				<terminology_id>
-					<value>ISO_639-1</value>
-				</terminology_id>
-				<code_string>pt</code_string>
-			</language>
-			<encoding>
-				<terminology_id>
-					<value>IANA_character-sets</value>
-				</terminology_id>
-				<code_string>UTF-8</code_string>
-			</encoding>
-			<subject></subject>
-			<time>
-				<oe:value>2016-05-23T15:16:00.000-03:00</oe:value>
-			</time>
-			<description>
-				<Procedimento_realizado>
-					<name>
-						<value>Procedimento realizado</value>
-					</name>
-					<value>
-						<value>ATIVIDADE EDUCATIVA / ORIENTAÇÃO EM GRUPO NA ATENÇÃO ESPECIALIZADA</value>
-						<defining_code>
-							<terminology_id>
-								<value>SNOMEDCT_RESCONSAB_PROCAB</value>
-							</terminology_id>
-							<code_string>0101010028</code_string>
-						</defining_code>
-					</value>
 				</Procedimento_realizado>
 			</description>
 			<ism_transition>
@@ -540,6 +600,131 @@
 						<name>
 							<value>Medicamento</value>
 						</name>
+					</Medicamento>
+					<Forma_farmacêutica>
+						<name>
+							<value>Forma farmacêutica</value>
+						</name>
+					</Forma_farmacêutica>
+					<Via_de_administração>
+						<name>
+							<value>Via de administração</value>
+						</name>
+					</Via_de_administração>
+					<Dose>
+						<name>
+							<value>Dose</value>
+						</name>
+					</Dose>
+					<Dose_estruturada>
+						<name>
+							<value>Dose estruturada</value>
+						</name>
+						<Duração_do_tratamento>
+							<name>
+								<value>Duração do tratamento</value>
+							</name>
+						</Duração_do_tratamento>
+					</Dose_estruturada>
+					<Detalhes_do_processo_medicação>
+						<name>
+							<value>Detalhes do processo medicação</value>
+						</name>
+					</Detalhes_do_processo_medicação>
+				</Item_de_medicação>
+			</data>
+		</Linha_de_Medicação>
+		<Linha_de_Medicação>
+			<name>
+				<value>Linha de Medicação</value>
+			</name>
+			<language>
+				<terminology_id>
+					<value>ISO_639-1</value>
+				</terminology_id>
+				<code_string>pt</code_string>
+			</language>
+			<encoding>
+				<terminology_id>
+					<value>IANA_character-sets</value>
+				</terminology_id>
+				<code_string>UTF-8</code_string>
+			</encoding>
+			<subject></subject>
+			<data>
+				<Item_de_medicação>
+					<name>
+						<value>Item de medicação</value>
+					</name>
+					<Medicamento>
+						<name>
+							<value>Medicamento</value>
+						</name>
+					</Medicamento>
+					<Forma_farmacêutica>
+						<name>
+							<value>Forma farmacêutica</value>
+						</name>
+					</Forma_farmacêutica>
+					<Via_de_administração>
+						<name>
+							<value>Via de administração</value>
+						</name>
+					</Via_de_administração>
+					<Dose>
+						<name>
+							<value>Dose</value>
+						</name>
+					</Dose>
+					<Dose_estruturada>
+						<name>
+							<value>Dose estruturada</value>
+						</name>
+						<Duração_do_tratamento>
+							<name>
+								<value>Duração do tratamento</value>
+							</name>
+						</Duração_do_tratamento>
+					</Dose_estruturada>
+					<Detalhes_do_processo_medicação>
+						<name>
+							<value>Detalhes do processo medicação</value>
+						</name>
+						<Estado_do_medicamento>
+							<name>
+								<value>Estado do medicamento</value>
+							</name>
+						</Estado_do_medicamento>
+					</Detalhes_do_processo_medicação>
+				</Item_de_medicação>
+			</data>
+		</Linha_de_Medicação>
+		<Linha_de_Medicação>
+			<name>
+				<value>Linha de Medicação</value>
+			</name>
+			<language>
+				<terminology_id>
+					<value>ISO_639-1</value>
+				</terminology_id>
+				<code_string>pt</code_string>
+			</language>
+			<encoding>
+				<terminology_id>
+					<value>IANA_character-sets</value>
+				</terminology_id>
+				<code_string>UTF-8</code_string>
+			</encoding>
+			<subject></subject>
+			<data>
+				<Item_de_medicação>
+					<name>
+						<value>Item de medicação</value>
+					</name>
+					<Medicamento>
+						<name>
+							<value>Medicamento</value>
+						</name>
 						<value>
 							<value>ALBENDAZOL 200 mg comprimido</value>
 							<defining_code>
@@ -555,12 +740,12 @@
 							<value>Forma farmacêutica</value>
 						</name>
 						<value>
-							<value>ALBENDAZOL 200 mg cmp FF</value>
+							<value>ALBENDAZOL 200 mg comprimido</value>
 							<defining_code>
 								<terminology_id>
 									<value>HORUS</value>
 								</terminology_id>
-								<code_string>BR0269629</code_string>
+								<code_string>BR0269628</code_string>
 							</defining_code>
 						</value>
 					</Forma_farmacêutica>
@@ -589,6 +774,25 @@
 				</Item_de_medicação>
 			</data>
 		</Linha_de_Medicação>
+		<Linha_de_Medicação>
+			<name>
+				<value>Linha de Medicação</value>
+			</name>
+			<language>
+				<terminology_id>
+					<value>ISO_639-1</value>
+				</terminology_id>
+				<code_string>pt</code_string>
+			</language>
+			<encoding>
+				<terminology_id>
+					<value>IANA_character-sets</value>
+				</terminology_id>
+				<code_string>UTF-8</code_string>
+			</encoding>
+			<subject></subject>
+			<data></data>
+		</Linha_de_Medicação>
 	</Lista_de_medicamentos>
 	<Dados_do_desfecho>
 		<name>
@@ -616,9 +820,6 @@
 					<name>
 						<value>Conduta</value>
 					</name>
-					<value>
-						<value>Retorno para cuidado continuado/programado</value>
-					</value>
 				</Conduta>
 				<Solicitações_de_encaminhamentos>
 					<name>
@@ -628,9 +829,6 @@
 						<name>
 							<value>Encaminhamento</value>
 						</name>
-						<value>
-							<oe:value>Interno no dia</oe:value>
-						</value>
 					</Encaminhamento>
 				</Solicitações_de_encaminhamentos>
 			</data>

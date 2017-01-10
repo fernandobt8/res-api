@@ -31,10 +31,10 @@ public class ProcedimentoBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 			}
 		}
 
-		return RDateUtil.dateToISOEHR(this.data)
-				+ this.openTagsNome() + this.nome
-				+ this.openTagsCodigo() + this.codigo + this.closeTagsCodigo()
-				+ tagRresultadoObservacoes;
+		if (this.nome != null || this.codigo != null || !tagRresultadoObservacoes.isEmpty()) {
+			return RDateUtil.dateToISOEHR(this.data) + this.openTagsNome() + this.nome + this.openTagsCodigo() + this.codigo + this.closeTagsCodigo() + tagRresultadoObservacoes;
+		}
+		return null;
 	}
 
 	@Override

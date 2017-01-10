@@ -1,11 +1,14 @@
 package br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.ufsc.bridge.res.dab.write.builder.base.ArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 
 public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ArquetypeWrapper<PARENT> {
 
 	private String cns;
+	private String nome;
 	private String cbo;
 	private boolean responsavel;
 
@@ -15,6 +18,11 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 
 	public IdentificacaoProfissionalBuilder<PARENT> cns(String cns) {
 		this.cns = cns;
+		return this;
+	}
+
+	public IdentificacaoProfissionalBuilder<PARENT> nome(String nome) {
+		this.nome = nome;
 		return this;
 	}
 
@@ -33,9 +41,20 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 		return "<Identificação_do_profissional><name><value>Identificação do profissional</value></name><CNS><name><value>CNS</value></name><value><oe:value>";
 	}
 
+	private String closeTagCNS() {
+		return "</oe:value></value></CNS>";
+	}
+
 	private String openTagCbo() {
-		return "</oe:value></value></CNS><CBO><name>" +
-				"<value>CBO</value></name><value><oe:value>";
+		return "<CBO><name>" + "<value>CBO</value></name><value><oe:value>";
+	}
+
+	private String openTagNome() {
+		return "<Nome><name><value>Nome</value></name><value><oe:value>";
+	}
+
+	private String closeTagNome() {
+		return "</oe:value></value></Nome>";
 	}
 
 	private String openTagResponsavel() {
@@ -49,7 +68,14 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 
 	@Override
 	public String getValue() {
-		return this.cns + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
+		if (this.cns != null || this.nome != null || this.cbo != null || this.responsavel != false) {
+			if (StringUtils.isNotBlank(this.nome)) {
+				return this.cns + this.closeTagCNS() + this.openTagNome() + this.nome + this.closeTagNome() + this.openTagCbo() + this.cbo + this.openTagResponsavel()
+						+ this.responsavel;
+			} else {
+				return this.cns + this.closeTagCNS() + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
+			}
+		}
+		return null;
 	}
-
 }

@@ -42,16 +42,19 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABIdentificacaoProfissional resABProfissional1 = resumoConsulta.getProfissionais().get(0);
 		Assert.assertEquals("703006821796679", resABProfissional1.getCns());
 		Assert.assertEquals("2235-65", resABProfissional1.getCbo());
+		Assert.assertEquals("Pedro Henrique", resABProfissional1.getNome());
 		Assert.assertEquals(true, resABProfissional1.isResponsavel());
 
 		ResABIdentificacaoProfissional resABProfissional2 = resumoConsulta.getProfissionais().get(1);
 		Assert.assertEquals("707000801749036", resABProfissional2.getCns());
 		Assert.assertEquals("2236-05", resABProfissional2.getCbo());
+		Assert.assertNull(resABProfissional2.getNome());
 		Assert.assertEquals(false, resABProfissional2.isResponsavel());
 
 		ResABIdentificacaoProfissional resABProfissional3 = resumoConsulta.getProfissionais().get(2);
 		Assert.assertEquals("898001153249911", resABProfissional3.getCns());
 		Assert.assertEquals("2235-64", resABProfissional3.getCbo());
+		Assert.assertEquals("João da Silva", resABProfissional3.getNome());
 		Assert.assertEquals(true, resABProfissional3.isResponsavel());
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -187,7 +190,7 @@ public class TestConvertXMLToResABResumoConsulta {
 	@Test
 	public void CDT002() throws Exception {
 		// XML sem as tags de value
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT002.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT002.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 		Assert.assertNull(resumoConsulta.getTurno());
@@ -197,6 +200,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABIdentificacaoProfissional resABProfissional1 = resumoConsulta.getProfissionais().get(0);
 		Assert.assertNull(resABProfissional1.getCns());
 		Assert.assertNull(resABProfissional1.getCbo());
+		Assert.assertNull(resABProfissional1.getNome());
 		Assert.assertEquals(true, resABProfissional1.isResponsavel());
 
 		Assert.assertNull(resumoConsulta.getDataAtendimento());
@@ -289,7 +293,7 @@ public class TestConvertXMLToResABResumoConsulta {
 	@Test
 	public void CDT003() throws Exception {
 		// XML apenas com as TAGs obrigatorias
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT003.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT003.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 		Assert.assertNull(resumoConsulta.getTurno());
@@ -317,7 +321,7 @@ public class TestConvertXMLToResABResumoConsulta {
 	@Test
 	public void CDT004() throws Exception {
 		// Arquivo XML sem algumas tags
-		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertResABResumoConsultaToXML/CDT004.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT004.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 
@@ -329,6 +333,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABIdentificacaoProfissional resABIdentificacaoProfissional1 = resumoConsulta.getProfissionais().get(0);
 		Assert.assertEquals("703006821798000", resABIdentificacaoProfissional1.getCns());
 		Assert.assertEquals("1235-65", resABIdentificacaoProfissional1.getCbo());
+		Assert.assertNull(resABIdentificacaoProfissional1.getNome());
 		Assert.assertEquals(false, resABIdentificacaoProfissional1.isResponsavel());
 
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");

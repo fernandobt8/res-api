@@ -15,7 +15,7 @@ public class ProcedimentosPequenasCirurgiasBuilder<PARENT extends ParentArquetyp
 
 	@Override
 	protected String closeTags() {
-		return " </Procedimentos_ou_pequenas_cirurgias>";
+		return "</Procedimentos_ou_pequenas_cirurgias>";
 	}
 
 	public ProcedimentoBuilder<ProcedimentosPequenasCirurgiasBuilder<PARENT>> procedimento() {
