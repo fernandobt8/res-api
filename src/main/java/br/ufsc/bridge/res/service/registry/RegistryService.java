@@ -93,7 +93,7 @@ public class RegistryService {
 		}
 	}
 
-	private AdhocQueryRequest buildRequest(RegistryFilter filter, String tipoBusca) {
+	public AdhocQueryRequest buildRequest(RegistryFilter filter, String tipoBusca) {
 		ResponseOptionType responseOptionType = new ResponseOptionType();
 		responseOptionType.setReturnComposedObjects(true);
 		responseOptionType.setReturnType(tipoBusca);
