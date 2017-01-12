@@ -75,11 +75,7 @@ public class RegistryService {
 			queryResponse = new AdhocQueryResponseXPath(response);
 
 			if (queryResponse.isSuccess()) {
-				ArrayList<String> uuids = new ArrayList<>();
-				for (XPathFactoryAssist refs : queryResponse.getObjectRefs()) {
-					uuids.add(refs.getString("./@id"));
-				}
-				return new RegistryResponse<>(uuids);
+				return this.getRegistryResponse(queryResponse);
 			} else {
 				this.printerResponseError.parserException(new RegistryErrorListXPath(response));
 				return null;
@@ -91,6 +87,14 @@ public class RegistryService {
 		} catch (ResHttpRequestResponseException | ResXDSbException e) {
 			throw new ResServiceFatalException(e);
 		}
+	}
+
+	public RegistryResponse<String> getRegistryResponse(AdhocQueryResponseXPath queryResponse) throws XPathExpressionException {
+		ArrayList<String> uuids = new ArrayList<>();
+		for (XPathFactoryAssist refs : queryResponse.getObjectRefs()) {
+			uuids.add(refs.getString("./@id"));
+		}
+		return new RegistryResponse<>(uuids);
 	}
 
 	public AdhocQueryRequest buildRequest(RegistryFilter filter, String tipoBusca) {
