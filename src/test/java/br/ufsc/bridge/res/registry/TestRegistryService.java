@@ -28,7 +28,7 @@ public class TestRegistryService {
 
 	@Test
 	public void testXmlGetRegistriesRef() throws Exception {
-		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlRegistriesHeader.xml";
+		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlRegistriesRef.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
 		RegistryHeader registryHeader = new RegistryHeader(new Credential("123", "123"));
@@ -58,10 +58,31 @@ public class TestRegistryService {
 		RegistryResponse<String> registryResponse = registryService.getRegistryResponse(queryResponse);
 
 		Assert.assertEquals(true, queryResponse.isSuccess());
-		Assert.assertEquals(this.itemsExpectedRegistryResponse(), registryResponse.getItems());
+		Assert.assertEquals(this.getItemsRegistryResponse(), registryResponse.getItems());
 	}
 
-	private List<String> itemsExpectedRegistryResponse() {
+	@Test
+	public void testXmlGetRegistriesHeader() throws Exception {
+		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlGetRegistriesHeader.xml";
+		InputStream resourceAsStream = new FileInputStream(pathFile);
+
+		RegistryHeader registryHeader = new RegistryHeader(new Credential("123", "123"));
+		RegistryService registryService = new RegistryService(new Credential("123", "123"));
+
+		RegistryFilter filter = new RegistryFilter();
+		filter.setEntryUUIDs(this.getItemsRegistryResponse());
+
+		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		registryHeader.create(adhocQueryRequest).writeTo(outputStream);
+		String xml = new String(outputStream.toByteArray(), "UTF-8");
+
+		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
+
+	}
+
+	private List<String> getItemsRegistryResponse() {
 		List<String> items = new ArrayList<>();
 		items.add("urn:uuid:d9e0169f-5bd9-4e77-abff-c9d356b29136");
 		items.add("urn:uuid:db36ce52-0878-43d7-8fda-e7381aa9e758");
