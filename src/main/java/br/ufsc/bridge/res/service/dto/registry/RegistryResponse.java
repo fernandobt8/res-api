@@ -12,6 +12,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class RegistryResponse<T> {
 
 	private List<T> items = new ArrayList<>();

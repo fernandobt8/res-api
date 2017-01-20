@@ -11,9 +11,7 @@ import org.joda.time.format.ISODateTimeFormat;
 
 public class RDateUtil {
 
-	private static final DateTimeFormatter patternFormat = new DateTimeFormatterBuilder()
-			.appendPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-			.appendTimeZoneOffset("Z", true, 2, 2)
+	private static final DateTimeFormatter patternFormat = new DateTimeFormatterBuilder().appendPattern("yyyy-MM-dd'T'HH:mm:ss.SSS").appendTimeZoneOffset("Z", true, 2, 2)
 			.toFormatter();
 
 	public static String dateToISOXDSb(Date date) {
@@ -71,6 +69,7 @@ public class RDateUtil {
 		} else {
 			c.set(Calendar.SECOND, 0);
 		}
+		c.set(Calendar.MILLISECOND, 0);
 
 		return c.getTime();
 	}

@@ -4,14 +4,18 @@ import java.io.Serializable;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@EqualsAndHashCode
 public class RegistryItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -1,0 +1,33 @@
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope">
+	<env:Header>
+		<wsse:Security xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
+			<wsse:UsernameToken xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UsernameToken-2">
+				<wsse:Username>123</wsse:Username>
+				<wsse:Password Type="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText">123</wsse:Password>
+			</wsse:UsernameToken>
+		</wsse:Security>
+		<a:Action xmlns:a="http://www.w3.org/2005/08/addressing" env:mustUnderstand="1">urn:ihe:iti:2007:RegistryStoredQuery</a:Action>
+		<a:MessageID xmlns:a="http://www.w3.org/2005/08/addressing">urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055</a:MessageID>
+		<a:ReplyTo xmlns:a="http://www.w3.org/2005/08/addressing">
+			<a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address>
+		</a:ReplyTo>
+		<a:To xmlns:a="http://www.w3.org/2005/08/addressing" env:mustUnderstand="1">https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS</a:To>
+	</env:Header>
+	<env:Body>
+		<ns3:AdhocQueryRequest xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:ns2="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:ns3="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0">
+			<ns3:ResponseOption returnComposedObjects="true" returnType="ObjectRef"/>
+			<AdhocQuery id="urn:uuid:14d4debf-8f97-4251-9a74-a90016b0af0d">
+				<Slot name="$XDSDocumentEntryPatientId">
+					<ValueList>
+						<Value>'898004405760294^^^&amp;2.16.840.1.113883.13.236&amp;ISO'</Value>
+					</ValueList>
+				</Slot>
+				<Slot name="$XDSDocumentEntryStatus">
+					<ValueList>
+						<Value>('urn:oasis:names:tc:ebxml-regrep:StatusType:Approved')</Value>
+					</ValueList>
+				</Slot>
+			</AdhocQuery>
+		</ns3:AdhocQueryRequest>
+	</env:Body>
+</env:Envelope>
