@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -127,6 +128,29 @@ public class TestRegistryService {
 
 		Assert.assertEquals(true, queryResponse.isSuccess());
 		Assert.assertEquals(this.getRegistryResponseHeaderParserExpected().getItems(), registryResponse.getItems());
+	}
+
+	@Test
+	public void testXmlAllFilter() throws Exception {
+		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlAllFilter.xml";
+		InputStream resourceAsStream = new FileInputStream(pathFile);
+
+		RegistryHeader registryHeader = new RegistryHeader(new Credential("123", "123"));
+		RegistryService registryService = new RegistryService(new Credential("123", "123"));
+
+		RegistryFilter filter = new RegistryFilter();
+		filter.setDataInicial(new Date(20161202200000l));
+		filter.setDataFim(new Date(20141202200000l));
+		filter.setEntryUUIDs(this.getItemsRegistryResponse());
+		filter.setCnsCidadao("898004405760294");
+
+		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		registryHeader.create(adhocQueryRequest).writeTo(outputStream);
+		String xml = new String(outputStream.toByteArray(), "UTF-8");
+
+		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
 	}
 
 	private RegistryResponse<RegistryItem> getRegistryResponseHeaderParserExpected() {
