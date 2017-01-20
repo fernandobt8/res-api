@@ -4,7 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -139,8 +138,8 @@ public class TestRegistryService {
 		RegistryService registryService = new RegistryService(new Credential("123", "123"));
 
 		RegistryFilter filter = new RegistryFilter();
-		filter.setDataInicial(new Date(20161202200000l));
-		filter.setDataFim(new Date(20141202200000l));
+		filter.setDataInicial(RDateUtil.isoXDSbToDate("20141202100000"));
+		filter.setDataFim(RDateUtil.isoXDSbToDate("20161202100000"));
 		filter.setEntryUUIDs(this.getItemsRegistryResponse());
 		filter.setCnsCidadao("898004405760294");
 

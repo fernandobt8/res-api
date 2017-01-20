@@ -25,13 +25,13 @@
 				<Slot name="$XDSDocumentEntryCreationTimeFrom">
 					<ValueList>
 						<Value>
-							26081119035640
+							20141202100000
 						</Value>
 					</ValueList>
 				</Slot>
 				<Slot name="$XDSDocumentEntryCreationTimeTo">
 					<ValueList>
-						<Value>26080401152320</Value>
+						<Value>20161202100000</Value>
 					</ValueList>
 				</Slot>
 				<Slot name="$XDSDocumentEntryEntryUUID">
