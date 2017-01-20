@@ -6,9 +6,9 @@
 	<soapenv:Body>
 		<query:AdhocQueryResponse status="urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success" xmlns:query="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0">
 			<rim:RegistryObjectList xmlns:rim="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0">
-				<rim:ObjectRef id="urn:uuid:d9e0169f-5bd9-4e77-abff-c9d356b29136" home="" />
-				<rim:ObjectRef id="urn:uuid:db36ce52-0878-43d7-8fda-e7381aa9e758" home="" />
-				<rim:ObjectRef id="urn:uuid:58ecea05-3fdc-40e7-bf66-8364df3211f2" home="" />
+				<rim:ObjectRef id="urn:uuid:38eef1c3-28c9-4467-8470-a550355ccc2f" home="" />
+				<rim:ObjectRef id="urn:uuid:69223bc9-99b2-419f-957d-abbcb977ce01" home="" />
+				<rim:ObjectRef id="urn:uuid:9b017ba6-a31b-4b4b-844c-9d7643b9f5ba" home="" />
 			</rim:RegistryObjectList>
 		</query:AdhocQueryResponse>
 	</soapenv:Body>

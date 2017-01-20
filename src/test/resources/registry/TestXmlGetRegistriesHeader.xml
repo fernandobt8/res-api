@@ -19,9 +19,9 @@
 			<AdhocQuery id="urn:uuid:5c4f972b-d56b-40ac-a5fc-c8ca9b40b9d4">
 				<Slot name="$XDSDocumentEntryEntryUUID">
 					<ValueList>
-						<Value>('urn:uuid:d9e0169f-5bd9-4e77-abff-c9d356b29136')</Value>
-						<Value>('urn:uuid:db36ce52-0878-43d7-8fda-e7381aa9e758')</Value>
-						<Value>('urn:uuid:58ecea05-3fdc-40e7-bf66-8364df3211f2')</Value>
+						<Value>('urn:uuid:38eef1c3-28c9-4467-8470-a550355ccc2f')</Value>
+						<Value>('urn:uuid:69223bc9-99b2-419f-957d-abbcb977ce01')</Value>
+						<Value>('urn:uuid:9b017ba6-a31b-4b4b-844c-9d7643b9f5ba')</Value>
 					</ValueList>
 				</Slot>
 				<Slot name="$XDSDocumentEntryStatus">
