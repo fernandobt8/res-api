@@ -8,7 +8,7 @@ import lombok.Getter;
 public enum ResABEstadoMedicamentoEnum {
 
 	ATIVA("at0050"),
-	DISCONTINUADA("at0051"),
+	DESCONTINUADA("at0051"),
 	NUNCA_ATIVA("at0052"),
 	TRATAMENTO_COMPLETO("at0053"),
 	SUBSTITUIDO("at0054");
