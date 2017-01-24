@@ -16,15 +16,15 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.ObjectFactory;
 @SuppressWarnings("unchecked")
 public class ExtrinsicObjectTypeBuilder<T extends ExtrinsicObjectTypeBuilder<T>> {
 
-	private static final String DOC1 = "doc1";
+	private String docId;
 	private ExtrinsicObjectType extrinsicObject;
 
 	public ExtrinsicObjectTypeBuilder() {
 		this.extrinsicObject = new ExtrinsicObjectType();
-		this.extrinsicObject.setId(DOC1);
 	}
 
 	public T id(String id) {
+		this.docId = id;
 		this.extrinsicObject.setId(id);
 		return (T) this;
 	}
@@ -44,11 +44,11 @@ public class ExtrinsicObjectTypeBuilder<T extends ExtrinsicObjectTypeBuilder<T>>
 	}
 
 	public ClassificationTypeBuilderWrapper<T> buildClassification() {
-		return new ClassificationTypeBuilderWrapper<>((T) this, this.extrinsicObject.getClassification(), DOC1);
+		return new ClassificationTypeBuilderWrapper<>((T) this, this.extrinsicObject.getClassification(), this.docId);
 	}
 
 	public ExternalIdentifierTypeBuilderWrapper<T> buildExternalIdentifier() {
-		return new ExternalIdentifierTypeBuilderWrapper<>((T) this, this.extrinsicObject.getExternalIdentifier(), DOC1);
+		return new ExternalIdentifierTypeBuilderWrapper<>((T) this, this.extrinsicObject.getExternalIdentifier(), this.docId);
 	}
 
 	public JAXBElement<ExtrinsicObjectType> createElement() {
