@@ -4,7 +4,7 @@
 
 	<groupId>br.ufsc.bridge</groupId>
 	<artifactId>res-api</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3-SNAPSHOT</version>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -122,6 +122,6 @@
 		<connection>scm:git:git@github.com:laboratoriobridge/res-api.git</connection>
 		<url>scm:git:git@github.com:laboratoriobridge/res-api.git</url>
 		<developerConnection>scm:git:git@github.com:laboratoriobridge/res-api.git</developerConnection>
-		<tag>0.0.2</tag>
+		<tag>HEAD</tag>
 	</scm>
 </project>
