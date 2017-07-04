@@ -9,5 +9,5 @@ import javax.xml.soap.SOAPMessage;
 
 public interface CreateSOAPMessage {
 
-	SOAPMessage create(Object soapBodyJaxbObject) throws SOAPException, IOException, JAXBException, ParserConfigurationException;
+	SOAPMessage create(Object soapBodyJaxbObject, String action, String url) throws SOAPException, IOException, JAXBException, ParserConfigurationException;
 }

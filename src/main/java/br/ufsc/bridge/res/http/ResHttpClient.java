@@ -41,9 +41,11 @@ public class ResHttpClient {
 	private URL url;
 	private HttpHost host;
 	private CreateSOAPMessage soapMessage;
+	private String action;
 
 	public ResHttpClient(CreateSOAPMessage soapMessage, String action) {
 		this.soapMessage = soapMessage;
+		this.action = action;
 
 		RequestConfig requestConfig = RequestConfig.custom()
 				.setSocketTimeout(60000)
@@ -118,7 +120,7 @@ public class ResHttpClient {
 
 	private ByteArrayEntity createMessage(Object jaxbObject) throws SOAPException, JAXBException, ParserConfigurationException, IOException {
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		this.soapMessage.create(jaxbObject).writeTo(outputStream);
+		this.soapMessage.create(jaxbObject, this.action, this.url.toString()).writeTo(outputStream);
 		return new ByteArrayEntity(outputStream.toByteArray());
 	}
 }

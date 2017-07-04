@@ -28,6 +28,9 @@ import br.ufsc.bridge.res.service.repository.RepositoryService;
 @Slf4j
 public class SOAPClientSAAJ {
 
+	private static final String registry_url = "http://23.236.48.233:8280/services/DocumentRegistry";
+	private static final String repository_url = "http://23.236.48.233:8280/services/DocumentRepository";
+
 	/**
 	 * Starting point for the SAAJ - SOAP Client Testing
 	 *
@@ -55,7 +58,7 @@ public class SOAPClientSAAJ {
 
 	private static void save(Credential credential) throws Exception {
 
-		RepositoryService repositoryService = new RepositoryService(credential);
+		RepositoryService repositoryService = new RepositoryService(credential, repository_url);
 
 		RepositorySaveDTO registerDTO = new RepositorySaveDTO();
 		registerDTO.setCboProfissional("225265");
@@ -88,6 +91,7 @@ public class SOAPClientSAAJ {
 		repositoryService.save(registerDTO);
 	}
 
+	@SuppressWarnings("unused")
 	private static void testeXml2() throws Exception {
 		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
 
@@ -99,11 +103,12 @@ public class SOAPClientSAAJ {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static void repository(Credential credential) throws Exception {
-		RepositoryService repositoryService = new RepositoryService(credential);
+		RepositoryService repositoryService = new RepositoryService(credential, repository_url);
 
 		RepositoryFilter repositoryFilter = new RepositoryFilter();
-		repositoryFilter.getDocuments().add(new DocumentItemFilter("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RepositoryPS", "2.16.840.1.113883.3.711.2.1.4.5.11601",
+		repositoryFilter.getDocuments().add(new DocumentItemFilter(repository_url, "2.16.840.1.113883.3.711.2.1.4.5.11601",
 				"1.42.20130403134532.123.1475256277528.2"));
 
 		RepositoryResponseDTO documents = repositoryService.getDocuments(repositoryFilter);
@@ -112,8 +117,9 @@ public class SOAPClientSAAJ {
 		}
 	}
 
-	private static RegistryResponse registry(Credential credential) throws Exception {
-		RegistryService registryService = new RegistryService(credential);
+	@SuppressWarnings("unused")
+	private static RegistryResponse<RegistryItem> registry(Credential credential) throws Exception {
+		RegistryService registryService = new RegistryService(credential, registry_url);
 
 		RegistryFilter registryFilter = new RegistryFilter();
 		registryFilter.setCnsCidadao("898004405760294");

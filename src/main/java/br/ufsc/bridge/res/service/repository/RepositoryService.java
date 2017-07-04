@@ -18,7 +18,7 @@ import br.ufsc.bridge.res.http.exception.ResHttpConnectionException;
 import br.ufsc.bridge.res.http.exception.ResHttpRequestResponseException;
 import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
 import br.ufsc.bridge.res.service.dto.header.Credential;
-import br.ufsc.bridge.res.service.dto.header.RepositoryHeader;
+import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter.DocumentItemFilter;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO;
@@ -47,21 +47,21 @@ public class RepositoryService {
 	private ResHttpClient httpClientProvide;
 	private ResHttpClient httpClientRetrive;
 
-	public RepositoryService(Credential c) throws ResServiceFatalException {
+	public RepositoryService(Credential c, String url) throws ResServiceFatalException {
 		this.submissionSetParser = new SubmissionSetParser();
 
 		this.documentParser = new DocumentParser();
 
 		this.printerResponseError = new ResLogError();
 
-		this.httpClientProvide = new ResHttpClient(new RepositoryHeader(c), "urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b");
+		this.httpClientProvide = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b");
 		try {
-			this.httpClientProvide.setUrl("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RepositoryPS");
+			this.httpClientProvide.setUrl(url);
 		} catch (MalformedURLException e) {
 			throw new ResServiceFatalException("Invalid Repository URL", e);
 		}
 
-		this.httpClientRetrive = new ResHttpClient(new RepositoryHeader(c), "urn:ihe:iti:2007:RetrieveDocumentSet");
+		this.httpClientRetrive = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:RetrieveDocumentSet");
 	}
 
 	public RepositoryResponseDTO getDocuments(RepositoryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
@@ -83,7 +83,8 @@ public class RepositoryService {
 						DocumentItem documentItem = new DocumentItem();
 						documentItem.setRepositoryUniqueId(xPathDocument.getString("./RepositoryUniqueId"));
 						documentItem.setDocumentUniqueId(xPathDocument.getString("./DocumentUniqueId"));
-						documentItem.setDocument(new String(Base64.decodeBase64(xPathDocument.getString("./Document")), "UTF-8"));
+						// FIXME: gambiarra para contornar MTOM/XOP
+						documentItem.setDocument(new String(Base64.decodeBase64(xPathDocument.getString("./Document")), "ISO-8859-1"));
 						responseDTO.getDocuments().add(documentItem);
 					}
 				} else {
@@ -117,6 +118,7 @@ public class RepositoryService {
 		requestType.getDocumentRequest().add(documentRequest);
 	}
 
+	// FIXME: tirar url do construtor e usar url de dentro do RepositorySaveDocumentDTO
 	public void save(RepositorySaveDTO dto) throws ResServiceSevereException, ResServiceFatalException {
 		ProvideAndRegisterDocumentSetRequestType provideRegister = new ProvideAndRegisterDocumentSetRequestType();
 

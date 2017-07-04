@@ -35,10 +35,10 @@ public class RegistryService {
 	private ResLogError printerResponseError;
 	private ResHttpClient httpClient;
 
-	public RegistryService(Credential c) throws ResServiceFatalException {
-		this.httpClient = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:ns:AdhocQueryRequestRequest");
+	public RegistryService(Credential c, String url) throws ResServiceFatalException {
+		this.httpClient = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:RegistryStoredQuery");
 		try {
-			this.httpClient.setUrl("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS");
+			this.httpClient.setUrl(url);
 		} catch (MalformedURLException e) {
 			throw new ResServiceFatalException("Invalid Registry URL", e);
 		}

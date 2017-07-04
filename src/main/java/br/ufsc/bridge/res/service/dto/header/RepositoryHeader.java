@@ -33,46 +33,48 @@ public class RepositoryHeader implements CreateSOAPMessage {
 	}
 
 	@Override
-	public SOAPMessage create(Object data) throws SOAPException, JAXBException, ParserConfigurationException {
+	public SOAPMessage create(Object data, String action, String url) throws SOAPException, JAXBException, ParserConfigurationException {
 		SOAPMessage message = null;
 		message = MessageFactory.newInstance(SOAPConstants.SOAP_1_2_PROTOCOL).createMessage();
 
-		SOAPFactory factory = SOAPFactory.newInstance();
-		String prefix = "wsse";
-		String uri = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
-		SOAPElement securityElem = factory.createElement("Security", prefix, uri);
+		if (this.c != null) {
+			SOAPHeader header = message.getSOAPHeader();
+			if (header == null) {
+				header = message.getSOAPPart().getEnvelope().addHeader();
+			}
+			SOAPFactory factory = SOAPFactory.newInstance();
+			String prefix = "wsse";
+			String uri = "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd";
+			SOAPElement securityElem = factory.createElement("Security", prefix, uri);
 
-		SOAPElement tokenElem = factory.createElement("UsernameToken", prefix, uri);
-		tokenElem.addAttribute(QName.valueOf("wsu:Id"), "UsernameToken-2");
-		tokenElem.addAttribute(QName.valueOf("xmlns:wsu"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
+			SOAPElement tokenElem = factory.createElement("UsernameToken", prefix, uri);
+			tokenElem.addAttribute(QName.valueOf("wsu:Id"), "UsernameToken-2");
+			tokenElem.addAttribute(QName.valueOf("xmlns:wsu"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
 
-		SOAPElement aElem = factory.createElement("Username", prefix, uri);
-		aElem.addTextNode(this.c.getUsername());
+			SOAPElement aElem = factory.createElement("Username", prefix, uri);
+			aElem.addTextNode(this.c.getUsername());
 
-		SOAPElement bElem = factory.createElement("Password", prefix, uri);
-		bElem.addTextNode(this.c.getPassword());
-		bElem.addAttribute(QName.valueOf("Type"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
+			SOAPElement bElem = factory.createElement("Password", prefix, uri);
+			bElem.addTextNode(this.c.getPassword());
+			bElem.addAttribute(QName.valueOf("Type"), "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordText");
 
-		tokenElem.addChildElement(aElem);
-		tokenElem.addChildElement(bElem);
-		securityElem.addChildElement(tokenElem);
+			tokenElem.addChildElement(aElem);
+			tokenElem.addChildElement(bElem);
+			securityElem.addChildElement(tokenElem);
 
-		SOAPHeader header = message.getSOAPHeader();
-		if (header == null) {
-			header = message.getSOAPPart().getEnvelope().addHeader();
+			header.addChildElement(securityElem);
 		}
-		header.addChildElement(securityElem);
 
 		SOAPBody body = message.getSOAPBody();
 		body.addDocument(this.jaxbObjectToDocument(data));
 
-		this.addAdditionalElements(message);
+		this.addAdditionalElements(message, action, url);
 
 		if (log.isDebugEnabled()) {
 			try {
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				message.writeTo(outputStream);
-				log.debug("Soap Envelope: " + outputStream.toString("UTF-8"));
+				log.info("Soap Envelope: " + outputStream.toString("UTF-8"));
 			} catch (IOException e) {
 				log.debug("Error debug writeTo Soap Envelope");
 			}
@@ -90,6 +92,6 @@ public class RepositoryHeader implements CreateSOAPMessage {
 		return document;
 	}
 
-	protected void addAdditionalElements(SOAPMessage message) throws SOAPException {
+	protected void addAdditionalElements(SOAPMessage message, String action, String url) throws SOAPException {
 	}
 }

@@ -24,4 +24,6 @@ public class RepositorySaveDocumentDTO {
 	private String documentId;
 
 	private String document;
+
+	private String url;
 }
