@@ -81,6 +81,7 @@ public class ResHttpClient {
 	public Document send(Object jaxbObject) throws ResHttpConnectionException, ResHttpRequestResponseException {
 		HttpPost httpPost = null;
 		InputStream is = null;
+		String responseValue = "";
 		try {
 			httpPost = new HttpPost(this.url.getFile());
 
@@ -98,15 +99,15 @@ public class ResHttpClient {
 			} else if (responseCode != HttpStatus.SC_OK) {
 				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode);
 			}
-
-			return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is = response.getEntity().getContent());
+			responseValue = IOUtils.toString(is = response.getEntity().getContent(), "UTF-8");
+			return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(MtomProcessor.process(responseValue));
 		} catch (IOException e) {
 			if (null != httpPost) {
 				httpPost.abort();
 			}
 			throw new ResHttpConnectionException("Error in connection", e);
 		} catch (SAXException | JAXBException | ParserConfigurationException | SOAPException e) {
-			throw new ResHttpRequestResponseException("Error parsing request/response", e);
+			throw new ResHttpRequestResponseException("Error parsing request/response, possible response: " + responseValue, e);
 		} finally {
 			if (null != is) {
 				try {

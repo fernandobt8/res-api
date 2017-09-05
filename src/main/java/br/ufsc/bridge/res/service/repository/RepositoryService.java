@@ -83,8 +83,7 @@ public class RepositoryService {
 						DocumentItem documentItem = new DocumentItem();
 						documentItem.setRepositoryUniqueId(xPathDocument.getString("./RepositoryUniqueId"));
 						documentItem.setDocumentUniqueId(xPathDocument.getString("./DocumentUniqueId"));
-						// FIXME: gambiarra para contornar MTOM/XOP
-						documentItem.setDocument(new String(Base64.decodeBase64(xPathDocument.getString("./Document")), "ISO-8859-1"));
+						documentItem.setDocument(new String(Base64.decodeBase64(xPathDocument.getString("./Document")), "UTF-8"));
 						responseDTO.getDocuments().add(documentItem);
 					}
 				} else {
