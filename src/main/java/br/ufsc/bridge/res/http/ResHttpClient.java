@@ -99,6 +99,7 @@ public class ResHttpClient {
 			} else if (responseCode != HttpStatus.SC_OK) {
 				throw new ResHttpRequestResponseException("HTTP Response code: " + responseCode);
 			}
+
 			responseValue = IOUtils.toString(is = response.getEntity().getContent(), "UTF-8");
 			return DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(MtomProcessor.process(responseValue));
 		} catch (IOException e) {

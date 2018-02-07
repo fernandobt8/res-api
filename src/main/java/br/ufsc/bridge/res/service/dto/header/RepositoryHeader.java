@@ -68,8 +68,6 @@ public class RepositoryHeader implements CreateSOAPMessage {
 		SOAPBody body = message.getSOAPBody();
 		body.addDocument(this.jaxbObjectToDocument(data));
 
-		this.addAdditionalElements(message, action, url);
-
 		if (log.isDebugEnabled()) {
 			try {
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

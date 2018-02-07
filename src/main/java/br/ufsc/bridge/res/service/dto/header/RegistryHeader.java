@@ -1,6 +1,8 @@
 package br.ufsc.bridge.res.service.dto.header;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.namespace.QName;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.soap.SOAPElement;
 import javax.xml.soap.SOAPException;
 import javax.xml.soap.SOAPFactory;
@@ -14,7 +16,9 @@ public class RegistryHeader extends RepositoryHeader {
 	}
 
 	@Override
-	protected void addAdditionalElements(SOAPMessage message, String action, String url) throws SOAPException {
+	public SOAPMessage create(Object data, String action, String url) throws SOAPException, JAXBException, ParserConfigurationException {
+		SOAPMessage message = super.create(data, action, url);
+
 		String envelopePrefix = message.getSOAPPart().getEnvelope().getPrefix();
 
 		SOAPFactory factory = SOAPFactory.newInstance();
@@ -42,5 +46,6 @@ public class RegistryHeader extends RepositoryHeader {
 		header.addChildElement(messageID);
 		header.addChildElement(replyTo);
 		header.addChildElement(to);
+		return message;
 	}
 }
