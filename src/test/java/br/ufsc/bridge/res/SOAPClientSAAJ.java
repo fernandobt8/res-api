@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
-import br.ufsc.bridge.res.service.dto.header.Credential;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
@@ -24,6 +23,7 @@ import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.service.registry.RegistryService;
 import br.ufsc.bridge.res.service.repository.RepositoryService;
+import br.ufsc.bridge.soap.http.SoapCredential;
 
 @Slf4j
 public class SOAPClientSAAJ {
@@ -38,7 +38,7 @@ public class SOAPClientSAAJ {
 	 * @throws JAXBException
 	 */
 	public static void main(String args[]) {
-		Credential credential = new Credential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
+		SoapCredential credential = new SoapCredential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
 
 		try {
 			// repository(credential);
@@ -56,9 +56,9 @@ public class SOAPClientSAAJ {
 		}
 	}
 
-	private static void save(Credential credential) throws Exception {
+	private static void save(SoapCredential credential) throws Exception {
 
-		RepositoryService repositoryService = new RepositoryService(credential, repository_url);
+		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositorySaveDTO registerDTO = new RepositorySaveDTO();
 		registerDTO.setCboProfissional("225265");
@@ -86,6 +86,7 @@ public class SOAPClientSAAJ {
 		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.4633");
 		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
 		documentDTO.setDocument(IOUtils.toString(resourceAsStream));
+		documentDTO.setUrl(repository_url);
 
 		registerDTO.getDocuments().add(documentDTO);
 		repositoryService.save(registerDTO);
@@ -104,11 +105,13 @@ public class SOAPClientSAAJ {
 	}
 
 	@SuppressWarnings("unused")
-	private static void repository(Credential credential) throws Exception {
-		RepositoryService repositoryService = new RepositoryService(credential, repository_url);
+	private static void repository(SoapCredential credential) throws Exception {
+		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositoryFilter repositoryFilter = new RepositoryFilter();
-		repositoryFilter.getDocuments().add(new DocumentItemFilter(repository_url, "2.16.840.1.113883.3.711.2.1.4.5.11601",
+		repositoryFilter.getDocuments().add(new DocumentItemFilter(
+				repository_url,
+				"2.16.840.1.113883.3.711.2.1.4.5.11601",
 				"1.42.20130403134532.123.1475256277528.2"));
 
 		RepositoryResponseDTO documents = repositoryService.getDocuments(repositoryFilter);
@@ -118,7 +121,7 @@ public class SOAPClientSAAJ {
 	}
 
 	@SuppressWarnings("unused")
-	private static RegistryResponse<RegistryItem> registry(Credential credential) throws Exception {
+	private static RegistryResponse<RegistryItem> registry(SoapCredential credential) throws Exception {
 		RegistryService registryService = new RegistryService(credential, registry_url);
 
 		RegistryFilter registryFilter = new RegistryFilter();

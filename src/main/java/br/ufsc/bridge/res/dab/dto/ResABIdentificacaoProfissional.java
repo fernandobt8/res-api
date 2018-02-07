@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
 @Setter

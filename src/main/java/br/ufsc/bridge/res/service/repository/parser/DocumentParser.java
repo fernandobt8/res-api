@@ -1,13 +1,10 @@
 package br.ufsc.bridge.res.service.repository.parser;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.bind.JAXBElement;
-
-import lombok.extern.slf4j.Slf4j;
 
 import br.ufsc.bridge.res.service.builder.IdentifiableTypeBuilder;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
@@ -16,8 +13,8 @@ import br.ufsc.bridge.res.util.XDSbUtil;
 
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType.Document;
+import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType.Include;
 
-@Slf4j
 public class DocumentParser {
 
 	private AtomicLong atomicLong;
@@ -32,12 +29,7 @@ public class DocumentParser {
 
 		Document document = new Document();
 		document.setId(docId);
-		try {
-			document.setValue(dto.getDocument().getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			log.error("UTF-8 não suportado", e);
-			return;
-		}
+		document.setInclude(new Include(dto.getDocumentId()));
 		provideRegister.getDocument().add(document);
 
 		List<JAXBElement<?>> identifiables = (List) provideRegister.getSubmitObjectsRequest().getRegistryObjectList().getIdentifiable();

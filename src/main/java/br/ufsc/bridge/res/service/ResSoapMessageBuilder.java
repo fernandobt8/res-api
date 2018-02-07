@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.service.dto.header;
+package br.ufsc.bridge.res.service;
 
 import javax.xml.namespace.QName;
 import javax.xml.soap.SOAPElement;
@@ -18,8 +18,8 @@ public class ResSoapMessageBuilder extends SoapMessageBuilder {
 	}
 
 	@Override
-	public SOAPMessage soapMessage(String action, Object data) throws SoapCreateMessageException {
-		SOAPMessage message = super.soapMessage(action, data);
+	public SOAPMessage soapMessage(String url, String action, Object data) throws SoapCreateMessageException {
+		SOAPMessage message = super.soapMessage(url, action, data);
 		try {
 			String envelopePrefix = message.getSOAPPart().getEnvelope().getPrefix();
 
@@ -41,7 +41,7 @@ public class ResSoapMessageBuilder extends SoapMessageBuilder {
 
 			SOAPElement to = factory.createElement("To", prefix, uri);
 			to.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
-			to.addTextNode(this.httpClient.getUrl().toString());
+			to.addTextNode(url);
 
 			SOAPHeader header = message.getSOAPHeader();
 			header.addChildElement(elementAction);

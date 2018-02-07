@@ -1,13 +1,14 @@
 package br.ufsc.bridge.res.service.registry;
 
-import java.net.MalformedURLException;
+import static br.ufsc.bridge.res.http.ResSoapHttpClientSingleton.resHttpClient;
+
 import java.util.ArrayList;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
 import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
-import br.ufsc.bridge.res.service.dto.header.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
@@ -18,15 +19,14 @@ import br.ufsc.bridge.res.service.exception.ResXDSbException;
 import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResLogError;
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
 import br.ufsc.bridge.soap.http.SoapCredential;
-import br.ufsc.bridge.soap.http.SoapHttpClient;
 import br.ufsc.bridge.soap.http.SoapHttpResponse;
 import br.ufsc.bridge.soap.http.SoapMessageBuilder;
 import br.ufsc.bridge.soap.http.exception.SoapCreateMessageException;
 import br.ufsc.bridge.soap.http.exception.SoapHttpConnectionException;
 import br.ufsc.bridge.soap.http.exception.SoapHttpResponseException;
 import br.ufsc.bridge.soap.http.exception.SoapReadMessageException;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
@@ -38,13 +38,11 @@ public class RegistryService {
 
 	private ResLogError printerResponseError;
 	private SoapMessageBuilder soapMessageSender;
+	private String url;
 
 	public RegistryService(SoapCredential c, String url) throws ResServiceFatalException {
-		try {
-			this.soapMessageSender = new ResSoapMessageBuilder(c, new SoapHttpClient().setUrl(url));
-		} catch (MalformedURLException e) {
-			throw new ResServiceFatalException("Invalid Registry URL", e);
-		}
+		this.url = url;
+		this.soapMessageSender = new ResSoapMessageBuilder(c, resHttpClient());
 		this.printerResponseError = new ResLogError();
 	}
 
@@ -52,7 +50,7 @@ public class RegistryService {
 		AdhocQueryResponseXPath queryResponse = null;
 		SoapHttpResponse response;
 		try {
-			response = this.soapMessageSender.postMessage(this.action, this.buildRequest(filter, "LeafClass"));
+			response = this.soapMessageSender.sendMessage(this.url, this.action, this.buildRequest(filter, "LeafClass"));
 			queryResponse = new AdhocQueryResponseXPath(response.getSoap());
 
 			if (queryResponse.isSuccess()) {
@@ -74,7 +72,7 @@ public class RegistryService {
 		AdhocQueryResponseXPath queryResponse = null;
 		SoapHttpResponse response;
 		try {
-			response = this.soapMessageSender.postMessage(this.action, this.buildRequest(filter, "ObjectRef"));
+			response = this.soapMessageSender.sendMessage(this.url, this.action, this.buildRequest(filter, "ObjectRef"));
 			queryResponse = new AdhocQueryResponseXPath(response.getSoap());
 
 			if (queryResponse.isSuccess()) {

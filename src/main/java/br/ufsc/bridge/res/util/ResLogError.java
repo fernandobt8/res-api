@@ -5,6 +5,7 @@ import javax.xml.xpath.XPathExpressionException;
 import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
 import br.ufsc.bridge.res.service.exception.ResServiceSevereException;
 import br.ufsc.bridge.res.service.exception.ResXDSbException;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 public class ResLogError {
 

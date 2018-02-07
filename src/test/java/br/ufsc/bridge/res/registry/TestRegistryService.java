@@ -14,8 +14,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import br.ufsc.bridge.res.service.dto.header.Credential;
-import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
+import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
@@ -23,6 +22,7 @@ import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.service.registry.RegistryService;
 import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.soap.http.SoapCredential;
 
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
 
@@ -35,8 +35,8 @@ public class TestRegistryService {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlRegistriesRef.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
-		RegistryHeader registryHeader = new RegistryHeader(new Credential("123", "123"));
-		RegistryService registryService = new RegistryService(new Credential("123", "123"), null);
+		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"), null);
+		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
 		filter.setCnsCidadao("898004405760294");
@@ -44,8 +44,10 @@ public class TestRegistryService {
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "ObjectRef");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		registryHeader.create(adhocQueryRequest, "urn:ihe:iti:2007:RegistryStoredQuery",
-				"https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP").writeTo(outputStream);
+		messageBuilder.soapMessage("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
+				"urn:ihe:iti:2007:RegistryStoredQuery",
+				adhocQueryRequest)
+				.writeTo(outputStream);
 		String xml = new String(outputStream.toByteArray(), "UTF-8");
 
 		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
@@ -55,7 +57,7 @@ public class TestRegistryService {
 	public void testRegistryResponseRef() throws Exception {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestRegistryResponseRef.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
-		RegistryService registryService = new RegistryService(new Credential("123", "123"), null);
+		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(resourceAsStream);
 		AdhocQueryResponseXPath queryResponse = new AdhocQueryResponseXPath(document);
@@ -70,7 +72,7 @@ public class TestRegistryService {
 	public void testRegistryResponseRefEmpty() throws Exception {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestRegistryResponseRefEmpty.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
-		RegistryService registryService = new RegistryService(new Credential("123", "123"), null);
+		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(resourceAsStream);
 		AdhocQueryResponseXPath queryResponse = new AdhocQueryResponseXPath(document);
@@ -86,8 +88,8 @@ public class TestRegistryService {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlGetRegistriesHeader.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
-		RegistryHeader registryHeader = new RegistryHeader(new Credential("123", "123"));
-		RegistryService registryService = new RegistryService(new Credential("123", "123"), null);
+		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"), null);
+		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
 		filter.setEntryUUIDs(this.getItemsRegistryResponse());
@@ -95,8 +97,10 @@ public class TestRegistryService {
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		registryHeader.create(adhocQueryRequest, "urn:ihe:iti:2007:RegistryStoredQuery",
-				"https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP").writeTo(outputStream);
+		messageBuilder.soapMessage("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
+				"urn:ihe:iti:2007:RegistryStoredQuery",
+				adhocQueryRequest)
+				.writeTo(outputStream);
 		String xml = new String(outputStream.toByteArray(), "UTF-8");
 
 		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
@@ -136,8 +140,8 @@ public class TestRegistryService {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlAllFilter.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
-		RegistryHeader registryHeader = new RegistryHeader(new Credential("123", "123"));
-		RegistryService registryService = new RegistryService(new Credential("123", "123"), null);
+		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"), null);
+		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
 		filter.setDataInicial(RDateUtil.isoXDSbToDate("20141202100000"));
@@ -148,8 +152,10 @@ public class TestRegistryService {
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
 
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		registryHeader.create(adhocQueryRequest, "urn:ihe:iti:2007:RegistryStoredQuery",
-				"https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP").writeTo(outputStream);
+		messageBuilder.soapMessage("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
+				"urn:ihe:iti:2007:RegistryStoredQuery",
+				adhocQueryRequest)
+				.writeTo(outputStream);
 		String xml = new String(outputStream.toByteArray(), "UTF-8");
 
 		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);

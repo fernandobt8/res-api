@@ -11,7 +11,7 @@
 		<a:ReplyTo xmlns:a="http://www.w3.org/2005/08/addressing">
 			<a:Address>http://www.w3.org/2005/08/addressing/anonymous</a:Address>
 		</a:ReplyTo>
-		<a:To xmlns:a="http://www.w3.org/2005/08/addressing" env:mustUnderstand="1">https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS</a:To>
+		<a:To xmlns:a="http://www.w3.org/2005/08/addressing" env:mustUnderstand="1">https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP</a:To>
 	</env:Header>
 	<env:Body>
 		<ns3:AdhocQueryRequest xmlns="urn:oasis:names:tc:ebxml-regrep:xsd:rim:3.0" xmlns:ns2="urn:oasis:names:tc:ebxml-regrep:xsd:rs:3.0" xmlns:ns3="urn:oasis:names:tc:ebxml-regrep:xsd:query:3.0">
