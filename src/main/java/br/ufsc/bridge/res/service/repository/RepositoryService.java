@@ -3,9 +3,7 @@ package br.ufsc.bridge.res.service.repository;
 import static br.ufsc.bridge.res.http.ResSoapHttpClientSingleton.resHttpClient;
 import static br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath.isSuccess;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -79,8 +77,8 @@ public class RepositoryService {
 		try {
 			List<RepositoryDocumentItem> responseDtos = new ArrayList<>();
 			for (Entry<String, RetrieveDocumentSetRequestType> entry : requests.entrySet()) {
-				InputStream message = new ResSoapMessageBuilder(this.c, entry.getKey(), this.retriveAction).createMessage(entry.getValue());
-				SoapHttpRequest request = new SoapHttpRequest(entry.getKey(), this.retriveAction, message)
+				byte[] message = new ResSoapMessageBuilder(this.c, entry.getKey(), this.retriveAction).createMessage(entry.getValue());
+				SoapHttpRequest request = new SoapHttpRequest(entry.getKey(), this.retriveAction, "soapId", message)
 						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 						.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
 						.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
@@ -140,14 +138,14 @@ public class RepositoryService {
 			provideRegister.getSubmitObjectsRequest().setRegistryObjectList(new RegistryObjectListType());
 			this.submissionSetParser.parser(dto, provideRegister);
 
-			Map<String, InputStream> isDocuments = new HashMap<>();
+			Map<String, byte[]> isDocuments = new HashMap<>();
 			try {
 				for (RepositorySaveDocumentDTO documentDTO : entryUrldocs.getValue()) {
 					this.documentParser.parser(provideRegister, documentDTO);
-					isDocuments.put(documentDTO.getDocumentId(), new ByteArrayInputStream(documentDTO.getDocument().getBytes("UTF-8")));
+					isDocuments.put(documentDTO.getDocumentId(), documentDTO.getDocument().getBytes("UTF-8"));
 				}
 
-				InputStream message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), this.retriveAction).createMessage(provideRegister);
+				byte[] message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), this.retriveAction).createMessage(provideRegister);
 				SoapHttpRequest request = new SoapHttpRequest(entryUrldocs.getKey(), this.provideAction, "soapId", message, isDocuments)
 						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, dto.getCnsProfissional())
 						.addHeader(ResSoapHttpHeaders.CBO, dto.getCboProfissional())

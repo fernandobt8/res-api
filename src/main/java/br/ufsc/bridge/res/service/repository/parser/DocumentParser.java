@@ -6,6 +6,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.bind.JAXBElement;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.ufsc.bridge.res.service.builder.IdentifiableTypeBuilder;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.util.RDateUtil;
@@ -29,7 +31,7 @@ public class DocumentParser {
 
 		Document document = new Document();
 		document.setId(docId);
-		document.setInclude(new Include(dto.getDocumentId()));
+		document.setInclude(new Include(StringUtils.prependIfMissing(dto.getDocumentId(), "cid:")));
 		provideRegister.getDocument().add(document);
 
 		List<JAXBElement<?>> identifiables = (List) provideRegister.getSubmitObjectsRequest().getRegistryObjectList().getIdentifiable();

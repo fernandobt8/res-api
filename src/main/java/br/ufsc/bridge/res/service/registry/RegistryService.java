@@ -2,7 +2,6 @@ package br.ufsc.bridge.res.service.registry;
 
 import static br.ufsc.bridge.res.http.ResSoapHttpClientSingleton.resHttpClient;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -53,7 +52,7 @@ public class RegistryService {
 	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter)
 			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
-			InputStream message = this.soapMessageSender.createMessage(this.buildRequest(filter, "LeafClass"));
+			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "LeafClass"));
 			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.action, message)
 					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
@@ -80,7 +79,7 @@ public class RegistryService {
 	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter)
 			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
-			InputStream message = this.soapMessageSender.createMessage(this.buildRequest(filter, "ObjectRef"));
+			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "ObjectRef"));
 			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.action, message)
 					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
