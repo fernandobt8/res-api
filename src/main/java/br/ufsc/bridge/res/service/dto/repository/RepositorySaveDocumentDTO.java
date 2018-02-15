@@ -5,6 +5,8 @@ import java.util.Date;
 import lombok.Getter;
 import lombok.Setter;
 
+import br.ufsc.bridge.res.dab.TipoDocumento;
+
 @Getter
 @Setter
 public class RepositorySaveDocumentDTO {
@@ -24,6 +26,8 @@ public class RepositorySaveDocumentDTO {
 	private String documentId;
 
 	private String document;
+
+	private TipoDocumento tipoDocumento;
 
 	private String url;
 }

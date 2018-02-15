@@ -45,9 +45,6 @@ public class ProvideAndRegisterDocumentSetRequestType {
 	@Getter
 	@Setter
 	@XmlAccessorType(XmlAccessType.FIELD)
-	@XmlType(name = "", propOrder = {
-			"value"
-	})
 	public static class Document {
 
 		@XmlElement(name = "Include", namespace = "http://www.w3.org/2004/08/xop/include")

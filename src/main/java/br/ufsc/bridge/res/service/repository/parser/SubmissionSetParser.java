@@ -31,9 +31,11 @@ public class SubmissionSetParser {
 		.addClassificationEnd()
 		.buildRegistryPackage()
 			.id(SUBMISSIONSET_ID)
+			//submissionTime
 			.buildSlot()
 				.name("submissionTime").value(creationTime)
 			.addSlotEnd()
+			//author
 			.buildClassification()
 				.classificationScheme("urn:uuid:a7058bb9-b4e4-4307-ba5b-e3f0ab85e12d")
 				.id("sscl2")
@@ -60,6 +62,7 @@ public class SubmissionSetParser {
 					.value("Summarization of Episode Note")
 				.addInternationalStringEnd()
 			.addClassificationEnd()
+			//patientId
 			.buildExternalIdentifier()
 				.identificationScheme("urn:uuid:6b5aea1a-874d-4603-a4bc-96a0a7b38446")
 				.value(dto.getCnsPaciente() + "^^^&2.16.840.1.113883.13.236&ISO")
@@ -68,6 +71,7 @@ public class SubmissionSetParser {
 					.value("XDSSubmissionSet.patientId")
 				.addInternationalStringEnd()
 			.addExternalIdentifierEnd()
+			//sourceId
 			.buildExternalIdentifier()
 				.identificationScheme("urn:uuid:554ac39e-e3fe-47fe-b233-965d2a147832")
 				.value(dto.getIdInstalacao())
@@ -76,6 +80,7 @@ public class SubmissionSetParser {
 					.value("XDSSubmissionSet.sourceId")
 				.addInternationalStringEnd()
 			.addExternalIdentifierEnd()
+			//uniqueId
 			.buildExternalIdentifier()
 				.identificationScheme("urn:uuid:96fdda7c-d067-4183-912e-bf5ee74998a8")
 				.value(dto.getSubmissionSetId())
@@ -85,6 +90,7 @@ public class SubmissionSetParser {
 				.addInternationalStringEnd()
 			.addExternalIdentifierEnd()
 		.addRegistryPackageEnd();
+		//intendedRecipient
 		//@formatter:on
 	}
 }

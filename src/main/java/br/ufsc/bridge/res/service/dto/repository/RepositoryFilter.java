@@ -14,7 +14,18 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RepositoryFilter {
 
+	private String cnsProfissional;
+	private String cboProfissional;
+	private String cnesProfissional;
+
 	private List<DocumentItemFilter> documents = new ArrayList<>();
+
+	public RepositoryFilter(String cnsProfissional, String cboProfissional, String cnesProfissional) {
+		super();
+		this.cnsProfissional = cnsProfissional;
+		this.cboProfissional = cboProfissional;
+		this.cnesProfissional = cnesProfissional;
+	}
 
 	@Getter
 	@Setter

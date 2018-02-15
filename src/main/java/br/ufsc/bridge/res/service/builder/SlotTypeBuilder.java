@@ -43,8 +43,10 @@ public class SlotTypeBuilder<T extends SlotTypeBuilder<T>> {
 	}
 
 	public T value(List<String> values, boolean bracket) {
-		for (String value : values) {
-			this.value(value, bracket);
+		if (values != null) {
+			for (String value : values) {
+				this.value(value, bracket);
+			}
 		}
 		return (T) this;
 	}

@@ -18,23 +18,27 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 
+import br.ufsc.bridge.res.http.ResSoapHttpHeaders;
+import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
+import br.ufsc.bridge.res.service.dto.repository.RepositoryDocumentItem;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter.DocumentItemFilter;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO.DocumentItem;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositorySaveResponseDTO;
+import br.ufsc.bridge.res.service.exception.ResConsentPolicyException;
+import br.ufsc.bridge.res.service.exception.ResException;
+import br.ufsc.bridge.res.service.exception.ResHttpConnectionException;
+import br.ufsc.bridge.res.service.exception.ResServerErrorException;
 import br.ufsc.bridge.res.service.exception.ResServiceFatalException;
-import br.ufsc.bridge.res.service.exception.ResServiceSevereException;
+import br.ufsc.bridge.res.service.exception.ResUrlsException;
 import br.ufsc.bridge.res.service.exception.ResXDSbException;
 import br.ufsc.bridge.res.service.repository.parser.DocumentParser;
 import br.ufsc.bridge.res.service.repository.parser.SubmissionSetParser;
 import br.ufsc.bridge.res.util.ResLogError;
 import br.ufsc.bridge.soap.http.SoapCredential;
+import br.ufsc.bridge.soap.http.SoapHttpRequest;
 import br.ufsc.bridge.soap.http.SoapHttpResponse;
-import br.ufsc.bridge.soap.http.SoapMessageBuilder;
 import br.ufsc.bridge.soap.http.exception.SoapCreateMessageException;
 import br.ufsc.bridge.soap.http.exception.SoapHttpConnectionException;
 import br.ufsc.bridge.soap.http.exception.SoapHttpResponseException;
@@ -55,20 +59,17 @@ public class RepositoryService {
 	private SubmissionSetParser submissionSetParser;
 	private DocumentParser documentParser;
 	private ResLogError printerResponseError;
+	private SoapCredential c;
 
-	private SoapMessageBuilder soapMessageSender;
-
-	public RepositoryService(SoapCredential c) throws ResServiceFatalException {
+	public RepositoryService(SoapCredential c) {
+		this.c = c;
 		this.submissionSetParser = new SubmissionSetParser();
-
 		this.documentParser = new DocumentParser();
-
 		this.printerResponseError = new ResLogError();
-
-		this.soapMessageSender = new SoapMessageBuilder(c, resHttpClient());
 	}
 
-	public RepositoryResponseDTO getDocuments(RepositoryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
+	public List<RepositoryDocumentItem> getDocuments(RepositoryFilter filter)
+			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		Map<String, RetrieveDocumentSetRequestType> requests = new HashMap<>();
 
 		for (DocumentItemFilter document : filter.getDocuments()) {
@@ -76,28 +77,34 @@ public class RepositoryService {
 		}
 
 		try {
-			RepositoryResponseDTO responseDTO = new RepositoryResponseDTO(true);
+			List<RepositoryDocumentItem> responseDtos = new ArrayList<>();
 			for (Entry<String, RetrieveDocumentSetRequestType> entry : requests.entrySet()) {
-				SoapHttpResponse response = this.soapMessageSender.sendMessage(entry.getKey(), this.retriveAction, entry.getValue());
+				InputStream message = new ResSoapMessageBuilder(this.c, entry.getKey(), this.retriveAction).createMessage(entry.getValue());
+				SoapHttpRequest request = new SoapHttpRequest(entry.getKey(), this.retriveAction, message)
+						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
+						.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
+						.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
+
+				SoapHttpResponse response = resHttpClient().request(request);
 
 				Document soap = response.getSoap();
 				XPathFactoryAssist xPathResponse = new XPathFactoryAssist(soap);
 				if (isSuccess(xPathResponse.getString("//RegistryResponse/@status"))) {
 					for (XPathFactoryAssist xPathDocument : xPathResponse.iterable("//Body//DocumentResponse")) {
-						DocumentItem documentItem = new DocumentItem();
+						RepositoryDocumentItem documentItem = new RepositoryDocumentItem();
 						documentItem.setRepositoryUniqueId(xPathDocument.getString("./RepositoryUniqueId"));
 						documentItem.setDocumentUniqueId(xPathDocument.getString("./DocumentUniqueId"));
 						documentItem.setDocument(IOUtils.toString(response.getPart(xPathDocument, "./Document"), "UTF-8"));
-						responseDTO.getDocuments().add(documentItem);
+						responseDtos.add(documentItem);
 					}
 				} else {
 					this.printerResponseError.parserException(new RegistryErrorListXPath(soap));
 					return null;
 				}
 			}
-			return responseDTO;
+			return responseDtos;
 		} catch (SoapHttpConnectionException e) {
-			throw new ResServiceSevereException(e);
+			throw new ResHttpConnectionException(e);
 		} catch (SoapCreateMessageException | SoapHttpResponseException | SoapReadMessageException | ResXDSbException | IOException e) {
 			throw new ResServiceFatalException(e);
 		} catch (XPathExpressionException e) {
@@ -117,7 +124,7 @@ public class RepositoryService {
 		requestType.getDocumentRequest().add(documentRequest);
 	}
 
-	public List<RepositorySaveResponseDTO> save(RepositorySaveDTO dto) {
+	public void save(RepositorySaveDTO dto) throws ResException {
 		Map<String, List<RepositorySaveDocumentDTO>> urlDocs = new HashMap<>();
 		for (RepositorySaveDocumentDTO documentDTO : dto.getDocuments()) {
 			if (!urlDocs.containsKey(documentDTO.getUrl())) {
@@ -126,7 +133,7 @@ public class RepositoryService {
 			urlDocs.get(documentDTO.getUrl()).add(documentDTO);
 		}
 
-		List<RepositorySaveResponseDTO> saveResponseDto = new ArrayList<>();
+		Map<String, ResException> urlErrors = new HashMap<>(urlDocs.size());
 		for (Entry<String, List<RepositorySaveDocumentDTO>> entryUrldocs : urlDocs.entrySet()) {
 			ProvideAndRegisterDocumentSetRequestType provideRegister = new ProvideAndRegisterDocumentSetRequestType();
 			provideRegister.setSubmitObjectsRequest(new SubmitObjectsRequest());
@@ -140,25 +147,31 @@ public class RepositoryService {
 					isDocuments.put(documentDTO.getDocumentId(), new ByteArrayInputStream(documentDTO.getDocument().getBytes("UTF-8")));
 				}
 
-				SoapHttpResponse response = this.soapMessageSender.sendMessage(entryUrldocs.getKey(), this.provideAction, provideRegister, isDocuments);
+				InputStream message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), this.retriveAction).createMessage(provideRegister);
+				SoapHttpRequest request = new SoapHttpRequest(entryUrldocs.getKey(), this.provideAction, "soapId", message, isDocuments)
+						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, dto.getCnsProfissional())
+						.addHeader(ResSoapHttpHeaders.CBO, dto.getCboProfissional())
+						.addHeader(ResSoapHttpHeaders.CNES, dto.getCnesUnidadeSaude());
+				SoapHttpResponse response = resHttpClient().request(request);
 
 				Document soap = response.getSoap();
-				if (isSuccess(new XPathFactoryAssist(soap).getString("//RegistryResponse/@status"))) {
-					saveResponseDto.add(new RepositorySaveResponseDTO(entryUrldocs.getKey()));
-					saveResponseDto.add(new RepositorySaveResponseDTO(entryUrldocs.getKey()));
-				} else {
+				if (!isSuccess(new XPathFactoryAssist(soap).getString("//RegistryResponse/@status"))) {
 					this.printerResponseError.parserException(new RegistryErrorListXPath(soap));
 				}
 			} catch (SoapHttpConnectionException e) {
-				saveResponseDto.add(new RepositorySaveResponseDTO(entryUrldocs.getKey(), false, new ResServiceSevereException(e)));
+				urlErrors.put(entryUrldocs.getKey(), new ResHttpConnectionException(e));
 			} catch (SoapCreateMessageException | SoapHttpResponseException | SoapReadMessageException | ResXDSbException | UnsupportedEncodingException e) {
-				saveResponseDto.add(new RepositorySaveResponseDTO(entryUrldocs.getKey(), false, new ResServiceFatalException(e)));
+				urlErrors.put(entryUrldocs.getKey(), new ResServiceFatalException(e));
 			} catch (XPathExpressionException e) {
-				saveResponseDto.add(new RepositorySaveResponseDTO(entryUrldocs.getKey(), false, new ResServiceFatalException("Error parsing \"RegistryResponse\"", e)));
-			} catch (ResServiceSevereException e) {
-				saveResponseDto.add(new RepositorySaveResponseDTO(entryUrldocs.getKey(), false, e));
+				urlErrors.put(entryUrldocs.getKey(), new ResServiceFatalException("Error parsing \"RegistryResponse\"", e));
+			} catch (ResConsentPolicyException | ResServerErrorException | ResServiceFatalException e) {
+				urlErrors.put(entryUrldocs.getKey(), e);
 			}
 		}
-		return saveResponseDto;
+		if (urlErrors.size() == 1) {
+			throw urlErrors.values().iterator().next();
+		} else if (urlErrors.size() > 1) {
+			throw new ResUrlsException(urlErrors);
+		}
 	}
 }

@@ -6,20 +6,26 @@ import javax.xml.soap.SOAPFactory;
 import javax.xml.soap.SOAPHeader;
 import javax.xml.soap.SOAPMessage;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.soap.http.SoapCredential;
-import br.ufsc.bridge.soap.http.SoapHttpClient;
 import br.ufsc.bridge.soap.http.SoapMessageBuilder;
 import br.ufsc.bridge.soap.http.exception.SoapCreateMessageException;
 
+@Getter
 public class ResSoapMessageBuilder extends SoapMessageBuilder {
+	private String url;
+	private String action;
 
-	public ResSoapMessageBuilder(SoapCredential c, SoapHttpClient httpClient) {
-		super(c, httpClient);
+	public ResSoapMessageBuilder(SoapCredential c, String url, String action) {
+		super(c);
+		this.url = url;
+		this.action = action;
 	}
 
 	@Override
-	public SOAPMessage soapMessage(String url, String action, Object data) throws SoapCreateMessageException {
-		SOAPMessage message = super.soapMessage(url, action, data);
+	public SOAPMessage soapMessage(Object data) throws SoapCreateMessageException {
+		SOAPMessage message = super.soapMessage(data);
 		try {
 			String envelopePrefix = message.getSOAPPart().getEnvelope().getPrefix();
 
@@ -28,7 +34,7 @@ public class ResSoapMessageBuilder extends SoapMessageBuilder {
 			String uri = "http://www.w3.org/2005/08/addressing";
 			SOAPElement elementAction = factory.createElement("Action", prefix, uri);
 			elementAction.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
-			elementAction.addTextNode(action);
+			elementAction.addTextNode(this.action);
 
 			SOAPElement messageID = factory.createElement("MessageID", prefix, uri);
 			messageID.addTextNode("urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055");
@@ -41,7 +47,7 @@ public class ResSoapMessageBuilder extends SoapMessageBuilder {
 
 			SOAPElement to = factory.createElement("To", prefix, uri);
 			to.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
-			to.addTextNode(url);
+			to.addTextNode(this.url);
 
 			SOAPHeader header = message.getSOAPHeader();
 			header.addChildElement(elementAction);

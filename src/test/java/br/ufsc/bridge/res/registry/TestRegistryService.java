@@ -1,6 +1,5 @@
 package br.ufsc.bridge.res.registry;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -35,7 +34,9 @@ public class TestRegistryService {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlRegistriesRef.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
-		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"), null);
+		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"),
+				"https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
+				"urn:ihe:iti:2007:RegistryStoredQuery");
 		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
@@ -43,14 +44,8 @@ public class TestRegistryService {
 
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "ObjectRef");
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		messageBuilder.soapMessage("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
-				"urn:ihe:iti:2007:RegistryStoredQuery",
-				adhocQueryRequest)
-				.writeTo(outputStream);
-		String xml = new String(outputStream.toByteArray(), "UTF-8");
-
-		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
+		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""),
+				IOUtils.toString(messageBuilder.createMessage(adhocQueryRequest)));
 	}
 
 	@Test
@@ -88,7 +83,9 @@ public class TestRegistryService {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlGetRegistriesHeader.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
-		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"), null);
+		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"),
+				"https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
+				"urn:ihe:iti:2007:RegistryStoredQuery");
 		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
@@ -96,14 +93,8 @@ public class TestRegistryService {
 
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		messageBuilder.soapMessage("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
-				"urn:ihe:iti:2007:RegistryStoredQuery",
-				adhocQueryRequest)
-				.writeTo(outputStream);
-		String xml = new String(outputStream.toByteArray(), "UTF-8");
-
-		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
+		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""),
+				IOUtils.toString(messageBuilder.createMessage(adhocQueryRequest)));
 
 	}
 
@@ -140,7 +131,9 @@ public class TestRegistryService {
 		String pathFile = this.PATH_TEST_RESOURCE + "TestXmlAllFilter.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 
-		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"), null);
+		ResSoapMessageBuilder messageBuilder = new ResSoapMessageBuilder(new SoapCredential("123", "123"),
+				"https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
+				"urn:ihe:iti:2007:RegistryStoredQuery");
 		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
@@ -151,14 +144,8 @@ public class TestRegistryService {
 
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
 
-		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-		messageBuilder.soapMessage("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryP",
-				"urn:ihe:iti:2007:RegistryStoredQuery",
-				adhocQueryRequest)
-				.writeTo(outputStream);
-		String xml = new String(outputStream.toByteArray(), "UTF-8");
-
-		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""), xml);
+		Assert.assertEquals(IOUtils.toString(resourceAsStream).replace("\n", "").replace("\r", "").replace("\t", ""),
+				IOUtils.toString(messageBuilder.createMessage(adhocQueryRequest)));
 	}
 
 	private RegistryResponse<RegistryItem> getRegistryResponseHeaderParserExpected() {

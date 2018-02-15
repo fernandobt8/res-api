@@ -1,9 +1,11 @@
 package br.ufsc.bridge.res;
 
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
@@ -11,14 +13,15 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
 
+import br.ufsc.bridge.res.dab.TipoDocumento;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
+import br.ufsc.bridge.res.service.dto.registry.RegistryFilter.RegistryFilterBuilder;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.dto.repository.RepositoryDocumentItem;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter;
 import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter.DocumentItemFilter;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryResponseDTO.DocumentItem;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.service.registry.RegistryService;
@@ -28,8 +31,12 @@ import br.ufsc.bridge.soap.http.SoapCredential;
 @Slf4j
 public class SOAPClientSAAJ {
 
-	private static final String registry_url = "http://23.236.48.233:8280/services/DocumentRegistry";
-	private static final String repository_url = "http://23.236.48.233:8280/services/DocumentRepository";
+	private static final String registry_url = "http://35.224.244.22:8280/services/DocumentRegistry";
+	private static final String repository_url = "http://35.224.244.22:8280/services/DocumentRepository";
+
+	static String cbo = "225130";
+	static String cns = "992294125290005";
+	static String cnes = "7592477";
 
 	/**
 	 * Starting point for the SAAJ - SOAP Client Testing
@@ -39,17 +46,16 @@ public class SOAPClientSAAJ {
 	 */
 	public static void main(String args[]) {
 		SoapCredential credential = new SoapCredential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
-
 		try {
 			// repository(credential);
 
 			// registry(credential);
 
+			save(credential);
+
 			// testeXml();
 
 			// testeXml2();
-
-			save(credential);
 
 		} catch (Exception e) {
 			log.error("", e);
@@ -83,9 +89,10 @@ public class SOAPClientSAAJ {
 		documentDTO.setCnsPaciente("898004405760294");
 		documentDTO.setDataInicioAtendimento(new Date());
 		documentDTO.setDataFimAtendimento(new Date());
-		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.4633");
-		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
-		documentDTO.setDocument(IOUtils.toString(resourceAsStream));
+		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.463322");
+		documentDTO.setDocument(IOUtils.toString(new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/CN4-CIT_doc-crianca.xml"))
+				.replace("\n", "").replace("\r", "").replace("\t", ""));
+		documentDTO.setTipoDocumento(TipoDocumento.ATENDIMENTO_CIT_2018);
 		documentDTO.setUrl(repository_url);
 
 		registerDTO.getDocuments().add(documentDTO);
@@ -94,7 +101,7 @@ public class SOAPClientSAAJ {
 
 	@SuppressWarnings("unused")
 	private static void testeXml2() throws Exception {
-		InputStream resourceAsStream = SOAPClientSAAJ.class.getResource("doc1.xml").openStream();
+		InputStream resourceAsStream = new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/CN4-CIT_doc-crianca.xml");
 
 		try {
 			ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
@@ -108,14 +115,14 @@ public class SOAPClientSAAJ {
 	private static void repository(SoapCredential credential) throws Exception {
 		RepositoryService repositoryService = new RepositoryService(credential);
 
-		RepositoryFilter repositoryFilter = new RepositoryFilter();
+		RepositoryFilter repositoryFilter = new RepositoryFilter(cns, cbo, cnes);
 		repositoryFilter.getDocuments().add(new DocumentItemFilter(
 				repository_url,
-				"2.16.840.1.113883.3.711.2.1.4.5.11601",
-				"1.42.20130403134532.123.1475256277528.2"));
+				"1.3.6.1.4.1.21367.2010.1.2.1125",
+				"1.42.20130403134532.123.1517918149401.2"));
 
-		RepositoryResponseDTO documents = repositoryService.getDocuments(repositoryFilter);
-		for (DocumentItem item : documents.getDocuments()) {
+		List<RepositoryDocumentItem> documents = repositoryService.getDocuments(repositoryFilter);
+		for (RepositoryDocumentItem item : documents) {
 			System.out.println(item.getDocument());
 		}
 	}
@@ -124,18 +131,18 @@ public class SOAPClientSAAJ {
 	private static RegistryResponse<RegistryItem> registry(SoapCredential credential) throws Exception {
 		RegistryService registryService = new RegistryService(credential, registry_url);
 
-		RegistryFilter registryFilter = new RegistryFilter();
-		registryFilter.setCnsCidadao("898004405760294");
+		RegistryFilterBuilder filterBuilder = RegistryFilter.builder()
+				.cnsProfissional(cns)
+				.cboProfissional(cbo)
+				.cnesProfissional(cnes);
 
-		RegistryResponse<String> registries = registryService.getRegistriesRef(registryFilter);
+		RegistryResponse<String> registries = registryService.getRegistriesRef(filterBuilder.cnsCidadao("898004405760294").build());
 		for (String uuid : registries.getItems()) {
 			System.out.println(uuid);
 		}
+		System.out.println();
 
-		registryFilter = new RegistryFilter();
-		registryFilter.setEntryUUIDs(registries.getItems());
-
-		RegistryResponse<RegistryItem> registries2 = registryService.getRegistriesHeader(registryFilter);
+		RegistryResponse<RegistryItem> registries2 = registryService.getRegistriesHeader(filterBuilder.entryUUIDs(registries.getItems()).build());
 		for (RegistryItem item : registries2.getItems()) {
 			System.out.println(item.getRepositoryUniqueId());
 			System.out.println(item.getDocumentUniqueId());
