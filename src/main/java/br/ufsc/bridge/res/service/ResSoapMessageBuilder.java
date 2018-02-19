@@ -38,8 +38,10 @@ public class ResSoapMessageBuilder extends SoapMessageBuilder {
 
 			SOAPElement messageID = factory.createElement("MessageID", prefix, uri);
 			messageID.addTextNode("urn:uuid:a02ca8cd-86fa-4afc-a27c-616c183b2055");
+			messageID.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
 
 			SOAPElement replyTo = factory.createElement("ReplyTo", prefix, uri);
+			replyTo.addAttribute(QName.valueOf(envelopePrefix + ":mustUnderstand"), "1");
 
 			SOAPElement adress = factory.createElement("Address", prefix, uri);
 			adress.addTextNode("http://www.w3.org/2005/08/addressing/anonymous");

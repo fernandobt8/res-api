@@ -145,7 +145,7 @@ public class RepositoryService {
 					isDocuments.put(documentDTO.getDocumentId(), documentDTO.getDocument().getBytes("UTF-8"));
 				}
 
-				byte[] message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), this.retriveAction).createMessage(provideRegister);
+				byte[] message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), this.provideAction).createMessage(provideRegister);
 				SoapHttpRequest request = new SoapHttpRequest(entryUrldocs.getKey(), this.provideAction, "soapId", message, isDocuments)
 						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, dto.getCnsProfissional())
 						.addHeader(ResSoapHttpHeaders.CBO, dto.getCboProfissional())

@@ -63,7 +63,7 @@ public class SOAPClientSAAJ {
 	}
 
 	private static void save(SoapCredential credential) throws Exception {
-
+		int add = 5;
 		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositorySaveDTO registerDTO = new RepositorySaveDTO();
@@ -75,7 +75,7 @@ public class SOAPClientSAAJ {
 
 		registerDTO.setCnsPaciente("898004405760294");
 		registerDTO.setIdInstalacao("1.3.6.1.4.1.21367.2010.1.2");
-		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.4635");
+		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.46354499" + add);
 		registerDTO.setDocuments(new ArrayList<RepositorySaveDocumentDTO>());
 
 		RepositorySaveDocumentDTO documentDTO = new RepositorySaveDocumentDTO();
@@ -89,7 +89,7 @@ public class SOAPClientSAAJ {
 		documentDTO.setCnsPaciente("898004405760294");
 		documentDTO.setDataInicioAtendimento(new Date());
 		documentDTO.setDataFimAtendimento(new Date());
-		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.463322");
+		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.4633229975489" + add);
 		documentDTO.setDocument(IOUtils.toString(new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/CN4-CIT_doc-crianca.xml"))
 				.replace("\n", "").replace("\r", "").replace("\t", ""));
 		documentDTO.setTipoDocumento(TipoDocumento.ATENDIMENTO_CIT_2018);
