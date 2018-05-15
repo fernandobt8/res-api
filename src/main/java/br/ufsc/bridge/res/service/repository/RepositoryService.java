@@ -1,6 +1,5 @@
 package br.ufsc.bridge.res.service.repository;
 
-import static br.ufsc.bridge.res.http.ResSoapHttpClientSingleton.resHttpClient;
 import static br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath.isSuccess;
 
 import java.io.IOException;
@@ -16,6 +15,7 @@ import javax.xml.xpath.XPathExpressionException;
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 
+import br.ufsc.bridge.res.http.ResSoapHttpClient;
 import br.ufsc.bridge.res.http.ResSoapHttpHeaders;
 import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
@@ -51,8 +51,8 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.RegistryObjectListType;
 
 public class RepositoryService {
 
-	private final String provideAction = "urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b";
-	private final String retriveAction = "urn:ihe:iti:2007:RetrieveDocumentSet";
+	private static final String PROVIDE_ACTION = "urn:ihe:iti:2007:ProvideAndRegisterDocumentSet-b";
+	private static final String RETRIEVE_ACTION = "urn:ihe:iti:2007:RetrieveDocumentSet";
 
 	private SubmissionSetParser submissionSetParser;
 	private DocumentParser documentParser;
@@ -77,13 +77,13 @@ public class RepositoryService {
 		try {
 			List<RepositoryDocumentItem> responseDtos = new ArrayList<>();
 			for (Entry<String, RetrieveDocumentSetRequestType> entry : requests.entrySet()) {
-				byte[] message = new ResSoapMessageBuilder(this.c, entry.getKey(), this.retriveAction).createMessage(entry.getValue());
-				SoapHttpRequest request = new SoapHttpRequest(entry.getKey(), this.retriveAction, "soapId", message)
+				byte[] message = new ResSoapMessageBuilder(this.c, entry.getKey(), RETRIEVE_ACTION).createMessage(entry.getValue());
+				SoapHttpRequest request = new SoapHttpRequest(entry.getKey(), RETRIEVE_ACTION, "soapId", message)
 						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 						.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
 						.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
 
-				SoapHttpResponse response = resHttpClient().request(request);
+				SoapHttpResponse response = ResSoapHttpClient.request(request);
 
 				Document soap = response.getSoap();
 				XPathFactoryAssist xPathResponse = new XPathFactoryAssist(soap);
@@ -145,12 +145,12 @@ public class RepositoryService {
 					isDocuments.put(documentDTO.getDocumentId(), documentDTO.getDocument().getBytes("UTF-8"));
 				}
 
-				byte[] message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), this.retriveAction).createMessage(provideRegister);
-				SoapHttpRequest request = new SoapHttpRequest(entryUrldocs.getKey(), this.provideAction, "soapId", message, isDocuments)
+				byte[] message = new ResSoapMessageBuilder(this.c, entryUrldocs.getKey(), RETRIEVE_ACTION).createMessage(provideRegister);
+				SoapHttpRequest request = new SoapHttpRequest(entryUrldocs.getKey(), PROVIDE_ACTION, "soapId", message, isDocuments)
 						.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, dto.getCnsProfissional())
 						.addHeader(ResSoapHttpHeaders.CBO, dto.getCboProfissional())
 						.addHeader(ResSoapHttpHeaders.CNES, dto.getCnesUnidadeSaude());
-				SoapHttpResponse response = resHttpClient().request(request);
+				SoapHttpResponse response = ResSoapHttpClient.request(request);
 
 				Document soap = response.getSoap();
 				if (!isSuccess(new XPathFactoryAssist(soap).getString("//RegistryResponse/@status"))) {

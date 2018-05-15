@@ -1,13 +1,12 @@
 package br.ufsc.bridge.res.service.registry;
 
-import static br.ufsc.bridge.res.http.ResSoapHttpClientSingleton.resHttpClient;
-
 import java.util.ArrayList;
 
 import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
+import br.ufsc.bridge.res.http.ResSoapHttpClient;
 import br.ufsc.bridge.res.http.ResSoapHttpHeaders;
 import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
@@ -38,14 +37,13 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
 
 public class RegistryService {
 
-	private final String action = "urn:ihe:iti:2007:RegistryStoredQuery";
+	private static final String ACTION = "urn:ihe:iti:2007:RegistryStoredQuery";
 
 	private ResLogError printerResponseError;
 	private ResSoapMessageBuilder soapMessageSender;
-	private SoapCredential c;
 
 	public RegistryService(SoapCredential c, String url) {
-		this.soapMessageSender = new ResSoapMessageBuilder(this.c, url, this.action);
+		this.soapMessageSender = new ResSoapMessageBuilder(c, url, ACTION);
 		this.printerResponseError = new ResLogError();
 	}
 
@@ -53,12 +51,12 @@ public class RegistryService {
 			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
 			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "LeafClass"));
-			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.action, message)
+			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), ACTION, message)
 					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
 					.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
 
-			Document soap = resHttpClient().request(httpRequest).getSoap();
+			Document soap = ResSoapHttpClient.request(httpRequest).getSoap();
 
 			AdhocQueryResponseXPath queryResponse = new AdhocQueryResponseXPath(soap);
 			if (queryResponse.isSuccess()) {
@@ -80,12 +78,12 @@ public class RegistryService {
 			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
 			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "ObjectRef"));
-			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.action, message)
+			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.ACTION, message)
 					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
 					.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
 
-			Document soap = resHttpClient().request(httpRequest).getSoap();
+			Document soap = ResSoapHttpClient.request(httpRequest).getSoap();
 
 			AdhocQueryResponseXPath queryResponse = new AdhocQueryResponseXPath(soap);
 
