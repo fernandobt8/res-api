@@ -4,7 +4,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 public class RegistryErrorListXPath {
 

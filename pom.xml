@@ -18,6 +18,12 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>br.ufsc.bridge</groupId>
+			<artifactId>soap-api</artifactId>
+			<version>0.0.3</version>
+		</dependency>
+	
+		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>

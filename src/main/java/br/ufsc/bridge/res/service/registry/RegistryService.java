@@ -1,30 +1,35 @@
 package br.ufsc.bridge.res.service.registry;
 
-import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
-import br.ufsc.bridge.res.http.ResHttpClient;
-import br.ufsc.bridge.res.http.exception.ResHttpConnectionException;
-import br.ufsc.bridge.res.http.exception.ResHttpRequestResponseException;
+import br.ufsc.bridge.res.http.ResSoapHttpClient;
+import br.ufsc.bridge.res.http.ResSoapHttpHeaders;
+import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
 import br.ufsc.bridge.res.service.builder.SlotTypeBuilder.SlotTypeBuilderWrapper;
 import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
-import br.ufsc.bridge.res.service.dto.header.Credential;
-import br.ufsc.bridge.res.service.dto.header.RegistryHeader;
 import br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath;
 import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
 import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
+import br.ufsc.bridge.res.service.exception.ResConsentPolicyException;
+import br.ufsc.bridge.res.service.exception.ResHttpConnectionException;
+import br.ufsc.bridge.res.service.exception.ResServerErrorException;
 import br.ufsc.bridge.res.service.exception.ResServiceFatalException;
-import br.ufsc.bridge.res.service.exception.ResServiceSevereException;
 import br.ufsc.bridge.res.service.exception.ResXDSbException;
 import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResLogError;
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
+import br.ufsc.bridge.soap.http.SoapCredential;
+import br.ufsc.bridge.soap.http.SoapHttpRequest;
+import br.ufsc.bridge.soap.http.exception.SoapCreateMessageException;
+import br.ufsc.bridge.soap.http.exception.SoapHttpConnectionException;
+import br.ufsc.bridge.soap.http.exception.SoapHttpResponseException;
+import br.ufsc.bridge.soap.http.exception.SoapReadMessageException;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
 import oasis.names.tc.ebxml_regrep.xsd.query._3.ResponseOptionType;
@@ -32,59 +37,67 @@ import oasis.names.tc.ebxml_regrep.xsd.rim._3.AdhocQueryType;
 
 public class RegistryService {
 
-	private ResLogError printerResponseError;
-	private ResHttpClient httpClient;
+	private static final String ACTION = "urn:ihe:iti:2007:RegistryStoredQuery";
 
-	public RegistryService(Credential c) throws ResServiceFatalException {
-		this.httpClient = new ResHttpClient(new RegistryHeader(c), "urn:ihe:iti:2007:ns:AdhocQueryRequestRequest");
-		try {
-			this.httpClient.setUrl("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RegistryPS");
-		} catch (MalformedURLException e) {
-			throw new ResServiceFatalException("Invalid Registry URL", e);
-		}
+	private ResLogError printerResponseError;
+	private ResSoapMessageBuilder soapMessageSender;
+
+	public RegistryService(SoapCredential c, String url) {
+		this.soapMessageSender = new ResSoapMessageBuilder(c, url, ACTION);
 		this.printerResponseError = new ResLogError();
 	}
 
-	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
-		AdhocQueryResponseXPath queryResponse = null;
-		Document response;
+	public RegistryResponse<RegistryItem> getRegistriesHeader(RegistryFilter filter)
+			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
-			response = this.httpClient.send(this.buildRequest(filter, "LeafClass"));
-			queryResponse = new AdhocQueryResponseXPath(response);
+			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "LeafClass"));
+			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), ACTION, message)
+					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
+					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
+					.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
 
+			Document soap = ResSoapHttpClient.request(httpRequest).getSoap();
+
+			AdhocQueryResponseXPath queryResponse = new AdhocQueryResponseXPath(soap);
 			if (queryResponse.isSuccess()) {
 				return RegistryResponseParser.parse(queryResponse);
 			} else {
-				this.printerResponseError.parserException(new RegistryErrorListXPath(response));
+				this.printerResponseError.parserException(new RegistryErrorListXPath(soap));
 				return null;
 			}
-		} catch (ResHttpConnectionException e) {
-			throw new ResServiceSevereException(e);
+		} catch (SoapHttpConnectionException e) {
+			throw new ResHttpConnectionException(e);
 		} catch (XPathExpressionException e) {
 			throw new ResServiceFatalException("Error parsing \"AdhocQueryResponse\"", e);
-		} catch (ResHttpRequestResponseException | ResXDSbException e) {
+		} catch (SoapCreateMessageException | SoapHttpResponseException | SoapReadMessageException | ResXDSbException e) {
 			throw new ResServiceFatalException(e);
 		}
 	}
 
-	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter) throws ResServiceSevereException, ResServiceFatalException {
-		AdhocQueryResponseXPath queryResponse = null;
-		Document response;
+	public RegistryResponse<String> getRegistriesRef(RegistryFilter filter)
+			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
-			response = this.httpClient.send(this.buildRequest(filter, "ObjectRef"));
-			queryResponse = new AdhocQueryResponseXPath(response);
+			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "ObjectRef"));
+			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.ACTION, message)
+					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
+					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
+					.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
+
+			Document soap = ResSoapHttpClient.request(httpRequest).getSoap();
+
+			AdhocQueryResponseXPath queryResponse = new AdhocQueryResponseXPath(soap);
 
 			if (queryResponse.isSuccess()) {
 				return this.getRegistryResponse(queryResponse);
 			} else {
-				this.printerResponseError.parserException(new RegistryErrorListXPath(response));
+				this.printerResponseError.parserException(new RegistryErrorListXPath(soap));
 				return null;
 			}
-		} catch (ResHttpConnectionException e) {
-			throw new ResServiceSevereException(e);
+		} catch (SoapHttpConnectionException e) {
+			throw new ResHttpConnectionException(e);
 		} catch (XPathExpressionException e) {
 			throw new ResServiceFatalException("Error parsing \"AdhocQueryResponse\"", e);
-		} catch (ResHttpRequestResponseException | ResXDSbException e) {
+		} catch (SoapCreateMessageException | SoapHttpResponseException | SoapReadMessageException | ResXDSbException e) {
 			throw new ResServiceFatalException(e);
 		}
 	}

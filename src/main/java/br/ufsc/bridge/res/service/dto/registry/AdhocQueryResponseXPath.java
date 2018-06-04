@@ -6,7 +6,8 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.w3c.dom.Document;
 
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
+import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 public class AdhocQueryResponseXPath {
 	private static final String SUCCESS = "urn:oasis:names:tc:ebxml-regrep:ResponseStatusType:Success";
@@ -39,7 +40,7 @@ public class AdhocQueryResponseXPath {
 	}
 
 	public Date getHeaderServiceStartTime(XPathFactoryAssist element) throws XPathExpressionException {
-		return element.getDateXDSb("./Slot[@name='serviceStartTime']/ValueList/Value");
+		return RDateUtil.isoXDSbToDate(element.getString("./Slot[@name='serviceStartTime']/ValueList/Value"));
 	}
 
 	public String getHeaderRepositoryURL(XPathFactoryAssist element) throws XPathExpressionException {

@@ -1,13 +1,12 @@
 package br.ufsc.bridge.res.service.repository.parser;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicLong;
 
 import javax.xml.bind.JAXBElement;
 
-import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.service.builder.IdentifiableTypeBuilder;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
@@ -16,8 +15,8 @@ import br.ufsc.bridge.res.util.XDSbUtil;
 
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType;
 import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType.Document;
+import ihe.iti.xds_b._2007.ProvideAndRegisterDocumentSetRequestType.Include;
 
-@Slf4j
 public class DocumentParser {
 
 	private AtomicLong atomicLong;
@@ -32,12 +31,7 @@ public class DocumentParser {
 
 		Document document = new Document();
 		document.setId(docId);
-		try {
-			document.setValue(dto.getDocument().getBytes("UTF-8"));
-		} catch (UnsupportedEncodingException e) {
-			log.error("UTF-8 não suportado", e);
-			return;
-		}
+		document.setInclude(new Include(StringUtils.prependIfMissing(dto.getDocumentId(), "cid:")));
 		provideRegister.getDocument().add(document);
 
 		List<JAXBElement<?>> identifiables = (List) provideRegister.getSubmitObjectsRequest().getRegistryObjectList().getIdentifiable();
@@ -55,26 +49,34 @@ public class DocumentParser {
 		.addAssociationEnd()
 		.buildExtrinsicObject()
 			.id(docId)
+			//mimeType
 			.mimeType("text/xml")
 			.objectType("urn:uuid:7edca82f-054d-47f2-a032-9b2a5b5186c1")
+			//creationTime
 			.buildSlot()
 				.name("creationTime").value(RDateUtil.dateToISOXDSb(new Date()))
 			.addSlotEnd()
+			//languageCode
 			.buildSlot()
 				.name("languageCode").value("pt-BR")
 			.addSlotEnd()
+			//serviceStartTime
 			.buildSlot()
 				.name("serviceStartTime").value(RDateUtil.dateToISOXDSb(dto.getDataInicioAtendimento()))
 			.addSlotEnd()
+			//serviceStopTime
 			.buildSlot()
 				.name("serviceStopTime").value(RDateUtil.dateToISOXDSb(dto.getDataFimAtendimento()))
 			.addSlotEnd()
+			//sourcePatientId
 			.buildSlot()
 				.name("sourcePatientId").value(dto.getCnsPaciente() + "^^^&2.16.840.1.113883.13.236.123456&ISO")
 			.addSlotEnd()
+			//URI
 			.buildSlot()
-				.name("URI").value("https://servicoshm.saude.gov.br/EHR-UNB/ProxyService/RepositoryPS")
+				.name("URI").value(dto.getUrl())
 			.addSlotEnd()
+			//author
 			.buildClassification()
 				.classificationScheme("urn:uuid:93606bcf-9494-43ec-9b4e-a7748d1a838d")
 				.id("cl" + this.atomicLong.incrementAndGet())
@@ -93,12 +95,12 @@ public class DocumentParser {
 			.buildClassification()
 				.classificationScheme("urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a")
 				.id("cl" + this.atomicLong.incrementAndGet())
-				.nodeRepresentation("34117-2")
+				.nodeRepresentation(dto.getTipoDocumento().getCodigo())
 				.buildSlot()
-					.name("codingScheme").value("LOINC")
+					.name("codingScheme").value("openEHR")
 				.addSlotEnd()
 				.buildInternationalString()
-					.value("History and Physical Note")
+					.value("Template Document Schema")
 				.addInternationalStringEnd()
 			.addClassificationEnd()
 			//confidentialityCode
@@ -137,7 +139,7 @@ public class DocumentParser {
 					.value("POSTO DE SAUDE")
 				.addInternationalStringEnd()
 			.addClassificationEnd()
-			//practiceSettingCode
+			//practiceSettingCode(CBO)
 			.buildClassification()
 				.classificationScheme("urn:uuid:cccf5598-8b07-4b77-a05e-ae952c785ead")
 				.id("cl" + this.atomicLong.incrementAndGet())
@@ -161,6 +163,7 @@ public class DocumentParser {
 					.value("Consultation Note")
 				.addInternationalStringEnd()
 			.addClassificationEnd()
+			//patientId
 			.buildExternalIdentifier()
 				.identificationScheme("urn:uuid:58a6f841-87b3-4a3e-92fd-a8ffeff98427")
 				.value(dto.getCnsPaciente() + "^^^&2.16.840.1.113883.13.236&ISO")
@@ -169,6 +172,7 @@ public class DocumentParser {
 					.value("XDSDocumentEntry.patientId")
 				.addInternationalStringEnd()
 			.addExternalIdentifierEnd()
+			//uniqueId
 			.buildExternalIdentifier()
 				.identificationScheme("urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab")
 				.value(dto.getDocumentId())
@@ -178,6 +182,8 @@ public class DocumentParser {
 				.addInternationalStringEnd()
 			.addExternalIdentifierEnd()
 		.addExtrinsicObjectEnd();
+		//eventCodeList (sigtap) exemplo sem
+		//legalAuthenticator (CNS) exemplo sem
 		//@formatter:on
 	}
 }

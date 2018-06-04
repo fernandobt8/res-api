@@ -35,7 +35,8 @@ import br.ufsc.bridge.res.dab.write.builder.desfecho.SolicitacoesEncaminhamentoB
 import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
+import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
 @Setter
@@ -89,7 +90,7 @@ public class ResABResumoConsulta implements Serializable {
 			this.tipoAtendimento = ResABTipoAtendimentoEnum.getByCodigo(xPathAdmissao.getString("./Tipo_de_atendimento//code_string"));
 			this.cnes = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//value/value");
 			this.ine = xPathAdmissao.getString("./Identificação_da_equipe_de_saúde/value/value");
-			this.dataAtendimento = xPathAdmissao.getDateEHR("./Data_fslash_hora_da_admissão/value/value");
+			this.dataAtendimento = RDateUtil.isoEHRToDate(xPathAdmissao.getString("./Data_fslash_hora_da_admissão/value/value"));
 			this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
 
 			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Identificação_do_profissional")) {
@@ -103,7 +104,7 @@ public class ResABResumoConsulta implements Serializable {
 					.getString("./Avaliação_antropométrica/Perímetro_cefálico//Qualquer_ponto_de_tempo_no_evento_prd_//_exclm___-__Perímetro_cefálico/value/magnitude");
 
 			XPathFactoryAssist xPathGestante = xPathMedicoes.getXPathAssist(".//Gestante");
-			this.dum = xPathGestante.getDateEHR("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value");
+			this.dum = RDateUtil.isoEHRToDate(xPathGestante.getString("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value"));
 			this.idadeGestacional = xPathGestante.getString("./Gestação//Idade_gestacional/value/value");
 
 			XPathFactoryAssist xPathSumarioObstetrico = xPathGestante.getXPathAssist(".//Sumário_obstétrico/data");

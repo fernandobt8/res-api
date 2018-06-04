@@ -14,7 +14,7 @@ import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
 import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
 import br.ufsc.bridge.res.service.exception.ResInvalidRegistryException;
 import br.ufsc.bridge.res.util.XDSbUtil;
-import br.ufsc.bridge.res.util.XPathFactoryAssist;
+import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Slf4j
 public class RegistryResponseParser {

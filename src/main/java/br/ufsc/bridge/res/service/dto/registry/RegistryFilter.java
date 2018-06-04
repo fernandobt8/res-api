@@ -4,12 +4,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.Builder;
 
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 public class RegistryFilter {
+
+	private String cnsProfissional;
+	private String cboProfissional;
+	private String cnesProfissional;
 
 	private String cnsCidadao;
 	private Date dataInicial;
@@ -35,4 +43,5 @@ public class RegistryFilter {
 	public boolean hasEntryUUID() {
 		return this.entryUUIDs != null && !this.entryUUIDs.isEmpty();
 	}
+
 }
