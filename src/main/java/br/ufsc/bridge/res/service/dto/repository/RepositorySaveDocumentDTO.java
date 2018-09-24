@@ -15,6 +15,15 @@ public class RepositorySaveDocumentDTO {
 	private Date dataFimAtendimento;
 
 	private String cnsPaciente;
+	private String nomePaciente;
+	private Date dataNascimentoPaciente;
+	private String sexoPaciente;
+
+	private String ufPaciente;
+	private String cidadePaciente;
+	private String bairroPaciente;
+	private String logradouroPaciente;
+	private String numeroCasaPaciente;
 
 	private String cnsProfissional;
 	private String nomeProfissional;
