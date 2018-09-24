@@ -82,7 +82,7 @@ public class DocumentParser {
 				.id("cl" + this.atomicLong.incrementAndGet())
 				.nodeRepresentation("")
 				.buildSlot()
-				.name("authorPerson").value(dto.getCnsProfissional() + "^" + nomeProf[2] + "^" + nomeProf[0] + "^" + nomeProf[1] + "^^^^^&1.2.840.113619.6.197&ISO")
+					.name("authorPerson").value(dto.getCnsProfissional() + "^" + nomeProf[2] + "^" + nomeProf[0] + "^" + nomeProf[1] + "^^^^^&1.2.840.113619.6.197&ISO")
 				.addSlot()
 				    .name("authorInstitution").value(dto.getNomeUnidadeSaude() + "^^^^^&1.2.3.4.5.678&ISO^^^^" + dto.getCnesUnidadeSaude())
 			    .addSlot()

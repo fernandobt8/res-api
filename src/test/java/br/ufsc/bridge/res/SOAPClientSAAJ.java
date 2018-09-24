@@ -31,8 +31,11 @@ import br.ufsc.bridge.soap.http.SoapCredential;
 @Slf4j
 public class SOAPClientSAAJ {
 
-	private static final String registry_url = "http://35.224.244.22:8280/services/DocumentRegistry";
-	private static final String repository_url = "http://35.224.244.22:8280/services/DocumentRepository";
+	// private static final String registry_url = "http://35.224.244.22:8280/services/DocumentRegistry";
+	// private static final String repository_url = "http://177.71.197.58:57772/csp/healthshare/hsbus/services/HS.IHE.XDSb.Repository.Services.cls";
+
+	private static final String registry_url = "http://35.232.62.225:8280/services/DocumentRegistry";
+	private static final String repository_url = "http://35.232.62.225:8280/services/DocumentRepository";
 
 	static String cbo = "225130";
 	static String cns = "992294125290005";
@@ -45,7 +48,7 @@ public class SOAPClientSAAJ {
 	 * @throws JAXBException
 	 */
 	public static void main(String args[]) {
-		SoapCredential credential = new SoapCredential("CADSUS.RES", "C@ASD213123adsas6dasdas7das6");
+		SoapCredential credential = new SoapCredential("HS_Services", "HS_Services");
 		try {
 			// repository(credential);
 
@@ -63,7 +66,7 @@ public class SOAPClientSAAJ {
 	}
 
 	private static void save(SoapCredential credential) throws Exception {
-		int add = 5;
+		int add = 18;
 		RepositoryService repositoryService = new RepositoryService(credential);
 
 		RepositorySaveDTO registerDTO = new RepositorySaveDTO();
@@ -73,7 +76,7 @@ public class SOAPClientSAAJ {
 		registerDTO.setCnsProfissional("898000127489128");
 		registerDTO.setNomeProfissional("Gabriel Holdener Geraldeli");
 
-		registerDTO.setCnsPaciente("898004405760294");
+		registerDTO.setCnsPaciente("898004405759903");
 		registerDTO.setIdInstalacao("1.3.6.1.4.1.21367.2010.1.2");
 		registerDTO.setSubmissionSetId("1.42.20130403134532.123.1478642031821.46354499" + add);
 		registerDTO.setDocuments(new ArrayList<RepositorySaveDocumentDTO>());
@@ -86,13 +89,13 @@ public class SOAPClientSAAJ {
 		documentDTO.setCnsProfissional("898000127489128");
 		documentDTO.setNomeProfissional("Gabriel Holdener Geraldeli");
 
-		documentDTO.setCnsPaciente("898004405760294");
+		documentDTO.setCnsPaciente("898004405759903");
 		documentDTO.setDataInicioAtendimento(new Date());
 		documentDTO.setDataFimAtendimento(new Date());
 		documentDTO.setDocumentId("1.42.20130403134532.123.1478642031821.4633229975489" + add);
-		documentDTO.setDocument(IOUtils.toString(new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/CN4-CIT_doc-crianca.xml"))
+		documentDTO.setDocument(IOUtils.toString(new FileInputStream("/home/fernandobt8/Documents/res/sbis-2018/exemplo-doc-atendimento-5.xml"))
 				.replace("\n", "").replace("\r", "").replace("\t", ""));
-		documentDTO.setTipoDocumento(TipoDocumento.ATENDIMENTO_CIT_2018);
+		documentDTO.setTipoDocumento(TipoDocumento.CONSULTA_AB_CN1_V2);
 		documentDTO.setUrl(repository_url);
 
 		registerDTO.getDocuments().add(documentDTO);
@@ -119,7 +122,7 @@ public class SOAPClientSAAJ {
 		repositoryFilter.getDocuments().add(new DocumentItemFilter(
 				repository_url,
 				"1.3.6.1.4.1.21367.2010.1.2.1125",
-				"1.42.20130403134532.123.1517918149401.2"));
+				"1.42.20130403134532.123.1478642031821.46332299754895"));
 
 		List<RepositoryDocumentItem> documents = repositoryService.getDocuments(repositoryFilter);
 		for (RepositoryDocumentItem item : documents) {

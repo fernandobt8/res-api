@@ -78,7 +78,7 @@ public class RegistryService {
 			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
 			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "ObjectRef"));
-			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.ACTION, message)
+			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), RegistryService.ACTION, message)
 					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
 					.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
