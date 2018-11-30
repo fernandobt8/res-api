@@ -43,9 +43,7 @@ public class RegistryResponseParser {
 
 				filterValues(registryItem);
 				documents.add(registryItem);
-			} catch (ResInvalidRegistryException e) {
-				log.info("Failed to parse. " + e.getMessage());
-			} catch (XPathExpressionException e) {
+			} catch (ResInvalidRegistryException | XPathExpressionException e) {
 				log.info("Failed to parse. " + e.getMessage());
 			}
 		}

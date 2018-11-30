@@ -11,9 +11,10 @@ import lombok.Getter;
 import br.ufsc.bridge.soap.http.SoapCredential;
 import br.ufsc.bridge.soap.http.SoapMessageBuilder;
 import br.ufsc.bridge.soap.http.exception.SoapCreateMessageException;
+import br.ufsc.bridge.soap.jaxb.JAXBMessageBuilder;
 
 @Getter
-public class ResSoapMessageBuilder extends SoapMessageBuilder {
+public class ResSoapMessageBuilder extends JAXBMessageBuilder<Object> {
 	private String url;
 	private String action;
 

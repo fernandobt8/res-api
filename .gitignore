@@ -24,12 +24,17 @@ centralizador/centralizador.business.impl/atualizador.log
 **/.factorypath
 .settings
 
-# Ignorar gerados pelos "annotation processing" mas não os gerados que estiverem em src #
+# Ignorar gerados pelos "annotation processing" mas nï¿½o os gerados que estiverem em src #
 generated/
 !/**/src/**
 
 # JBOSS AS #
 **/*.jar.index
+
+# IntelliJ #
+.idea/
+*.iml
+out/
 
 # Thrift #
 gen-java/
