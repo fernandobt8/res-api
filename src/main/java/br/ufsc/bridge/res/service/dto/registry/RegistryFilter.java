@@ -5,9 +5,9 @@ import java.util.Date;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.Builder;
 
 @Getter
 @Setter
@@ -19,7 +19,7 @@ public class RegistryFilter {
 	private String cboProfissional;
 	private String cnesProfissional;
 
-	private String cnsCidadao;
+	private String patientId;
 	private Date dataInicial;
 	private Date dataFim;
 	private List<String> entryUUIDs;
@@ -28,8 +28,8 @@ public class RegistryFilter {
 		this.entryUUIDs = new ArrayList<>();
 	}
 
-	public boolean hasCnsCidadao() {
-		return this.cnsCidadao != null;
+	public boolean hasPatientId() {
+		return this.patientId != null;
 	}
 
 	public boolean hasDataInicial() {

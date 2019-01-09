@@ -9,7 +9,6 @@ import javax.xml.soap.SOAPMessage;
 import lombok.Getter;
 
 import br.ufsc.bridge.soap.http.SoapCredential;
-import br.ufsc.bridge.soap.http.SoapMessageBuilder;
 import br.ufsc.bridge.soap.http.exception.SoapCreateMessageException;
 import br.ufsc.bridge.soap.jaxb.JAXBMessageBuilder;
 
