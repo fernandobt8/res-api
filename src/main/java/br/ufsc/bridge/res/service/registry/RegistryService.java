@@ -78,7 +78,7 @@ public class RegistryService {
 			throws ResHttpConnectionException, ResServiceFatalException, ResServerErrorException, ResConsentPolicyException {
 		try {
 			byte[] message = this.soapMessageSender.createMessage(this.buildRequest(filter, "ObjectRef"));
-			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), this.ACTION, message)
+			SoapHttpRequest httpRequest = new SoapHttpRequest(this.soapMessageSender.getUrl(), RegistryService.ACTION, message)
 					.addHeader(ResSoapHttpHeaders.CNS_PROFISSIONAL, filter.getCnsProfissional())
 					.addHeader(ResSoapHttpHeaders.CBO, filter.getCboProfissional())
 					.addHeader(ResSoapHttpHeaders.CNES, filter.getCnesProfissional());
@@ -125,8 +125,8 @@ public class RegistryService {
 		//@formatter:off
 		new SlotTypeBuilderWrapper<>(queryType.getSlot())
 				.name("$XDSDocumentEntryPatientId")
-				.value("'" + filter.getCnsCidadao() + "^^^&2.16.840.1.113883.13.236&ISO'")
-			.addSlotIf(filter.hasCnsCidadao())
+				.value("'" + filter.getPatientId() + "'")
+			.addSlotIf(filter.hasPatientId())
 				.name("$XDSDocumentEntryCreationTimeFrom")
 				.value(RDateUtil.dateToISOXDSb(filter.getDataInicial()))
 			.addSlotIf(filter.hasDataInicial())

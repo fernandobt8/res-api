@@ -40,7 +40,7 @@ public class TestRegistryService {
 		RegistryService registryService = new RegistryService(new SoapCredential("123", "123"), null);
 
 		RegistryFilter filter = new RegistryFilter();
-		filter.setCnsCidadao("898004405760294");
+		filter.setPatientId("898004405760294^^^&2.16.840.1.113883.13.236&ISO");
 
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "ObjectRef");
 
@@ -140,7 +140,7 @@ public class TestRegistryService {
 		filter.setDataInicial(RDateUtil.isoXDSbToDate("20141202100000"));
 		filter.setDataFim(RDateUtil.isoXDSbToDate("20161202100000"));
 		filter.setEntryUUIDs(this.getItemsRegistryResponse());
-		filter.setCnsCidadao("898004405760294");
+		filter.setPatientId("898004405760294^^^&2.16.840.1.113883.13.236&ISO");
 
 		AdhocQueryRequest adhocQueryRequest = registryService.buildRequest(filter, "LeafClass");
 
