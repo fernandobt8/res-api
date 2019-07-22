@@ -13,7 +13,7 @@ public class RegistryQueryTest {
 
 	// private static final String registry_url = "http://35.224.244.22:8280/services/DocumentRegistry";
 
-	private static final String registry_url = "http://localhost:8080/webnar/sim/testuser1__reg/reg/sq";
+	private static final String registry_url = "http://xdstools.bridge.ufsc.br:80/xdstools7.0.2/sim/teste-salux__reg/reg/sq";
 
 	static String cbo = "225130";
 	static String cns = "992294125290005";
@@ -29,7 +29,7 @@ public class RegistryQueryTest {
 					.cboProfissional(cbo)
 					.cnesProfissional(cnes);
 
-			RegistryResponse<String> registries = registryService.getRegistriesRef(filterBuilder.patientId("IHEGREEN-2737^^^&1.3.6.1.4.1.21367.13.20.2000&ISO").build());
+			RegistryResponse<String> registries = registryService.getRegistriesRef(filterBuilder.patientId("206256456550009^^^&1.3.6.1.4.1.21367.13.20.2000&ISO").build());
 			log.debug("Registry ObjectRef");
 			for (String uuid : registries.getItems()) {
 				log.debug(uuid);
