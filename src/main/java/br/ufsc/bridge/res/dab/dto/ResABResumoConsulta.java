@@ -36,6 +36,7 @@ import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosB
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -43,7 +44,7 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class ResABResumoConsulta implements Serializable {
+public class ResABResumoConsulta implements Serializable, ResDocument {
 	private static final long serialVersionUID = 1L;
 
 	private Date dataAtendimento;

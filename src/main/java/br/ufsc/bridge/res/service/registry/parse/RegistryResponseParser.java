@@ -40,6 +40,7 @@ public class RegistryResponseParser {
 				registryItem.setCbo(queryResponse.getHeaderCbo(header));
 				registryItem.setRepositoryURL(queryResponse.getHeaderRepositoryURL(header));
 				registryItem.setDocumentUniqueId(queryResponse.getDocumentUniqueId(header));
+				registryItem.setDocumentType(queryResponse.getDocumentType(header));
 
 				filterValues(registryItem);
 				documents.add(registryItem);

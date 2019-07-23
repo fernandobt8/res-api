@@ -9,7 +9,9 @@ public enum TipoDocumento {
 
 	ATENDIMENTO_CIT_2018("RegistroAtendimentoClínico_CIT_2018"),
 	CONSULTA_AB_CN1_V1("Resumo de consulta ab_CN1_v1"),
-	CONSULTA_AB_CN1_V2("Resumo de consulta ab_CN1_v2.0.oet");
+	CONSULTA_AB_CN1_V2("Resumo de consulta ab_CN1_v2.0.oet"),
+	SUMARIO_DE_ALTA("Sumário de alta"); // XXX: pode ficar aqui?
+	// XXX: add atual tipo do res aqui e mudar no save
 
 	private String codigo;
 }

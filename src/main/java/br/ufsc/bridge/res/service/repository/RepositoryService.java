@@ -93,6 +93,8 @@ public class RepositoryService {
 						documentItem.setRepositoryUniqueId(xPathDocument.getString("./RepositoryUniqueId"));
 						documentItem.setDocumentUniqueId(xPathDocument.getString("./DocumentUniqueId"));
 						documentItem.setDocument(IOUtils.toString(response.getPart(xPathDocument, "./Document"), "UTF-8"));
+						// XXX: verificar forma correta de refatorar isso daqui
+						// documentItem.setDocumentType(filter);
 						responseDtos.add(documentItem);
 					}
 				} else {
