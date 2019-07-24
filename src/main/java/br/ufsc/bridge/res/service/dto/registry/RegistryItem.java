@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import br.ufsc.bridge.res.dab.TipoDocumento;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -19,6 +21,7 @@ import lombok.ToString;
 public class RegistryItem implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private TipoDocumento documentType;
 	private String repositoryUniqueId;
 	private String documentUniqueId;
 

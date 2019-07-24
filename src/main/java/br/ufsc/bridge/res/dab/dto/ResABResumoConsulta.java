@@ -1,15 +1,11 @@
 package br.ufsc.bridge.res.dab.dto;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
 import lombok.EqualsAndHashCode;
@@ -17,9 +13,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
@@ -36,14 +29,15 @@ import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosB
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = true)
 @ToString
-public class ResABResumoConsulta implements Serializable {
+public class ResABResumoConsulta extends ResDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Date dataAtendimento;
@@ -77,14 +71,7 @@ public class ResABResumoConsulta implements Serializable {
 	private List<String> encaminhamentos = new LinkedList<>();
 
 	public ResABResumoConsulta(String xml) throws ResABXMLParserException {
-		Document document;
-		try {
-			document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(new ByteArrayInputStream(xml.getBytes("UTF-8")));
-		} catch (SAXException | IOException | ParserConfigurationException e) {
-			throw new ResABXMLParserException("Erro no parser do XML para \"Document\"", e);
-		}
-
-		XPathFactoryAssist xPathRoot = new XPathFactoryAssist(document);
+		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);
 		try {
 			XPathFactoryAssist xPathAdmissao = xPathRoot.getXPathAssist("//Admissão_do_paciente/data");
 			this.tipoAtendimento = ResABTipoAtendimentoEnum.getByCodigo(xPathAdmissao.getString("./Tipo_de_atendimento//code_string"));
@@ -147,6 +134,7 @@ public class ResABResumoConsulta implements Serializable {
 		}
 	}
 
+	@Override
 	public String getXml() {
 		ResumoConsultaABBuilder abBuilder = new ResumoConsultaABBuilder().data(this.dataAtendimento);
 

@@ -62,4 +62,8 @@ public class AdhocQueryResponseXPath {
 	public String getDocumentUniqueId(XPathFactoryAssist element) throws XPathExpressionException {
 		return element.getString("./ExternalIdentifier[@identificationScheme='urn:uuid:2e82c1f6-a085-4c72-9da3-8640a32e42ab']/@value");
 	}
+
+	public String getDocumentType(XPathFactoryAssist element) throws XPathExpressionException {
+		return element.getString("./Classification[@classificationScheme='urn:uuid:41a5887f-8865-4c09-adf7-e362475b143a']/@nodeRepresentation");
+	}
 }
