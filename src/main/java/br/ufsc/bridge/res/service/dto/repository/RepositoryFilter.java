@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.Singular;
 
-import br.ufsc.bridge.res.dab.TipoDocumento;
-
 @Getter
 @Setter
 @Builder
@@ -35,6 +33,5 @@ public class RepositoryFilter {
 		private String repositoryURL;
 		private String repositoryUniqueId;
 		private String documentUniqueId;
-		private TipoDocumento documentType;
 	}
 }
