@@ -26,9 +26,9 @@ public class ResABProblemaDiagnostico implements Serializable {
 	private String codigo;
 
 	public ResABProblemaDiagnostico(XPathFactoryAssist xPathDiagnostico) throws XPathExpressionException {
-		this.codigo = xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/code_string");
-		this.descricao = xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/value");
-		this.tipo = ResABTipoProblemaDiagnostico.getByTipo(xPathDiagnostico.getString("./data/Problema__fslash__Diagnóstico/value/defining_code/terminology_id/value"));
+		this.codigo = xPathDiagnostico.getString("./data/Diagnóstico/value/defining_code/code_string");
+		this.descricao = xPathDiagnostico.getString("./data/Diagnóstico/value/value");
+		this.tipo = ResABTipoProblemaDiagnostico.getByTipo(xPathDiagnostico.getString("./data/Diagnóstico/value/defining_code/terminology_id/value"));
 	}
 
 	public String getTipoProblemaDiagnostico() {

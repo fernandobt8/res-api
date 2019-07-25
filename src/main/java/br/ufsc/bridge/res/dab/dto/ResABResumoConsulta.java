@@ -17,7 +17,6 @@ import lombok.ToString;
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
 import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilder;
@@ -45,7 +44,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 	private ResABTipoAtendimentoEnum tipoAtendimento;
 	private String cnes;
 	private String ine;
-	private ResABTurnoEnum turno;
+	//private ResABTurnoEnum turno;
 	private List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
 
 	private String peso;
@@ -75,60 +74,59 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		try {
 			XPathFactoryAssist xPathAdmissao = xPathRoot.getXPathAssist("//Admissão_do_paciente/data");
 			this.tipoAtendimento = ResABTipoAtendimentoEnum.getByCodigo(xPathAdmissao.getString("./Tipo_de_atendimento//code_string"));
-			this.cnes = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//value/value");
-			this.ine = xPathAdmissao.getString("./Identificação_da_equipe_de_saúde/value/value");
+			this.cnes = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//Estabelecimento_de_saúde//value/value");
+			this.ine = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//Identificação_da_equipe_de_saúde/value/value");
 			this.dataAtendimento = RDateUtil.isoEHRToDate(xPathAdmissao.getString("./Data_fslash_hora_da_admissão/value/value"));
-			this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
 
-			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Identificação_do_profissional")) {
+			//this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
+
+			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Profissionais_do_atendimento")) {
 				this.profissionais.add(new ResABIdentificacaoProfissional(xPathprofissional));
 			}
 
-			XPathFactoryAssist xPathMedicoes = xPathRoot.getXPathAssist("//Medições_e_observações");
-			this.peso = xPathMedicoes.getString("./Avaliação_antropométrica/Peso_corporal//Peso/value/magnitude");
-			this.altura = xPathMedicoes.getString("./Avaliação_antropométrica/Altura__fslash__comprimento//Altura__fslash__comprimento/value/magnitude");
-			this.perimetroCefalico = xPathMedicoes
-					.getString("./Avaliação_antropométrica/Perímetro_cefálico//Qualquer_ponto_de_tempo_no_evento_prd_//_exclm___-__Perímetro_cefálico/value/magnitude");
+			XPathFactoryAssist xPathMedicoes = xPathRoot.getXPathAssist("//Observações/Medições");
+			this.peso = xPathMedicoes.getString("./Peso_corporal//Peso/value/magnitude");
+			this.altura = xPathMedicoes.getString("./Altura__fslash__comprimento//Altura/value/magnitude");
+			this.perimetroCefalico = xPathMedicoes.getString("./Perímetro_cefálico//Perímetro_cefálico/value/magnitude");
 
-			XPathFactoryAssist xPathGestante = xPathMedicoes.getXPathAssist(".//Gestante");
-			this.dum = RDateUtil.isoEHRToDate(xPathGestante.getString("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value"));
-			this.idadeGestacional = xPathGestante.getString("./Gestação//Idade_gestacional/value/value");
+			XPathFactoryAssist xPathInfoAdicionais = xPathMedicoes.getXPathAssist(".//Informações_adicionais");
+			this.dum = RDateUtil.isoEHRToDate(xPathInfoAdicionais.getString("./Ciclo_menstrual//DUM__openBrkt_Data_da_última_menstruação_closeBrkt_/value/value"));
+			this.idadeGestacional = xPathInfoAdicionais.getString("./Gestação//Idade_gestacional/value/value");
 
-			XPathFactoryAssist xPathSumarioObstetrico = xPathGestante.getXPathAssist(".//Sumário_obstétrico/data");
-			this.gestasPrevias = xPathSumarioObstetrico.getString("./Gestas_prévias/value/magnitude");
-			this.partos = xPathSumarioObstetrico.getString("./Partos/value/magnitude");
+			XPathFactoryAssist xPathSumarioObstetrico = xPathInfoAdicionais.getXPathAssist("./Sumário_obstétrico/data");
+			this.gestasPrevias = xPathSumarioObstetrico.getString("./Quantidade_de_gestas_prévias/value/magnitude");
+			this.partos = xPathSumarioObstetrico.getString("./Quantidade_de_partos/value/magnitude");
 
-			XPathFactoryAssist xPathCrianca = xPathMedicoes.getXPathAssist(".//Criança");
 			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum
-					.getByDescricao(xPathCrianca.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data/Aleitamento_materno/value/value"));
+					.getByDescricao(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
 
-			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas__fslash__diagnósticos_avaliados");
-			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema__fslash_Diagnóstico")) {
+			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas_fslash_Diagnósticos_avaliados");
+			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema_Diagnóstico")) {
 				this.problemasDiagnosticos.add(new ResABProblemaDiagnostico(xPathDiagnostico));
 			}
 
-			XPathFactoryAssist xPathAlergias = xPathRoot.getXPathAssist("//Alergias_e_reações_adversas");
-			for (XPathFactoryAssist xPathAlergia : xPathAlergias.iterable(".//Risco_de_Reação_Adversa")) {
+			XPathFactoryAssist xPathAlergias = xPathRoot.getXPathAssist("//Alergias_e_fslash_ou_reações_adversas_no_atendimento");
+			for (XPathFactoryAssist xPathAlergia : xPathAlergias.iterable(".//Risco_de_reação_adversa")) {
 				this.alergias.add(new ResABAlergiaReacoes(xPathAlergia));
 			}
 
-			XPathFactoryAssist xPathProcedimentos = xPathRoot.getXPathAssist("//Procedimentos_ou_pequenas_cirurgias");
+			XPathFactoryAssist xPathProcedimentos = xPathRoot.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt_");
 			for (XPathFactoryAssist xPathProcedimento : xPathProcedimentos.iterable(".//Procedimento")) {
 				this.procedimentos.add(new ResABProcedimento(xPathProcedimento));
 			}
 
-			XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Lista_de_medicamentos");
-			for (XPathFactoryAssist xPathMedicamento : xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Item_de_medicação")) {
-				this.medicamentos.add(new ResABMedicamento(xPathMedicamento));
-			}
+			//			XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Prescrição_no_atendimento");
+			//			for (XPathFactoryAssist xPathMedicamento : xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Lista_de_medicamentos_no_atendimento__openBrkt_estruturada_closeBrkt_")) {
+			//				this.medicamentos.add(new ResABMedicamento(xPathMedicamento));
+			//			}
 
-			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
-			for (XPathFactoryAssist xPathConduta : xPathDados.iterable(".//Conduta")) {
-				this.condutas.add(ResABCondutaEnum.getByCodigo(xPathConduta.getString("./value/value")));
-			}
-			for (XPathFactoryAssist xPathEncaminhamento : xPathRoot.iterable(".//Solicitações_de_encaminhamentos/Encaminhamento")) {
-				this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
-			}
+			//			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
+			//			for (XPathFactoryAssist xPathConduta : xPathDados.iterable(".//Conduta")) {
+			//				this.condutas.add(ResABCondutaEnum.getByCodigo(xPathConduta.getString("./value/value")));
+			//			}
+			//			for (XPathFactoryAssist xPathEncaminhamento : xPathRoot.iterable(".//Solicitações_de_encaminhamentos/Encaminhamento")) {
+			//				this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
+			//			}
 		} catch (XPathExpressionException e) {
 			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}
@@ -155,7 +153,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		caracterizacaoConsulta
 			.ine(this.ine)
 			.dataHoraAdmissao(this.dataAtendimento)
-			.turnoAtendimento(this.turno)
+			//.turnoAtendimento(this.turno)
 		.close()
 		.medicoesObservacoes()
 			.avaliacaoAntropometrica()
@@ -185,7 +183,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			alergiaBuilder
 				.agente(alergia.getAgente())
 				.categoria(alergia.getCategoria())
-				.gravidade(alergia.getGravidade());
+				.gravidade(alergia.getCriticidade());
 
 			for (ResABEventoReacao evento : alergia.getEventoReacao()) {
 				alergiaBuilder.eventoReacao()
@@ -200,8 +198,8 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			procedimentosBuilder.procedimento()
 				.nome(procedimento.getNome())
 				.data(this.dataAtendimento)
-				.codigo(procedimento.getCodigo())
-				.resultadoObservacoes(procedimento.getResultadoObservacoes());
+				.codigo(procedimento.getCodigo());
+				//.resultadoObservacoes(procedimento.getResultadoObservacoes());
 		}
 
 		ListaMedicamentosBuilder<ResumoConsultaABBuilder> medicamentosBuilder = abBuilder.listaMedicamentos();
@@ -230,6 +228,6 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 
 	public void setDataAtendimento(Date dataAtendimento) {
 		this.dataAtendimento = dataAtendimento;
-		this.turno = ResABTurnoEnum.getTurnoByHora(dataAtendimento);
+	//	this.turno = ResABTurnoEnum.getTurnoByHora(dataAtendimento);
 	}
 }

@@ -5,14 +5,14 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ResABGravidadeEnum {
+public enum ResABCriticidadeEnum {
 	BAIXO("at0102"),
 	ALTO("at0103");
 
 	private String codigo;
 
-	public static ResABGravidadeEnum getByCodigo(String codigo) {
-		for (ResABGravidadeEnum value : values()) {
+	public static ResABCriticidadeEnum getByCodigo(String codigo) {
+		for (ResABCriticidadeEnum value : values()) {
 			if (value.getCodigo().equals(codigo)) {
 				return value;
 			}

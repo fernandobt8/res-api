@@ -14,7 +14,7 @@ public class ResABResumoXmlTest {
 
 	public static void main(String args[]) {
 		try {
-			InputStream resourceAsStream = new FileInputStream(System.getProperty("user.dir") + "/src/test/resources/CN4-CIT_doc-crianca.xml");
+			InputStream resourceAsStream = new FileInputStream("/home/fernandobt8/Documents/res/showroom/CN2CN4CN7CN9_ExemplosXML/cn4-doc1.xml");
 
 			try {
 				ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));

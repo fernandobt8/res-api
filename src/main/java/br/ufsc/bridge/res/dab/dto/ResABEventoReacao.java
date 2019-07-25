@@ -27,8 +27,8 @@ public class ResABEventoReacao implements Serializable {
 	private String evolucaoAlergia;
 
 	public ResABEventoReacao(XPathFactoryAssist xPathEvento) throws XPathExpressionException {
-		this.dataInstalacao = RDateUtil.isoEHRToDate(xPathEvento.getString("./Data_da_instalação_da_alergia__fslash__reação_adversa/value/value"));
-		this.evolucaoAlergia = xPathEvento.getString("./Evolução_da_alergia__fslash__reação_adversa/value/value");
+		this.dataInstalacao = RDateUtil.isoEHRToDate(xPathEvento.getString("./Data_da_instalação_da_reação_adversa/value/value"));
+		this.evolucaoAlergia = xPathEvento.getString("./Evolução_da_alergia_fslash_reação_adversa/value/value");
 		this.manifestacao = xPathEvento.getString("./Manifestação/value/value");
 	}
 }
