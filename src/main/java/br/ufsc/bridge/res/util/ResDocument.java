@@ -10,7 +10,6 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
-import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 public abstract class ResDocument {

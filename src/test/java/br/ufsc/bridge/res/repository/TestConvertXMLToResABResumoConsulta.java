@@ -10,10 +10,8 @@ import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
-import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
 import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
 import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
@@ -21,6 +19,8 @@ import br.ufsc.bridge.res.dab.dto.ResABMedicamento;
 import br.ufsc.bridge.res.dab.dto.ResABProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABProcedimento;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
+import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 
 public class TestConvertXMLToResABResumoConsulta {
 
@@ -80,22 +80,22 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABProblemaDiagnostico resABProblemaDiagnostico1 = resumoConsulta.getProblemasDiagnosticos().get(0);
 		Assert.assertEquals("A920", resABProblemaDiagnostico1.getCodigo());
 		Assert.assertEquals("Febre de Chikungunya", resABProblemaDiagnostico1.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico1.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico1.getTipo());
 
 		ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
 		Assert.assertEquals("T28", resABProblemaDiagnostico2.getCodigo());
 		Assert.assertEquals("LIMITAÇÃO FUNCIONAL/INCAPACIDADE", resABProblemaDiagnostico2.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CIAP, resABProblemaDiagnostico2.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CIAP, resABProblemaDiagnostico2.getTipo());
 
 		ResABProblemaDiagnostico resABProblemaDiagnostico3 = resumoConsulta.getProblemasDiagnosticos().get(2);
 		Assert.assertEquals("O038", resABProblemaDiagnostico3.getCodigo());
 		Assert.assertEquals("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.", resABProblemaDiagnostico3.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico3.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico3.getTipo());
 
 		Assert.assertEquals(2, resumoConsulta.getAlergias().size());
 
 		ResABAlergiaReacoes resABAlergiaReacoes1 = resumoConsulta.getAlergias().get(0);
-		Assert.assertEquals(ResABCriticidadeEnum.BAIXO, resABAlergiaReacoes1.getCriticidade());
+		Assert.assertEquals(ResCriticidadeEnum.BAIXO, resABAlergiaReacoes1.getCriticidade());
 		Assert.assertEquals("Alimento", resABAlergiaReacoes1.getCategoria());
 		Assert.assertEquals("leite", resABAlergiaReacoes1.getAgente());
 
@@ -114,7 +114,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		Assert.assertEquals("início mês passado, percebeu piora após ingestão de leite e derivados", resABAlergia1EventoReacao2.getManifestacao());
 
 		ResABAlergiaReacoes resABAlergiaReacoes2 = resumoConsulta.getAlergias().get(1);
-		Assert.assertEquals(ResABCriticidadeEnum.ALTO, resABAlergiaReacoes2.getCriticidade());
+		Assert.assertEquals(ResCriticidadeEnum.ALTO, resABAlergiaReacoes2.getCriticidade());
 		Assert.assertEquals("Remedio", resABAlergiaReacoes2.getCategoria());
 		Assert.assertEquals("metamizol", resABAlergiaReacoes2.getAgente());
 
@@ -384,7 +384,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
 		Assert.assertEquals("A920", resABProblemaDiagnostico2.getCodigo());
 		Assert.assertEquals("Febre de Chikungunya", resABProblemaDiagnostico2.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico2.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico2.getTipo());
 
 		Assert.assertEquals(0, resumoConsulta.getProcedimentos().size());
 	}

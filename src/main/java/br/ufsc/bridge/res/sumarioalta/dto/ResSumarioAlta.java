@@ -9,14 +9,15 @@ import javax.xml.xpath.XPathExpressionException;
 
 import lombok.Getter;
 
-import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.ResABXMLParserException;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
 public class ResSumarioAlta extends ResDocument implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private Date dataAtendimento;
 	private String estabelecimento;
 	private String equipe;
@@ -31,12 +32,6 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 	private String motivoAlta;
 	private ResSumarioAltaIdentificacaoProfissional profissional;
 	private Date dataAlta;
-
-	// XXX: verificar necessidade
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
 
 	public ResSumarioAlta(String xml) throws ResABXMLParserException {
 		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);

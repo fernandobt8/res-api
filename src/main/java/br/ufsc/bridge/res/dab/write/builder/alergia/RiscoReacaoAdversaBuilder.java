@@ -1,12 +1,12 @@
 package br.ufsc.bridge.res.dab.write.builder.alergia;
 
-import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
+import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 
 public class RiscoReacaoAdversaBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
 
 	private String agente;
-	private ResABCriticidadeEnum gravidade;
+	private ResCriticidadeEnum gravidade;
 	private String categoria;
 
 	public RiscoReacaoAdversaBuilder(PARENT parent) {
@@ -18,7 +18,7 @@ public class RiscoReacaoAdversaBuilder<PARENT extends ParentArquetypeWrapper<?>>
 		return this;
 	}
 
-	public RiscoReacaoAdversaBuilder<PARENT> gravidade(ResABCriticidadeEnum gravidade) {
+	public RiscoReacaoAdversaBuilder<PARENT> gravidade(ResCriticidadeEnum gravidade) {
 		this.gravidade = gravidade;
 		return this;
 	}

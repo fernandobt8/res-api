@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import br.ufsc.bridge.res.dab.TipoDocumento;
+import br.ufsc.bridge.res.domain.TipoDocumento;
 
 @Getter
 @Setter

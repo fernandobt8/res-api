@@ -1,12 +1,14 @@
 package br.ufsc.bridge.res.sumarioalta.dto;
 
+import java.io.Serializable;
+
 import javax.xml.xpath.XPathExpressionException;
 
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
-// XXX: precisa serializar? relembrar razão disso
-public class ResSumarioAltaProcedimento {
+public class ResSumarioAltaProcedimento implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String nome;
 	private String codigo;
 

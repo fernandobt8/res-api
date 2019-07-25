@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.sumarioalta.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.xml.xpath.XPathExpressionException;
@@ -7,8 +8,9 @@ import javax.xml.xpath.XPathExpressionException;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
-public class ResSumarioAltaEventoReacao {
+public class ResSumarioAltaEventoReacao implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String manifestacao;
 	private Date dataInstalacao;
 	private String evolucaoAlergia;

@@ -1,11 +1,14 @@
 package br.ufsc.bridge.res.sumarioalta.dto;
 
+import java.io.Serializable;
+
 import javax.xml.xpath.XPathExpressionException;
 
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
-public class ResSumarioAltaIdentificacaoProfissional {
+public class ResSumarioAltaIdentificacaoProfissional implements Serializable {
 
+	private static final long serialVersionUID = 1L;
 	private String cns;
 	private String cbo;
 

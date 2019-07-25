@@ -1,13 +1,15 @@
 package br.ufsc.bridge.res.sumarioalta.dto;
 
+import java.io.Serializable;
+
 import javax.xml.xpath.XPathExpressionException;
 
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 // XXX: aguardar Postal
-public class ResSumarioAltaMedicamento {
+public class ResSumarioAltaMedicamento implements Serializable {
 
-	// XXX: tirei alguns campos se comparado com AB
+	private static final long serialVersionUID = 1L;
 	// XXX: questão dose estruturada ser 0..*, não chequei se no AB é assim tbm, mas lá não foi considerado
 	private String nomeMedicamento;
 	private String descricaoViaAdministracao;

@@ -1,19 +1,18 @@
-package br.ufsc.bridge.res.dab.domain;
+package br.ufsc.bridge.res.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-// XXX: generalizar, não é só do dab
 @Getter
 @AllArgsConstructor
-public enum ResABCriticidadeEnum {
+public enum ResCriticidadeEnum {
 	BAIXO("at0102"),
 	ALTO("at0103");
 
 	private String codigo;
 
-	public static ResABCriticidadeEnum getByCodigo(String codigo) {
-		for (ResABCriticidadeEnum value : values()) {
+	public static ResCriticidadeEnum getByCodigo(String codigo) {
+		for (ResCriticidadeEnum value : values()) {
 			if (value.getCodigo().equals(codigo)) {
 				return value;
 			}

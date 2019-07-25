@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dab;
+package br.ufsc.bridge.res.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
