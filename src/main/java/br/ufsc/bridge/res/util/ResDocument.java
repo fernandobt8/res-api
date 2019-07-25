@@ -25,8 +25,6 @@ public abstract class ResDocument {
 		return new XPathFactoryAssist(document);
 	}
 
-	public abstract String getXml();
-
 	public abstract Date getDataAtendimento();
 
 }

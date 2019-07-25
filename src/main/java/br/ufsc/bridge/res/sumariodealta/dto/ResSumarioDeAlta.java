@@ -10,7 +10,6 @@ import javax.xml.xpath.XPathExpressionException;
 import lombok.Getter;
 
 import br.ufsc.bridge.res.dab.exception.ResABXMLParserException;
-import br.ufsc.bridge.res.sumariodealta.write.builder.SumarioDeAltaBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
@@ -90,12 +89,4 @@ public class ResSumarioDeAlta extends ResDocument implements Serializable {
 			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}
 	}
-
-	@Override
-	public String getXml() {
-		SumarioDeAltaBuilder sumarioDeAltaBuilder = new SumarioDeAltaBuilder();
-		// XXX: implementar
-		return sumarioDeAltaBuilder.getXmlContent();
-	}
-
 }
