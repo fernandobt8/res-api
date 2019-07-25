@@ -9,6 +9,7 @@ import lombok.Getter;
 public enum ResABTipoProblemaDiagnostico {
 
 	CID10("CID10"),
+	CID10_1998("CID-10_1998.v1.0.0"),
 	CIAP("CIAP2");
 
 	private String tipo;

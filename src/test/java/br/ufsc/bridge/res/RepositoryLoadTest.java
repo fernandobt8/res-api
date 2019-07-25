@@ -14,7 +14,7 @@ public class RepositoryLoadTest {
 
 	// private static final String repository_url = "http://177.71.197.58:57772/csp/healthshare/hsbus/services/HS.IHE.XDSb.Repository.Services.cls";
 
-	private static final String repository_url = "http://localhost:8080/webnar/sim/testuser1__rep/rep/ret";
+	private static final String repository_url = "http://xdstools.bridge.ufsc.br:80/xdstools7.0.2/sim/teste-salux__rep/rep/ret";
 
 	static String cbo = "225130";
 	static String cns = "992294125290005";
@@ -29,11 +29,6 @@ public class RepositoryLoadTest {
 					.cnsProfissional(cns)
 					.cboProfissional(cbo)
 					.cnesProfissional(cnes)
-					.document(RepositoryFilter.DocumentItemFilter.builder()
-							.repositoryURL(repository_url)
-							.repositoryUniqueId("1.1.4567332.1.2")
-							.documentUniqueId("1.42.20130403134532.123.1478642031821.463322997548918")
-							.build())
 					.document(RepositoryFilter.DocumentItemFilter.builder()
 							.repositoryURL(repository_url)
 							.repositoryUniqueId("1.1.4567332.1.2")

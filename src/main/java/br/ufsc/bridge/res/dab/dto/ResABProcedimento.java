@@ -1,8 +1,6 @@
 package br.ufsc.bridge.res.dab.dto;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
@@ -24,15 +22,15 @@ public class ResABProcedimento implements Serializable {
 
 	private String nome;
 	private String codigo;
-	private List<String> resultadoObservacoes = new ArrayList<>();
+	//	private List<String> resultadoObservacoes = new ArrayList<>();
 
 	public ResABProcedimento(XPathFactoryAssist xPathProcedimento) throws XPathExpressionException {
-		this.codigo = xPathProcedimento.getString("./description/Procedimento_realizado/value/defining_code/code_string");
-		this.nome = xPathProcedimento.getString("./description/Procedimento_realizado/value/value");
+		this.codigo = xPathProcedimento.getString("./description/Procedimento_SUS/value/defining_code/code_string");
+		this.nome = xPathProcedimento.getString("./description/Procedimento_SUS/value/value");
 
-		for (XPathFactoryAssist xPathResultado : xPathProcedimento.iterable(".//description/Resultado_e_fslash_ou_observações_do_procedimento_ou_pequena_cirurgia")) {
-			this.resultadoObservacoes.add(xPathResultado.getString("./value/value"));
-		}
+		//		for (XPathFactoryAssist xPathResultado : xPathProcedimento.iterable(".//description/Resultado_e_fslash_ou_observações_do_procedimento_ou_pequena_cirurgia")) {
+		//			this.resultadoObservacoes.add(xPathResultado.getString("./value/value"));
+		//		}
 
 	}
 }

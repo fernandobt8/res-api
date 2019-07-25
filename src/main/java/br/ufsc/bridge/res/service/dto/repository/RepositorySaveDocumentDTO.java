@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import br.ufsc.bridge.res.dab.TipoDocumento;
-
 @Getter
 @Setter
 @Builder
@@ -34,8 +32,6 @@ public class RepositorySaveDocumentDTO {
 	private String documentId;
 
 	private String document;
-
-	private TipoDocumento tipoDocumento;
 
 	private String url;
 

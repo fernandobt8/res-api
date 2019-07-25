@@ -26,9 +26,9 @@ public class ResABIdentificacaoProfissional implements Serializable {
 	private boolean responsavel;
 
 	public ResABIdentificacaoProfissional(XPathFactoryAssist xPathprofissional) throws XPathExpressionException {
-		this.cns = xPathprofissional.getString("./CNS/value/value");
-		this.cbo = xPathprofissional.getString("./CBO/value/value");
-		this.nome = xPathprofissional.getString("./Nome/value/value");
+		this.cns = xPathprofissional.getString("./CNS_do_profissional/value/value");
+		this.cbo = xPathprofissional.getString("./Ocupação_do_profissional/value//code_string");
+		this.nome = xPathprofissional.getString("./Nome_do_profissional/value/value");
 		this.responsavel = xPathprofissional.getBoolean("./É_o_responsável_pelo_atendimento_quest_/value/value");
 	}
 }

@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
 
-import br.ufsc.bridge.res.dab.TipoDocumento;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
 import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO.ClassificationDTO;
@@ -18,12 +17,12 @@ import br.ufsc.bridge.soap.http.SoapCredential;
 public class RepositorySaveTest {
 	// private static final String repository_url = "http://177.71.197.58:57772/csp/healthshare/hsbus/services/HS.IHE.XDSb.Repository.Services.cls";
 
-	private static final String repository_url = "http://localhost:8080/webnar/sim/testuser1__rep/rep/prb";
+	private static final String repository_url = "http://xdstools.bridge.ufsc.br:80/xdstools7.0.2/sim/teste-salux__rep/rep/prb";
 
 	public static void main(String args[]) {
 		SoapCredential credential = new SoapCredential("", "");
 		try {
-			int add = 19;
+			int add = 20;
 			RepositoryService repositoryService = new RepositoryService(credential);
 
 			RepositorySaveDTO registerDTO = RepositorySaveDTO.builder()
@@ -38,7 +37,7 @@ public class RepositorySaveTest {
 							.codingScheme("2.16.840.1.113883.6.96")
 							.build())
 
-					.patientId("IHEGREEN-2737^^^&1.3.6.1.4.1.21367.13.20.2000&ISO")
+					.patientId("asdf^^^&1.3.6.1.4.1.21367.13.20.2000&ISO")
 					.idInstalacao("1.3.6.1.4.1.21367.2010.1.2")
 					.submissionSetId("1.42.20130403134532.123.1478642031821.46354499" + add)
 
@@ -72,13 +71,12 @@ public class RepositorySaveTest {
 									.build())
 
 							.sourcePatientId("898004405759903^^^&2.16.840.1.113883.13.236.123456&ISO")
-							.patientId("IHEGREEN-2737^^^&1.3.6.1.4.1.21367.13.20.2000&ISO")
+							.patientId("asdf^^^&1.3.6.1.4.1.21367.13.20.2000&ISO")
 							.dataInicioAtendimento(new Date())
 							.dataFimAtendimento(new Date())
 							.documentId("1.42.20130403134532.123.1478642031821.4633229975489" + add)
 							.document(IOUtils.toString(new FileInputStream("/home/fernandobt8/Documents/res/sbis-2018/exemplo-doc-atendimento-5.xml"))
 									.replace("\n", "").replace("\r", "").replace("\t", ""))
-							.tipoDocumento(TipoDocumento.CONSULTA_AB_CN1_V2)
 							.url(repository_url)
 							.build())
 					.build();
