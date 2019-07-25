@@ -13,6 +13,5 @@ public class ResSumarioDeAltaProcedimento {
 	public ResSumarioDeAltaProcedimento(XPathFactoryAssist xPathProcedimento) throws XPathExpressionException {
 		this.nome = xPathProcedimento.getString("./description/Procedimento_SUS/value/value");
 		this.codigo = xPathProcedimento.getString("./description/Procedimento_SUS/value/defining_code/code_string");
-		// XXX: pegar alguma observação?
 	}
 }

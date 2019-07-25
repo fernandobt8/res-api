@@ -19,22 +19,19 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResSumarioDeAlta extends ResDocument implements Serializable {
 
 	private Date dataAtendimento;
-
-	// XXX: verificar possibilidade de usar mesmos dtos para ab e sumário
-	private List<ResSumarioDeAltaProblemaDiagnostico> problemasDiagnosticos = new ArrayList<>();
-
-	// XXX: verificar possibilidade de usar mesmos dtos para ab e sumário
+	private String estabelecimento;
+	private String equipe;
+	private List<ResSumarioDeAltaProblemaDiagnostico> problemasDiagnostico = new ArrayList<>();
 	private List<ResSumarioDeAltaProcedimento> procedimentos = new ArrayList<>();
-
 	private List<ResSumarioDeAltaResumoEvolucaoClinica> resumos = new ArrayList<>();
-
-	// XXX: verificar possibilidade de usar mesmos dtos para ab e sumário
 	private List<ResSumarioDeAltaAlergia> alergias = new ArrayList<>();
-
-	// XXX: verificar apresentacao na tela e necessidade de dois dtos ou um só com campo aberto
-	// XXX: verificar possibilidade de usar mesmos dtos para ab e sumário
-	private List<ResSumarioDeAltaMedicamento> medicamentos = new ArrayList<>();
-	private List<ResSumarioDeAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = new ArrayList<>();
+	// XXX: aguardar Postal
+	// private List<ResSumarioDeAltaMedicamento> medicamentos = new ArrayList<>();
+	// private List<ResSumarioDeAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = new ArrayList<>();
+	private String planoCuidado;
+	private String motivoAlta;
+	private ResSumarioAltaIdentificacaoProfissional profissional;
+	private Date dataAlta;
 
 	// XXX: verificar necessidade
 	/**
@@ -45,31 +42,20 @@ public class ResSumarioDeAlta extends ResDocument implements Serializable {
 	public ResSumarioDeAlta(String xml) throws ResABXMLParserException {
 		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);
 		try {
-			// XXX: acho que não, confirmar burigo
-			// territory?
-			// cns?
-			// start_time?
 			XPathFactoryAssist xPathAdmissao = xPathRoot.getXPathAssist("//Admissão_do_paciente/data");
 			this.dataAtendimento = RDateUtil.isoEHRToDate(xPathAdmissao.getString("./Data_e_hora_da_internação/value/value"));
-			// XXX: acho que sim, confirmar postal
-			// caráter da internação
-			// procedencia
-			// local do atendimento0
-			// estabelecimento de saúde
-			// equipe de saúde
+			String startXPathInstituicao = "./Localização_atribuída_ao_paciente/Instituição";
+			this.estabelecimento = xPathAdmissao.getString(startXPathInstituicao + "/Estabelecimento_de_saúde/value/value");
+			this.equipe = xPathAdmissao.getString(startXPathInstituicao + "/Identificação_da_equipe_de_saúde/value/value");
 
 			XPathFactoryAssist xPathDiagnosticos = xPathRoot
 					.getXPathAssist("//Motivo_da_admissão_comma__diagnósticos_relevantes_e_patologias_associadas_desenvolvidas_na_internação");
-			// XXX: também pode ter procedimentos aqui
-			// XXX: problema_diagnostico_hash
 			for (XPathFactoryAssist xPathDiagnostico : xPathDiagnosticos.iterable(".//Problema_Diagnóstico")) {
-				this.problemasDiagnosticos.add(new ResSumarioDeAltaProblemaDiagnostico(xPathDiagnostico));
+				this.problemasDiagnostico.add(new ResSumarioDeAltaProblemaDiagnostico(xPathDiagnostico));
 			}
 
 			XPathFactoryAssist xPathProcedimentos = xPathRoot
 					.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt");
-			// XXX: problemas_ou_diagnosticos
-			// XXX: procedimento_hash
 			for (XPathFactoryAssist xPathProcedimento : xPathProcedimentos.iterable(".//Procedimento")) {
 				this.procedimentos.add(new ResSumarioDeAltaProcedimento(xPathProcedimento));
 			}
@@ -84,20 +70,22 @@ public class ResSumarioDeAlta extends ResDocument implements Serializable {
 				this.alergias.add(new ResSumarioDeAltaAlergia(xPathAlergia));
 			}
 
-			XPathFactoryAssist xPathAltaMedicamentos = xPathRoot.getXPathAssist("//Prescrição_da_alta");
-			for (XPathFactoryAssist xPathMedicamentoEstruturado : xPathAltaMedicamentos.iterable(".//Linha_de_Medicação")) {
-				this.medicamentos.add(new ResSumarioDeAltaMedicamento(xPathMedicamentoEstruturado));
-			}
-			for (XPathFactoryAssist xPathMedicamentoNaoEstruturado : xPathAltaMedicamentos.iterable(".//Recipiente")) {
-				this.medicamentosNaoEstruturados.add(new ResSumarioDeAltaMedicamentoNaoEstruturado(xPathMedicamentoNaoEstruturado));
-			}
+			// XXX: aguardar postal
+			// XPathFactoryAssist xPathAltaMedicamentos = xPathRoot.getXPathAssist("//Prescrição_da_alta");
+			// for (XPathFactoryAssist xPathMedicamentoEstruturado : xPathAltaMedicamentos.iterable(".//Linha_de_Medicação")) {
+			// this.medicamentos.add(new ResSumarioDeAltaMedicamento(xPathMedicamentoEstruturado));
+			// }
+			// for (XPathFactoryAssist xPathMedicamentoNaoEstruturado : xPathAltaMedicamentos.iterable(".//Recipiente")) {
+			// this.medicamentosNaoEstruturados.add(new ResSumarioDeAltaMedicamentoNaoEstruturado(xPathMedicamentoNaoEstruturado));
+			// }
 
-			// Plano_de_cuidados_comma__instruções_e_recomendações__openBrkt_na_alta_closeBrkt_
+			XPathFactoryAssist xPathPlanoCuidado = xPathRoot.getXPathAssist("//Plano_de_cuidados_comma__instruções_e_recomendações__openBrkt_na_alta_closeBrkt_");
+			this.planoCuidado = xPathPlanoCuidado.getString("./Plano_de_Cuidado/narrative/value");
 
-			// verificar informações da alta
-
-			// XXX: colocar algum profissional
-
+			XPathFactoryAssist xPathInformacoesAlta = xPathRoot.getXPathAssist("//Informações_da_alta/Desfecho__fslash__alta_do_contato_assistencial/data");
+			this.motivoAlta = xPathInformacoesAlta.getString("./Motivo_do_desfecho/value/value");
+			this.profissional = new ResSumarioAltaIdentificacaoProfissional(xPathInformacoesAlta);
+			this.dataAlta = RDateUtil.isoEHRToDate(xPathInformacoesAlta.getString("./Data_e_hora_da_saída_da_internação/value/value"));
 		} catch (XPathExpressionException e) {
 			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}

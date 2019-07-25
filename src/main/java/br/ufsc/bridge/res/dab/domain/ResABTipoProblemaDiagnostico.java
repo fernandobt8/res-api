@@ -3,6 +3,7 @@ package br.ufsc.bridge.res.dab.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+// XXX: generalizar após merge
 @Getter
 @AllArgsConstructor
 public enum ResABTipoProblemaDiagnostico {

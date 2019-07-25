@@ -4,6 +4,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+// XXX: aguardar Postal
 public class ResSumarioDeAltaMedicamento {
 
 	// XXX: tirei alguns campos se comparado com AB
