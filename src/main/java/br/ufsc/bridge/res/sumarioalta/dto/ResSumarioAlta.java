@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.sumariodealta.dto;
+package br.ufsc.bridge.res.sumarioalta.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,15 +15,15 @@ import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
-public class ResSumarioDeAlta extends ResDocument implements Serializable {
+public class ResSumarioAlta extends ResDocument implements Serializable {
 
 	private Date dataAtendimento;
 	private String estabelecimento;
 	private String equipe;
-	private List<ResSumarioDeAltaProblemaDiagnostico> problemasDiagnostico = new ArrayList<>();
-	private List<ResSumarioDeAltaProcedimento> procedimentos = new ArrayList<>();
-	private List<ResSumarioDeAltaResumoEvolucaoClinica> resumos = new ArrayList<>();
-	private List<ResSumarioDeAltaAlergia> alergias = new ArrayList<>();
+	private List<ResSumarioAltaProblemaDiagnostico> problemasDiagnostico = new ArrayList<>();
+	private List<ResSumarioAltaProcedimento> procedimentos = new ArrayList<>();
+	private List<ResSumarioAltaResumoEvolucaoClinica> resumos = new ArrayList<>();
+	private List<ResSumarioAltaAlergia> alergias = new ArrayList<>();
 	// XXX: aguardar Postal
 	// private List<ResSumarioDeAltaMedicamento> medicamentos = new ArrayList<>();
 	// private List<ResSumarioDeAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = new ArrayList<>();
@@ -38,7 +38,7 @@ public class ResSumarioDeAlta extends ResDocument implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public ResSumarioDeAlta(String xml) throws ResABXMLParserException {
+	public ResSumarioAlta(String xml) throws ResABXMLParserException {
 		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);
 		try {
 			XPathFactoryAssist xPathAdmissao = xPathRoot.getXPathAssist("//Admissão_do_paciente/data");
@@ -50,23 +50,23 @@ public class ResSumarioDeAlta extends ResDocument implements Serializable {
 			XPathFactoryAssist xPathDiagnosticos = xPathRoot
 					.getXPathAssist("//Motivo_da_admissão_comma__diagnósticos_relevantes_e_patologias_associadas_desenvolvidas_na_internação");
 			for (XPathFactoryAssist xPathDiagnostico : xPathDiagnosticos.iterable(".//Problema_Diagnóstico")) {
-				this.problemasDiagnostico.add(new ResSumarioDeAltaProblemaDiagnostico(xPathDiagnostico));
+				this.problemasDiagnostico.add(new ResSumarioAltaProblemaDiagnostico(xPathDiagnostico));
 			}
 
 			XPathFactoryAssist xPathProcedimentos = xPathRoot
 					.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt");
 			for (XPathFactoryAssist xPathProcedimento : xPathProcedimentos.iterable(".//Procedimento")) {
-				this.procedimentos.add(new ResSumarioDeAltaProcedimento(xPathProcedimento));
+				this.procedimentos.add(new ResSumarioAltaProcedimento(xPathProcedimento));
 			}
 
 			XPathFactoryAssist xPathResumos = xPathRoot.getXPathAssist("//Resumo_da_evolução_clínica_do_indivíduo_durante_a_internação");
 			for (XPathFactoryAssist xPathResumo : xPathResumos.iterable(".//Recipiente")) {
-				this.resumos.add(new ResSumarioDeAltaResumoEvolucaoClinica(xPathResumo));
+				this.resumos.add(new ResSumarioAltaResumoEvolucaoClinica(xPathResumo));
 			}
 
 			XPathFactoryAssist xPathAlergias = xPathRoot.getXPathAssist("//Alergias_e_fslash_ou_reações_adversas_na_internação");
 			for (XPathFactoryAssist xPathAlergia : xPathAlergias.iterable(".//Alergia_e_fslash_ou_reação_adversa")) {
-				this.alergias.add(new ResSumarioDeAltaAlergia(xPathAlergia));
+				this.alergias.add(new ResSumarioAltaAlergia(xPathAlergia));
 			}
 
 			// XXX: aguardar postal

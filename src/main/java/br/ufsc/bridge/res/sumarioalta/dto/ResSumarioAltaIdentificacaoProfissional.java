@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.sumariodealta.dto;
+package br.ufsc.bridge.res.sumarioalta.dto;
 
 import javax.xml.xpath.XPathExpressionException;
 

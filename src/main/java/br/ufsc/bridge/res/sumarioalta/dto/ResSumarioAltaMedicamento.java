@@ -1,11 +1,11 @@
-package br.ufsc.bridge.res.sumariodealta.dto;
+package br.ufsc.bridge.res.sumarioalta.dto;
 
 import javax.xml.xpath.XPathExpressionException;
 
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 // XXX: aguardar Postal
-public class ResSumarioDeAltaMedicamento {
+public class ResSumarioAltaMedicamento {
 
 	// XXX: tirei alguns campos se comparado com AB
 	// XXX: questão dose estruturada ser 0..*, não chequei se no AB é assim tbm, mas lá não foi considerado
@@ -14,7 +14,7 @@ public class ResSumarioDeAltaMedicamento {
 	private String descricaoDose;
 	private String duracaoTratamento;
 
-	public ResSumarioDeAltaMedicamento(XPathFactoryAssist xPathMedicamentoEstruturado) throws XPathExpressionException {
+	public ResSumarioAltaMedicamento(XPathFactoryAssist xPathMedicamentoEstruturado) throws XPathExpressionException {
 		String startXPath = "./data/Lista_de_medicamentos_da_alta__openBrkt_estruturada_closeBrkt_";
 		this.nomeMedicamento = xPathMedicamentoEstruturado.getString(startXPath + "/Medicamento/value/value");
 		this.descricaoViaAdministracao = xPathMedicamentoEstruturado.getString(startXPath + "/Via_de_administração/value/value");
