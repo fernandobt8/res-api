@@ -3,6 +3,7 @@ package br.ufsc.bridge.res.dab.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+// XXX: generalizar, não é só do dab
 @Getter
 @AllArgsConstructor
 public enum ResABGravidadeEnum {
