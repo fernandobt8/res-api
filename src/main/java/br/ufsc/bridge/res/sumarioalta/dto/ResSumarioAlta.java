@@ -49,7 +49,7 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 			}
 
 			XPathFactoryAssist xPathProcedimentos = xPathRoot
-					.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt");
+					.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt_");
 			for (XPathFactoryAssist xPathProcedimento : xPathProcedimentos.iterable(".//Procedimento")) {
 				this.procedimentos.add(new ResSumarioAltaProcedimento(xPathProcedimento));
 			}

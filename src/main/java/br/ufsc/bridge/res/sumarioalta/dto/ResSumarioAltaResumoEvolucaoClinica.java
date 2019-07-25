@@ -12,7 +12,7 @@ public class ResSumarioAltaResumoEvolucaoClinica implements Serializable {
 	private String resumo;
 
 	public ResSumarioAltaResumoEvolucaoClinica(XPathFactoryAssist xPathResumoEvolucaoClinica) throws XPathExpressionException {
-		this.resumo = xPathResumoEvolucaoClinica.getString("./data/Texto_livre/value/value");
+		this.resumo = xPathResumoEvolucaoClinica.getString("./data/Texto_livre/Descrição_da_evolução_clínica_do_indivíduo_durante_a_internação/value/value");
 	}
 
 }
