@@ -6,9 +6,12 @@ import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+@Getter
 public class ResSumarioAltaAlergia implements Serializable {
 
 	private static final long serialVersionUID = 1L;

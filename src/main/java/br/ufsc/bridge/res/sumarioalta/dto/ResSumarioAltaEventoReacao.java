@@ -5,9 +5,12 @@ import java.util.Date;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+@Getter
 public class ResSumarioAltaEventoReacao implements Serializable {
 
 	private static final long serialVersionUID = 1L;
