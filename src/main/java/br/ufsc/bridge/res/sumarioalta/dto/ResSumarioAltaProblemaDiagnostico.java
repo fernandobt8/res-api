@@ -4,9 +4,12 @@ import java.io.Serializable;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+@Getter
 public class ResSumarioAltaProblemaDiagnostico implements Serializable {
 
 	private static final long serialVersionUID = 1L;

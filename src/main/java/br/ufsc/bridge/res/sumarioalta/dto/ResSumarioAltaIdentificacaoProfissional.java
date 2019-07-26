@@ -4,8 +4,11 @@ import java.io.Serializable;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+@Getter
 public class ResSumarioAltaIdentificacaoProfissional implements Serializable {
 
 	private static final long serialVersionUID = 1L;

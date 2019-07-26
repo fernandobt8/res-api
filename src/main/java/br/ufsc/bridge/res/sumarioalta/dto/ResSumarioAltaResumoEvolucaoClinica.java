@@ -4,15 +4,18 @@ import java.io.Serializable;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+@Getter
 public class ResSumarioAltaResumoEvolucaoClinica implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String resumo;
+	private String texto;
 
 	public ResSumarioAltaResumoEvolucaoClinica(XPathFactoryAssist xPathResumoEvolucaoClinica) throws XPathExpressionException {
-		this.resumo = xPathResumoEvolucaoClinica.getString("./data/Texto_livre/Descrição_da_evolução_clínica_do_indivíduo_durante_a_internação/value/value");
+		this.texto = xPathResumoEvolucaoClinica.getString("./data/Texto_livre/Descrição_da_evolução_clínica_do_indivíduo_durante_a_internação/value/value");
 	}
 
 }
