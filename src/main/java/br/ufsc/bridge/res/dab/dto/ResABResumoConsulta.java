@@ -43,7 +43,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 	private ResABTipoAtendimentoEnum tipoAtendimento;
 	private String cnes;
 	private String ine;
-	//private ResABTurnoEnum turno;
+	// private ResABTurnoEnum turno;
 	private List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
 
 	private String peso;
@@ -79,7 +79,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			this.ine = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//Identificação_da_equipe_de_saúde/value/value");
 			this.dataAtendimento = RDateUtil.isoEHRToDate(xPathAdmissao.getString("./Data_fslash_hora_da_admissão/value/value"));
 
-			//this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
+			// this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
 
 			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Profissionais_do_atendimento")) {
 				this.profissionais.add(new ResABIdentificacaoProfissional(xPathprofissional));
@@ -111,29 +111,33 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				this.alergias.add(new ResABAlergiaReacoes(xPathAlergia));
 			}
 
-			XPathFactoryAssist xPathProcedimentos = xPathRoot.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt_");
+			XPathFactoryAssist xPathProcedimentos = xPathRoot
+					.getXPathAssist("//Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt_");
 			for (XPathFactoryAssist xPathProcedimento : xPathProcedimentos.iterable(".//Procedimento")) {
 				this.procedimentos.add(new ResABProcedimento(xPathProcedimento));
 			}
 
 			String xPathMedicamentos = xPathRoot.getString("//Prescrição_no_atendimento//Descrição_da_prescrição/value/value");
-			for (String medicamento : xPathMedicamentos.split(";")) {
-				this.medicamentosNaoEstruturados.add(medicamento);
+			if (xPathMedicamentos != null) {
+				for (String medicamento : xPathMedicamentos.split(";")) {
+					this.medicamentosNaoEstruturados.add(medicamento);
+				}
 			}
 
-			//			XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Prescrição_no_atendimento");
-			//			for (XPathFactoryAssist xPathMedicamento : xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Lista_de_medicamentos_no_atendimento__openBrkt_estruturada_closeBrkt_")) {
-			//				this.medicamentos.add(new ResABMedicamento(xPathMedicamento));
-			//			}
+			// XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Prescrição_no_atendimento");
+			// for (XPathFactoryAssist xPathMedicamento :
+			// xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Lista_de_medicamentos_no_atendimento__openBrkt_estruturada_closeBrkt_")) {
+			// this.medicamentos.add(new ResABMedicamento(xPathMedicamento));
+			// }
 
 			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
 			for (XPathFactoryAssist xPathConduta : xPathDados.iterable(".//Motivo_do_desfecho")) {
 				this.condutas.add(xPathConduta.getString("./value/value"));
 			}
 
-			//			for (XPathFactoryAssist xPathEncaminhamento : xPathRoot.iterable(".//Solicitações_de_encaminhamentos/Encaminhamento")) {
-			//				this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
-			//			}
+			// for (XPathFactoryAssist xPathEncaminhamento : xPathRoot.iterable(".//Solicitações_de_encaminhamentos/Encaminhamento")) {
+			// this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
+			// }
 		} catch (XPathExpressionException e) {
 			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}
