@@ -9,11 +9,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
-import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
 import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
 import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
@@ -62,7 +59,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		String dateInString = "2016-05-23T15:00:00.000-03:00";
 		Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getDataAtendimento());
 
-		//Assert.assertEquals(ResABTurnoEnum.NOITE, resumoConsulta.getTurno());
+		// Assert.assertEquals(ResABTurnoEnum.NOITE, resumoConsulta.getTurno());
 
 		Assert.assertEquals("994.250", resumoConsulta.getPeso());
 		Assert.assertEquals("987.55", resumoConsulta.getAltura());
@@ -176,10 +173,10 @@ public class TestConvertXMLToResABResumoConsulta {
 
 		Assert.assertEquals(2, resumoConsulta.getCondutas().size());
 
-		//		ResABCondutaEnum resABConduta1 = resumoConsulta.getCondutas().get(0);
-		//		Assert.assertEquals("Retorno para cuidado continuado/programado", resABConduta1.getDescricao());
-		//		ResABCondutaEnum resABCondutaEnum2 = resumoConsulta.getCondutas().get(1);
-		//		Assert.assertEquals("Alta do episódio", resABCondutaEnum2.getDescricao());
+		// ResABCondutaEnum resABConduta1 = resumoConsulta.getCondutas().get(0);
+		// Assert.assertEquals("Retorno para cuidado continuado/programado", resABConduta1.getDescricao());
+		// ResABCondutaEnum resABCondutaEnum2 = resumoConsulta.getCondutas().get(1);
+		// Assert.assertEquals("Alta do episódio", resABCondutaEnum2.getDescricao());
 
 		Assert.assertEquals(3, resumoConsulta.getEncaminhamentos().size());
 
@@ -194,7 +191,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT002.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-		//Assert.assertNull(resumoConsulta.getTurno());
+		// Assert.assertNull(resumoConsulta.getTurno());
 		Assert.assertNull(resumoConsulta.getCnes());
 
 		Assert.assertEquals(1, resumoConsulta.getProfissionais().size());
@@ -251,7 +248,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABProcedimento resABProcedimento1 = resumoConsulta.getProcedimentos().get(0);
 		Assert.assertNull(resABProcedimento1.getCodigo());
 		Assert.assertNull(resABProcedimento1.getNome());
-		//Assert.assertEquals(0, resABProcedimento1.getResultadoObservacoes().size());
+		// Assert.assertEquals(0, resABProcedimento1.getResultadoObservacoes().size());
 
 		Assert.assertEquals(3, resumoConsulta.getMedicamentos().size());
 		ResABMedicamento resABMedicamento1 = resumoConsulta.getMedicamentos().get(0);
@@ -297,7 +294,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT003.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-		//	Assert.assertNull(resumoConsulta.getTurno());
+		// Assert.assertNull(resumoConsulta.getTurno());
 		Assert.assertNull(resumoConsulta.getCnes());
 		Assert.assertNull(resumoConsulta.getDataAtendimento());
 		Assert.assertNull(resumoConsulta.getAltura());
@@ -327,7 +324,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 
 		Assert.assertEquals(ResABTipoAtendimentoEnum.DEMANDA_ESPONTANEA_CONSULTA_NO_DIA, resumoConsulta.getTipoAtendimento());
-		//Assert.assertNull(resumoConsulta.getTurno());
+		// Assert.assertNull(resumoConsulta.getTurno());
 		Assert.assertNull(resumoConsulta.getCnes());
 
 		Assert.assertEquals(1, resumoConsulta.getProfissionais().size());

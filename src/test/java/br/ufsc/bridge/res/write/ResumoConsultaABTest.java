@@ -1,6 +1,5 @@
 package br.ufsc.bridge.res.write;
 
-import java.util.Arrays;
 import java.util.Date;
 
 import org.junit.Test;
@@ -74,7 +73,7 @@ public class ResumoConsultaABTest {
 					.nome("AVALIAÇÃO ANTROPOMÉTRICA")
 					.data(new Date())
 					.codigo("122869004")
-					.resultadoObservacoes(Arrays.asList("nada consta1","nada consta2","nada consta3"))
+//					.resultadoObservacoes(Arrays.asList("nada consta1","nada consta2","nada consta3"))
 				.close()
 			.close()
 			.listaMedicamentos()
