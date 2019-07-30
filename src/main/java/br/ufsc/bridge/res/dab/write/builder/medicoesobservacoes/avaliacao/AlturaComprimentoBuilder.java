@@ -22,22 +22,16 @@ public class AlturaComprimentoBuilder<PARENT extends ParentArquetypeWrapper<?>> 
 
 	@Override
 	protected String openTags() {
-		return "<Altura__fslash__comprimento><name><value>Altura / comprimento</value></name><language>"
-				+ "<terminology_id><value>ISO_639-1</value></terminology_id><code_string>pt</code_string>"
-				+ "</language><encoding><terminology_id><value>IANA_character-sets</value></terminology_id>"
-				+ "<code_string>UTF-8</code_string></encoding><subject></subject><data><Qualquer_evento_as_Point_Event>"
-				+ "<name><value>Qualquer evento</value></name><time><oe:value>";
+		return "<Altura__fslash__comprimento><name><value>Altura / comprimento</value></name><language><terminology_id><value>ISO_639-1</value></terminology_id><code_string>pt</code_string></language><encoding><terminology_id><value>IANA_character-sets</value></terminology_id><code_string>UTF-8</code_string></encoding><subject xsi:type=\"oe:PARTY_SELF\"/><data><Qualquer_evento_as_Point_Event><name><value>Qualquer evento</value></name><time><oe:value>";
 	}
 
 	private String openTagAltura() {
-		return "</oe:value></time><data><Altura__fslash__comprimento><name>"
-				+ "<value>Altura / comprimento</value></name><value><magnitude>";
+		return "</oe:value></time><data><Altura><name><value>Altura</value></name><value><magnitude>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</magnitude><units>cm</units></value></Altura__fslash__comprimento></data><state/>"
-				+ "</Qualquer_evento_as_Point_Event></data></Altura__fslash__comprimento>";
+		return "</magnitude><units>cm</units></value></Altura></data><state/></Qualquer_evento_as_Point_Event></data></Altura__fslash__comprimento>";
 	}
 
 	@Override

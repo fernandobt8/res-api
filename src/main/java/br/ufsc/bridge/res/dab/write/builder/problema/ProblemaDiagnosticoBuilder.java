@@ -30,23 +30,20 @@ public class ProblemaDiagnosticoBuilder<PARENT extends ParentArquetypeWrapper<?>
 
 	@Override
 	protected String openTags() {
-		return "<Problema__fslash_Diagnóstico><name><value>Problema /Diagnóstico</value></name>" + "<language><terminology_id><value>ISO_639-1</value></terminology_id>"
-				+ "<code_string>pt</code_string></language><encoding><terminology_id><value>IANA_character-sets"
-				+ "</value></terminology_id><code_string>UTF-8</code_string></encoding><subject></subject>"
-				+ "<data><Problema__fslash__Diagnóstico><name><value>Problema / Diagnóstico</value></name><value><value>";
+		return "<Problema_Diagnóstico><name><value>Problema Diagnóstico</value></name><language><terminology_id><value>ISO_639-1</value></terminology_id><code_string>pt</code_string></language><encoding><terminology_id><value>IANA_character-sets</value></terminology_id><code_string>UTF-8</code_string></encoding><subject xsi:type=\"oe:PARTY_SELF\"/><data><Diagnóstico><name><value>Diagnóstico</value></name><value><oe:value>";
 	}
 
 	private String openTagsTipo() {
-		return "</value><defining_code><terminology_id><value>";
+		return "</oe:value><oe:defining_code><oe:terminology_id><oe:value>";
 	}
 
 	private String openTagsCodigo() {
-		return "</value></terminology_id><code_string>";
+		return "</oe:value></oe:terminology_id><oe:code_string>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</code_string></defining_code></value></Problema__fslash__Diagnóstico></data></Problema__fslash_Diagnóstico>";
+		return "</oe:code_string></oe:defining_code></value></Diagnóstico></data></Problema_Diagnóstico>";
 	}
 
 	@Override

@@ -1,14 +1,13 @@
 package br.ufsc.bridge.res.dab.write.builder.desfecho;
 
-import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.write.builder.base.ArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 
 public class CondutaBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ArquetypeWrapper<PARENT> {
 
-	private ResABCondutaEnum conduta;
+	private String conduta;
 
-	public CondutaBuilder(PARENT parent, ResABCondutaEnum conduta) {
+	public CondutaBuilder(PARENT parent, String conduta) {
 		super(parent);
 		this.conduta = conduta;
 	}
@@ -25,9 +24,6 @@ public class CondutaBuilder<PARENT extends ParentArquetypeWrapper<?>> extends Ar
 
 	@Override
 	public String getValue() {
-		if (this.conduta != null) {
-			return this.conduta.getDescricao();
-		}
-		return null;
+		return this.conduta;
 	}
 }

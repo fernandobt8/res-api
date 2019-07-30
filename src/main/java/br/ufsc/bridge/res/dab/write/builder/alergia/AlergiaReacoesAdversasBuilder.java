@@ -10,12 +10,12 @@ public class AlergiaReacoesAdversasBuilder<PARENT extends ParentArquetypeWrapper
 
 	@Override
 	protected String openTags() {
-		return "<Alergias_e_reações_adversas><name><value>Alergias e reações adversas</value></name>";
+		return "<Alergias_e_fslash_ou_reações_adversas_no_atendimento><name><value>Alergias e/ou reações adversas no atendimento</value></name>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</Alergias_e_reações_adversas>";
+		return "</Alergias_e_fslash_ou_reações_adversas_no_atendimento>";
 	}
 
 	public RiscoReacaoAdversaBuilder<AlergiaReacoesAdversasBuilder<PARENT>> alergia() {

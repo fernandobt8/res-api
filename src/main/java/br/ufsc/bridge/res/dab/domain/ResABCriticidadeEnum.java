@@ -6,9 +6,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ResABCriticidadeEnum {
-	BAIXO("at0102"),
-	ALTO("at0103");
+	BAIXO("Baixo", "at0102"),
+	ALTO("Alto", "at0103");
 
+	private String descricao;
 	private String codigo;
 
 	public static ResABCriticidadeEnum getByCodigo(String codigo) {

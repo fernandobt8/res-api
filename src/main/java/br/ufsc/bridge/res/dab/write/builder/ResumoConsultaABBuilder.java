@@ -18,22 +18,12 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 
 	@Override
 	protected String openTags() {
-		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Encontro xmlns:oe=\"http://schemas.openehr.org/v1\""
-				+ " xmlns=\"http://schemas.oceanehr.com/templates\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance"
-				+ "\" xsi:schemaLocation=\"http://schemas.oceanehr.com/templates CN1.xsd\" template_id=\""
-				+ "Resumo de consulta ab_CN1_v1\"><name><value>Encontro</value></name><language><terminology_id>"
-				+ "<value>ISO_639-1</value></terminology_id><code_string>pt</code_string></language><territory>"
-				+ "<terminology_id><value>ISO_3166-1</value></terminology_id><code_string>BR</code_string></territory>"
-				+ "<category><value>event</value><defining_code><terminology_id><value>openehr</value></terminology_id>"
-				+ "<code_string>433</code_string></defining_code></category><composer xsi:type=\"oe:PARTY_SELF\">"
-				+ "</composer><context><start_time><oe:value>";
-
+		return "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Registro_de_Atendimento_Clínico xmlns:oe=\"http://schemas.openehr.org/v1\" xmlns=\"http://schemas.oceanehr.com/templates\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://schemas.oceanehr.com/templates RegistroAtendimentoClínico.v4.xsd\" template_id=\"RegistroAtendimentoClínico.v4.0\"><name><value>Registro de Atendimento Clínico</value></name><language><terminology_id><value>ISO_639-1</value></terminology_id><code_string>pt</code_string></language><territory><terminology_id><value>ISO_3166-1</value></terminology_id><code_string>BR</code_string></territory><category><value>event</value><defining_code><terminology_id><value>openehr</value></terminology_id><code_string>433</code_string></defining_code></category><composer xsi:type=\"oe:PARTY_IDENTIFIED\"><oe:identifiers><oe:issuer>2.16.840.1.113883.13.236</oe:issuer><oe:assigner>2.16.840.1.113883.13"
+				+ ".236</oe:assigner><oe:id>203011369760008</oe:id><oe:type>CNS</oe:type></oe:identifiers></composer><context><start_time><oe:value>";
 	}
 
 	private String closeTagsData() {
-		return "</oe:value></start_time><setting><oe:value>other care</oe:value><oe:defining_code>"
-				+ "<oe:terminology_id><oe:value>openehr</oe:value></oe:terminology_id>"
-				+ "<oe:code_string>238</oe:code_string></oe:defining_code></setting></context>";
+		return "</oe:value></start_time><setting><oe:value>primary medical care</oe:value><oe:defining_code><oe:terminology_id><oe:value>openehr</oe:value></oe:terminology_id><oe:code_string>228</oe:code_string></oe:defining_code></setting></context>";
 	}
 
 	@Override
