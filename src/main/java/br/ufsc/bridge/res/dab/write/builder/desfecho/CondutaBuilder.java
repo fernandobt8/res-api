@@ -14,12 +14,12 @@ public class CondutaBuilder<PARENT extends ParentArquetypeWrapper<?>> extends Ar
 
 	@Override
 	protected String openTags() {
-		return "<Conduta><name><value>Conduta</value></name><value><value>";
+		return "<Motivo_do_desfecho><name><value>Motivo do desfecho</value></name><value><value>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</value></value></Conduta>";
+		return "</value><defining_code><terminology_id><value>local</value></terminology_id><code_string>at0058</code_string></defining_code></value></Motivo_do_desfecho>";
 	}
 
 	@Override

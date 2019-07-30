@@ -7,6 +7,7 @@ import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.desfecho.DadosDesfechoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
+import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosNaoEstruturadosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.MedicoesObservacoesBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
@@ -56,8 +57,13 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 		return new ProcedimentosPequenasCirurgiasBuilder<>(this);
 	}
 
+	// se voltar a utilizar medicamentos estruturados, entao colocar ele e o nao estruturado dentro de uma unica estrutura pai
 	public ListaMedicamentosBuilder<ResumoConsultaABBuilder> listaMedicamentos() {
 		return new ListaMedicamentosBuilder<>(this);
+	}
+
+	public ListaMedicamentosNaoEstruturadosBuilder<ResumoConsultaABBuilder> listaMedicamentosNaoEstruturados() {
+		return new ListaMedicamentosNaoEstruturadosBuilder<>(this);
 	}
 
 	public DadosDesfechoBuilder<ResumoConsultaABBuilder> dadosDesfecho() {

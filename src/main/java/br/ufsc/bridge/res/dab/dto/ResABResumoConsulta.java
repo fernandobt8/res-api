@@ -21,8 +21,7 @@ import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilde
 import br.ufsc.bridge.res.dab.write.builder.alergia.RiscoReacaoAdversaBuilder;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.desfecho.DadosDesfechoBuilder;
-import br.ufsc.bridge.res.dab.write.builder.desfecho.SolicitacoesEncaminhamentoBuilder;
-import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosBuilder;
+import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosNaoEstruturadosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
@@ -43,6 +42,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 	private ResABTipoAtendimentoEnum tipoAtendimento;
 	private String cnes;
 	private String ine;
+	// nao presente mais, comentado para manter historico
 	// private ResABTurnoEnum turno;
 	private List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
 
@@ -79,6 +79,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			this.ine = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//Identificação_da_equipe_de_saúde/value/value");
 			this.dataAtendimento = RDateUtil.isoEHRToDate(xPathAdmissao.getString("./Data_fslash_hora_da_admissão/value/value"));
 
+			// nao presente mais, comentado para manter historico
 			// this.turno = ResABTurnoEnum.getByCodigo(xPathAdmissao.getString("./Turno_de_atendimento//code_string"));
 
 			for (XPathFactoryAssist xPathprofissional : xPathAdmissao.iterable(".//Profissionais_do_atendimento")) {
@@ -124,6 +125,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				}
 			}
 
+			// nao presente mais, comentado para manter historico
 			// XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Prescrição_no_atendimento");
 			// for (XPathFactoryAssist xPathMedicamento :
 			// xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Lista_de_medicamentos_no_atendimento__openBrkt_estruturada_closeBrkt_")) {
@@ -135,9 +137,11 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				this.condutas.add(xPathConduta.getString("./value/value"));
 			}
 
+			// nao presente mais, comentado para manter historico
 			// for (XPathFactoryAssist xPathEncaminhamento : xPathRoot.iterable(".//Solicitações_de_encaminhamentos/Encaminhamento")) {
 			// this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
 			// }
+
 		} catch (XPathExpressionException e) {
 			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}
@@ -211,26 +215,30 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				//.resultadoObservacoes(procedimento.getResultadoObservacoes());
 		}
 
-		ListaMedicamentosBuilder<ResumoConsultaABBuilder> medicamentosBuilder = abBuilder.listaMedicamentos();
-		for (ResABMedicamento medicamento : this.medicamentos) {
-			medicamentosBuilder.itemMedicacao()
-				.medicamento(medicamento.getNomeMedicamento(), medicamento.getCodigoMedicamentoCatmat())
-				.formaFarmaceutica(medicamento.getDescricaoFormaFarmaceutica(), medicamento.getCodigoFormaFarmaceutica())
-				.viaAdministracao(medicamento.getDescricaoViaAdministracao(), medicamento.getCodigoViaAdministracao())
-				.dose(medicamento.getDescricaoDose())
-				.doseEstruturada(medicamento.getDuracaoTratamento())
-				.estadoMedicamento(medicamento.getEstadoMedicamento());
-		}
+		// nao presente mais, comentado para manter historico
+//		ListaMedicamentosBuilder<ResumoConsultaABBuilder> medicamentosBuilder = abBuilder.listaMedicamentos();
+//		for (ResABMedicamento medicamento : this.medicamentos) {
+//			medicamentosBuilder.itemMedicacao()
+//				.medicamento(medicamento.getNomeMedicamento(), medicamento.getCodigoMedicamentoCatmat())
+//				.formaFarmaceutica(medicamento.getDescricaoFormaFarmaceutica(), medicamento.getCodigoFormaFarmaceutica())
+//				.viaAdministracao(medicamento.getDescricaoViaAdministracao(), medicamento.getCodigoViaAdministracao())
+//				.dose(medicamento.getDescricaoDose())
+//				.doseEstruturada(medicamento.getDuracaoTratamento())
+//				.estadoMedicamento(medicamento.getEstadoMedicamento());
+//		}
+
+		abBuilder.listaMedicamentosNaoEstruturados().itemMedicacaoNaoEstruturada(this.medicamentosNaoEstruturados);
 
 		DadosDesfechoBuilder<ResumoConsultaABBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
 		for (String conduta : this.condutas) {
 			desfechoBuilder.conduta(conduta);
 		}
 
-		SolicitacoesEncaminhamentoBuilder<DadosDesfechoBuilder<ResumoConsultaABBuilder>> solicitacaoEncaminhamento = desfechoBuilder.solicitacoesEncaminhamento();
-		for (String encaminhamento : this.encaminhamentos) {
-				solicitacaoEncaminhamento.encaminhamento(encaminhamento);
-		}
+		// nao presente mais, comentado para manter historico
+//		SolicitacoesEncaminhamentoBuilder<DadosDesfechoBuilder<ResumoConsultaABBuilder>> solicitacaoEncaminhamento = desfechoBuilder.solicitacoesEncaminhamento();
+//		for (String encaminhamento : this.encaminhamentos) {
+//				solicitacaoEncaminhamento.encaminhamento(encaminhamento);
+//		}
 
 		return abBuilder.getXmlContent();
 	}
