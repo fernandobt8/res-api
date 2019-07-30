@@ -13,8 +13,10 @@ import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
+import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
 import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
 import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
@@ -95,9 +97,9 @@ public class TestConvertResABResumoConsultaToXML {
 		resumoConsulta.setProcedimentos(this.getProcedimentosCDT002());
 		resumoConsulta.setMedicamentos(this.getMedicamentosCDT002());
 
-		List<ResABCondutaEnum> condutas = new LinkedList<>();
-		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
-		condutas.add(ResABCondutaEnum.ALTA_DO_EPISODIO);
+		List<String> condutas = new LinkedList<>();
+		condutas.add("teste");
+		condutas.add("teste2");
 		resumoConsulta.setCondutas(condutas);
 
 		List<String> encaminhamentos = new LinkedList<>();
@@ -144,8 +146,8 @@ public class TestConvertResABResumoConsultaToXML {
 		resumoConsulta.setProcedimentos(this.getProcedimentosCDT003());
 		resumoConsulta.setMedicamentos(this.getMedicamentosCDT003());
 
-		List<ResABCondutaEnum> condutas = new LinkedList<>();
-		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
+		List<String> condutas = new LinkedList<>();
+		condutas.add("teste");
 		condutas.add(null);
 		resumoConsulta.setCondutas(condutas);
 
@@ -512,9 +514,9 @@ public class TestConvertResABResumoConsultaToXML {
 		medicamentos.add(medicamento);
 		resumoConsulta.setMedicamentos(medicamentos);
 
-		List<ResABCondutaEnum> condutas = new LinkedList<>();
-		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
-		resumoConsulta.setCondutas(condutas);
+		//		List<ResABCondutaEnum> condutas = new LinkedList<>();
+		//		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
+		//		resumoConsulta.setCondutas(condutas);
 
 		List<String> encaminhamentos = new LinkedList<>();
 		encaminhamentos.add("Interno no dia");

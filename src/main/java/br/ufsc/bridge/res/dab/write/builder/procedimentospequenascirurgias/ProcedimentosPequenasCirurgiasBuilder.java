@@ -10,12 +10,12 @@ public class ProcedimentosPequenasCirurgiasBuilder<PARENT extends ParentArquetyp
 
 	@Override
 	protected String openTags() {
-		return "<Procedimentos_ou_pequenas_cirurgias><name><value>Procedimentos ou pequenas cirurgias</value></name>";
+		return "<Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt_><name><value>Procedimento(s) realizado(s) ou solicitado(s)</value></name>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</Procedimentos_ou_pequenas_cirurgias>";
+		return "</Procedimento_openBrkt_s_closeBrkt__realizado_openBrkt_s_closeBrkt__ou_solicitado_openBrkt_s_closeBrkt_>";
 	}
 
 	public ProcedimentoBuilder<ProcedimentosPequenasCirurgiasBuilder<PARENT>> procedimento() {

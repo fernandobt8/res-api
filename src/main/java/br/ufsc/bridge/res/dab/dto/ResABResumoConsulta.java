@@ -15,7 +15,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilder;
@@ -65,7 +64,9 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 
 	private List<ResABMedicamento> medicamentos = new LinkedList<>();
 
-	private List<ResABCondutaEnum> condutas = new LinkedList<>();
+	private List<String> medicamentosNaoEstruturados = new LinkedList<>();
+
+	private List<String> condutas = new LinkedList<>();
 
 	private List<String> encaminhamentos = new LinkedList<>();
 
@@ -115,15 +116,21 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				this.procedimentos.add(new ResABProcedimento(xPathProcedimento));
 			}
 
+			String xPathMedicamentos = xPathRoot.getString("//Prescrição_no_atendimento//Descrição_da_prescrição/value/value");
+			for (String medicamento : xPathMedicamentos.split(";")) {
+				this.medicamentosNaoEstruturados.add(medicamento);
+			}
+
 			//			XPathFactoryAssist xPathMedicamentos = xPathRoot.getXPathAssist("//Prescrição_no_atendimento");
 			//			for (XPathFactoryAssist xPathMedicamento : xPathMedicamentos.iterable(".//Linha_de_Medicação/data/Lista_de_medicamentos_no_atendimento__openBrkt_estruturada_closeBrkt_")) {
 			//				this.medicamentos.add(new ResABMedicamento(xPathMedicamento));
 			//			}
 
-			//			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
-			//			for (XPathFactoryAssist xPathConduta : xPathDados.iterable(".//Conduta")) {
-			//				this.condutas.add(ResABCondutaEnum.getByCodigo(xPathConduta.getString("./value/value")));
-			//			}
+			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
+			for (XPathFactoryAssist xPathConduta : xPathDados.iterable(".//Motivo_do_desfecho")) {
+				this.condutas.add(xPathConduta.getString("./value/value"));
+			}
+
 			//			for (XPathFactoryAssist xPathEncaminhamento : xPathRoot.iterable(".//Solicitações_de_encaminhamentos/Encaminhamento")) {
 			//				this.encaminhamentos.add(xPathEncaminhamento.getString("./value/value"));
 			//			}
@@ -139,34 +146,33 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		CaracterizacaoConsultaABBuilder<ResumoConsultaABBuilder> caracterizacaoConsulta = abBuilder.caracterizacaoConsulta();
 		caracterizacaoConsulta
 			.tipoAtendimento(this.tipoAtendimento)
-			.cnes(this.cnes);
+			.localizacaoAtribuidaPaciente(this.cnes, this.ine);
 
 		for (ResABIdentificacaoProfissional profissional : this.profissionais) {
 			caracterizacaoConsulta.identificacaoProfissional()
 				.cns(profissional.getCns())
 				.nome(profissional.getNome())
+				.descricaoCbo("")
 				.cbo(profissional.getCbo())
 				.responsavel(profissional.isResponsavel());
 		}
 
 		caracterizacaoConsulta
-			.ine(this.ine)
-			.dataHoraAdmissao(this.dataAtendimento)
-			//.turnoAtendimento(this.turno)
+				.dataHoraAdmissao(this.dataAtendimento)
 		.close()
 		.medicoesObservacoes()
 			.avaliacaoAntropometrica()
 				.pesoCorporal(this.dataAtendimento, this.peso)
 				.altura(this.dataAtendimento, this.altura)
 				.perimetroCefalico(this.dataAtendimento, this.perimetroCefalico)
-			.close()
-			.gestante()
-				.cicloMenstrual(this.dataAtendimento, this.dum)
-				.gestacao(this.dataAtendimento, this.idadeGestacional)
-				.sumarioObstetrico(this.gestasPrevias, this.partos)
-			.close()
-			.crianca()
-				.aleitamentoMaterno(this.dataAtendimento, this.aleitamentoMaterno);
+			.close();
+//			.gestante()
+//				.cicloMenstrual(this.dataAtendimento, this.dum)
+//				.gestacao(this.dataAtendimento, this.idadeGestacional)
+//				.sumarioObstetrico(this.gestasPrevias, this.partos)
+//			.close()
+//			.crianca()
+//				.aleitamentoMaterno(this.dataAtendimento, this.aleitamentoMaterno);
 
 		ProblemaDiagnosticoAvaliadoBuilder<ResumoConsultaABBuilder> diagnosticoAvaliadoBuilder = abBuilder.problemaDiagnostico();
 		for (ResABProblemaDiagnostico diagnostico : this.problemasDiagnosticos) {
@@ -187,7 +193,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			for (ResABEventoReacao evento : alergia.getEventoReacao()) {
 				alergiaBuilder.eventoReacao()
 					.dataInstalacao(evento.getDataInstalacao())
-					.evolucaoAlergia(evento.getEvolucaoAlergia())
+					//.evolucaoAlergia(evento.getEvolucaoAlergia())
 					.manifestacao(evento.getManifestacao());
 			}
 		}
@@ -213,7 +219,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		}
 
 		DadosDesfechoBuilder<ResumoConsultaABBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
-		for (ResABCondutaEnum conduta : this.condutas) {
+		for (String conduta : this.condutas) {
 			desfechoBuilder.conduta(conduta);
 		}
 

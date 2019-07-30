@@ -1,7 +1,5 @@
 package br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta;
 
-import org.apache.commons.lang3.StringUtils;
-
 import br.ufsc.bridge.res.dab.write.builder.base.ArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 
@@ -11,6 +9,7 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 	private String nome;
 	private String cbo;
 	private boolean responsavel;
+	private String descricaoCbo;
 
 	public IdentificacaoProfissionalBuilder(PARENT parent) {
 		super(parent);
@@ -31,6 +30,11 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 		return this;
 	}
 
+	public IdentificacaoProfissionalBuilder<PARENT> descricaoCbo(String descricaoCbo) {
+		this.descricaoCbo = descricaoCbo;
+		return this;
+	}
+
 	public IdentificacaoProfissionalBuilder<PARENT> responsavel(boolean responsavel) {
 		this.responsavel = responsavel;
 		return this;
@@ -38,43 +42,38 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 
 	@Override
 	protected String openTags() {
-		return "<Identificação_do_profissional><name><value>Identificação do profissional</value></name><CNS><name><value>CNS</value></name><value><oe:value>";
+		return "<Profissionais_do_atendimento><name><value>Profissionais do atendimento</value></name><Nome_do_profissional><name><value>Nome do profissional</value></name><value><oe:value>";
 	}
 
-	private String closeTagCNS() {
-		return "</oe:value></value></CNS>";
+	private String openTagCns() {
+		return "</oe:value></value></Nome_do_profissional><CNS_do_profissional><name><value>CNS do profissional</value></name><value><oe:value>";
+	}
+
+	private String openTagDescricaoCbo() {
+		return "</oe:value></value></CNS_do_profissional><Ocupação_do_profissional><name><value>Ocupação do profissional</value></name><value><value>";
 	}
 
 	private String openTagCbo() {
-		return "<CBO><name>" + "<value>CBO</value></name><value><oe:value>";
-	}
-
-	private String openTagNome() {
-		return "<Nome><name><value>Nome</value></name><value><oe:value>";
-	}
-
-	private String closeTagNome() {
-		return "</oe:value></value></Nome>";
+		return "</value><defining_code><terminology_id><value>CBO_2002.v1.0.0</value></terminology_id><code_string>";
 	}
 
 	private String openTagResponsavel() {
-		return "</oe:value></value></CBO><É_o_responsável_pelo_atendimento_quest_><name><value>É o responsável pelo atendimento</value></name><value><oe:value>";
+		return "</code_string></defining_code></value></Ocupação_do_profissional><É_o_responsável_pelo_atendimento_quest_><name><value>É o responsável pelo atendimento?</value></name><value><oe:value>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</oe:value></value></É_o_responsável_pelo_atendimento_quest_></Identificação_do_profissional>";
+		return "</oe:value></value></É_o_responsável_pelo_atendimento_quest_></Profissionais_do_atendimento>";
 	}
 
 	@Override
 	public String getValue() {
 		if (this.cns != null || this.nome != null || this.cbo != null || this.responsavel != false) {
-			if (StringUtils.isNotBlank(this.nome)) {
-				return this.cns + this.closeTagCNS() + this.openTagNome() + this.nome + this.closeTagNome() + this.openTagCbo() + this.cbo + this.openTagResponsavel()
-						+ this.responsavel;
-			} else {
-				return this.cns + this.closeTagCNS() + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
-			}
+			//			if (StringUtils.isNotBlank(this.nome)) {
+			return this.nome + this.openTagCns() + this.cns + this.openTagCbo() + this.cbo + this.openTagDescricaoCbo() + this.descricaoCbo + this.openTagResponsavel() + this.responsavel;
+			//			} else {
+			//				return this.cns + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
+			//			}
 		}
 		return null;
 	}

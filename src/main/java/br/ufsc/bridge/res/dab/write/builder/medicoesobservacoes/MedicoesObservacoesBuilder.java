@@ -2,8 +2,6 @@ package br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes;
 
 import br.ufsc.bridge.res.dab.write.builder.base.ParentArquetypeWrapper;
 import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.avaliacao.AvaliacaoAntropometricaBuilder;
-import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.crianca.CriancaBuilder;
-import br.ufsc.bridge.res.dab.write.builder.medicoesobservacoes.gestante.GestanteBuilder;
 
 public class MedicoesObservacoesBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
 
@@ -13,24 +11,24 @@ public class MedicoesObservacoesBuilder<PARENT extends ParentArquetypeWrapper<?>
 
 	@Override
 	protected String openTags() {
-		return "<Medições_e_observações><name><value>Medições e observações</value></name>";
+		return "<Observações><name><value>Observações</value></name>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</Medições_e_observações>";
+		return "</Observações>";
 	}
 
 	public AvaliacaoAntropometricaBuilder<MedicoesObservacoesBuilder<PARENT>> avaliacaoAntropometrica() {
 		return new AvaliacaoAntropometricaBuilder<>(this);
 	}
 
-	public GestanteBuilder<MedicoesObservacoesBuilder<PARENT>> gestante() {
-		return new GestanteBuilder<>(this);
-	}
-
-	public CriancaBuilder<MedicoesObservacoesBuilder<PARENT>> crianca() {
-		return new CriancaBuilder<>(this);
-	}
+	//	public GestanteBuilder<MedicoesObservacoesBuilder<PARENT>> gestante() {
+	//		return new GestanteBuilder<>(this);
+	//	}
+	//
+	//	public CriancaBuilder<MedicoesObservacoesBuilder<PARENT>> crianca() {
+	//		return new CriancaBuilder<>(this);
+	//	}
 
 }

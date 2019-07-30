@@ -10,12 +10,12 @@ public class ProblemaDiagnosticoAvaliadoBuilder<PARENT extends ParentArquetypeWr
 
 	@Override
 	protected String openTags() {
-		return "<Problemas__fslash__diagnósticos_avaliados><name><value>Problemas / diagnósticos avaliados</value></name>";
+		return "<Problemas_fslash_Diagnósticos_avaliados><name><value>Problemas/Diagnósticos avaliados</value></name>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</Problemas__fslash__diagnósticos_avaliados>";
+		return "</Problemas_fslash_Diagnósticos_avaliados>";
 	}
 
 	public ProblemaDiagnosticoBuilder<ProblemaDiagnosticoAvaliadoBuilder<PARENT>> problema() {

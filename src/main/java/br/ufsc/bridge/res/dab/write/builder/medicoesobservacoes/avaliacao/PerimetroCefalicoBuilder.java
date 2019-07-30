@@ -30,12 +30,12 @@ public class PerimetroCefalicoBuilder<PARENT extends ParentArquetypeWrapper<?>> 
 	}
 
 	private String openTagPerimetroCefalico() {
-		return "</oe:value></time><data><_exclm___-__Perímetro_cefálico><name><value>! - Perímetro cefálico</value></name><value><magnitude>";
+		return "</oe:value></time><data><Perímetro_cefálico><name><value>Perímetro cefálico</value></name><value><magnitude>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</magnitude><precision>1</precision><units>cm</units></value></_exclm___-__Perímetro_cefálico>"
+		return "</magnitude><precision>1</precision><units>cm</units></value></Perímetro_cefálico>"
 				+ "</data><state></state></Qualquer_ponto_de_tempo_no_evento_prd_></data></Perímetro_cefálico>";
 	}
 

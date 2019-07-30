@@ -10,7 +10,7 @@ public class EventoReacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 
 	private String manifestacao;
 	private Date dataInstalacao;
-	private String evolucaoAlergia;
+	//	private String evolucaoAlergia;
 
 	public EventoReacaoBuilder(PARENT parent) {
 		super(parent);
@@ -21,10 +21,10 @@ public class EventoReacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 		return this;
 	}
 
-	public EventoReacaoBuilder<PARENT> evolucaoAlergia(String evolucaoAlergia) {
-		this.evolucaoAlergia = evolucaoAlergia;
-		return this;
-	}
+	//	public EventoReacaoBuilder<PARENT> evolucaoAlergia(String evolucaoAlergia) {
+	//		this.evolucaoAlergia = evolucaoAlergia;
+	//		return this;
+	//	}
 
 	public EventoReacaoBuilder<PARENT> dataInstalacao(Date dataInstalacao) {
 		this.dataInstalacao = dataInstalacao;
@@ -49,21 +49,20 @@ public class EventoReacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 		return "</oe:value></value></Manifestação>";
 	}
 
-	private String openTagsEvolucaoAlergia() {
-		return "<Evolução_da_alergia__fslash__reação_adversa><name><value>Evolução da alergia / reação adversa</value></name><value><oe:value>";
-	}
-
-	private String closeTagsEvolucaoAlergia() {
-		return "</oe:value></value></Evolução_da_alergia__fslash__reação_adversa>";
-	}
+	//	private String openTagsEvolucaoAlergia() {
+	//		return "<Evolução_da_alergia__fslash__reação_adversa><name><value>Evolução da alergia / reação adversa</value></name><value><oe:value>";
+	//	}
+	//
+	//	private String closeTagsEvolucaoAlergia() {
+	//		return "</oe:value></value></Evolução_da_alergia__fslash__reação_adversa>";
+	//	}
 
 	private String openTagsDataInstalacao() {
-		return "<Data_da_instalação_da_alergia__fslash__reação_adversa><name><value>"
-				+ "Data da instalação da alergia / reação adversa</value></name><value><oe:value>";
+		return "<Data_da_instalação_da_reação_adversa><name><value>Data da instalação da reação adversa</value></name><value><oe:value>";
 	}
 
 	private String closeTagsDataInstalacao() {
-		return "</oe:value></value></Data_da_instalação_da_alergia__fslash__reação_adversa>";
+		return "</oe:value></value></Data_da_instalação_da_reação_adversa>";
 	}
 
 	@Override
@@ -72,9 +71,9 @@ public class EventoReacaoBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 		if (this.manifestacao != null) {
 			value += this.openTagsManifestacao() + this.manifestacao + this.closeTagsManifestacao();
 		}
-		if (this.evolucaoAlergia != null) {
-			value += this.openTagsEvolucaoAlergia() + this.evolucaoAlergia + this.closeTagsEvolucaoAlergia();
-		}
+		//		if (this.evolucaoAlergia != null) {
+		//			value += this.openTagsEvolucaoAlergia() + this.evolucaoAlergia + this.closeTagsEvolucaoAlergia();
+		//		}
 		if (this.dataInstalacao != null) {
 			value += this.openTagsDataInstalacao() + RDateUtil.dateToISOEHR(this.dataInstalacao) + this.closeTagsDataInstalacao();
 		}

@@ -12,12 +12,12 @@ public class AvaliacaoAntropometricaBuilder<PARENT extends ParentArquetypeWrappe
 
 	@Override
 	protected String openTags() {
-		return "<Avaliação_antropométrica><name><value>Avaliação antropométrica</value></name>";
+		return "<Medições><name><value>Medições</value></name>";
 	}
 
 	@Override
 	protected String closeTags() {
-		return "</Avaliação_antropométrica>";
+		return "</Medições>";
 	}
 
 	public AvaliacaoAntropometricaBuilder<PARENT> pesoCorporal(Date dataEvento, String peso) {

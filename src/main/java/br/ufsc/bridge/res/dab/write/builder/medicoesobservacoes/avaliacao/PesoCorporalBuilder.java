@@ -22,12 +22,7 @@ public class PesoCorporalBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 
 	@Override
 	protected String openTags() {
-		return "<Peso_corporal><name><value>Peso corporal</value></name><language><terminology_id>" +
-				"<value>ISO_639-1</value></terminology_id><code_string>pt</code_string>" +
-				"</language><encoding><terminology_id><value>IANA_character-sets</value></terminology_id>" +
-				"<code_string>UTF-8</code_string></encoding><subject></subject><data>" +
-				"<Qualquer_evento_as_Point_Event><name><value>Qualquer evento</value>" +
-				"</name><time><oe:value>";
+		return "<Peso_corporal><name><value>Peso corporal</value></name><language><terminology_id><value>ISO_639-1</value></terminology_id><code_string>pt</code_string></language><encoding><terminology_id><value>IANA_character-sets</value></terminology_id><code_string>UTF-8</code_string></encoding><subject xsi:type=\"oe:PARTY_SELF\"/><data><Qualquer_evento_as_Point_Event><name><value>Qualquer evento</value></name><time><oe:value>";
 	}
 
 	private String openTagPeso() {
@@ -36,8 +31,7 @@ public class PesoCorporalBuilder<PARENT extends ParentArquetypeWrapper<?>> exten
 
 	@Override
 	protected String closeTags() {
-		return "</magnitude><units>kg</units></value></Peso></data><state/>" +
-				"</Qualquer_evento_as_Point_Event></data></Peso_corporal>";
+		return "</magnitude><units>kg</units></value></Peso></data><state/></Qualquer_evento_as_Point_Event></data></Peso_corporal>";
 	}
 
 	@Override

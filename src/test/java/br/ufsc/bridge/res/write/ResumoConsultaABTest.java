@@ -5,9 +5,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABTurnoEnum;
 import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
@@ -21,26 +19,25 @@ public class ResumoConsultaABTest {
 		CaracterizacaoConsultaABBuilder<ResumoConsultaABBuilder> caracterizacaoConsulta = abBuilder.caracterizacaoConsulta();
 		caracterizacaoConsulta
 				.tipoAtendimento(ResABTipoAtendimentoEnum.CONSULTA_AGENDADA_PROGRAMADA_CUIDADO_CONTINUADO)
-				.cnes("aaaa")
+				.localizacaoAtribuidaPaciente("aaaa", "ine")
 				.identificacaoProfissional()
 					.cns("123456789")
 					.cbo("000000")
 					.responsavel(true)
 				.close()
-				.ine("321")
 				.dataHoraAdmissao(new Date())
-				.turnoAtendimento(ResABTurnoEnum.MANHA)
+//				.turnoAtendimento(ResABTurnoEnum.MANHA)
 			.close()
 			.medicoesObservacoes()
 				.avaliacaoAntropometrica()
 					.pesoCorporal(new Date(), "53")
 					.altura(new Date(), "33")
 				.close()
-				.gestante()
-					.cicloMenstrual(new Date(), new Date())
-					.gestacao(new Date(), "22")
-					.sumarioObstetrico("asdf", "fdas")
-				.close()
+//				.gestante()
+//					.cicloMenstrual(new Date(), new Date())
+//					.gestacao(new Date(), "22")
+//					.sumarioObstetrico("asdf", "fdas")
+//				.close()
 			.close()
 			.problemaDiagnostico()
 				.problema()
@@ -61,7 +58,7 @@ public class ResumoConsultaABTest {
 					.gravidade(ResCriticidadeEnum.ALTO)
 					.eventoReacao()
 						.dataInstalacao(new Date())
-						.evolucaoAlergia("evoluiu para um alien")
+//						.evolucaoAlergia("evoluiu para um alien")
 						.manifestacao("ser saindo do embigo")
 					.close()
 				.close()
@@ -71,7 +68,7 @@ public class ResumoConsultaABTest {
 					.nome("CONSULTA MEDICA EM ATENÇAO BASICA")
 					.data(new Date())
 					.codigo("0301010064")
-					.resultadoObservacoes(Arrays.asList("nada consta"))
+//					.resultadoObservacoes(Arrays.asList("nada consta"))
 				.close()
 				.procedimento()
 					.nome("AVALIAÇÃO ANTROPOMÉTRICA")
@@ -97,7 +94,7 @@ public class ResumoConsultaABTest {
 				.close()
 			.close()
 			.dadosDesfecho()
-				.conduta(ResABCondutaEnum.AGENDAMENTO_PARA_GRUPOS)
+				.conduta("teste")
 				.solicitacoesEncaminhamento()
 					.encaminhamento("Interno no dia I")
 					.encaminhamento("Interno no dia II")
