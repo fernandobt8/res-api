@@ -25,9 +25,9 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 	private List<ResSumarioAltaProcedimento> procedimentos = new ArrayList<>();
 	private List<ResSumarioAltaResumoEvolucaoClinica> resumos = new ArrayList<>();
 	private List<ResSumarioAltaAlergia> alergias = new ArrayList<>();
-	// XXX: aguardar Postal
+	// medicamento estruturado nao ira aparecer por enquanto, deixarei comentado so para manter historico
 	// private List<ResSumarioDeAltaMedicamento> medicamentos = new ArrayList<>();
-	// private List<ResSumarioDeAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = new ArrayList<>();
+	private List<ResSumarioAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = new ArrayList<>();
 	private String planoCuidado;
 	private String motivoAlta;
 	private ResSumarioAltaIdentificacaoProfissional profissional;
@@ -64,14 +64,15 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 				this.alergias.add(new ResSumarioAltaAlergia(xPathAlergia));
 			}
 
-			// XXX: aguardar postal
-			// XPathFactoryAssist xPathAltaMedicamentos = xPathRoot.getXPathAssist("//Prescrição_da_alta");
+			// medicamento estruturado nao ira aparecer por enquanto, deixarei comentado so para manter historico
 			// for (XPathFactoryAssist xPathMedicamentoEstruturado : xPathAltaMedicamentos.iterable(".//Linha_de_Medicação")) {
 			// this.medicamentos.add(new ResSumarioDeAltaMedicamento(xPathMedicamentoEstruturado));
 			// }
-			// for (XPathFactoryAssist xPathMedicamentoNaoEstruturado : xPathAltaMedicamentos.iterable(".//Recipiente")) {
-			// this.medicamentosNaoEstruturados.add(new ResSumarioDeAltaMedicamentoNaoEstruturado(xPathMedicamentoNaoEstruturado));
-			// }
+
+			XPathFactoryAssist xPathAltaMedicamentos = xPathRoot.getXPathAssist("//Prescrição_da_alta");
+			for (XPathFactoryAssist xPathMedicamentoNaoEstruturado : xPathAltaMedicamentos.iterable(".//Recipiente")) {
+				this.medicamentosNaoEstruturados.add(new ResSumarioAltaMedicamentoNaoEstruturado(xPathMedicamentoNaoEstruturado));
+			}
 
 			XPathFactoryAssist xPathPlanoCuidado = xPathRoot.getXPathAssist("//Plano_de_cuidados_comma__instruções_e_recomendações__openBrkt_na_alta_closeBrkt_");
 			this.planoCuidado = xPathPlanoCuidado.getString("./Plano_de_Cuidado/narrative/value");

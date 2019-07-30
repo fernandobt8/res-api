@@ -1,20 +1,27 @@
 package br.ufsc.bridge.res.sumarioalta.dto;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.xpath.XPathExpressionException;
 
+import lombok.Getter;
+
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
-// XXX: aguardar Postal
+@Getter
 public class ResSumarioAltaMedicamentoNaoEstruturado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private String descricao;
+	private List<String> descricoes;
 
 	public ResSumarioAltaMedicamentoNaoEstruturado(XPathFactoryAssist xPathMedicamentoNaoEstruturado) throws XPathExpressionException {
-		this.descricao = xPathMedicamentoNaoEstruturado
+		String descricao = xPathMedicamentoNaoEstruturado
 				.getString("./data/Medicamentos_prescritos_na_alta__openBrkt_não_estruturado_closeBrkt_/Descrição_da_prescrição/value/value");
+		if (descricao != null) {
+			this.descricoes = Arrays.asList(descricao.split(";"));
+		}
 	}
 
 }

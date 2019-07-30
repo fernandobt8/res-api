@@ -6,11 +6,11 @@ import javax.xml.xpath.XPathExpressionException;
 
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
-// XXX: aguardar Postal
+// medicamento estruturado nao ira aparecer por enquanto, deixarei comentado so para manter historico
 public class ResSumarioAltaMedicamento implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	// XXX: questão dose estruturada ser 0..*, não chequei se no AB é assim tbm, mas lá não foi considerado
+	// se voltar a fazer isso daqui, verificar a questão dose estruturada ser 0..*, não chequei se no AB é assim tbm, mas lá não foi considerado
 	private String nomeMedicamento;
 	private String descricaoViaAdministracao;
 	private String descricaoDose;
