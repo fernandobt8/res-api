@@ -70,7 +70,7 @@ public class IdentificacaoProfissionalBuilder<PARENT extends ParentArquetypeWrap
 	public String getValue() {
 		if (this.cns != null || this.nome != null || this.cbo != null || this.responsavel != false) {
 			//			if (StringUtils.isNotBlank(this.nome)) {
-			return this.nome + this.openTagCns() + this.cns + this.openTagCbo() + this.cbo + this.openTagDescricaoCbo() + this.descricaoCbo + this.openTagResponsavel() + this.responsavel;
+			return this.nome + this.openTagCns() + this.cns + this.openTagDescricaoCbo() + this.descricaoCbo + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
 			//			} else {
 			//				return this.cns + this.openTagCbo() + this.cbo + this.openTagResponsavel() + this.responsavel;
 			//			}

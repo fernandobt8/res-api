@@ -14,6 +14,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
@@ -120,7 +122,9 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			String xPathMedicamentos = xPathRoot.getString("//Prescrição_no_atendimento//Descrição_da_prescrição/value/value");
 			if (xPathMedicamentos != null) {
 				for (String medicamento : xPathMedicamentos.split(";")) {
-					this.medicamentosNaoEstruturados.add(medicamento);
+					if (StringUtils.isNotBlank(medicamento)) {
+						this.medicamentosNaoEstruturados.add(medicamento);
+					}
 				}
 			}
 

@@ -29,7 +29,7 @@ public class ResumoConsultaABBuilder extends ParentArquetypeWrapper<ResumoConsul
 
 	@Override
 	protected String closeTags() {
-		return "</Encontro>";
+		return "</Registro_de_Atendimento_Clínico>";
 	}
 
 	public ResumoConsultaABBuilder data(Date data) {
