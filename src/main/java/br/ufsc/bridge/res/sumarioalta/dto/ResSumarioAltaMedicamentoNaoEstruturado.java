@@ -1,6 +1,7 @@
 package br.ufsc.bridge.res.sumarioalta.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResSumarioAltaMedicamentoNaoEstruturado implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<String> descricoes;
+	private List<String> descricoes = new ArrayList<>();
 
 	public ResSumarioAltaMedicamentoNaoEstruturado(XPathFactoryAssist xPathMedicamentoNaoEstruturado) throws XPathExpressionException {
 		String descricao = xPathMedicamentoNaoEstruturado

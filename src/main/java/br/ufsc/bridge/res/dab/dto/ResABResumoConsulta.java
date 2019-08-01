@@ -21,7 +21,6 @@ import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilde
 import br.ufsc.bridge.res.dab.write.builder.alergia.RiscoReacaoAdversaBuilder;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.desfecho.DadosDesfechoBuilder;
-import br.ufsc.bridge.res.dab.write.builder.listamedicamentos.ListaMedicamentosNaoEstruturadosBuilder;
 import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
 import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
