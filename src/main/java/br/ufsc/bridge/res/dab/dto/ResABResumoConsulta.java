@@ -177,6 +177,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				.altura(this.dataAtendimento, this.altura)
 				.perimetroCefalico(this.dataAtendimento, this.perimetroCefalico)
 			.close();
+		// XXX: aguardar postal com exemplos (dum, ig, gestas prévias, partos e aleitamento materno)
 //			.gestante()
 //				.cicloMenstrual(this.dataAtendimento, this.dum)
 //				.gestacao(this.dataAtendimento, this.idadeGestacional)
