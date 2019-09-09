@@ -9,10 +9,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
 import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
 import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
@@ -20,6 +18,8 @@ import br.ufsc.bridge.res.dab.dto.ResABMedicamento;
 import br.ufsc.bridge.res.dab.dto.ResABProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABProcedimento;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
+import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 
 public class TestConvertXMLToResABResumoConsulta {
 
@@ -59,7 +59,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		String dateInString = "2016-05-23T15:00:00.000-03:00";
 		Assert.assertEquals(formatter.parse(dateInString), resumoConsulta.getDataAtendimento());
 
-		//Assert.assertEquals(ResABTurnoEnum.NOITE, resumoConsulta.getTurno());
+		// Assert.assertEquals(ResABTurnoEnum.NOITE, resumoConsulta.getTurno());
 
 		Assert.assertEquals("994.250", resumoConsulta.getPeso());
 		Assert.assertEquals("987.55", resumoConsulta.getAltura());
@@ -79,22 +79,22 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABProblemaDiagnostico resABProblemaDiagnostico1 = resumoConsulta.getProblemasDiagnosticos().get(0);
 		Assert.assertEquals("A920", resABProblemaDiagnostico1.getCodigo());
 		Assert.assertEquals("Febre de Chikungunya", resABProblemaDiagnostico1.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico1.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico1.getTipo());
 
 		ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
 		Assert.assertEquals("T28", resABProblemaDiagnostico2.getCodigo());
 		Assert.assertEquals("LIMITAÇÃO FUNCIONAL/INCAPACIDADE", resABProblemaDiagnostico2.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CIAP, resABProblemaDiagnostico2.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CIAP, resABProblemaDiagnostico2.getTipo());
 
 		ResABProblemaDiagnostico resABProblemaDiagnostico3 = resumoConsulta.getProblemasDiagnosticos().get(2);
 		Assert.assertEquals("O038", resABProblemaDiagnostico3.getCodigo());
 		Assert.assertEquals("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.", resABProblemaDiagnostico3.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico3.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico3.getTipo());
 
 		Assert.assertEquals(2, resumoConsulta.getAlergias().size());
 
 		ResABAlergiaReacoes resABAlergiaReacoes1 = resumoConsulta.getAlergias().get(0);
-		Assert.assertEquals(ResABCriticidadeEnum.BAIXO, resABAlergiaReacoes1.getCriticidade());
+		Assert.assertEquals(ResCriticidadeEnum.BAIXO, resABAlergiaReacoes1.getCriticidade());
 		Assert.assertEquals("Alimento", resABAlergiaReacoes1.getCategoria());
 		Assert.assertEquals("leite", resABAlergiaReacoes1.getAgente());
 
@@ -113,7 +113,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		Assert.assertEquals("início mês passado, percebeu piora após ingestão de leite e derivados", resABAlergia1EventoReacao2.getManifestacao());
 
 		ResABAlergiaReacoes resABAlergiaReacoes2 = resumoConsulta.getAlergias().get(1);
-		Assert.assertEquals(ResABCriticidadeEnum.ALTO, resABAlergiaReacoes2.getCriticidade());
+		Assert.assertEquals(ResCriticidadeEnum.ALTO, resABAlergiaReacoes2.getCriticidade());
 		Assert.assertEquals("Remedio", resABAlergiaReacoes2.getCategoria());
 		Assert.assertEquals("metamizol", resABAlergiaReacoes2.getAgente());
 
@@ -173,10 +173,10 @@ public class TestConvertXMLToResABResumoConsulta {
 
 		Assert.assertEquals(2, resumoConsulta.getCondutas().size());
 
-		//		ResABCondutaEnum resABConduta1 = resumoConsulta.getCondutas().get(0);
-		//		Assert.assertEquals("Retorno para cuidado continuado/programado", resABConduta1.getDescricao());
-		//		ResABCondutaEnum resABCondutaEnum2 = resumoConsulta.getCondutas().get(1);
-		//		Assert.assertEquals("Alta do episódio", resABCondutaEnum2.getDescricao());
+		// ResABCondutaEnum resABConduta1 = resumoConsulta.getCondutas().get(0);
+		// Assert.assertEquals("Retorno para cuidado continuado/programado", resABConduta1.getDescricao());
+		// ResABCondutaEnum resABCondutaEnum2 = resumoConsulta.getCondutas().get(1);
+		// Assert.assertEquals("Alta do episódio", resABCondutaEnum2.getDescricao());
 
 		Assert.assertEquals(3, resumoConsulta.getEncaminhamentos().size());
 
@@ -191,7 +191,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT002.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-		//Assert.assertNull(resumoConsulta.getTurno());
+		// Assert.assertNull(resumoConsulta.getTurno());
 		Assert.assertNull(resumoConsulta.getCnes());
 
 		Assert.assertEquals(1, resumoConsulta.getProfissionais().size());
@@ -248,7 +248,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABProcedimento resABProcedimento1 = resumoConsulta.getProcedimentos().get(0);
 		Assert.assertNull(resABProcedimento1.getCodigo());
 		Assert.assertNull(resABProcedimento1.getNome());
-		//Assert.assertEquals(0, resABProcedimento1.getResultadoObservacoes().size());
+		// Assert.assertEquals(0, resABProcedimento1.getResultadoObservacoes().size());
 
 		Assert.assertEquals(3, resumoConsulta.getMedicamentos().size());
 		ResABMedicamento resABMedicamento1 = resumoConsulta.getMedicamentos().get(0);
@@ -294,7 +294,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		String pathFile = this.PATH_TEST_RESOURCE + "/TestConvertXMLToResABResumoConsulta/CDT003.xml";
 		InputStream resourceAsStream = new FileInputStream(pathFile);
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
-		//	Assert.assertNull(resumoConsulta.getTurno());
+		// Assert.assertNull(resumoConsulta.getTurno());
 		Assert.assertNull(resumoConsulta.getCnes());
 		Assert.assertNull(resumoConsulta.getDataAtendimento());
 		Assert.assertNull(resumoConsulta.getAltura());
@@ -324,7 +324,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABResumoConsulta resumoConsulta = new ResABResumoConsulta(IOUtils.toString(resourceAsStream));
 
 		Assert.assertEquals(ResABTipoAtendimentoEnum.DEMANDA_ESPONTANEA_CONSULTA_NO_DIA, resumoConsulta.getTipoAtendimento());
-		//Assert.assertNull(resumoConsulta.getTurno());
+		// Assert.assertNull(resumoConsulta.getTurno());
 		Assert.assertNull(resumoConsulta.getCnes());
 
 		Assert.assertEquals(1, resumoConsulta.getProfissionais().size());
@@ -383,7 +383,7 @@ public class TestConvertXMLToResABResumoConsulta {
 		ResABProblemaDiagnostico resABProblemaDiagnostico2 = resumoConsulta.getProblemasDiagnosticos().get(1);
 		Assert.assertEquals("A920", resABProblemaDiagnostico2.getCodigo());
 		Assert.assertEquals("Febre de Chikungunya", resABProblemaDiagnostico2.getDescricao());
-		Assert.assertEquals(ResABTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico2.getTipo());
+		Assert.assertEquals(ResTipoProblemaDiagnostico.CID10, resABProblemaDiagnostico2.getTipo());
 
 		Assert.assertEquals(0, resumoConsulta.getProcedimentos().size());
 	}

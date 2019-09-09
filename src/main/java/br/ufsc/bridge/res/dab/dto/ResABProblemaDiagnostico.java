@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
+import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -22,13 +22,13 @@ public class ResABProblemaDiagnostico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String descricao;
-	private ResABTipoProblemaDiagnostico tipo;
+	private ResTipoProblemaDiagnostico tipo;
 	private String codigo;
 
 	public ResABProblemaDiagnostico(XPathFactoryAssist xPathDiagnostico) throws XPathExpressionException {
 		this.codigo = xPathDiagnostico.getString("./data/Diagnóstico/value/defining_code/code_string");
 		this.descricao = xPathDiagnostico.getString("./data/Diagnóstico/value/value");
-		this.tipo = ResABTipoProblemaDiagnostico.getByTipo(xPathDiagnostico.getString("./data/Diagnóstico/value/defining_code/terminology_id/value"));
+		this.tipo = ResTipoProblemaDiagnostico.getByTipo(xPathDiagnostico.getString("./data/Diagnóstico/value/defining_code/terminology_id/value"));
 	}
 
 	public String getTipoProblemaDiagnostico() {

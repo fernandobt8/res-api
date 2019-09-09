@@ -81,6 +81,7 @@ public class RDateUtil {
 		return null;
 	}
 
+	// XXX: esperar chegar servidor para verificar como deve ser o format
 	public static Date isoEHRToDate(String date) {
 		if (StringUtils.isNotBlank(date)) {
 			return new Date(ISODateTimeFormat.dateTimeParser().parseMillis(date));

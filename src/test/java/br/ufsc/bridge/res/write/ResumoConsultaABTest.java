@@ -4,10 +4,10 @@ import java.util.Date;
 
 import org.junit.Test;
 
-import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 
 public class ResumoConsultaABTest {
 
@@ -54,7 +54,7 @@ public class ResumoConsultaABTest {
 				.alergia()
 					.agente("porcaria")
 					.categoria("filha da putagem")
-					.gravidade(ResABCriticidadeEnum.ALTO)
+					.gravidade(ResCriticidadeEnum.ALTO)
 					.eventoReacao()
 						.dataInstalacao(new Date())
 //						.evolucaoAlergia("evoluiu para um alien")

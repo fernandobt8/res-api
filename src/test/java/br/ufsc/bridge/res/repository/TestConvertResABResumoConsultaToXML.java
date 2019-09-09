@@ -12,10 +12,8 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
 import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
 import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
@@ -23,6 +21,8 @@ import br.ufsc.bridge.res.dab.dto.ResABMedicamento;
 import br.ufsc.bridge.res.dab.dto.ResABProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABProcedimento;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
+import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 
 public class TestConvertResABResumoConsultaToXML {
 
@@ -75,7 +75,7 @@ public class TestConvertResABResumoConsultaToXML {
 		String dateInString = "2016-05-23T15:00:00.000-03:00";
 		resumoConsulta.setDataAtendimento(formatter.parse(dateInString));
 
-		//resumoConsulta.setTurno(ResABTurnoEnum.NOITE);
+		// resumoConsulta.setTurno(ResABTurnoEnum.NOITE);
 		resumoConsulta.setPeso("994.250");
 		resumoConsulta.setAltura("987.55");
 		resumoConsulta.setPerimetroCefalico("43");
@@ -222,7 +222,7 @@ public class TestConvertResABResumoConsultaToXML {
 		ResABAlergiaReacoes alergia1 = new ResABAlergiaReacoes();
 		alergia1.setAgente("leite");
 		alergia1.setCategoria("Alimento");
-		alergia1.setCriticidade(ResABCriticidadeEnum.BAIXO);
+		alergia1.setCriticidade(ResCriticidadeEnum.BAIXO);
 
 		List<ResABEventoReacao> reacoesAlergia1 = new LinkedList<>();
 		ResABEventoReacao reacao1Alergia1 = new ResABEventoReacao();
@@ -247,7 +247,7 @@ public class TestConvertResABResumoConsultaToXML {
 		ResABAlergiaReacoes alergia2 = new ResABAlergiaReacoes();
 		alergia2.setAgente("metamizol");
 		alergia2.setCategoria("Remedio");
-		alergia2.setCriticidade(ResABCriticidadeEnum.ALTO);
+		alergia2.setCriticidade(ResCriticidadeEnum.ALTO);
 
 		List<ResABEventoReacao> reacoesAlergia2 = new LinkedList<>();
 		ResABEventoReacao reacao1Alergia2 = new ResABEventoReacao();
@@ -274,18 +274,18 @@ public class TestConvertResABResumoConsultaToXML {
 
 		problema.setCodigo("A920");
 		problema.setDescricao("Febre de Chikungunya");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CID10);
+		problema.setTipo(ResTipoProblemaDiagnostico.CID10);
 		problemas.add(problema);
 
 		problema = new ResABProblemaDiagnostico();
 		problema.setCodigo("T28");
 		problema.setDescricao("LIMITAÇÃO FUNCIONAL/INCAPACIDADE");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CIAP);
+		problema.setTipo(ResTipoProblemaDiagnostico.CIAP);
 		problemas.add(problema);
 
 		problema = new ResABProblemaDiagnostico();
 		problema.setDescricao("ABORTO ESPONTÂNEO - COMPLETO OU NÃO ESPEC., COM OUTRAS COMPLICAÇÕES OU COM COMPLICAÇÕES NÃO ESPECIF.");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CID10);
+		problema.setTipo(ResTipoProblemaDiagnostico.CID10);
 		problema.setCodigo("O038");
 		problemas.add(problema);
 		return problemas;
@@ -335,13 +335,13 @@ public class TestConvertResABResumoConsultaToXML {
 
 		problema.setCodigo("S08");
 		problema.setDescricao("AMPUTAÇÃO TRAUMÁTICA DE PARTE DA CABEÇA");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CID10);
+		problema.setTipo(ResTipoProblemaDiagnostico.CID10);
 		problemas.add(problema);
 
 		problema = new ResABProblemaDiagnostico();
 		problema.setCodigo("A01");
 		problema.setDescricao("DOR GENERALIZADA /MÚLTIPLA");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CIAP);
+		problema.setTipo(ResTipoProblemaDiagnostico.CIAP);
 		problemas.add(problema);
 
 		problema = new ResABProblemaDiagnostico();
@@ -360,7 +360,7 @@ public class TestConvertResABResumoConsultaToXML {
 		ResABAlergiaReacoes alergia2 = new ResABAlergiaReacoes();
 		alergia2.setAgente("Engove");
 		alergia2.setCategoria("Remédio");
-		alergia2.setCriticidade(ResABCriticidadeEnum.ALTO);
+		alergia2.setCriticidade(ResCriticidadeEnum.ALTO);
 
 		List<ResABEventoReacao> reacoesAlergia2 = new LinkedList<>();
 		ResABEventoReacao reacao1Alergia2 = new ResABEventoReacao();
@@ -450,13 +450,13 @@ public class TestConvertResABResumoConsultaToXML {
 
 		problema.setCodigo("S08");
 		problema.setDescricao("AMPUTAÇÃO TRAUMÁTICA DE PARTE DA CABEÇA");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CID10);
+		problema.setTipo(ResTipoProblemaDiagnostico.CID10);
 		problemas.add(problema);
 
 		problema = new ResABProblemaDiagnostico();
 		problema.setCodigo("A01");
 		problema.setDescricao("DOR GENERALIZADA /MÚLTIPLA");
-		problema.setTipo(ResABTipoProblemaDiagnostico.CIAP);
+		problema.setTipo(ResTipoProblemaDiagnostico.CIAP);
 		problemas.add(problema);
 		resumoConsulta.setProblemasDiagnosticos(problemas);
 
@@ -470,7 +470,7 @@ public class TestConvertResABResumoConsultaToXML {
 		ResABAlergiaReacoes alergia2 = new ResABAlergiaReacoes();
 		alergia2.setAgente("Engove");
 		alergia2.setCategoria("Remédio");
-		alergia2.setCriticidade(ResABCriticidadeEnum.ALTO);
+		alergia2.setCriticidade(ResCriticidadeEnum.ALTO);
 
 		List<ResABEventoReacao> reacoesAlergia2 = new LinkedList<>();
 		ResABEventoReacao reacao1Alergia2 = new ResABEventoReacao();
@@ -511,9 +511,9 @@ public class TestConvertResABResumoConsultaToXML {
 		medicamentos.add(medicamento);
 		resumoConsulta.setMedicamentos(medicamentos);
 
-		//		List<ResABCondutaEnum> condutas = new LinkedList<>();
-		//		condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
-		//		resumoConsulta.setCondutas(condutas);
+		// List<ResABCondutaEnum> condutas = new LinkedList<>();
+		// condutas.add(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO);
+		// resumoConsulta.setCondutas(condutas);
 
 		List<String> encaminhamentos = new LinkedList<>();
 		encaminhamentos.add("Interno no dia");

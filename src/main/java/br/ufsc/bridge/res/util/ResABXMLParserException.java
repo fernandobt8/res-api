@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dab.exception;
+package br.ufsc.bridge.res.util;
 
 import br.ufsc.bridge.res.service.exception.ResException;
 

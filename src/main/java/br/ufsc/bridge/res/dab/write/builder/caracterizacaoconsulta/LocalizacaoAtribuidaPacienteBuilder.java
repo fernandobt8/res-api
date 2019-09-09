@@ -25,15 +25,30 @@ public class LocalizacaoAtribuidaPacienteBuilder<PARENT extends ParentArquetypeW
 
 	@Override
 	protected String closeTags() {
-		return "</oe:value></value></Identificação_da_equipe_de_saúde></Instituição></Localização_atribuída_ao_paciente>";
+		return "</Instituição></Localização_atribuída_ao_paciente>";
 	}
 
 	@Override
 	public String getValue() {
-		return this.cnes + this.closeCnes() + this.ine;
+		String value = this.cnes + this.closeCnes();
+
+		if (this.ine != null) {
+			value += this.openIne() + this.ine + this.closeIne();
+		}
+
+		return value;
 	}
 
 	private String closeCnes() {
-		return "</oe:value></value></Estabelecimento_de_saúde><Identificação_da_equipe_de_saúde><name><value>Identificação da equipe de saúde</value></name><value><oe:value>";
+		return "</oe:value></value></Estabelecimento_de_saúde>";
 	}
+
+	private String openIne() {
+		return "<Identificação_da_equipe_de_saúde><name><value>Identificação da equipe de saúde</value></name><value><oe:value>";
+	}
+
+	private String closeIne() {
+		return "</oe:value></value></Identificação_da_equipe_de_saúde>";
+	}
+
 }
