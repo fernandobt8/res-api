@@ -30,6 +30,11 @@ import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+
+import net.minidev.json.JSONArray;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -137,6 +142,27 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		} catch (XPathExpressionException e) {
 			throw new ResABXMLParserException("Erro no parser do XML para o DTO", e);
 		}
+	}
+
+	public ResABResumoConsulta(String json, boolean a) throws ResABXMLParserException {
+		DocumentContext parse = JsonPath.parse(json);
+		Object teste = parse.read("$.content[?(@.name.value == 'Caracterização do atendimento')].items.data.items[?(@.name.value == 'Tipo de atendimento')].value..code_string");
+		teste = parse.read("$..items[?(@.name.value == 'Tipo de atendimento')].value..code_string");
+		System.out.println(teste);
+		teste = parse.read("$..items[?(@.name.value == 'Tipo de atendimento')]");
+
+		JSONArray aa = (JSONArray) teste;
+
+		String jsonString = aa.toJSONString();
+		System.out.println(jsonString);
+
+		parse.set("$..items[?(@.name.value == 'Tipo de atendimento')].value..code_string", "8888");
+
+		parse.add("$.content[?(@.name.value == 'Caracterização do atendimento')].items.data.items", "asdf");
+
+		//		parse.delete("$..items[?(@.name.value == 'Tipo de atendimento')]");
+
+		System.out.println(parse.jsonString());
 	}
 
 	@Override
