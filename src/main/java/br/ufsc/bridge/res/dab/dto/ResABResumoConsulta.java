@@ -176,7 +176,6 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		System.out.println(parse.jsonString());
 	}
 
-	@Override
 	public String getXml() {
 		ResumoConsultaABBuilder abBuilder = new ResumoConsultaABBuilder().data(this.dataAtendimento);
 
