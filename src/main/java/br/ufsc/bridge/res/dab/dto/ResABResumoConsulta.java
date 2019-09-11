@@ -18,13 +18,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
-import br.ufsc.bridge.res.dab.write.builder.alergia.AlergiaReacoesAdversasBuilder;
-import br.ufsc.bridge.res.dab.write.builder.alergia.RiscoReacaoAdversaBuilder;
-import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
-import br.ufsc.bridge.res.dab.write.builder.desfecho.DadosDesfechoBuilder;
-import br.ufsc.bridge.res.dab.write.builder.problema.ProblemaDiagnosticoAvaliadoBuilder;
-import br.ufsc.bridge.res.dab.write.builder.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.ResumoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.alergia.AlergiaReacoesAdversasBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.alergia.RiscoReacaoAdversaBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.desfecho.DadosDesfechoBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.problema.ProblemaDiagnosticoAvaliadoBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.procedimentospequenascirurgias.ProcedimentosPequenasCirurgiasBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResABXMLParserException;
 import br.ufsc.bridge.res.util.ResDocument;
@@ -159,13 +159,13 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		DocumentContext parse = JsonPath.parse(json);
 		Object teste = parse.read("$.content[?(@.name.value == 'Caracterização do atendimento')].items.data.items[?(@.name.value == 'Tipo de atendimento')].value..code_string");
 		teste = parse.read("$..items[?(@.name.value == 'Tipo de atendimento')].value..code_string");
-		System.out.println(teste);
+		//		System.out.println(teste);
 		teste = parse.read("$..items[?(@.name.value == 'Tipo de atendimento')]");
 
 		JSONArray aa = (JSONArray) teste;
 
 		String jsonString = aa.toJSONString();
-		System.out.println(jsonString);
+		//		System.out.println(jsonString);
 
 		parse.set("$..items[?(@.name.value == 'Tipo de atendimento')].value..code_string", "8888");
 

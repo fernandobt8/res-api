@@ -5,8 +5,8 @@ import java.util.Date;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.write.builder.ResumoConsultaABBuilder;
-import br.ufsc.bridge.res.dab.write.builder.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.ResumoConsultaABBuilder;
+import br.ufsc.bridge.res.dab.writer.xml.caracterizacaoconsulta.CaracterizacaoConsultaABBuilder;
 import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 
 public class ResumoConsultaABTest {

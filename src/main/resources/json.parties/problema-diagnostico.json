@@ -1,0 +1,205 @@
+{
+  "_archetype_node_id": "openEHR-EHR-SECTION.problem_list.v1",
+  "_type": "SECTION",
+  "name": {
+    "value": "Problemas/Diagnósticos avaliados"
+  },
+  "archetype_details": {
+    "archetype_id": {
+      "value": "openEHR-EHR-SECTION.problem_list.v1"
+    },
+    "rm_version": "1.0.1"
+  },
+  "items": [
+    {
+      "_archetype_node_id": "openEHR-EHR-EVALUATION.problem_diagnosis-ms_br.v1",
+      "_type": "EVALUATION",
+      "name": {
+        "value": "Problema Diagnóstico"
+      },
+      "archetype_details": {
+        "archetype_id": {
+          "value": "openEHR-EHR-EVALUATION.problem_diagnosis-ms_br.v1"
+        },
+        "rm_version": "1.0.1"
+      },
+      "language": {
+        "terminology_id": {
+          "value": "ISO_639-1"
+        },
+        "code_string": "en"
+      },
+      "encoding": {
+        "terminology_id": {
+          "value": "IANA_character-sets"
+        },
+        "code_string": "UTF-8"
+      },
+      "subject": {
+        "_type": "PARTY_SELF"
+      },
+      "data": {
+        "_archetype_node_id": "at0001",
+        "_type": "ITEM_TREE",
+        "name": {
+          "value": "structure"
+        },
+        "items": [
+          {
+            "_archetype_node_id": "at0002.1",
+            "_type": "ELEMENT",
+            "name": {
+              "value": "Diagnóstico"
+            },
+            "value": {
+              "_type": "DV_CODED_TEXT",
+              "value": "Hipertensão secundária",
+              "defining_code": {
+                "terminology_id": {
+                  "value": "CID-10_1998.v1.0.0"
+                },
+                "code_string": "I15"
+              }
+            }
+          },
+          {
+            "_archetype_node_id": "openEHR-EHR-CLUSTER.problem_status.v0",
+            "_type": "CLUSTER",
+            "name": {
+              "value": "Estado do Problema / Diagnóstico"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.problem_status.v0"
+              },
+              "rm_version": "1.0.1"
+            },
+            "items": {
+              "_archetype_node_id": "at0063",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Categoria do diagnóstico"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "Diagnóstico principal",
+                "defining_code": {
+                  "terminology_id": {
+                    "value": "local"
+                  },
+                  "code_string": "at0064"
+                }
+              }
+            }
+          },
+          {
+            "_archetype_node_id": "at0069",
+            "_type": "ELEMENT",
+            "name": {
+              "value": "Nota"
+            },
+            "value": {
+              "_type": "DV_TEXT",
+              "value": "Relata morte do tio há uma semana por infarto e diz ter medo de morrer também."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "_archetype_node_id": "openEHR-EHR-EVALUATION.problem_diagnosis-ms_br.v1",
+      "_type": "EVALUATION",
+      "name": {
+        "value": "Problema Diagnóstico #1"
+      },
+      "archetype_details": {
+        "archetype_id": {
+          "value": "openEHR-EHR-EVALUATION.problem_diagnosis-ms_br.v1"
+        },
+        "rm_version": "1.0.1"
+      },
+      "language": {
+        "terminology_id": {
+          "value": "ISO_639-1"
+        },
+        "code_string": "en"
+      },
+      "encoding": {
+        "terminology_id": {
+          "value": "IANA_character-sets"
+        },
+        "code_string": "UTF-8"
+      },
+      "subject": {
+        "_type": "PARTY_SELF"
+      },
+      "data": {
+        "_archetype_node_id": "at0001",
+        "_type": "ITEM_TREE",
+        "name": {
+          "value": "structure"
+        },
+        "items": [
+          {
+            "_archetype_node_id": "at0002.1",
+            "_type": "ELEMENT",
+            "name": {
+              "value": "Problema"
+            },
+            "value": {
+              "_type": "DV_CODED_TEXT",
+              "value": "Medo de morrer/medo da morte",
+              "defining_code": {
+                "terminology_id": {
+                  "value": "CIAP-2_2005.v1.0.0"
+                },
+                "code_string": "A25"
+              }
+            }
+          },
+          {
+            "_archetype_node_id": "openEHR-EHR-CLUSTER.problem_status.v0",
+            "_type": "CLUSTER",
+            "name": {
+              "value": "Estado do Problema / Diagnóstico #1"
+            },
+            "archetype_details": {
+              "archetype_id": {
+                "value": "openEHR-EHR-CLUSTER.problem_status.v0"
+              },
+              "rm_version": "1.0.1"
+            },
+            "items": {
+              "_archetype_node_id": "at0083",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Estado de resolução do problema"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "Resolvido",
+                "defining_code": {
+                  "terminology_id": {
+                    "value": "local"
+                  },
+                  "code_string": "at0084"
+                }
+              }
+            }
+          },
+          {
+            "_archetype_node_id": "at0069",
+            "_type": "ELEMENT",
+            "name": {
+              "value": "Nota"
+            },
+            "value": {
+              "_type": "DV_TEXT",
+              "value": "Relata morte do tio há uma semana por infarto e diz ter medo de morrer também."
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

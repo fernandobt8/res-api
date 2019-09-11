@@ -1,0 +1,411 @@
+{
+  "_archetype_node_id": "openEHR-EHR-COMPOSITION.encounter.v1",
+  "name": {
+    "value": "Registro de Atendimento Clínico"
+  },
+  "uid": {
+    "_type": "OBJECT_VERSION_ID",
+    "value": "dcf97204-df2c-4bf3-a1aa-1ca49381c0f6::example.ethercis.com::1"
+  },
+  "archetype_details": {
+    "archetype_id": {
+      "value": "openEHR-EHR-COMPOSITION.encounter.v1"
+    },
+    "template_id": {
+      "value": "RegistroAtendimentoClinico.v4.0"
+    },
+    "rm_version": "1.0.1"
+  },
+  "language": {
+    "terminology_id": {
+      "value": "ISO_639-1"
+    },
+    "code_string": "en"
+  },
+  "territory": {
+    "terminology_id": {
+      "value": "ISO_3166-1"
+    },
+    "code_string": "GB"
+  },
+  "category": {
+    "value": "event",
+    "defining_code": {
+      "terminology_id": {
+        "value": "openehr"
+      },
+      "code_string": "433"
+    }
+  },
+  "composer": {
+    "_type": "PARTY_IDENTIFIED",
+    "external_ref": {
+      "id": {
+        "_type": "GENERIC_ID",
+        "value": "1234-5678",
+        "scheme": "ETHERCIS-TEST"
+      },
+      "namespace": "DEMOGRAPHIC",
+      "type": "PARTY"
+    },
+    "name": "Composer",
+    "identifiers": {
+      "issuer": "ETHERCIS",
+      "assigner": "dummy",
+      "id": "1234-5678",
+      "type": "dummy"
+    }
+  },
+  "context": {
+    "start_time": {
+      "value": "2019-09-10T17:29:57.503-03:00"
+    },
+    "location": "TEST LAB",
+    "setting": {
+      "value": "Other Care",
+      "defining_code": {
+        "terminology_id": {
+          "value": "openehr"
+        },
+        "code_string": "238"
+      }
+    },
+    "health_care_facility": {
+      "external_ref": {
+        "id": {
+          "_type": "GENERIC_ID",
+          "value": "123456-123",
+          "scheme": "ETHERCIS-SCHEME"
+        },
+        "namespace": "DEMOGRAPHIC",
+        "type": "PARTY"
+      },
+      "name": "FACILITY"
+    }
+  },
+  "content": [
+    {
+      "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+      "_type": "SECTION",
+      "name": {
+        "value": "Caracterização do atendimento"
+      },
+      "archetype_details": {
+        "archetype_id": {
+          "value": "openEHR-EHR-SECTION.adhoc.v1"
+        },
+        "rm_version": "1.0.1"
+      },
+      "items": {
+        "_archetype_node_id": "openEHR-EHR-ADMIN_ENTRY.admission-ms_br.v2",
+        "_type": "ADMIN_ENTRY",
+        "name": {
+          "value": "Admissão do paciente"
+        },
+        "archetype_details": {
+          "archetype_id": {
+            "value": "openEHR-EHR-ADMIN_ENTRY.admission-ms_br.v2"
+          },
+          "template_id": {
+            "value": "RegistroAtendimentoClinico.v4.0"
+          },
+          "rm_version": "1.0.1"
+        },
+        "language": {
+          "terminology_id": {
+            "value": "ISO_639-1"
+          },
+          "code_string": "en"
+        },
+        "encoding": {
+          "terminology_id": {
+            "value": "IANA_character-sets"
+          },
+          "code_string": "UTF-8"
+        },
+        "subject": {
+          "_type": "PARTY_SELF"
+        },
+        "data": {
+          "_archetype_node_id": "at0001",
+          "_type": "ITEM_TREE",
+          "name": {
+            "value": "Tree"
+          },
+          "items": [
+            {
+              "_archetype_node_id": "at0.135",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Modalidade assistencial"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "Atenção básica",
+                "defining_code": {
+                  "terminology_id": {
+                    "value": "local"
+                  },
+                  "code_string": "at0.136"
+                }
+              }
+            },
+            {
+              "_archetype_node_id": "at0.132",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Tipo de atendimento"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "Consulta agendada programada/ cuidado continuado",
+                "defining_code": {
+                  "terminology_id": {
+                    "value": "local"
+                  },
+                  "code_string": "at0.140"
+                }
+              }
+            },
+            {
+              "_archetype_node_id": "at0.176",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Procedência"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "Demanda espontânea",
+                "defining_code": {
+                  "terminology_id": {
+                    "value": "local"
+                  },
+                  "code_string": "at0.179"
+                }
+              }
+            },
+            {
+              "_archetype_node_id": "at0073",
+              "_type": "CLUSTER",
+              "name": {
+                "value": "Localização atribuída ao paciente"
+              },
+              "items": [
+                {
+                  "_archetype_node_id": "at0074.1",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "Local de atendimento"
+                  },
+                  "value": {
+                    "_type": "DV_CODED_TEXT",
+                    "value": "No próprio estabelecimento",
+                    "defining_code": {
+                      "terminology_id": {
+                        "value": "local"
+                      },
+                      "code_string": "at0.177"
+                    }
+                  }
+                },
+                {
+                  "_archetype_node_id": "at0104",
+                  "_type": "CLUSTER",
+                  "name": {
+                    "value": "Instituição"
+                  },
+                  "items": [
+                    {
+                      "_archetype_node_id": "at0.158",
+                      "_type": "ELEMENT",
+                      "name": {
+                        "value": "Estabelecimento de saúde"
+                      },
+                      "value": {
+                        "_type": "DV_TEXT",
+                        "value": "aaaa"
+                      }
+                    },
+                    {
+                      "_archetype_node_id": "at0.159",
+                      "_type": "ELEMENT",
+                      "name": {
+                        "value": "Identificação da equipe de saúde"
+                      },
+                      "value": {
+                        "_type": "DV_TEXT",
+                        "value": "ine"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "_archetype_node_id": "at0121",
+              "_type": "CLUSTER",
+              "name": {
+                "value": "Profissionais do atendimento"
+              },
+              "items": [
+                {
+                  "_archetype_node_id": "at0100",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "Nome do profissional"
+                  },
+                  "value": {
+                    "_type": "DV_TEXT",
+                    "value": "testeeee"
+                  }
+                },
+                {
+                  "_archetype_node_id": "at0.165",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "CNS do profissional"
+                  },
+                  "value": {
+                    "_type": "DV_TEXT",
+                    "value": "123456789"
+                  }
+                },
+                {
+                  "_archetype_node_id": "at0.166",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "Ocupação do profissional"
+                  },
+                  "value": {
+                    "_type": "DV_CODED_TEXT",
+                    "value": "médico",
+                    "defining_code": {
+                      "terminology_id": {
+                        "value": "CBO_2002.v1.0.0"
+                      },
+                      "code_string": "000000"
+                    }
+                  }
+                },
+                {
+                  "_archetype_node_id": "at0.167",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "É o responsável pelo atendimento?"
+                  },
+                  "value": {
+                    "_type": "DV_BOOLEAN",
+                    "value": "true"
+                  }
+                }
+              ]
+            },
+            {
+              "_archetype_node_id": "at0071",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Data/hora da admissão"
+              },
+              "value": {
+                "_type": "DV_DATE_TIME",
+                "value": "2019-09-10T17:29:57.625-03:00"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+      "_type": "SECTION",
+      "name": {
+        "value": "Observações"
+      },
+      "archetype_details": {
+        "archetype_id": {
+          "value": "openEHR-EHR-SECTION.adhoc.v1"
+        },
+        "rm_version": "1.0.1"
+      },
+      "items": [
+        {
+          "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+          "_type": "SECTION",
+          "name": {
+            "value": "Informações adicionais"
+          },
+          "archetype_details": {
+            "archetype_id": {
+              "value": "openEHR-EHR-SECTION.adhoc.v1"
+            },
+            "rm_version": "1.0.1"
+          },
+          "items": [
+            {
+              "_archetype_node_id": "openEHR-EHR-OBSERVATION.infant_feeding-ms_br.v0",
+              "_type": "OBSERVATION",
+              "name": {
+                "value": "Alimentação da criança menor de 2 anos"
+              },
+              "archetype_details": {
+                "archetype_id": {
+                  "value": "openEHR-EHR-OBSERVATION.infant_feeding-ms_br.v0"
+                },
+                "rm_version": "1.0.1"
+              },
+              "language": {
+                "terminology_id": {
+                  "value": "ISO_639-1"
+                },
+                "code_string": "en"
+              },
+              "encoding": {
+                "terminology_id": {
+                  "value": "IANA_character-sets"
+                },
+                "code_string": "UTF-8"
+              },
+              "subject": {
+                "_type": "PARTY_SELF"
+              },
+              "data": {
+                "_archetype_node_id": "at0001",
+                "name": {
+                  "value": "Event Series"
+                },
+                "events": {
+                  "_archetype_node_id": "at0002",
+                  "_type": "POINT_EVENT",
+                  "name": {
+                    "value": "Qualquer evento"
+                  },
+                  "time": {
+                    "value": "2019-09-10T17:29:57.638-03:00"
+                  },
+                  "data": {
+                    "_archetype_node_id": "at0003",
+                    "_type": "ITEM_TREE",
+                    "name": {
+                      "value": "Tree"
+                    },
+                    "items": {
+                      "_archetype_node_id": "at0030",
+                      "_type": "ELEMENT",
+                      "name": {
+                        "value": "Tipo de aleitamento materno para crianças até 2 anos"
+                      },
+                      "value": {
+                        "_type": "DV_TEXT",
+                        "value": "Complementado"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
