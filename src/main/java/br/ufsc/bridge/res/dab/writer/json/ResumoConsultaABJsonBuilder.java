@@ -28,4 +28,12 @@ public class ResumoConsultaABJsonBuilder extends BaseJsonBuilder<ResumoConsultaA
 	public MedicoesObservacoesJsonBuilder<ResumoConsultaABJsonBuilder> medicoesObservacoes() {
 		return new MedicoesObservacoesJsonBuilder<>(this);
 	}
+
+	public ProblemaDiagnosticoJsonBuilder<ResumoConsultaABJsonBuilder> problemaDiagnostico() {
+		return new ProblemaDiagnosticoJsonBuilder<>(this);
+	}
+
+	public AlergiaReacoesAdversasJsonBuilder<ResumoConsultaABJsonBuilder> alergiaReacao() {
+		return new AlergiaReacoesAdversasJsonBuilder<>(this);
+	}
 }
