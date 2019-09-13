@@ -31,6 +31,7 @@ public @interface JsonPathProperty {
 		OBSERVACOES_INFORMACOES_ADICIONAIS_CICLO_MENSTRUAL(Group.OBSERVACOES_INFORMACOES_ADICIONAIS.path + ".items[?(@._archetype_node_id == 'openEHR-EHR-OBSERVATION.menstrual_cycle.v0')]"),
 		OBSERVACOES_INFORMACOES_ADICIONAIS_GESTACAO(Group.OBSERVACOES_INFORMACOES_ADICIONAIS.path + ".items[?(@._archetype_node_id == 'openEHR-EHR-OBSERVATION.gestation.v1')]"),
 		OBSERVACOES_SUMARIO_OBSTETRICO(Group.OBSERVACOES_INFORMACOES_ADICIONAIS.path + ".items[?(@._archetype_node_id == 'openEHR-EHR-EVALUATION.obstetric_summary.v0')]"),
+		PROBLEMAS_DIAGNOSTICOS("$.content[?(@.name.value == 'Problemas/Diagnósticos avaliados')]"),
 		;
 
 		@Getter

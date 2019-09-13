@@ -86,18 +86,20 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 	@JsonPathProperty(group = Group.OBSERVACOES_SUMARIO_OBSTETRICO, value = ".data.items[?(@._archetype_node_id == 'at0017')].value.magnitude")
 	private String partos;
 
+	@JsonPathProperty(group = Group.PROBLEMAS_DIAGNOSTICOS, value = ".items")
 	private List<ResABProblemaDiagnostico> problemasDiagnosticos = new ArrayList<>();
 
 	private List<ResABAlergiaReacoes> alergias = new LinkedList<>();
 
 	private List<ResABProcedimento> procedimentos = new LinkedList<>();
-
+	// não tem json
 	private List<ResABMedicamento> medicamentos = new LinkedList<>();
 
 	private List<String> medicamentosNaoEstruturados = new LinkedList<>();
 
 	private List<String> condutas = new LinkedList<>();
 
+	// não tem json
 	private List<String> encaminhamentos = new LinkedList<>();
 
 	public ResABResumoConsulta(String xml) throws ResABXMLParserException {
