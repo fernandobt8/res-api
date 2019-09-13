@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.dto;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,6 +19,13 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.writer.json.AlergiaReacoesAdversasJsonBuilder;
+import br.ufsc.bridge.res.dab.writer.json.AlergiaReacoesAdversasJsonBuilder.AlergiaJsonBuilder;
+import br.ufsc.bridge.res.dab.writer.json.CaracterizacaoConsultaABJsonBuilder;
+import br.ufsc.bridge.res.dab.writer.json.DadosDesfechoJsonBuilder;
+import br.ufsc.bridge.res.dab.writer.json.ProblemaDiagnosticoJsonBuilder;
+import br.ufsc.bridge.res.dab.writer.json.ProcedimentoRealizadoJsonBuilder;
+import br.ufsc.bridge.res.dab.writer.json.ResumoConsultaABJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.xml.ResumoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.writer.xml.alergia.AlergiaReacoesAdversasBuilder;
 import br.ufsc.bridge.res.dab.writer.xml.alergia.RiscoReacaoAdversaBuilder;
@@ -29,11 +37,6 @@ import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResABXMLParserException;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
-
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
-
-import net.minidev.json.JSONArray;
 
 @Getter
 @Setter
@@ -155,27 +158,6 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		}
 	}
 
-	public ResABResumoConsulta(String json, boolean a) throws ResABXMLParserException {
-		DocumentContext parse = JsonPath.parse(json);
-		Object teste = parse.read("$.content[?(@.name.value == 'Caracterização do atendimento')].items.data.items[?(@.name.value == 'Tipo de atendimento')].value..code_string");
-		teste = parse.read("$..items[?(@.name.value == 'Tipo de atendimento')].value..code_string");
-		//		System.out.println(teste);
-		teste = parse.read("$..items[?(@.name.value == 'Tipo de atendimento')]");
-
-		JSONArray aa = (JSONArray) teste;
-
-		String jsonString = aa.toJSONString();
-		//		System.out.println(jsonString);
-
-		parse.set("$..items[?(@.name.value == 'Tipo de atendimento')].value..code_string", "8888");
-
-		parse.add("$.content[?(@.name.value == 'Caracterização do atendimento')].items.data.items", "asdf");
-
-		//		parse.delete("$..items[?(@.name.value == 'Tipo de atendimento')]");
-
-		System.out.println(parse.jsonString());
-	}
-
 	public String getXml() {
 		ResumoConsultaABBuilder abBuilder = new ResumoConsultaABBuilder().data(this.dataAtendimento);
 
@@ -273,8 +255,74 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		return abBuilder.getXmlContent();
 	}
 
-	public void setDataAtendimento(Date dataAtendimento) {
-		this.dataAtendimento = dataAtendimento;
-	//	this.turno = ResABTurnoEnum.getTurnoByHora(dataAtendimento);
+	public String getJson() throws IOException{
+		ResumoConsultaABJsonBuilder abBuilder = new ResumoConsultaABJsonBuilder().data(this.dataAtendimento);
+
+		//@formatter:off
+		CaracterizacaoConsultaABJsonBuilder<ResumoConsultaABJsonBuilder> caracterizacaoConsulta = abBuilder.caracterizacaoConsulta();
+		caracterizacaoConsulta
+			.tipoAtendimento(this.tipoAtendimento)
+			.localizacaoAtribuidaPaciente(this.cnes, this.ine)
+			.dataHoraAdmissao(this.dataAtendimento);
+
+		for (ResABIdentificacaoProfissional profissional : this.profissionais) {
+			caracterizacaoConsulta.profissional()
+				.cns(profissional.getCns())
+				.nome(profissional.getNome())
+				.cboDescricao("")
+				.cbo(profissional.getCbo())
+				.responsavel(profissional.isResponsavel());
+		}
+
+		abBuilder.medicoesObservacoes()
+			.pesoCorporal(this.dataAtendimento, this.peso)
+			.altura(this.dataAtendimento, this.altura)
+			.perimetroCefalico(this.dataAtendimento, this.perimetroCefalico)
+			.cicloMenstrual(this.dataAtendimento, this.dum)
+			.gestacao(this.dataAtendimento, this.idadeGestacional)
+			.sumarioObstetrico(this.gestasPrevias, this.partos)
+			.aleitamentoMaterno(this.dataAtendimento, this.aleitamentoMaterno);
+
+		ProblemaDiagnosticoJsonBuilder<ResumoConsultaABJsonBuilder> diagnosticoAvaliadoBuilder = abBuilder.problemaDiagnostico();
+		for (ResABProblemaDiagnostico diagnostico : this.problemasDiagnosticos) {
+			diagnosticoAvaliadoBuilder.problema()
+				.descricao(diagnostico.getDescricao())
+				.tipo(diagnostico.getTipoProblemaDiagnostico())
+				.codigo(diagnostico.getCodigo());
+		}
+
+		AlergiaReacoesAdversasJsonBuilder<ResumoConsultaABJsonBuilder> alergiasBuilder = abBuilder.alergiaReacao();
+		for (ResABAlergiaReacoes alergia : this.alergias) {
+			AlergiaJsonBuilder alergiaBuilder = alergiasBuilder.alergia();
+			alergiaBuilder
+				.agente(alergia.getAgente())
+				.categoria(alergia.getCategoria())
+				.criticidade(alergia.getCriticidade());
+
+			for (ResABEventoReacao evento : alergia.getEventoReacao()) {
+				alergiaBuilder.evento()
+					.dataInstalacao(evento.getDataInstalacao())
+					.evolucao(evento.getEvolucaoAlergia())
+					.manifestacao(evento.getManifestacao());
+			}
+		}
+
+		ProcedimentoRealizadoJsonBuilder<ResumoConsultaABJsonBuilder> procedimentosBuilder = abBuilder.procedimentoRealizado();
+		for (ResABProcedimento procedimento : this.procedimentos) {
+			procedimentosBuilder.procedimento()
+				.descricao(procedimento.getNome())
+				.data(this.dataAtendimento)
+				.codigo(procedimento.getCodigo());
+		}
+
+		abBuilder.prescricaoAtendimento()
+				.medicamentoNaoEstruturado().medicamentos(this.medicamentosNaoEstruturados);
+
+		DadosDesfechoJsonBuilder<ResumoConsultaABJsonBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
+		for (String conduta : this.condutas) {
+			desfechoBuilder.desfecho().descricao(conduta);
+		}
+
+		return abBuilder.getJsonString();
 	}
 }

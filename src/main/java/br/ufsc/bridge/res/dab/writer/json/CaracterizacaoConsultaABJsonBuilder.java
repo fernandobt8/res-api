@@ -5,10 +5,20 @@ import java.util.Date;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.util.RDateUtil;
 
+import com.google.gson.GsonBuilder;
+import com.jayway.jsonpath.JsonPath;
+
+import net.minidev.json.JSONArray;
+
 public class CaracterizacaoConsultaABJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
+
+	private String profissionalJson;
 
 	public CaracterizacaoConsultaABJsonBuilder(T parent) {
 		super(parent, "caracterizacao-atendimento.json");
+		this.profissionalJson = new GsonBuilder().create().toJson(
+				((JSONArray) this.document.read("$.items.data.items[?(@.name.value == 'Profissionais do atendimento')]")).get(0));
+		this.document.delete("$.items.data.items[?(@.name.value == 'Profissionais do atendimento')]");
 	}
 
 	public CaracterizacaoConsultaABJsonBuilder<T> tipoAtendimento(ResABTipoAtendimentoEnum value) {
@@ -29,29 +39,50 @@ public class CaracterizacaoConsultaABJsonBuilder<T extends BaseJsonBuilder<?>> e
 		return this;
 	}
 
-	public CaracterizacaoConsultaABJsonBuilder<T> nomeProfissional(String nome) {
-		this.document.set("$.items.data.items[*].items[?(@.name.value == 'Nome do profissional')].value.value", nome);
-		return this;
-	}
-
-	public CaracterizacaoConsultaABJsonBuilder<T> cnsProfissional(String cns) {
-		this.document.set("$.items.data.items[*].items[?(@.name.value == 'CNS do profissional')].value.value", cns);
-		return this;
-	}
-
-	public CaracterizacaoConsultaABJsonBuilder<T> cboProfissional(String cbo) {
-		this.document.set("$.items.data.items[*].items[?(@.name.value == 'Ocupação do profissional')].value..code_string", cbo);
-		return this;
-	}
-
-	public CaracterizacaoConsultaABJsonBuilder<T> cboDescricaoProfissional(String cboDescricao) {
-		this.document.set("$.items.data.items[*].items[?(@.name.value == 'Ocupação do profissional')].value.value", cboDescricao);
-		return this;
-	}
-
 	public CaracterizacaoConsultaABJsonBuilder<T> dataHoraAdmissao(Date data) {
 		this.document.set("$.items.data.items[?(@.name.value == 'Data/hora da admissão')].value.value", RDateUtil.dateToISOEHR(data));
 		return this;
+	}
+
+	public ProfissionalAtendimentoJsonBuilder profissional() {
+		return new ProfissionalAtendimentoJsonBuilder(this, this.profissionalJson);
+	}
+
+	@Override
+	protected String childJsonPath() {
+		return "$.items.data.items";
+	}
+
+	public class ProfissionalAtendimentoJsonBuilder extends BaseJsonBuilder<CaracterizacaoConsultaABJsonBuilder<T>> {
+
+		public ProfissionalAtendimentoJsonBuilder(CaracterizacaoConsultaABJsonBuilder<T> parent, String profissionalJson) {
+			super(parent, JsonPath.parse(profissionalJson));
+		}
+
+		public ProfissionalAtendimentoJsonBuilder nome(String nome) {
+			this.document.set("$.items[?(@.name.value == 'Nome do profissional')].value.value", nome);
+			return this;
+		}
+
+		public ProfissionalAtendimentoJsonBuilder cns(String cns) {
+			this.document.set("$.items[?(@.name.value == 'CNS do profissional')].value.value", cns);
+			return this;
+		}
+
+		public ProfissionalAtendimentoJsonBuilder cbo(String cbo) {
+			this.document.set("$.items[?(@.name.value == 'Ocupação do profissional')].value..code_string", cbo);
+			return this;
+		}
+
+		public ProfissionalAtendimentoJsonBuilder cboDescricao(String cboDescricao) {
+			this.document.set("$.items[?(@.name.value == 'Ocupação do profissional')].value.value", cboDescricao);
+			return this;
+		}
+
+		public ProfissionalAtendimentoJsonBuilder responsavel(boolean responsavel) {
+			this.document.set("$.items[?(@.name.value == 'É o responsável pelo atendimento?')].value.value", responsavel);
+			return this;
+		}
 	}
 
 }
