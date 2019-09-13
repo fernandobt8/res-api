@@ -36,4 +36,16 @@ public class ResumoConsultaABJsonBuilder extends BaseJsonBuilder<ResumoConsultaA
 	public AlergiaReacoesAdversasJsonBuilder<ResumoConsultaABJsonBuilder> alergiaReacao() {
 		return new AlergiaReacoesAdversasJsonBuilder<>(this);
 	}
+
+	public ProcedimentoRealizadoJsonBuilder<ResumoConsultaABJsonBuilder> procedimentoRealizado() {
+		return new ProcedimentoRealizadoJsonBuilder<>(this);
+	}
+
+	public PrescricaoAtendimentoJsonBuilder<ResumoConsultaABJsonBuilder> prescricaoAtendimento() {
+		return new PrescricaoAtendimentoJsonBuilder<>(this);
+	}
+
+	public DadosDesfechoJsonBuilder<ResumoConsultaABJsonBuilder> dadosDesfecho() {
+		return new DadosDesfechoJsonBuilder<>(this);
+	}
 }
