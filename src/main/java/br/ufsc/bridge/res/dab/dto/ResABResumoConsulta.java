@@ -16,8 +16,13 @@ import lombok.ToString;
 
 import org.apache.commons.lang3.StringUtils;
 
+import br.ufsc.bridge.res.dab.DateJsonPathValueConverter;
+import br.ufsc.bridge.res.dab.JsonPathProperty;
+import br.ufsc.bridge.res.dab.JsonPathProperty.Group;
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
+import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnumJsonPathConverter;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnumJsonPathValueConverter;
 import br.ufsc.bridge.res.dab.writer.xml.ResumoConsultaABBuilder;
 import br.ufsc.bridge.res.dab.writer.xml.alergia.AlergiaReacoesAdversasBuilder;
 import br.ufsc.bridge.res.dab.writer.xml.alergia.RiscoReacaoAdversaBuilder;
@@ -43,23 +48,42 @@ import net.minidev.json.JSONArray;
 public class ResABResumoConsulta extends ResDocument implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonPathProperty(group = Group.ADMISSAO_DO_PACIENTE, value = ".data.items[?(@.name.value == 'Data/hora da admissão')].value.value", converter =
+			DateJsonPathValueConverter.class)
 	private Date dataAtendimento;
 
+	@JsonPathProperty(group = Group.ADMISSAO_DO_PACIENTE, value = ".data.items[?(@.name.value == 'Tipo de atendimento')].value.defining_code.code_string", converter =
+			ResABTipoAtendimentoEnumJsonPathValueConverter.class)
 	private ResABTipoAtendimentoEnum tipoAtendimento;
+
+	@JsonPathProperty(group = Group.INSTITUICAO, value = ".items[?(@.name.value == 'Estabelecimento de saúde')].value.value")
 	private String cnes;
+
+	@JsonPathProperty(group = Group.INSTITUICAO, value = ".items[?(@.name.value == 'Identificação da equipe de saúde')].value.value")
 	private String ine;
 	// nao presente mais, comentado para manter historico
 	// private ResABTurnoEnum turno;
+	@JsonPathProperty(group = Group.ADMISSAO_DO_PACIENTE, value = ".data.items[?(@.name.value == 'Profissionais do atendimento')].items")
 	private List<ResABIdentificacaoProfissional> profissionais = new ArrayList<>();
 
+	@JsonPathProperty(group = Group.OBSERVACOES_MEDICOES, value = ".items[?(@.name.value == 'Peso corporal')].data..magnitude")
 	private String peso;
+
+	@JsonPathProperty(group = Group.OBSERVACOES_MEDICOES, value = ".items[?(@.name.value == 'Altura / comprimento')].data..magnitude")
 	private String altura;
+
+	@JsonPathProperty(group = Group.OBSERVACOES_MEDICOES, value = ".items[?(@._archetype_node_id == 'openEHR-EHR-OBSERVATION.head_circumference-ms_br.v0')].data..magnitude")
 	private String perimetroCefalico;
+	@JsonPathProperty(group = Group.OBSERVACOES_INFORMACOES_ADICIONAIS, value = ".items[?(@._archetype_node_id == 'openEHR-EHR-OBSERVATION.infant_feeding-ms_br.v0')].data.events.data.items[?(@._archetype_node_id == 'at0030')].value.value", converter = ResABAleitamentoMaternoEnumJsonPathConverter.class)
 	private ResABAleitamentoMaternoEnum aleitamentoMaterno;
 
+	@JsonPathProperty(group = Group.OBSERVACOES_INFORMACOES_ADICIONAIS_CICLO_MENSTRUAL, value = ".data.events.data.items[?(@._archetype_node_id == 'openEHR-EHR-ELEMENT.last_normal_menstrual_period.v1')].value.value", converter = DateJsonPathValueConverter.class)
 	private Date dum;
+	@JsonPathProperty(group = Group.OBSERVACOES_INFORMACOES_ADICIONAIS_GESTACAO, value = ".data.events.data.items[?(@._archetype_node_id == 'at0004')].value.value")
 	private String idadeGestacional;
+	@JsonPathProperty(group = Group.OBSERVACOES_SUMARIO_OBSTETRICO, value = ".data.items[?(@._archetype_node_id == 'at0002')].value.magnitude")
 	private String gestasPrevias;
+	@JsonPathProperty(group = Group.OBSERVACOES_SUMARIO_OBSTETRICO, value = ".data.items[?(@._archetype_node_id == 'at0017')].value.magnitude")
 	private String partos;
 
 	private List<ResABProblemaDiagnostico> problemasDiagnosticos = new ArrayList<>();
@@ -80,7 +104,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);
 		try {
 			XPathFactoryAssist xPathAdmissao = xPathRoot.getXPathAssist("//Admissão_do_paciente/data");
-			this.tipoAtendimento = ResABTipoAtendimentoEnum.getByCodigo(xPathAdmissao.getString("./Tipo_de_atendimento//code_string"));
+			this.tipoAtendimento = new ResABTipoAtendimentoEnumJsonPathValueConverter().convert(xPathAdmissao.getString("./Tipo_de_atendimento//code_string"));
 			this.cnes = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//Estabelecimento_de_saúde//value/value");
 			this.ine = xPathAdmissao.getString("./Localização_atribuída_ao_paciente//Identificação_da_equipe_de_saúde/value/value");
 			this.dataAtendimento = RDateUtil.isoEHRToDate(xPathAdmissao.getString("./Data_fslash_hora_da_admissão/value/value"));
@@ -105,8 +129,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			this.gestasPrevias = xPathSumarioObstetrico.getString("./Quantidade_de_gestas_prévias/value/magnitude");
 			this.partos = xPathSumarioObstetrico.getString("./Quantidade_de_partos/value/magnitude");
 
-			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum
-					.getByDescricao(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
+			this.aleitamentoMaterno = new ResABAleitamentoMaternoEnumJsonPathConverter().convert(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas_fslash_Diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema_Diagnóstico")) {

@@ -13,12 +13,4 @@ public enum ResABAleitamentoMaternoEnum {
 
 	private String descricao;
 
-	public static ResABAleitamentoMaternoEnum getByDescricao(String descricao) {
-		for (ResABAleitamentoMaternoEnum value : values()) {
-			if (value.getDescricao().equalsIgnoreCase(descricao)) {
-				return value;
-			}
-		}
-		return null;
-	}
 }

@@ -10,6 +10,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import br.ufsc.bridge.res.dab.BooleanJsonPathValueConverter;
+import br.ufsc.bridge.res.dab.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -20,9 +22,13 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResABIdentificacaoProfissional implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonPathProperty("$.[?(@.name.value == 'CNS do profissional')].value.value")
 	private String cns;
+	@JsonPathProperty("$.[?(@.name.value == 'Ocupação do profissional')].value.defining_code.code_string")
 	private String cbo;
+	@JsonPathProperty("$.[?(@.name.value == 'Nome do profissional')].value.value")
 	private String nome;
+	@JsonPathProperty(value = "$.[?(@.name.value == 'É o responsável pelo atendimento?')].value.value", converter = BooleanJsonPathValueConverter.class)
 	private boolean responsavel;
 
 	public ResABIdentificacaoProfissional(XPathFactoryAssist xPathprofissional) throws XPathExpressionException {
