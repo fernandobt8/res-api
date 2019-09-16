@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res;
+package br.ufsc.bridge.res.soap;
 
 import java.util.List;
 
