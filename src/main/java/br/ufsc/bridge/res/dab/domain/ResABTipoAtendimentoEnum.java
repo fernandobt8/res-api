@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum ResABTipoAtendimentoEnum {
+public enum ResABTipoAtendimentoEnum  {
 
 	CONSULTA_AGENDADA_PROGRAMADA_CUIDADO_CONTINUADO("Consulta agendada programada/ cuidado continuado", "at0.140"),
 	CONSULTA_AGENDADA("Consulta Agendada", "at0.141"),
@@ -15,12 +15,4 @@ public enum ResABTipoAtendimentoEnum {
 	private String descricao;
 	private String codigo;
 
-	public static ResABTipoAtendimentoEnum getByCodigo(String codigo) {
-		for (ResABTipoAtendimentoEnum value : values()) {
-			if (value.getCodigo().equals(codigo)) {
-				return value;
-			}
-		}
-		return null;
-	}
 }
