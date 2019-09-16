@@ -1,16 +1,22 @@
 package br.ufsc.bridge.res.rest;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.matchers.JUnitMatchers;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import br.ufsc.bridge.res.service.rest.repository.RestRepositoryService;
+import br.ufsc.bridge.res.service.rest.repository.dto.ItemDTO;
+import br.ufsc.bridge.res.service.rest.repository.dto.ResultDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.SaveDTO;
 
 @RunWith(JUnit4.class)
@@ -19,6 +25,8 @@ public class RestRepositorySaveTest {
 	private SaveDTO dto;
 
 	private RestRepositoryService service = new RestRepositoryService();
+
+	private static final String URL = "https://ehr-services.rnds.mbamobi.com.br/ehr-services/fhir/r4/DocumentReference";
 
 	private static final String PROFISSIONAL = "PractitionerRole/a4";
 
@@ -46,18 +54,32 @@ public class RestRepositorySaveTest {
 	@Test
 	public void read() {
 		//given
-		this.service = new RestRepositoryService();
 		String uuid = this.service.save(this.dto);
 
 		//when
 		SaveDTO dto = this.service.read(uuid);
 
 		//then
-//		assertEquals(DATA, dto.getDocumento());
+//		assertEquals(DATA, dto.getDocumento()); FIXME: O endpoint sempre retorna o mesmo doc
 		assertEquals(PACIENTE, dto.getPacienteId());
 		assertEquals(PROFISSIONAL, dto.getProfissionalId());
 		assertEquals(UNIDADE, dto.getUnidadeId());
 
+	}
+
+	@Test
+	public void list() {
+		//given
+		String uuid1 = this.service.save(this.dto);
+		String uuid2 = this.service.save(this.dto);
+
+		//when
+		List<ItemDTO> result = this.service.list(PACIENTE);
+
+		//then
+		assertTrue(result.size() >= 2);
+//		assertThat(result, JUnitMatchers.hasItem(new ItemDTO(uuid1, URL + "/" + uuid1))); FIXME: O endpoint não retorna os itens adicionados
+//		assertThat(result, JUnitMatchers.hasItem(new ItemDTO(uuid2, URL + "/" + uuid2)));
 
 	}
 

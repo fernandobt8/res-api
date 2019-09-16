@@ -1,5 +1,7 @@
 package br.ufsc.bridge.res.service.rest.repository;
 
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpEntity;
@@ -7,7 +9,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import br.ufsc.bridge.res.service.rest.repository.dto.ItemDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.RestRepositorySaveDTO;
+import br.ufsc.bridge.res.service.rest.repository.dto.ResultDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.SaveDTO;
 
 @Slf4j
@@ -16,6 +20,8 @@ public class RestRepositoryService {
 	private static final String URL = "https://ehr-services.rnds.mbamobi.com.br/ehr-services/fhir/r4/DocumentReference";
 
 	private static final String PATH = "/ehr-services/fhir/r4/DocumentReference/";
+
+	private static final String PARAMS = "&_include=DocumentReference:subject&_include=DocumentReference:author&_sort=-date";
 
 
 	public String save(SaveDTO dto) {
@@ -33,5 +39,12 @@ public class RestRepositoryService {
 		log.debug(response.getBody().stringfy());
 		return response.getBody().toDto();
 	}
+
+	public List<ItemDTO> list(String pacienteId) {
+		ResponseEntity<ResultDTO> response = new RestTemplate().getForEntity(URL + "?subject=" + pacienteId + PARAMS, ResultDTO.class);
+		return response.getBody().toItems();
+	}
+
+
 
 }

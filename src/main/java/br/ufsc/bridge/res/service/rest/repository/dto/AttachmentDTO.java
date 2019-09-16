@@ -20,6 +20,8 @@ public class AttachmentDTO {
 
 		private String data;
 
+		private String url;
+
 	}
 
 }
