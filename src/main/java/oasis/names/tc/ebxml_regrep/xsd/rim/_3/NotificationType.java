@@ -9,12 +9,12 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * Notification of registry events.
- * 
+ * Notification of dto events.
+ *
  * <p>Java class for NotificationType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="NotificationType">
  *   &lt;complexContent>
@@ -27,8 +27,8 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NotificationType", propOrder = {
@@ -45,11 +45,11 @@ public class NotificationType
 
     /**
      * Gets the value of the registryObjectList property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link RegistryObjectListType }
-     *     
+     *
      */
     public RegistryObjectListType getRegistryObjectList() {
         return registryObjectList;
@@ -57,11 +57,11 @@ public class NotificationType
 
     /**
      * Sets the value of the registryObjectList property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link RegistryObjectListType }
-     *     
+     *
      */
     public void setRegistryObjectList(RegistryObjectListType value) {
         this.registryObjectList = value;
@@ -69,11 +69,11 @@ public class NotificationType
 
     /**
      * Gets the value of the subscription property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSubscription() {
         return subscription;
@@ -81,11 +81,11 @@ public class NotificationType
 
     /**
      * Sets the value of the subscription property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSubscription(String value) {
         this.subscription = value;

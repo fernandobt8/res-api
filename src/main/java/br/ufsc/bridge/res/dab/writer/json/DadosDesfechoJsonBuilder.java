@@ -1,16 +1,13 @@
 package br.ufsc.bridge.res.dab.writer.json;
 
-import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 
 public class DadosDesfechoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 
 	private String desfechoJson;
 
 	public DadosDesfechoJsonBuilder(T parent) {
-		super(parent, "dados-desfecho.json");
-		this.desfechoJson = new GsonBuilder().create().toJson(this.document.read("$.items.data.items[0]"));
-		this.document.delete("$.items.data.items[0]");
+		super(parent, "dados-desfecho");
 	}
 
 	public DesfechoJsonBuilder desfecho() {
@@ -25,7 +22,7 @@ public class DadosDesfechoJsonBuilder<T extends BaseJsonBuilder<?>> extends Base
 	public class DesfechoJsonBuilder extends BaseJsonBuilder<DadosDesfechoJsonBuilder<T>> {
 
 		private DesfechoJsonBuilder(DadosDesfechoJsonBuilder<T> parent, String json) {
-			super(parent, JsonPath.parse(json));
+			super(parent, "desfecho");
 		}
 
 		public DesfechoJsonBuilder descricao(String descricao) {

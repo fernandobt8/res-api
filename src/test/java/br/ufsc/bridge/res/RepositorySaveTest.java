@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 
 import org.apache.commons.io.IOUtils;
 
-import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO;
-import br.ufsc.bridge.res.service.dto.repository.RepositorySaveDocumentDTO.ClassificationDTO;
-import br.ufsc.bridge.res.service.repository.RepositoryService;
+import br.ufsc.bridge.res.service.soap.repository.RepositoryService;
+import br.ufsc.bridge.res.service.soap.repository.dto.RepositorySaveDTO;
+import br.ufsc.bridge.res.service.soap.repository.dto.RepositorySaveDocumentDTO;
+import br.ufsc.bridge.res.service.soap.repository.dto.RepositorySaveDocumentDTO.ClassificationDTO;
 import br.ufsc.bridge.soap.http.SoapCredential;
 
 @Slf4j

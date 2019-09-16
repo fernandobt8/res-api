@@ -4,11 +4,11 @@ import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.ufsc.bridge.res.service.dto.RegistryErrorListXPath;
-import br.ufsc.bridge.res.service.exception.ResConsentPolicyException;
-import br.ufsc.bridge.res.service.exception.ResServerErrorException;
-import br.ufsc.bridge.res.service.exception.ResServiceFatalException;
-import br.ufsc.bridge.res.service.exception.ResXDSbException;
+import br.ufsc.bridge.res.service.soap.exception.ResConsentPolicyException;
+import br.ufsc.bridge.res.service.soap.exception.ResServerErrorException;
+import br.ufsc.bridge.res.service.soap.exception.ResServiceFatalException;
+import br.ufsc.bridge.res.service.soap.exception.ResXDSbException;
+import br.ufsc.bridge.res.service.soap.registry.RegistryErrorListXPath;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 public class ResLogError {

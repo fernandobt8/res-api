@@ -6,20 +6,18 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * 
- *                 Classification is the mapping of the same named interface in ebRIM.
- *                 It extends RegistryObject.
- *                 A Classification specifies references to two registry entrys.
- *                 The classifiedObject is id of the Object being classified.
- *                 The classificationNode is id of the ClassificationNode classying the object
- *             
- * 
+ * Classification is the mapping of the same named interface in ebRIM.
+ * It extends RegistryObject.
+ * A Classification specifies references to two dto entrys.
+ * The classifiedObject is id of the Object being classified.
+ * The classificationNode is id of the ClassificationNode classying the object
+ *
+ *
  * <p>Java class for ClassificationType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="ClassificationType">
  *   &lt;complexContent>
@@ -32,118 +30,99 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ClassificationType")
 public class ClassificationType
-    extends RegistryObjectType
-{
+		extends RegistryObjectType {
 
-    @XmlAttribute(name = "classificationScheme")
-    protected String classificationScheme;
-    @XmlAttribute(name = "classifiedObject", required = true)
-    protected String classifiedObject;
-    @XmlAttribute(name = "classificationNode")
-    protected String classificationNode;
-    @XmlAttribute(name = "nodeRepresentation")
-    protected String nodeRepresentation;
+	@XmlAttribute(name = "classificationScheme")
+	protected String classificationScheme;
+	@XmlAttribute(name = "classifiedObject", required = true)
+	protected String classifiedObject;
+	@XmlAttribute(name = "classificationNode")
+	protected String classificationNode;
+	@XmlAttribute(name = "nodeRepresentation")
+	protected String nodeRepresentation;
 
-    /**
-     * Gets the value of the classificationScheme property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getClassificationScheme() {
-        return classificationScheme;
-    }
+	/**
+	 * Gets the value of the classificationScheme property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getClassificationScheme() {
+		return this.classificationScheme;
+	}
 
-    /**
-     * Sets the value of the classificationScheme property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setClassificationScheme(String value) {
-        this.classificationScheme = value;
-    }
+	/**
+	 * Sets the value of the classificationScheme property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setClassificationScheme(String value) {
+		this.classificationScheme = value;
+	}
 
-    /**
-     * Gets the value of the classifiedObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getClassifiedObject() {
-        return classifiedObject;
-    }
+	/**
+	 * Gets the value of the classifiedObject property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getClassifiedObject() {
+		return this.classifiedObject;
+	}
 
-    /**
-     * Sets the value of the classifiedObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setClassifiedObject(String value) {
-        this.classifiedObject = value;
-    }
+	/**
+	 * Sets the value of the classifiedObject property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setClassifiedObject(String value) {
+		this.classifiedObject = value;
+	}
 
-    /**
-     * Gets the value of the classificationNode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getClassificationNode() {
-        return classificationNode;
-    }
+	/**
+	 * Gets the value of the classificationNode property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getClassificationNode() {
+		return this.classificationNode;
+	}
 
-    /**
-     * Sets the value of the classificationNode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setClassificationNode(String value) {
-        this.classificationNode = value;
-    }
+	/**
+	 * Sets the value of the classificationNode property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setClassificationNode(String value) {
+		this.classificationNode = value;
+	}
 
-    /**
-     * Gets the value of the nodeRepresentation property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getNodeRepresentation() {
-        return nodeRepresentation;
-    }
+	/**
+	 * Gets the value of the nodeRepresentation property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getNodeRepresentation() {
+		return this.nodeRepresentation;
+	}
 
-    /**
-     * Sets the value of the nodeRepresentation property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setNodeRepresentation(String value) {
-        this.nodeRepresentation = value;
-    }
+	/**
+	 * Sets the value of the nodeRepresentation property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setNodeRepresentation(String value) {
+		this.nodeRepresentation = value;
+	}
 
 }

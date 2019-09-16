@@ -3,6 +3,7 @@ package br.ufsc.bridge.res.dab.writer.json;
 import java.util.Date;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 public class MedicoesObservacoesJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
@@ -18,7 +19,7 @@ public class MedicoesObservacoesJsonBuilder<T extends BaseJsonBuilder<?>> extend
 	private boolean hasAleitamentoMaterno;
 
 	public MedicoesObservacoesJsonBuilder(T parent) {
-		super(parent, "medicoes-observacoes.json");
+		super(parent, "medicoes-observacoes");
 	}
 
 	public MedicoesObservacoesJsonBuilder<T> pesoCorporal(Date data, String peso) {

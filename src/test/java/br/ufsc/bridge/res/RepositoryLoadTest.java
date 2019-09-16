@@ -4,9 +4,9 @@ import java.util.List;
 
 import lombok.extern.slf4j.Slf4j;
 
-import br.ufsc.bridge.res.service.dto.repository.RepositoryDocumentItem;
-import br.ufsc.bridge.res.service.dto.repository.RepositoryFilter;
-import br.ufsc.bridge.res.service.repository.RepositoryService;
+import br.ufsc.bridge.res.service.soap.repository.RepositoryService;
+import br.ufsc.bridge.res.service.soap.repository.dto.RepositoryDocumentItem;
+import br.ufsc.bridge.res.service.soap.repository.dto.RepositoryFilter;
 import br.ufsc.bridge.soap.http.SoapCredential;
 
 @Slf4j

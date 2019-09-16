@@ -1,6 +1,6 @@
 package br.ufsc.bridge.res.util;
 
-import br.ufsc.bridge.res.service.exception.ResException;
+import br.ufsc.bridge.res.service.soap.exception.ResException;
 
 public class ResABXMLParserException extends ResException {
 

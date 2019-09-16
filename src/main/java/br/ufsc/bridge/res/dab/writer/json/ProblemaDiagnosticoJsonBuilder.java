@@ -1,20 +1,15 @@
 package br.ufsc.bridge.res.dab.writer.json;
 
-import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 
 public class ProblemaDiagnosticoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 
-	private String diagnosticoJson;
-
 	public ProblemaDiagnosticoJsonBuilder(T parent) {
-		super(parent, "problema-diagnostico.json");
-		this.diagnosticoJson = new GsonBuilder().create().toJson(this.document.read("$.items[0]"));
-		this.document.delete("$.items[0]");
+		super(parent, "problema-diagnostico");
 	}
 
 	public DiagnosticoJsonBuilder problema() {
-		return new DiagnosticoJsonBuilder(this, this.diagnosticoJson);
+		return new DiagnosticoJsonBuilder(this);
 	}
 
 	@Override
@@ -24,8 +19,8 @@ public class ProblemaDiagnosticoJsonBuilder<T extends BaseJsonBuilder<?>> extend
 
 	public class DiagnosticoJsonBuilder extends BaseJsonBuilder<ProblemaDiagnosticoJsonBuilder<T>> {
 
-		private DiagnosticoJsonBuilder(ProblemaDiagnosticoJsonBuilder<T> parent, String json) {
-			super(parent, JsonPath.parse(json));
+		private DiagnosticoJsonBuilder(ProblemaDiagnosticoJsonBuilder<T> parent) {
+			super(parent, "problema");
 		}
 
 		public DiagnosticoJsonBuilder descricao(String descricao) {

@@ -2,23 +2,19 @@ package br.ufsc.bridge.res.dab.writer.json;
 
 import java.util.Date;
 
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
-
-import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
 
 public class ProcedimentoRealizadoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 
 	private String procedimentoJson;
 
 	public ProcedimentoRealizadoJsonBuilder(T parent) {
-		super(parent, "procedimento-realizado.json");
-		this.procedimentoJson = new GsonBuilder().create().toJson(this.document.read("$.items[0]"));
-		this.document.delete("$.items[0]");
+		super(parent, "procedimento-realizado");
 	}
 
 	public ProcedimentoJsonBuilder procedimento() {
-		return new ProcedimentoJsonBuilder(this, this.procedimentoJson);
+		return new ProcedimentoJsonBuilder(this);
 	}
 
 	@Override
@@ -28,8 +24,8 @@ public class ProcedimentoRealizadoJsonBuilder<T extends BaseJsonBuilder<?>> exte
 
 	public class ProcedimentoJsonBuilder extends BaseJsonBuilder<ProcedimentoRealizadoJsonBuilder<T>> {
 
-		private ProcedimentoJsonBuilder(ProcedimentoRealizadoJsonBuilder<T> parent, String json) {
-			super(parent, JsonPath.parse(json));
+		private ProcedimentoJsonBuilder(ProcedimentoRealizadoJsonBuilder<T> parent) {
+			super(parent, "procedimento");
 		}
 
 		public ProcedimentoJsonBuilder data(Date data) {

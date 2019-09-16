@@ -13,13 +13,13 @@ import org.junit.Assert;
 import org.junit.Test;
 import org.w3c.dom.Document;
 
-import br.ufsc.bridge.res.service.ResSoapMessageBuilder;
-import br.ufsc.bridge.res.service.dto.registry.AdhocQueryResponseXPath;
-import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
-import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
-import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.service.registry.RegistryService;
-import br.ufsc.bridge.res.service.registry.parse.RegistryResponseParser;
+import br.ufsc.bridge.res.service.soap.ResSoapMessageBuilder;
+import br.ufsc.bridge.res.service.soap.registry.RegistryService;
+import br.ufsc.bridge.res.service.soap.registry.dto.AdhocQueryResponseXPath;
+import br.ufsc.bridge.res.service.soap.registry.dto.RegistryFilter;
+import br.ufsc.bridge.res.service.soap.registry.dto.RegistryItem;
+import br.ufsc.bridge.res.service.soap.registry.dto.RegistryResponse;
+import br.ufsc.bridge.res.service.soap.registry.parse.RegistryResponseParser;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.soap.http.SoapCredential;
 
@@ -27,7 +27,7 @@ import oasis.names.tc.ebxml_regrep.xsd.query._3.AdhocQueryRequest;
 
 public class TestRegistryService {
 
-	String PATH_TEST_RESOURCE = System.getProperty("user.dir") + "/src/test/resources/registry/";
+	String PATH_TEST_RESOURCE = System.getProperty("user.dir") + "/src/test/resources/dto/";
 
 	@Test
 	public void testXmlGetRegistriesRef() throws Exception {

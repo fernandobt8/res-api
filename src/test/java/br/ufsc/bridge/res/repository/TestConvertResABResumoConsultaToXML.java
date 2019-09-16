@@ -26,7 +26,7 @@ import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 
 public class TestConvertResABResumoConsultaToXML {
 
-	String PATH_TEST_RESOURCE = System.getProperty("user.dir") + "/src/test/resources/repository/";
+	String PATH_TEST_RESOURCE = System.getProperty("user.dir") + "/src/test/resources/dto/";
 
 	@Test
 	public void CDT001() throws Exception {

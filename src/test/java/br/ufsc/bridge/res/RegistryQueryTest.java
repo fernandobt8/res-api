@@ -2,10 +2,10 @@ package br.ufsc.bridge.res;
 
 import lombok.extern.slf4j.Slf4j;
 
-import br.ufsc.bridge.res.service.dto.registry.RegistryFilter;
-import br.ufsc.bridge.res.service.dto.registry.RegistryItem;
-import br.ufsc.bridge.res.service.dto.registry.RegistryResponse;
-import br.ufsc.bridge.res.service.registry.RegistryService;
+import br.ufsc.bridge.res.service.soap.registry.RegistryService;
+import br.ufsc.bridge.res.service.soap.registry.dto.RegistryFilter;
+import br.ufsc.bridge.res.service.soap.registry.dto.RegistryItem;
+import br.ufsc.bridge.res.service.soap.registry.dto.RegistryResponse;
 import br.ufsc.bridge.soap.http.SoapCredential;
 
 @Slf4j

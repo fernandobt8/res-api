@@ -6,21 +6,19 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * 
- *                 Association is the mapping of the same named interface in ebRIM.
- *                 It extends RegistryObject.
- *                 An Association specifies references to two previously submitted
- *                 registry entrys.
- *                 The sourceObject is id of the sourceObject in association
- *                 The targetObject is id of the targetObject in association
- *             
- * 
+ * Association is the mapping of the same named interface in ebRIM.
+ * It extends RegistryObject.
+ * An Association specifies references to two previously submitted
+ * dto entrys.
+ * The sourceObject is id of the sourceObject in association
+ * The targetObject is id of the targetObject in association
+ *
+ *
  * <p>Java class for AssociationType1 complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="AssociationType1">
  *   &lt;complexContent>
@@ -32,92 +30,77 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AssociationType1")
 public class AssociationType1
-    extends RegistryObjectType
-{
+		extends RegistryObjectType {
 
-    @XmlAttribute(name = "associationType", required = true)
-    protected String associationType;
-    @XmlAttribute(name = "sourceObject", required = true)
-    protected String sourceObject;
-    @XmlAttribute(name = "targetObject", required = true)
-    protected String targetObject;
+	@XmlAttribute(name = "associationType", required = true)
+	protected String associationType;
+	@XmlAttribute(name = "sourceObject", required = true)
+	protected String sourceObject;
+	@XmlAttribute(name = "targetObject", required = true)
+	protected String targetObject;
 
-    /**
-     * Gets the value of the associationType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAssociationType() {
-        return associationType;
-    }
+	/**
+	 * Gets the value of the associationType property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getAssociationType() {
+		return this.associationType;
+	}
 
-    /**
-     * Sets the value of the associationType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAssociationType(String value) {
-        this.associationType = value;
-    }
+	/**
+	 * Sets the value of the associationType property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setAssociationType(String value) {
+		this.associationType = value;
+	}
 
-    /**
-     * Gets the value of the sourceObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getSourceObject() {
-        return sourceObject;
-    }
+	/**
+	 * Gets the value of the sourceObject property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getSourceObject() {
+		return this.sourceObject;
+	}
 
-    /**
-     * Sets the value of the sourceObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setSourceObject(String value) {
-        this.sourceObject = value;
-    }
+	/**
+	 * Sets the value of the sourceObject property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setSourceObject(String value) {
+		this.sourceObject = value;
+	}
 
-    /**
-     * Gets the value of the targetObject property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getTargetObject() {
-        return targetObject;
-    }
+	/**
+	 * Gets the value of the targetObject property.
+	 *
+	 * @return possible object is
+	 * {@link String }
+	 */
+	public String getTargetObject() {
+		return this.targetObject;
+	}
 
-    /**
-     * Sets the value of the targetObject property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setTargetObject(String value) {
-        this.targetObject = value;
-    }
+	/**
+	 * Sets the value of the targetObject property.
+	 *
+	 * @param value allowed object is
+	 *              {@link String }
+	 */
+	public void setTargetObject(String value) {
+		this.targetObject = value;
+	}
 
 }

@@ -2,26 +2,18 @@ package br.ufsc.bridge.res.dab.writer.json;
 
 import java.util.Date;
 
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.util.RDateUtil;
 
-import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
-
-import net.minidev.json.JSONArray;
-
 public class AlergiaReacoesAdversasJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 
-	private String alergiaJson;
-
 	public AlergiaReacoesAdversasJsonBuilder(T parent) {
-		super(parent, "alergia-reacoes.json");
-		this.alergiaJson = new GsonBuilder().create().toJson(this.document.read("$.items[0]"));
-		this.document.delete("$.items[0]");
+		super(parent, "alergia-reacoes");
 	}
 
 	public AlergiaJsonBuilder alergia() {
-		return new AlergiaJsonBuilder(this, this.alergiaJson);
+		return new AlergiaJsonBuilder(this);
 	}
 
 	@Override
@@ -31,14 +23,10 @@ public class AlergiaReacoesAdversasJsonBuilder<T extends BaseJsonBuilder<?>> ext
 
 	public class AlergiaJsonBuilder extends BaseJsonBuilder<AlergiaReacoesAdversasJsonBuilder<T>> {
 
-		private String eventoJson;
-
 		private boolean hasCriticidade;
 
-		private AlergiaJsonBuilder(AlergiaReacoesAdversasJsonBuilder<T> parent, String json) {
-			super(parent, JsonPath.parse(json));
-			this.eventoJson = new GsonBuilder().create().toJson(((JSONArray) this.document.read("$.data.items[?(@.name.value == 'Evento da reação')]")).get(0));
-			this.document.delete("$.data.items[?(@.name.value == 'Evento da reação')]");
+		private AlergiaJsonBuilder(AlergiaReacoesAdversasJsonBuilder<T> parent) {
+			super(parent, "alergia");
 		}
 
 		public AlergiaJsonBuilder agente(String agente) {
@@ -74,7 +62,7 @@ public class AlergiaReacoesAdversasJsonBuilder<T extends BaseJsonBuilder<?>> ext
 		}
 
 		public EventoReacaoJsonBuilder evento() {
-			return new EventoReacaoJsonBuilder(this, this.eventoJson);
+			return new EventoReacaoJsonBuilder(this);
 		}
 	}
 
@@ -84,8 +72,8 @@ public class AlergiaReacoesAdversasJsonBuilder<T extends BaseJsonBuilder<?>> ext
 		private boolean hasManifestacao;
 		private boolean hasEvolucao;
 
-		private EventoReacaoJsonBuilder(AlergiaJsonBuilder parent, String json) {
-			super(parent, JsonPath.parse(json));
+		private EventoReacaoJsonBuilder(AlergiaJsonBuilder parent) {
+			super(parent, "evento-alergia");
 		}
 
 		public EventoReacaoJsonBuilder dataInstalacao(Date data) {

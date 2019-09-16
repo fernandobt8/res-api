@@ -2,24 +2,16 @@ package br.ufsc.bridge.res.dab.writer.json;
 
 import java.util.List;
 
-import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
-
-import net.minidev.json.JSONArray;
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 
 public class PrescricaoAtendimentoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 
-	private String medicamentoNaoEstruturado;
-
 	public PrescricaoAtendimentoJsonBuilder(T parent) {
-		super(parent, "prescricao-atendimento.json");
-		this.medicamentoNaoEstruturado = new GsonBuilder().create().toJson(
-				((JSONArray) this.document.read("$.items.data.items[?(@.name.value == 'Medicamentos prescritos no atendimento (não estruturado)')]")).get(0));
-		this.document.delete("$.items.data.items[?(@.name.value == 'Medicamentos prescritos no atendimento (não estruturado)')]");
+		super(parent, "prescricao-atendimento");
 	}
 
 	public MedicamentoNaoEstruturado medicamentoNaoEstruturado() {
-		return new MedicamentoNaoEstruturado(this, this.medicamentoNaoEstruturado);
+		return new MedicamentoNaoEstruturado(this);
 	}
 
 	@Override
@@ -29,8 +21,8 @@ public class PrescricaoAtendimentoJsonBuilder<T extends BaseJsonBuilder<?>> exte
 
 	public class MedicamentoNaoEstruturado extends BaseJsonBuilder<PrescricaoAtendimentoJsonBuilder<T>> {
 
-		public MedicamentoNaoEstruturado(PrescricaoAtendimentoJsonBuilder<T> parent, String medicamento) {
-			super(parent, JsonPath.parse(medicamento));
+		public MedicamentoNaoEstruturado(PrescricaoAtendimentoJsonBuilder<T> parent) {
+			super(parent, "medicamento-nao-estruturado");
 		}
 
 		public MedicamentoNaoEstruturado medicamentos(List<String> medicamentos) {

@@ -3,22 +3,13 @@ package br.ufsc.bridge.res.dab.writer.json;
 import java.util.Date;
 
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
-
-import com.google.gson.GsonBuilder;
-import com.jayway.jsonpath.JsonPath;
-
-import net.minidev.json.JSONArray;
 
 public class CaracterizacaoConsultaABJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 
-	private String profissionalJson;
-
 	public CaracterizacaoConsultaABJsonBuilder(T parent) {
-		super(parent, "caracterizacao-atendimento.json");
-		this.profissionalJson = new GsonBuilder().create().toJson(
-				((JSONArray) this.document.read("$.items.data.items[?(@.name.value == 'Profissionais do atendimento')]")).get(0));
-		this.document.delete("$.items.data.items[?(@.name.value == 'Profissionais do atendimento')]");
+		super(parent, "caracterizacao-atendimento");
 	}
 
 	public CaracterizacaoConsultaABJsonBuilder<T> tipoAtendimento(ResABTipoAtendimentoEnum value) {
@@ -45,7 +36,7 @@ public class CaracterizacaoConsultaABJsonBuilder<T extends BaseJsonBuilder<?>> e
 	}
 
 	public ProfissionalAtendimentoJsonBuilder profissional() {
-		return new ProfissionalAtendimentoJsonBuilder(this, this.profissionalJson);
+		return new ProfissionalAtendimentoJsonBuilder(this);
 	}
 
 	@Override
@@ -55,8 +46,8 @@ public class CaracterizacaoConsultaABJsonBuilder<T extends BaseJsonBuilder<?>> e
 
 	public class ProfissionalAtendimentoJsonBuilder extends BaseJsonBuilder<CaracterizacaoConsultaABJsonBuilder<T>> {
 
-		public ProfissionalAtendimentoJsonBuilder(CaracterizacaoConsultaABJsonBuilder<T> parent, String profissionalJson) {
-			super(parent, JsonPath.parse(profissionalJson));
+		public ProfissionalAtendimentoJsonBuilder(CaracterizacaoConsultaABJsonBuilder<T> parent) {
+			super(parent, "profissional");
 		}
 
 		public ProfissionalAtendimentoJsonBuilder nome(String nome) {

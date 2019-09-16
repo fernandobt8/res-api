@@ -15,12 +15,12 @@ import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
- * A Subscription for specified Events in an ebXML V3+ registry.
- * 
+ * A Subscription for specified Events in an ebXML V3+ dto.
+ *
  * <p>Java class for SubscriptionType complex type.
- * 
+ *
  * <p>The following schema fragment specifies the expected content contained within this class.
- * 
+ *
  * <pre>
  * &lt;complexType name="SubscriptionType">
  *   &lt;complexContent>
@@ -36,8 +36,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- * 
- * 
+ *
+ *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "SubscriptionType", propOrder = {
@@ -62,26 +62,26 @@ public class SubscriptionType
 
     /**
      * Gets the value of the action property.
-     * 
+     *
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
      * This is why there is not a <CODE>set</CODE> method for the action property.
-     * 
+     *
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
      *    getAction().add(newItem);
      * </pre>
-     * 
-     * 
+     *
+     *
      * <p>
      * Objects of the following type(s) are allowed in the list
      * {@link JAXBElement }{@code <}{@link NotifyActionType }{@code >}
      * {@link JAXBElement }{@code <}{@link ActionType }{@code >}
-     * 
-     * 
+     *
+     *
      */
     public List<JAXBElement<? extends ActionType>> getAction() {
         if (action == null) {
@@ -92,11 +92,11 @@ public class SubscriptionType
 
     /**
      * Gets the value of the selector property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link String }
-     *     
+     *
      */
     public String getSelector() {
         return selector;
@@ -104,11 +104,11 @@ public class SubscriptionType
 
     /**
      * Sets the value of the selector property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link String }
-     *     
+     *
      */
     public void setSelector(String value) {
         this.selector = value;
@@ -116,11 +116,11 @@ public class SubscriptionType
 
     /**
      * Gets the value of the startTime property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link XMLGregorianCalendar }
-     *     
+     *
      */
     public XMLGregorianCalendar getStartTime() {
         return startTime;
@@ -128,11 +128,11 @@ public class SubscriptionType
 
     /**
      * Sets the value of the startTime property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link XMLGregorianCalendar }
-     *     
+     *
      */
     public void setStartTime(XMLGregorianCalendar value) {
         this.startTime = value;
@@ -140,11 +140,11 @@ public class SubscriptionType
 
     /**
      * Gets the value of the endTime property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link XMLGregorianCalendar }
-     *     
+     *
      */
     public XMLGregorianCalendar getEndTime() {
         return endTime;
@@ -152,11 +152,11 @@ public class SubscriptionType
 
     /**
      * Sets the value of the endTime property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link XMLGregorianCalendar }
-     *     
+     *
      */
     public void setEndTime(XMLGregorianCalendar value) {
         this.endTime = value;
@@ -164,11 +164,11 @@ public class SubscriptionType
 
     /**
      * Gets the value of the notificationInterval property.
-     * 
+     *
      * @return
      *     possible object is
      *     {@link Duration }
-     *     
+     *
      */
     public Duration getNotificationInterval() {
         return notificationInterval;
@@ -176,11 +176,11 @@ public class SubscriptionType
 
     /**
      * Sets the value of the notificationInterval property.
-     * 
+     *
      * @param value
      *     allowed object is
      *     {@link Duration }
-     *     
+     *
      */
     public void setNotificationInterval(Duration value) {
         this.notificationInterval = value;
