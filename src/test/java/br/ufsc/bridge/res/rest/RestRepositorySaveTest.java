@@ -1,47 +1,63 @@
 package br.ufsc.bridge.res.rest;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.Date;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import br.ufsc.bridge.res.service.rest.repository.RestRepositoryService;
-import br.ufsc.bridge.res.service.rest.repository.dto.AttachmentDTO;
-import br.ufsc.bridge.res.service.rest.repository.dto.ReferenceDTO;
-import br.ufsc.bridge.res.service.rest.repository.dto.RestRepositorySaveDTO;
+import br.ufsc.bridge.res.service.rest.repository.dto.SaveDTO;
 
 @RunWith(JUnit4.class)
 public class RestRepositorySaveTest {
 
-	private RestRepositorySaveDTO dto;
+	private SaveDTO dto;
+
+	private RestRepositoryService service = new RestRepositoryService();
+
+	private static final String PROFISSIONAL = "PractitionerRole/a4";
+
+	private static final String UNIDADE = "Organization/a9";
+
+	private static final String PACIENTE = "Patient/789";
 
 	@Before
 	public void setup() {
-		this.dto = RestRepositorySaveDTO.builder()
-				.date(new Date())
-				.subject(ReferenceDTO.builder()
-						.reference("Patient/123")
-						.build())
-				.author(ReferenceDTO.builder()
-						.reference("Organization/a3")
-						.build())
-				.author(ReferenceDTO.builder()
-						.reference("PractitionerRole/a4")
-						.build())
-				.content(AttachmentDTO.builder()
-						.attachment(AttachmentDTO.DataDTO.builder()
-								.data(DATA)
-								.build())
-						.build())
+		this.dto = SaveDTO.builder()
+				.data(new Date())
+				.pacienteId(PACIENTE)
+				.unidadeId(UNIDADE)
+				.profissionalId(PROFISSIONAL)
+				.documento(DATA)
 		.build();
 	}
 
 	@Test
 	public void save() {
+		String uuid = this.service.save(this.dto);
+		Assert.assertNotNull(uuid);
+	}
 
-		new RestRepositoryService().save(this.dto);
+	@Test
+	public void read() {
+		//given
+		this.service = new RestRepositoryService();
+		String uuid = this.service.save(this.dto);
+
+		//when
+		SaveDTO dto = this.service.read(uuid);
+
+		//then
+//		assertEquals(DATA, dto.getDocumento());
+		assertEquals(PACIENTE, dto.getPacienteId());
+		assertEquals(PROFISSIONAL, dto.getProfissionalId());
+		assertEquals(UNIDADE, dto.getUnidadeId());
+
 
 	}
 

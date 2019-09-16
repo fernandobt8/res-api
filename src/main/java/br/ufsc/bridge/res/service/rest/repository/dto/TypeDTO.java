@@ -13,7 +13,7 @@ public class TypeDTO {
 	private final List<CodingDTO> coding = Arrays.asList(new CodingDTO());
 
 	@Getter
-	private class CodingDTO {
+	public static class CodingDTO {
 
 		private final String system = "http://rnds.saude.gov.br/fhir/r4/CodeSystem/rnds-openehrdocumenttype-1.0";
 
