@@ -17,9 +17,9 @@ import br.ufsc.bridge.res.service.rest.repository.dto.SaveDTO;
 @Slf4j
 public class RestRepositoryService {
 
-	private static final String URL = "https://ehr-services.rnds.mbamobi.com.br/ehr-services/fhir/r4/DocumentReference";
-
 	private static final String PATH = "/ehr-services/fhir/r4/DocumentReference/";
+
+	private static final String URL = "https://ehr-services.rnds.mbamobi.com.br" + PATH;
 
 	private static final String PARAMS = "&_include=DocumentReference:subject&_include=DocumentReference:author&_sort=-date";
 

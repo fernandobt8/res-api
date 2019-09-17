@@ -1,7 +1,6 @@
 package br.ufsc.bridge.res.rest;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Date;
@@ -10,13 +9,11 @@ import java.util.List;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.matchers.JUnitMatchers;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import br.ufsc.bridge.res.service.rest.repository.RestRepositoryService;
 import br.ufsc.bridge.res.service.rest.repository.dto.ItemDTO;
-import br.ufsc.bridge.res.service.rest.repository.dto.ResultDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.SaveDTO;
 
 @RunWith(JUnit4.class)
