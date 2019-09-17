@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.domain;
+package br.ufsc.bridge.res.dab.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,5 +19,13 @@ public enum ResCriticidadeEnum {
 			}
 		}
 		return null;
+	}
+
+	public static class ResCriticidadeEnumJsonPathConveter implements JsonPathValueConverter<ResCriticidadeEnum, String> {
+
+		@Override
+		public ResCriticidadeEnum convert(String value) {
+			return ResCriticidadeEnum.getByCodigo(value);
+		}
 	}
 }

@@ -6,7 +6,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import lombok.Getter;
 
-import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
+import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter

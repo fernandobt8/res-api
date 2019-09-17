@@ -1,7 +1,7 @@
 package br.ufsc.bridge.res.dab.domain;
 
-public interface JsonPathValueConverter<T> {
+public interface JsonPathValueConverter<T, I> {
 
-	public T convert(String value);
+	T convert(I value);
 
 }

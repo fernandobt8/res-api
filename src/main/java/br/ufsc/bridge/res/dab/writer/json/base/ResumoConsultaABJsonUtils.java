@@ -3,11 +3,26 @@ package br.ufsc.bridge.res.dab.writer.json.base;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import br.ufsc.bridge.res.dab.DummyJsonPathValueConverter;
+import br.ufsc.bridge.res.dab.JsonPathProperty;
+import br.ufsc.bridge.res.dab.domain.JsonPathValueConverter;
+import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
@@ -19,8 +34,88 @@ public class ResumoConsultaABJsonUtils {
 
 	private static Map<String, String> jsons = new HashMap<>();
 
+	private static Map<Class<?>, List<SetDTO<?>>> config = new LinkedHashMap<>();
+
 	public static DocumentContext getJsonDocument(String name) {
 		return JsonPath.parse(jsons.get(name));
+	}
+
+	public static <T> T readJson(String json, Class<T> clazz) {
+		try {
+			return readJsonInternal(JsonPath.parse(json).json(), new SetDTO<T>(clazz));
+		} catch (Exception e) {
+			throw new RuntimeException("erro ao carregar metadados da classe", e);
+		}
+	}
+
+	static {
+		try {
+			readMetadata(ResABResumoConsulta.class);
+		} catch (Exception e) {
+			new RuntimeException("erro ao carregar metadados da classe", e);
+		}
+	}
+
+	private static void readMetadata(Class<?> clazz) throws Exception {
+		List<SetDTO<?>> classMetadata = new ArrayList<>();
+		config.put(clazz, classMetadata);
+
+		for (Field field : clazz.getDeclaredFields()) {
+			if (field.isAnnotationPresent(JsonPathProperty.class)) {
+				SetDTO<?> setDTO = new SetDTO<>(field, clazz);
+				if (!setDTO.primitive) {
+					readMetadata(setDTO.clazz);
+				}
+				classMetadata.add(setDTO);
+			}
+		}
+	}
+
+	private static <T> T readJsonInternal(Object value, SetDTO<T> field) throws Exception {
+		if (value instanceof JSONArray) {
+			if (!((JSONArray) value).isEmpty()) {
+				value = ((JSONArray) value).get(0);
+			} else {
+				value = null;
+			}
+		}
+
+		if (field.primitive) {
+			return (T) value;
+		}
+
+		T returnOject = field.constructor.newInstance();
+		DocumentContext document = JsonPath.parse(value);
+
+		for (SetDTO<?> chieldField : config.get(field.clazz)) {
+			JsonPathProperty annotation = chieldField.annotation;
+			String jsonKey = annotation.group().getPath() + annotation.value();
+
+			Object chieldValue = document.read(jsonKey);
+
+			if (chieldField.list) {
+				ArrayList values = new ArrayList();
+				for (Object item : (JSONArray) chieldValue) {
+					Object itemValue = readJsonInternal(item, chieldField);
+					if (chieldField.converter != null) {
+						itemValue = chieldField.converter.convert(itemValue);
+					}
+					values.add(itemValue);
+				}
+				chieldValue = values;
+			} else {
+				chieldValue = readJsonInternal(chieldValue, chieldField);
+				if (chieldField.converter != null) {
+					chieldValue = chieldField.converter.convert(chieldValue);
+				}
+			}
+
+			if (chieldValue != null) {
+				chieldField.method.invoke(returnOject, chieldValue);
+			}
+		}
+
+		return returnOject;
 	}
 
 	static {
@@ -35,6 +130,7 @@ public class ResumoConsultaABJsonUtils {
 			putJson("medicoes-observacoes", null, null);
 			putJson("dados-desfecho", "desfecho", "$.items.data.items[0]");
 			putJson("caracterizacao-atendimento", "profissional", "$.items.data.items[?(@.name.value == 'Profissionais do atendimento')]");
+
 			putJson("alergia-reacoes", "alergia", "$.items[0]");
 
 			DocumentContext alergia = getJsonDocument("alergia");
@@ -43,7 +139,7 @@ public class ResumoConsultaABJsonUtils {
 			jsons.put("alergia", alergia.jsonString());
 			jsons.put("evento-alergia", eventoJson);
 		} catch (IOException e) {
-			throw new RuntimeException("Erro ao carregar templates json");
+			throw new RuntimeException("Erro ao carregar templates json", e);
 		}
 	}
 
@@ -62,5 +158,40 @@ public class ResumoConsultaABJsonUtils {
 		}
 		jsons.put(name, jsonValue);
 		return jsonValue;
+	}
+
+	private static class SetDTO<T> {
+		private JsonPathProperty annotation;
+		private Method method;
+		private boolean list;
+		private boolean primitive;
+		private Constructor<T> constructor;
+		private Class<T> clazz;
+		private JsonPathValueConverter converter;
+
+		SetDTO(Class<T> clazz) throws NoSuchMethodException {
+			this.clazz = clazz;
+			this.constructor = clazz.getConstructor();
+		}
+
+		SetDTO(Field field, Class<?> fatherClass) throws Exception {
+			this.clazz = (Class<T>) field.getType();
+			this.method = fatherClass.getMethod("set" + StringUtils.capitalize(field.getName()), this.clazz);
+			this.annotation = field.getAnnotation(JsonPathProperty.class);
+			if (!DummyJsonPathValueConverter.class.isAssignableFrom(this.annotation.converter())) {
+				this.converter = this.annotation.converter().newInstance();
+			}
+
+			this.primitive = this.clazz.isAssignableFrom(String.class) || this.clazz.isEnum() || Date.class.isAssignableFrom(this.clazz) || this.clazz.isPrimitive();
+
+			if (!this.primitive) {
+				if (Collection.class.isAssignableFrom(this.clazz)) {
+					this.clazz = (Class<T>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
+					this.list = true;
+					this.primitive = this.clazz.isAssignableFrom(String.class) || this.clazz.isEnum() || Date.class.isAssignableFrom(this.clazz) || this.clazz.isPrimitive();
+				}
+				this.constructor = this.clazz.getConstructor();
+			}
+		}
 	}
 }

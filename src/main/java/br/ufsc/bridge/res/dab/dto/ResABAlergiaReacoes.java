@@ -13,7 +13,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import br.ufsc.bridge.res.dab.JsonPathProperty;
-import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum.ResCriticidadeEnumJsonPathConveter;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -24,9 +25,17 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResABAlergiaReacoes implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonPathProperty("$.data.items[?(@.name.value == 'Agente/substância específica')].value.value")
 	private String agente;
+
+	@JsonPathProperty(value = "$.data.items[?(@.name.value == 'Criticidade')].value..code_string",
+			converter = ResCriticidadeEnumJsonPathConveter.class)
 	private ResCriticidadeEnum criticidade;
+
+	@JsonPathProperty("$.data.items[?(@.name.value == 'Categoria do agente causador da alergia ou reação adversa')].value.value")
 	private String categoria;
+
+	@JsonPathProperty("$.data.items[?(@.name.value == 'Evento da reação')]")
 	private List<ResABEventoReacao> eventoReacao = new ArrayList<>();
 
 	public ResABAlergiaReacoes(XPathFactoryAssist xPathAlergia) throws XPathExpressionException {

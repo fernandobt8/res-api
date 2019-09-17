@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import br.ufsc.bridge.res.dab.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -20,7 +21,10 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResABProcedimento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonPathProperty("$.description.items[?(@.name.value == 'Procedimento SUS')].value.value")
 	private String nome;
+
+	@JsonPathProperty("$.description.items[?(@.name.value == 'Procedimento SUS')].value.defining_code.code_string")
 	private String codigo;
 	//	private List<String> resultadoObservacoes = new ArrayList<>();
 

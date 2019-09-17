@@ -1,7 +1,7 @@
 package br.ufsc.bridge.res.dab.writer.xml.alergia;
 
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.dab.writer.xml.base.ParentArquetypeWrapper;
-import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 
 public class RiscoReacaoAdversaBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
 

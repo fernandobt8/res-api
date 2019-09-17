@@ -8,7 +8,7 @@ import javax.xml.xpath.XPathExpressionException;
 
 import lombok.Getter;
 
-import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter

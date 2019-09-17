@@ -2,8 +2,8 @@ package br.ufsc.bridge.res.dab.writer.json;
 
 import java.util.Date;
 
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
-import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 public class AlergiaReacoesAdversasJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {

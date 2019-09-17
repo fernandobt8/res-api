@@ -14,6 +14,8 @@ import org.junit.Test;
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABEstadoMedicamentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABAlergiaReacoes;
 import br.ufsc.bridge.res.dab.dto.ResABEventoReacao;
 import br.ufsc.bridge.res.dab.dto.ResABIdentificacaoProfissional;
@@ -21,8 +23,6 @@ import br.ufsc.bridge.res.dab.dto.ResABMedicamento;
 import br.ufsc.bridge.res.dab.dto.ResABProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.dto.ResABProcedimento;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
-import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
-import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
 
 public class TestConvertResABResumoConsultaToXML {
 

@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import br.ufsc.bridge.res.dab.DateJsonPathValueConverter;
+import br.ufsc.bridge.res.dab.JsonPathProperty;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
@@ -22,8 +24,14 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResABEventoReacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonPathProperty("$.items[?(@.name.value == 'Manifestação')].value.value")
 	private String manifestacao;
+
+	@JsonPathProperty(value = "$.items[?(@.name.value == 'Data da instalação da reação adversa')].value.value",
+			converter = DateJsonPathValueConverter.class)
 	private Date dataInstalacao;
+
+	@JsonPathProperty("$.items[?(@.name.value == 'Evolução da alergia/reação adversa')].value.value")
 	private String evolucaoAlergia;
 
 	public ResABEventoReacao(XPathFactoryAssist xPathEvento) throws XPathExpressionException {

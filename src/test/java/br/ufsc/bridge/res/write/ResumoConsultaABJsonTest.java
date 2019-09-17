@@ -1,18 +1,31 @@
 package br.ufsc.bridge.res.write;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
+import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.dab.writer.json.CaracterizacaoConsultaABJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.ResumoConsultaABJsonBuilder;
-import br.ufsc.bridge.res.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.writer.json.base.ResumoConsultaABJsonUtils;
 
 public class ResumoConsultaABJsonTest {
+
+	@Test
+	public void test() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
+
+		InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("exemplo-clinico.json");
+		ResABResumoConsulta resumo = ResumoConsultaABJsonUtils.readJson(IOUtils.toString(resourceAsStream), ResABResumoConsulta.class);
+		System.out.println(resumo);
+	}
 
 	@Test
 	public void test2() throws IOException {

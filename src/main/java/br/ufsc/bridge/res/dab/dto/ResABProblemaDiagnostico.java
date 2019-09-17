@@ -10,7 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import br.ufsc.bridge.res.domain.ResTipoProblemaDiagnostico;
+import br.ufsc.bridge.res.dab.JsonPathProperty;
+import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico;
+import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico.ResTipoProblemaDiagnosticoJsonPathConveter;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -21,8 +23,14 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 public class ResABProblemaDiagnostico implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@JsonPathProperty("$.data.items[?(@.name.value == 'Diagnóstico')].value.value")
 	private String descricao;
+
+	@JsonPathProperty(value = "$.data.items[?(@.name.value == 'Diagnóstico')].value.defining_code..value",
+			converter = ResTipoProblemaDiagnosticoJsonPathConveter.class)
 	private ResTipoProblemaDiagnostico tipo;
+
+	@JsonPathProperty("$.data.items[?(@.name.value == 'Diagnóstico')].value.defining_code.code_string")
 	private String codigo;
 
 	public ResABProblemaDiagnostico(XPathFactoryAssist xPathDiagnostico) throws XPathExpressionException {

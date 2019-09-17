@@ -22,4 +22,12 @@ public enum ResABCondutaEnum {
 		}
 		return null;
 	}
+
+	public static class ResABCondutaEnumJsonPathConverter implements JsonPathValueConverter<ResABCondutaEnum, String> {
+
+		@Override
+		public ResABCondutaEnum convert(String value) {
+			return ResABCondutaEnum.getByCodigo(value);
+		}
+	}
 }

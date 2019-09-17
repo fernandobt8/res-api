@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.domain;
+package br.ufsc.bridge.res.dab.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,5 +21,13 @@ public enum ResTipoProblemaDiagnostico {
 			}
 		}
 		return null;
+	}
+
+	public static class ResTipoProblemaDiagnosticoJsonPathConveter implements JsonPathValueConverter<ResTipoProblemaDiagnostico, String> {
+
+		@Override
+		public ResTipoProblemaDiagnostico convert(String value) {
+			return ResTipoProblemaDiagnostico.getByTipo(value);
+		}
 	}
 }
