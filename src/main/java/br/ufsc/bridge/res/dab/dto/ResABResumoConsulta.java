@@ -17,9 +17,6 @@ import lombok.ToString;
 
 import org.apache.commons.lang3.StringUtils;
 
-import br.ufsc.bridge.res.dab.DateJsonPathValueConverter;
-import br.ufsc.bridge.res.dab.JsonPathProperty;
-import br.ufsc.bridge.res.dab.JsonPathProperty.Group;
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum.ResABAleitamentoMaternoEnumJsonPathConverter;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
@@ -41,6 +38,9 @@ import br.ufsc.bridge.res.dab.writer.xml.procedimentospequenascirurgias.Procedim
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResABXMLParserException;
 import br.ufsc.bridge.res.util.ResDocument;
+import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
+import br.ufsc.bridge.res.util.json.JsonPathProperty;
+import br.ufsc.bridge.res.util.json.JsonPathProperty.Group;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter

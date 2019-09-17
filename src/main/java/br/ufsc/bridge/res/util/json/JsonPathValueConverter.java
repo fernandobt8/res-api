@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dab.domain;
+package br.ufsc.bridge.res.util.json;
 
 public interface JsonPathValueConverter<T, I> {
 

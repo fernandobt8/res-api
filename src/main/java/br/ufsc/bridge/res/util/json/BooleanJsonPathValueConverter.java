@@ -1,6 +1,4 @@
-package br.ufsc.bridge.res.dab;
-
-import br.ufsc.bridge.res.dab.domain.JsonPathValueConverter;
+package br.ufsc.bridge.res.util.json;
 
 public class BooleanJsonPathValueConverter implements JsonPathValueConverter<Boolean, String> {
 	@Override

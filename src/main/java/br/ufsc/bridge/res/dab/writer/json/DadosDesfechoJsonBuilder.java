@@ -1,6 +1,6 @@
 package br.ufsc.bridge.res.dab.writer.json;
 
-import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
+import br.ufsc.bridge.res.util.json.BaseJsonBuilder;
 
 public class DadosDesfechoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
 

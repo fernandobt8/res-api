@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dab.writer.json.base;
+package br.ufsc.bridge.res.util.json;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class BaseJsonBuilder<T extends BaseJsonBuilder<?>> {
 	protected List<BaseJsonBuilder<?>> children;
 
 	public BaseJsonBuilder(T parent, String fileName) {
-		this.document = ResumoConsultaABJsonUtils.getJsonDocument(fileName);
+		this.document = ResJsonUtils.getJsonDocument(fileName);
 		this.children = new ArrayList<>();
 		this.parent = parent;
 		if (parent != null) {

@@ -15,7 +15,7 @@ import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.dab.writer.json.CaracterizacaoConsultaABJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.ResumoConsultaABJsonBuilder;
-import br.ufsc.bridge.res.dab.writer.json.base.ResumoConsultaABJsonUtils;
+import br.ufsc.bridge.res.util.json.ResJsonUtils;
 
 public class ResumoConsultaABJsonTest {
 
@@ -23,7 +23,7 @@ public class ResumoConsultaABJsonTest {
 	public void test() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
 
 		InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("exemplo-clinico.json");
-		ResABResumoConsulta resumo = ResumoConsultaABJsonUtils.readJson(IOUtils.toString(resourceAsStream), ResABResumoConsulta.class);
+		ResABResumoConsulta resumo = ResJsonUtils.readJson(IOUtils.toString(resourceAsStream), ResABResumoConsulta.class);
 		System.out.println(resumo);
 	}
 

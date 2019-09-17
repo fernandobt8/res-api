@@ -1,4 +1,4 @@
-package br.ufsc.bridge.res.dab.writer.json.base;
+package br.ufsc.bridge.res.util.json;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +19,6 @@ import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import br.ufsc.bridge.res.dab.DummyJsonPathValueConverter;
-import br.ufsc.bridge.res.dab.JsonPathProperty;
-import br.ufsc.bridge.res.dab.domain.JsonPathValueConverter;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -30,7 +27,7 @@ import com.jayway.jsonpath.JsonPath;
 
 import net.minidev.json.JSONArray;
 
-public class ResumoConsultaABJsonUtils {
+public class ResJsonUtils {
 
 	private static Map<String, String> jsons = new HashMap<>();
 
@@ -144,7 +141,7 @@ public class ResumoConsultaABJsonUtils {
 	}
 
 	private static String putJson(String name, String childName, String childPath) throws IOException {
-		InputStream resourceAsStream = ResumoConsultaABJsonUtils.class.getClassLoader().getResourceAsStream("json.parties" + File.separator + name + ".json");
+		InputStream resourceAsStream = ResJsonUtils.class.getClassLoader().getResourceAsStream("json.parties" + File.separator + name + ".json");
 		String jsonValue = IOUtils.toString(resourceAsStream, Charset.forName("UTF-8"));
 		if (childName != null) {
 			DocumentContext document = JsonPath.parse(jsonValue);

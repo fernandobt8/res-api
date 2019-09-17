@@ -3,8 +3,8 @@ package br.ufsc.bridge.res.dab.writer.json;
 import java.io.IOException;
 import java.util.Date;
 
-import br.ufsc.bridge.res.dab.writer.json.base.BaseJsonBuilder;
 import br.ufsc.bridge.res.util.RDateUtil;
+import br.ufsc.bridge.res.util.json.BaseJsonBuilder;
 
 public class ResumoConsultaABJsonBuilder extends BaseJsonBuilder<ResumoConsultaABJsonBuilder> {
 

@@ -1,12 +1,10 @@
-package br.ufsc.bridge.res.dab;
+package br.ufsc.bridge.res.util.json;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import br.ufsc.bridge.res.dab.domain.JsonPathValueConverter;
 
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JsonPathProperty {

@@ -3,6 +3,8 @@ package br.ufsc.bridge.res.dab.domain;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import br.ufsc.bridge.res.util.json.JsonPathValueConverter;
+
 @Getter
 @AllArgsConstructor
 public enum ResABCondutaEnum {

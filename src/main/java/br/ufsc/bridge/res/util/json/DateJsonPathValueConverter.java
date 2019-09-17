@@ -1,8 +1,7 @@
-package br.ufsc.bridge.res.dab;
+package br.ufsc.bridge.res.util.json;
 
 import java.util.Date;
 
-import br.ufsc.bridge.res.dab.domain.JsonPathValueConverter;
 import br.ufsc.bridge.res.util.RDateUtil;
 
 public class DateJsonPathValueConverter implements JsonPathValueConverter<Date, String> {

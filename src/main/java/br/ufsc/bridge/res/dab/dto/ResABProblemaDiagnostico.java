@@ -10,9 +10,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import br.ufsc.bridge.res.dab.JsonPathProperty;
 import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico.ResTipoProblemaDiagnosticoJsonPathConveter;
+import br.ufsc.bridge.res.util.json.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
