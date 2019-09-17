@@ -1,0 +1,18 @@
+{
+  "items": {
+    "_archetype_node_id": "openEHR-EHR-ADMIN_ENTRY.admission-ms_br.v2",
+    "_type": "ADMIN_ENTRY",
+    "name": {
+      "value": "Admissão do paciente"
+    },
+    "archetype_details": {
+      "archetype_id": {
+        "value": "openEHR-EHR-ADMIN_ENTRY.admission-ms_br.v2"
+      },
+      "template_id": {
+        "value": "SumariodeAlta.v4.0"
+      },
+      "rm_version": "1.0.1"
+    }
+  }
+}
