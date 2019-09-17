@@ -9,6 +9,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
+import br.ufsc.bridge.res.domain.Sort;
 import br.ufsc.bridge.res.service.rest.repository.dto.ItemDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.RestRepositorySaveDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.ResultDTO;
@@ -21,7 +22,7 @@ public class RestRepositoryService {
 
 	private static final String URL = "https://ehr-services.rnds.mbamobi.com.br" + PATH;
 
-	private static final String PARAMS = "&_include=DocumentReference:subject&_include=DocumentReference:author&_sort=-date";
+	private static final String PARAMS = "?subject=%s&_include=DocumentReference:subject&_include=DocumentReference:author&_sort=%sdate";
 
 
 	public String save(SaveDTO dto) {
@@ -40,8 +41,8 @@ public class RestRepositoryService {
 		return response.getBody().toDto();
 	}
 
-	public List<ItemDTO> list(String pacienteId) {
-		ResponseEntity<ResultDTO> response = new RestTemplate().getForEntity(URL + "?subject=" + pacienteId + PARAMS, ResultDTO.class);
+	public List<ItemDTO> list(String pacienteId, Sort sort) {
+		ResponseEntity<ResultDTO> response = new RestTemplate().getForEntity(String.format(URL + PARAMS, pacienteId,  sort.getCode()), ResultDTO.class);
 		return response.getBody().toItems();
 	}
 
