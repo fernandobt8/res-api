@@ -45,7 +45,7 @@ public class EHRReaderTest {
 	@Test
 	public void testSimpleJson() {
 		SimpleExampleDto dto = (SimpleExampleDto) this.reader.from("items")
-				.select("name.value").where("asdasd == asdas").as("value")
+				.select("name.value").as("value")
 				.select("_type").as("type")
 				.select("archetype_details.rm_version").as("version")
 				.select("archetype_details.template_id.value").as("templateId")
