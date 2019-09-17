@@ -7,7 +7,7 @@ import br.ufsc.bridge.res.util.json.JsonPathValueConverter;
 
 @Getter
 @AllArgsConstructor
-public enum ResTipoProblemaDiagnostico {
+public enum ResABTipoProblemaDiagnostico {
 
 	CID10("CID10"),
 	CID10_1998("CID-10_1998.v1.0.0"),
@@ -16,8 +16,8 @@ public enum ResTipoProblemaDiagnostico {
 
 	private String tipo;
 
-	public static ResTipoProblemaDiagnostico getByTipo(String codigo) {
-		for (ResTipoProblemaDiagnostico value : values()) {
+	public static ResABTipoProblemaDiagnostico getByTipo(String codigo) {
+		for (ResABTipoProblemaDiagnostico value : values()) {
 			if (value.getTipo().equals(codigo)) {
 				return value;
 			}
@@ -25,11 +25,11 @@ public enum ResTipoProblemaDiagnostico {
 		return null;
 	}
 
-	public static class ResTipoProblemaDiagnosticoJsonPathConveter implements JsonPathValueConverter<ResTipoProblemaDiagnostico, String> {
+	public static class ResTipoProblemaDiagnosticoJsonPathConveter implements JsonPathValueConverter<ResABTipoProblemaDiagnostico, String> {
 
 		@Override
-		public ResTipoProblemaDiagnostico convert(String value) {
-			return ResTipoProblemaDiagnostico.getByTipo(value);
+		public ResABTipoProblemaDiagnostico convert(String value) {
+			return ResABTipoProblemaDiagnostico.getByTipo(value);
 		}
 	}
 }

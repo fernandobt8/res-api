@@ -10,8 +10,8 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
+import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.dab.writer.json.CaracterizacaoConsultaABJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.ResumoConsultaABJsonBuilder;
@@ -76,7 +76,7 @@ public class ResumoConsultaABJsonTest {
 				.alergia()
 					.agente("porcaria")
 					.categoria("filha da putagem")
-					.criticidade(ResCriticidadeEnum.ALTO)
+					.criticidade(ResABCriticidadeEnum.ALTO)
 					.evento()
 						.dataInstalacao(new Date())
 						.evolucao("evoluiu para um alien")

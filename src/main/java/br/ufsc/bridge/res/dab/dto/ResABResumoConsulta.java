@@ -160,7 +160,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			this.gestasPrevias = xPathSumarioObstetrico.getString("./Quantidade_de_gestas_prévias/value/magnitude");
 			this.partos = xPathSumarioObstetrico.getString("./Quantidade_de_partos/value/magnitude");
 
-			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum.getById(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
+			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum.getByDescricao(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas_fslash_Diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema_Diagnóstico")) {
