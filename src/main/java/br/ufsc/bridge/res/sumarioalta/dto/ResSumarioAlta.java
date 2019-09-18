@@ -8,6 +8,7 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResABXMLParserException;
@@ -15,6 +16,7 @@ import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
+@NoArgsConstructor
 public class ResSumarioAlta extends ResDocument implements Serializable {
 
 	private static final long serialVersionUID = 1L;

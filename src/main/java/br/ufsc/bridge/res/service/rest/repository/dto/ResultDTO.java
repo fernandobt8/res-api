@@ -4,13 +4,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import br.ufsc.bridge.res.domain.TipoDocumento;
 
 @Getter
 @Setter
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class ResultDTO {
 
 	private Long total;
@@ -20,6 +26,8 @@ public class ResultDTO {
 	@Getter
 	@Setter
 	@Builder
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class EntryDTO {
 
 		private String fullUrl;
@@ -31,6 +39,8 @@ public class ResultDTO {
 	@Getter
 	@Setter
 	@Builder
+	@AllArgsConstructor
+	@NoArgsConstructor
 	public static class ResourceDTO {
 
 		private String id;
@@ -53,11 +63,16 @@ public class ResultDTO {
 
 	public List<ItemDTO> toItems() {
 		List<ItemDTO> items = new ArrayList<>();
-		for(EntryDTO entry : this.entry) {
-			ItemDTO item = new ItemDTO();
-			item.setUuid(entry.getResource().getId());
-			item.setUrl(entry.getFullUrl());
-			items.add(item);
+		if (this.entry != null) {
+			for (EntryDTO entry : this.entry) {
+				ItemDTO item = new ItemDTO();
+				item.setUuid(entry.getResource().getId());
+				item.setUrl(entry.getFullUrl());
+				if (entry.getResource().getType() != null) {
+					item.setTipoDocumento(TipoDocumento.getByCodigo(entry.getResource().getType().getCoding().get(0).getCode()));
+				}
+				items.add(item);
+			}
 		}
 		return items;
 	}

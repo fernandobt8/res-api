@@ -39,6 +39,8 @@ public class RestRepositorySaveDTO {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date date;
 
+	private String id;
+
 	private ReferenceDTO subject;
 
 	@Singular
@@ -74,6 +76,7 @@ public class RestRepositorySaveDTO {
 
 	public SaveDTO toDto() {
 		return SaveDTO.builder()
+				.id(this.id)
 				.data(this.date)
 				.documento(CollectionUtils.isEmpty(this.contents) ? null : this.contents.get(0).getAttachment().getData())
 				.pacienteId(this.subject.getReference())
@@ -83,8 +86,8 @@ public class RestRepositorySaveDTO {
 	}
 
 	private String getAuthor(String name) {
-		for (ReferenceDTO author: this.authors) {
-			if(StringUtils.startsWith(author.getReference(), name)) {
+		for (ReferenceDTO author : this.authors) {
+			if (StringUtils.startsWith(author.getReference(), name)) {
 				return author.getReference();
 			}
 		}

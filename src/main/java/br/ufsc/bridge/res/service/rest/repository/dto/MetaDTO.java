@@ -3,9 +3,13 @@ package br.ufsc.bridge.res.service.rest.repository.dto;
 import java.util.Arrays;
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class MetaDTO {
 
 	public static final MetaDTO DEFAULT = new MetaDTO();

@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.junit.Test;
 
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.writer.xml.ResumoConsultaABBuilder;
@@ -93,7 +94,7 @@ public class ResumoConsultaABTest {
 				.close()
 			.close()
 			.dadosDesfecho()
-				.conduta("teste")
+				.conduta(ResABCondutaEnum.RETORNO_PARA_CUIDADO_CONTINUADO_PROGRAMADO)
 				.solicitacoesEncaminhamento()
 					.encaminhamento("Interno no dia I")
 					.encaminhamento("Interno no dia II")
