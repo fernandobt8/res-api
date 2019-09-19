@@ -19,6 +19,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum.ResABAleitamentoMaternoEnumJsonPathConverter;
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum.ResABCondutaEnumJsonPathConverter;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum.ResABTipoAtendimentoEnumJsonPathValueConverter;
 import br.ufsc.bridge.res.dab.writer.json.AlergiaReacoesAdversasJsonBuilder;
@@ -125,8 +127,9 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 	@JsonPathProperty("$.content[?(@.name.value == 'Prescrição no atendimento')]..items[?(@.name.value == 'Medicamentos prescritos no atendimento (não estruturado)')].items.value.value")
 	private List<String> medicamentosNaoEstruturados = new LinkedList<>();
 
-	@JsonPathProperty("$.content[?(@.name.value == 'Dados do desfecho')]..items[?(@.name.value == 'Motivo do desfecho')].value..code_string")
-	private List<String> condutas = new LinkedList<>();
+	@JsonPathProperty(value = "$.content[?(@.name.value == 'Dados do desfecho')]..items[?(@.name.value == 'Motivo do desfecho')].value..code_string",
+			converter = ResABCondutaEnumJsonPathConverter.class)
+	private List<ResABCondutaEnum> condutas = new LinkedList<>();
 
 	// não tem json
 	private List<String> encaminhamentos = new LinkedList<>();
@@ -160,7 +163,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			this.gestasPrevias = xPathSumarioObstetrico.getString("./Quantidade_de_gestas_prévias/value/magnitude");
 			this.partos = xPathSumarioObstetrico.getString("./Quantidade_de_partos/value/magnitude");
 
-			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum.getById(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
+			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum.getByDescricao(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas_fslash_Diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema_Diagnóstico")) {
@@ -196,7 +199,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 
 			XPathFactoryAssist xPathDados = xPathRoot.getXPathAssist("//Dados_do_desfecho/Desfecho__fslash__alta_do_contato_assistencial/data");
 			for (XPathFactoryAssist xPathConduta : xPathDados.iterable(".//Motivo_do_desfecho")) {
-				this.condutas.add(xPathConduta.getString("./value/value"));
+				this.condutas.add(ResABCondutaEnum.getByCodigo(xPathConduta.getString("./value/defining_code/code_string")));
 			}
 
 			// nao presente mais, comentado para manter historico
@@ -293,7 +296,7 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		abBuilder.listaMedicamentosNaoEstruturados().itemMedicacaoNaoEstruturada(this.medicamentosNaoEstruturados);
 
 		DadosDesfechoBuilder<ResumoConsultaABBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
-		for (String conduta : this.condutas) {
+		for (ResABCondutaEnum conduta : this.condutas) {
 			desfechoBuilder.conduta(conduta);
 		}
 
@@ -370,8 +373,8 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 				.medicamentoNaoEstruturado().medicamentos(this.medicamentosNaoEstruturados);
 
 		DadosDesfechoJsonBuilder<ResumoConsultaABJsonBuilder> desfechoBuilder = abBuilder.dadosDesfecho();
-		for (String conduta : this.condutas) {
-			desfechoBuilder.desfecho().descricao(conduta);
+		for (ResABCondutaEnum conduta : this.condutas) {
+			desfechoBuilder.desfecho(conduta);
 		}
 
 		return abBuilder.getJsonString();

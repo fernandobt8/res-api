@@ -2,7 +2,7 @@ package br.ufsc.bridge.res.dab.writer.json;
 
 import java.util.Date;
 
-import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
+import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.json.BaseJsonBuilder;
 
@@ -39,7 +39,7 @@ public class AlergiaReacoesAdversasJsonBuilder<T extends BaseJsonBuilder<?>> ext
 			return this;
 		}
 
-		public AlergiaJsonBuilder criticidade(ResCriticidadeEnum criticidade) {
+		public AlergiaJsonBuilder criticidade(ResABCriticidadeEnum criticidade) {
 			this.hasCriticidade = criticidade != null;
 			if (this.hasCriticidade) {
 				this.document.set("$.data.items[?(@.name.value == 'Criticidade')].value.value", criticidade.getDescricao());

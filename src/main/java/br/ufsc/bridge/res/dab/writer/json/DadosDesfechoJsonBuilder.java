@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.writer.json;
 
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.util.json.BaseJsonBuilder;
 
 public class DadosDesfechoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
@@ -10,8 +11,9 @@ public class DadosDesfechoJsonBuilder<T extends BaseJsonBuilder<?>> extends Base
 		super(parent, "dados-desfecho");
 	}
 
-	public DesfechoJsonBuilder desfecho() {
-		return new DesfechoJsonBuilder(this, this.desfechoJson);
+	public DadosDesfechoJsonBuilder<T> desfecho(ResABCondutaEnum desfecho) {
+		new DesfechoJsonBuilder(this, this.desfechoJson, desfecho);
+		return this;
 	}
 
 	@Override
@@ -21,18 +23,10 @@ public class DadosDesfechoJsonBuilder<T extends BaseJsonBuilder<?>> extends Base
 
 	public class DesfechoJsonBuilder extends BaseJsonBuilder<DadosDesfechoJsonBuilder<T>> {
 
-		private DesfechoJsonBuilder(DadosDesfechoJsonBuilder<T> parent, String json) {
+		private DesfechoJsonBuilder(DadosDesfechoJsonBuilder<T> parent, String json, ResABCondutaEnum desfecho) {
 			super(parent, "desfecho");
-		}
-
-		public DesfechoJsonBuilder descricao(String descricao) {
-			this.document.set("$.value.value", descricao);
-			return this;
-		}
-
-		public DesfechoJsonBuilder codigo(String codigo) {
-			this.document.set("$.value.defining_code.code_string", codigo);
-			return this;
+			this.document.set("$.value.value", desfecho.getDescricao());
+			this.document.set("$.value.defining_code.code_string", desfecho.getCodigo());
 		}
 	}
 }

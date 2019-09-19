@@ -7,11 +7,10 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TipoDocumento {
 
-	ATENDIMENTO_CIT_2018("RegistroAtendimentoClínico_CIT_2018"),
-	CONSULTA_AB_CN1_V1("Resumo de consulta ab_CN1_v1"),
-	CONSULTA_AB_CN1_V2("Resumo de consulta ab_CN1_v2.0.oet"),
-	SUMARIO_DE_ALTA("Sumário de alta");
-	// XXX: add atual tipo do res aqui e mudar no save
+	REGISTRO_ATENDIMENTO_CLINICO("cn4_registro_atendimento_clinico_v1.0"),
+	REGISTRO_IMUNOBIOLOGICO("cn6_registro_imunobiologico_v1.0"),
+	SUMARIO_ALTA("cn2_sumario_alta_internacao_v1.0"),
+	DISPENSACAO_MEDICAMENTOS("cn10_dispensacao_medicamentos_v1.0");
 
 	private String codigo;
 

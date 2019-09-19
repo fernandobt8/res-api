@@ -6,12 +6,14 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
 import java.util.Date;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.domain.ResABAleitamentoMaternoEnum;
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
+import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
 import br.ufsc.bridge.res.dab.domain.ResABTipoAtendimentoEnum;
-import br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum;
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
 import br.ufsc.bridge.res.dab.writer.json.CaracterizacaoConsultaABJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.ResumoConsultaABJsonBuilder;
@@ -76,7 +78,7 @@ public class ResumoConsultaABJsonTest {
 				.alergia()
 					.agente("porcaria")
 					.categoria("filha da putagem")
-					.criticidade(ResCriticidadeEnum.ALTO)
+					.criticidade(ResABCriticidadeEnum.ALTO)
 					.evento()
 						.dataInstalacao(new Date())
 						.evolucao("evoluiu para um alien")
@@ -130,18 +132,12 @@ public class ResumoConsultaABJsonTest {
 //				.close()
 //			.close()
 			.dadosDesfecho()
-				.desfecho()
-					.codigo("1234")
-					.descricao("destruição global")
-				.close()
-				.desfecho()
-					.codigo("4321")
-					.descricao("destruir alguma coisa")
-				.close()
+				.desfecho(ResABCondutaEnum.ENCAMINHAMENTO)
+				.desfecho(ResABCondutaEnum.EVASAO)
 			.close();
 
 		String jsonString = abBuilder.getJsonString();
 		System.out.println("--------------------------");
-		System.out.println(jsonString);
+		System.out.println(Base64.encodeBase64String(jsonString.getBytes("UTF-8")));
 	}
 }

@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dab.writer.xml.desfecho;
 
+import br.ufsc.bridge.res.dab.domain.ResABCondutaEnum;
 import br.ufsc.bridge.res.dab.writer.xml.base.ParentArquetypeWrapper;
 
 public class DadosDesfechoBuilder<PARENT extends ParentArquetypeWrapper<?>> extends ParentArquetypeWrapper<PARENT> {
@@ -23,7 +24,7 @@ public class DadosDesfechoBuilder<PARENT extends ParentArquetypeWrapper<?>> exte
 		return "</data></Desfecho__fslash__alta_do_contato_assistencial></Dados_do_desfecho>";
 	}
 
-	public DadosDesfechoBuilder<PARENT> conduta(String conduta) {
+	public DadosDesfechoBuilder<PARENT> conduta(ResABCondutaEnum conduta) {
 		new CondutaBuilder<>(this, conduta);
 		return this;
 	}

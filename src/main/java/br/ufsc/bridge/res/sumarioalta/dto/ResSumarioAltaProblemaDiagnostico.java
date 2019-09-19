@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico;
+import br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
@@ -30,11 +30,11 @@ public class ResSumarioAltaProblemaDiagnostico implements Serializable {
 	@JsonPathProperty(value = "[?(@.name.value == 'Diagnóstico')]"
 			+ ".value.defining_code.terminology_id.value",
 			converter = ResTipoProblemaDiagnostico.ResTipoProblemaDiagnosticoJsonPathConveter.class)
-	private ResTipoProblemaDiagnostico tipo;
+	private ResABTipoProblemaDiagnostico tipo;
 
 	public ResSumarioAltaProblemaDiagnostico(XPathFactoryAssist xPathProblemaDiagnostico) throws XPathExpressionException {
 		this.descricao = xPathProblemaDiagnostico.getString("./data/Diagnóstico/value/value");
 		this.codigo = xPathProblemaDiagnostico.getString("./data/Diagnóstico/value/defining_code/code_string");
-		this.tipo = ResTipoProblemaDiagnostico.getByTipo(xPathProblemaDiagnostico.getString("./data/Diagnóstico/value/defining_code/terminology_id/value"));
+		this.tipo = ResABTipoProblemaDiagnostico.getByTipo(xPathProblemaDiagnostico.getString("./data/Diagnóstico/value/defining_code/terminology_id/value"));
 	}
 }

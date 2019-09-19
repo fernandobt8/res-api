@@ -15,7 +15,7 @@ public enum ResABAleitamentoMaternoEnum {
 
 	private String descricao;
 
-	public static ResABAleitamentoMaternoEnum getById(String jsonValue) {
+	public static ResABAleitamentoMaternoEnum getByDescricao(String jsonValue) {
 		for (ResABAleitamentoMaternoEnum value : ResABAleitamentoMaternoEnum.values()) {
 			if (value.getDescricao().equalsIgnoreCase(jsonValue)) {
 				return value;
@@ -28,7 +28,7 @@ public enum ResABAleitamentoMaternoEnum {
 
 		@Override
 		public ResABAleitamentoMaternoEnum convert(String jsonValue) {
-			return ResABAleitamentoMaternoEnum.getById(jsonValue);
+			return ResABAleitamentoMaternoEnum.getByDescricao(jsonValue);
 		}
 	}
 }
