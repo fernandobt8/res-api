@@ -1,7 +1,7 @@
 package br.ufsc.bridge.res.read;
 
-import static br.ufsc.bridge.res.dab.domain.ResCriticidadeEnum.BAIXO;
-import static br.ufsc.bridge.res.dab.domain.ResTipoProblemaDiagnostico.CID10_201812;
+import static br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum.BAIXO;
+import static br.ufsc.bridge.res.dab.domain.ResABTipoProblemaDiagnostico.CID10_201812;
 import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
@@ -14,13 +14,15 @@ import org.junit.Test;
 import br.ufsc.bridge.res.sumarioalta.dto.ResSumarioAlta;
 import br.ufsc.bridge.res.util.json.ResJsonUtils;
 
+import com.sun.org.apache.xml.internal.security.utils.Base64;
+
 public class ResSumarioAltaReadJsonTest {
 
 	private ResSumarioAlta form;
 
 	@Before
 	public void setup() throws IOException {
-		this.form = ResJsonUtils.readJson(IOUtils.toString(ResSumarioAltaReadJsonTest.class.getResourceAsStream("/exemplo-sumario-alta.json")), ResSumarioAlta.class);
+		this.form = ResJsonUtils.readJson(Base64.encode(IOUtils.toString(ResSumarioAltaReadJsonTest.class.getResourceAsStream("/exemplo-sumario-alta.json")).getBytes()), ResSumarioAlta.class);
 	}
 
 	@Test

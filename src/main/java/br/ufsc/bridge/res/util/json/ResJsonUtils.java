@@ -71,7 +71,6 @@ public class ResJsonUtils {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static <T> T readJsonInternal(Object value, SetDTO<T> field) throws Exception {
 		if (value instanceof JSONArray) {
 			if (!((JSONArray) value).isEmpty()) {
@@ -168,7 +167,6 @@ public class ResJsonUtils {
 		private boolean primitive;
 		private Constructor<T> constructor;
 		private Class<T> clazz;
-		@SuppressWarnings("rawtypes")
 		private JsonPathValueConverter converter;
 
 		SetDTO(Class<T> clazz) throws NoSuchMethodException {
@@ -176,7 +174,6 @@ public class ResJsonUtils {
 			this.constructor = clazz.getConstructor();
 		}
 
-		@SuppressWarnings("unchecked")
 		SetDTO(Field field, Class<?> fatherClass) throws Exception {
 			this.clazz = (Class<T>) field.getType();
 			this.method = fatherClass.getMethod("set" + StringUtils.capitalize(field.getName()), this.clazz);
@@ -193,7 +190,9 @@ public class ResJsonUtils {
 					this.list = true;
 					this.primitive = this.clazz.isAssignableFrom(String.class) || this.clazz.isEnum() || Date.class.isAssignableFrom(this.clazz) || this.clazz.isPrimitive();
 				}
-				this.constructor = this.clazz.getConstructor();
+				if (!this.primitive) {
+					this.constructor = this.clazz.getConstructor();
+				}
 			}
 		}
 	}

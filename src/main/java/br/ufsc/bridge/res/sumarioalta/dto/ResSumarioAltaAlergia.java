@@ -31,7 +31,7 @@ public class ResSumarioAltaAlergia implements Serializable {
 
 	@JsonPathProperty(value = "@.data.items[?(@.name.value == 'Criticidade')]"
 			+ ".value.defining_code.code_string",
-			converter = ResCriticidadeEnum.ResCriticidadeEnumJsonPathConveter.class)
+			converter = ResABCriticidadeEnum.ResCriticidadeEnumJsonPathConveter.class)
 	private ResABCriticidadeEnum criticidade;
 
 	@JsonPathProperty(value = "@.data.items[?(@.name.value == 'Evento da reação')]")

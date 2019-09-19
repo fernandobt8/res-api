@@ -29,7 +29,7 @@ public class ResSumarioAltaProblemaDiagnostico implements Serializable {
 
 	@JsonPathProperty(value = "[?(@.name.value == 'Diagnóstico')]"
 			+ ".value.defining_code.terminology_id.value",
-			converter = ResTipoProblemaDiagnostico.ResTipoProblemaDiagnosticoJsonPathConveter.class)
+			converter = ResABTipoProblemaDiagnostico.ResTipoProblemaDiagnosticoJsonPathConveter.class)
 	private ResABTipoProblemaDiagnostico tipo;
 
 	public ResSumarioAltaProblemaDiagnostico(XPathFactoryAssist xPathProblemaDiagnostico) throws XPathExpressionException {
