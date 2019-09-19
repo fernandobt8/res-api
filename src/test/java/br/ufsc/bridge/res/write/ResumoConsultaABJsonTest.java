@@ -25,7 +25,7 @@ public class ResumoConsultaABJsonTest {
 	public void test() throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException, IOException {
 
 		InputStream resourceAsStream = this.getClass().getClassLoader().getResourceAsStream("exemplo-clinico.json");
-		ResABResumoConsulta resumo = ResJsonUtils.readJson(IOUtils.toString(resourceAsStream), ResABResumoConsulta.class);
+		ResABResumoConsulta resumo = ResJsonUtils.readJson(com.sun.org.apache.xml.internal.security.utils.Base64.encode(IOUtils.toString(resourceAsStream).getBytes()), ResABResumoConsulta.class);
 		System.out.println(resumo);
 	}
 

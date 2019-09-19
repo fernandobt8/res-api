@@ -5,14 +5,25 @@ import java.io.Serializable;
 import javax.xml.xpath.XPathExpressionException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+import br.ufsc.bridge.res.util.json.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class ResSumarioAltaIdentificacaoProfissional implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@JsonPathProperty(value = "[?(@.name.value == 'CNS do profissional')]"
+			+ ".value.value")
 	private String cns;
+
+	@JsonPathProperty(value = "[?(@.name.value == 'Ocupação do profissional responsável pela alta')]"
+			+ ".value.value")
 	private String cbo;
 
 	public ResSumarioAltaIdentificacaoProfissional(XPathFactoryAssist xPathInformacoesAlta) throws XPathExpressionException {

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import br.ufsc.bridge.res.util.json.BooleanJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
@@ -27,7 +28,7 @@ public class ResABIdentificacaoProfissional implements Serializable {
 	private String cbo;
 	@JsonPathProperty("$.items[?(@.name.value == 'Nome do profissional')].value.value")
 	private String nome;
-	@JsonPathProperty(value = "$.items[?(@.name.value == 'É o responsável pelo atendimento?')].value.value")
+	@JsonPathProperty(value = "$.items[?(@.name.value == 'É o responsável pelo atendimento?')].value.value", converter = BooleanJsonPathValueConverter.class)
 	private boolean responsavel;
 
 	public ResABIdentificacaoProfissional(XPathFactoryAssist xPathprofissional) throws XPathExpressionException {
