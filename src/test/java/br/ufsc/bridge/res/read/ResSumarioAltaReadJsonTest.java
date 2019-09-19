@@ -49,11 +49,11 @@ public class ResSumarioAltaReadJsonTest {
 		assertEquals(new Date(1483228800000L), this.form.getAlergias().get(0).getEventoReacao().get(0).getDataInstalacao());
 		assertEquals(1, this.form.getMedicamentosNaoEstruturados().size());
 		assertEquals(5, this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().size());
-//		assertEquals("1) captopril 25 mg, oral, 1x/dia", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(0));
-//		assertEquals(" 2) clopidogrel 75mg, oral,1x/dia, por 30 dias", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(1));
-//		assertEquals(" 3) AAS 100mg, oral, 1x/dia pela manhã", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(2));
-//		assertEquals(" 4) metoprolol 25 mg, oral, 1x/dia", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(3));
-//		assertEquals(" 5) sinvastatina 20 mg, oral, 2x/dia.", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(4));
+		assertEquals("1) captopril 25 mg, oral, 1x/dia", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(0));
+		assertEquals(" 2) clopidogrel 75mg, oral,1x/dia, por 30 dias", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(1));
+		assertEquals(" 3) AAS 100mg, oral, 1x/dia pela manhã", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(2));
+		assertEquals(" 4) metoprolol 25 mg, oral, 1x/dia", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(3));
+		assertEquals(" 5) sinvastatina 20 mg, oral, 2x/dia.", this.form.getMedicamentosNaoEstruturados().get(0).getDescricoes().get(4));
 		assertEquals("Evitar consumir alimentos salgados", this.form.getPlanoCuidado());
 		assertEquals("Alta clínica", this.form.getMotivoAlta());
 		assertEquals("162338254590005", this.form.getProfissional().getCns());
