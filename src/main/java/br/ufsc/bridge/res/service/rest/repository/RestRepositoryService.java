@@ -9,7 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
 
 import br.ufsc.bridge.res.domain.Sort;
@@ -79,7 +78,7 @@ public class RestRepositoryService {
 		// .setConnectionManager(poolingHttpClientConnectionManager)
 		// .build();
 
-		ResponseEntity<ResultDTO> response = new RestTemplate(new HttpComponentsClientHttpRequestFactory())
+		ResponseEntity<ResultDTO> response = new RestTemplate()
 				.getForEntity(String.format(this.url + PARAMS, pacienteId, sort.getCode()), ResultDTO.class);
 		return response.getBody().toItems();
 	}

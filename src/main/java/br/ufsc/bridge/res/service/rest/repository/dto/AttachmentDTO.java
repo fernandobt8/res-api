@@ -22,7 +22,7 @@ public class AttachmentDTO {
 	@NoArgsConstructor
 	public static class DataDTO {
 
-		private final String contentType = "application/json";
+		private String contentType = "application/json";
 
 		private String data;
 

@@ -16,6 +16,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,9 +38,9 @@ public class ResJsonUtils {
 		return JsonPath.parse(jsons.get(name));
 	}
 
-	public static <T> T readJson(String json, Class<T> clazz) {
+	public static <T> T readJson(String jsonBase64, Class<T> clazz) {
 		try {
-			return readJsonInternal(JsonPath.parse(json).json(), new SetDTO<T>(clazz));
+			return readJsonInternal(JsonPath.parse(new String(Base64.decodeBase64(jsonBase64), "UTF-8")).json(), new SetDTO<>(clazz));
 		} catch (Exception e) {
 			throw new RuntimeException("erro ao carregar metadados da classe", e);
 		}
@@ -68,6 +69,7 @@ public class ResJsonUtils {
 		}
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static <T> T readJsonInternal(Object value, SetDTO<T> field) throws Exception {
 		if (value instanceof JSONArray) {
 			if (!((JSONArray) value).isEmpty()) {
@@ -164,6 +166,7 @@ public class ResJsonUtils {
 		private boolean primitive;
 		private Constructor<T> constructor;
 		private Class<T> clazz;
+		@SuppressWarnings("rawtypes")
 		private JsonPathValueConverter converter;
 
 		SetDTO(Class<T> clazz) throws NoSuchMethodException {
@@ -171,6 +174,7 @@ public class ResJsonUtils {
 			this.constructor = clazz.getConstructor();
 		}
 
+		@SuppressWarnings("unchecked")
 		SetDTO(Field field, Class<?> fatherClass) throws Exception {
 			this.clazz = (Class<T>) field.getType();
 			this.method = fatherClass.getMethod("set" + StringUtils.capitalize(field.getName()), this.clazz);

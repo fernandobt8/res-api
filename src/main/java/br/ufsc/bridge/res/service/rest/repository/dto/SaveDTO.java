@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import br.ufsc.bridge.res.domain.TipoDocumento;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -22,6 +24,8 @@ public class SaveDTO {
 	private String profissionalId;
 
 	private String pacienteId;
+
+	private TipoDocumento tipoDocumento;
 
 	private String documento;
 }

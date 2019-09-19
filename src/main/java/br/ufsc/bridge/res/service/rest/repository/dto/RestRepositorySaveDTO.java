@@ -15,6 +15,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
+import br.ufsc.bridge.res.domain.TipoDocumento;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -28,13 +30,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @AllArgsConstructor
 public class RestRepositorySaveDTO {
 
-	private final String resourceType = "DocumentReference";
+	private String resourceType = "DocumentReference";
 
-	private final String status = "current";
+	private String status = "current";
 
-	private final MetaDTO meta = MetaDTO.DEFAULT;
+	private MetaDTO meta = MetaDTO.DEFAULT;
 
-	private final TypeDTO type = TypeDTO.DEFAULT;
+	private TypeDTO type = TypeDTO.DEFAULT;
 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss")
 	private Date date;
@@ -63,6 +65,7 @@ public class RestRepositorySaveDTO {
 						.data(dto.getDocumento())
 						.build())
 				.build());
+		this.type.getCoding().get(0).setCode(dto.getTipoDocumento().getCodigo());
 	}
 
 	public String stringfy() {
@@ -82,6 +85,7 @@ public class RestRepositorySaveDTO {
 				.pacienteId(this.subject.getReference())
 				.unidadeId(this.getAuthor("Organization/"))
 				.profissionalId(this.getAuthor("PractitionerRole/"))
+				.tipoDocumento(TipoDocumento.getByCodigo(this.type.getCoding().get(0).getCode()))
 				.build();
 	}
 
