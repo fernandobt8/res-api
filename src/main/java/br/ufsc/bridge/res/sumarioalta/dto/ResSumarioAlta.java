@@ -2,6 +2,7 @@ package br.ufsc.bridge.res.sumarioalta.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -11,11 +12,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import org.apache.commons.lang3.StringUtils;
+
 import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.ResABXMLParserException;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
+import br.ufsc.bridge.res.util.json.ResJsonUtils;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -29,7 +33,7 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 			+ ".items[?(@.name.value == 'Admissão do paciente')]"
 			+ ".data.items[?(@.name.value == 'Data e hora da internação')]"
 			+ ".value.value",
-		converter = DateJsonPathValueConverter.class)
+			converter = DateJsonPathValueConverter.class)
 	private Date dataAtendimento;
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Caracterização do atendimento')]"
@@ -69,12 +73,10 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 	@JsonPathProperty(value = ".content[?(@.name.value == 'Prescrição da alta')]")
 	private List<ResSumarioAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = new ArrayList<>();
 
-
 	@JsonPathProperty(value = ".content[?(@.name.value == 'Plano de cuidados, instruções e recomendações (na alta)')]"
 			+ ".items.activities.description"
 			+ ".items.value.value")
 	private String planoCuidado;
-
 
 	@JsonPathProperty(value = ".content[?(@.name.value == 'Informações da alta')]"
 			+ ".items.data.items[?(@.name.value == 'Motivo do desfecho')]"
@@ -91,6 +93,22 @@ public class ResSumarioAlta extends ResDocument implements Serializable {
 			+ ".value.value",
 			converter = DateJsonPathValueConverter.class)
 	private Date dataAlta;
+
+	public static ResSumarioAlta readJsonBase64(String jsonBase64) {
+		ResSumarioAlta sumarioAlta = ResJsonUtils.readJson(jsonBase64, ResSumarioAlta.class);
+		List<ResSumarioAltaMedicamentoNaoEstruturado> medicamentosNaoEstruturados = sumarioAlta.getMedicamentosNaoEstruturados();
+
+		for (ResSumarioAltaMedicamentoNaoEstruturado medicamento : medicamentosNaoEstruturados) {
+			List<String> descricoes = new ArrayList<>();
+			for (String medicamentoDescricao : medicamento.getDescricoes()) {
+				if (StringUtils.isNotBlank(medicamentoDescricao)) {
+					descricoes.addAll(Arrays.asList(medicamentoDescricao.split(";")));
+				}
+			}
+			medicamento.setDescricoes(descricoes);
+		}
+		return sumarioAlta;
+	}
 
 	public ResSumarioAlta(String xml) throws ResABXMLParserException {
 		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);

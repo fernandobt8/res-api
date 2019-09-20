@@ -3,6 +3,7 @@ package br.ufsc.bridge.res.dab.dto;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -43,6 +44,7 @@ import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 import br.ufsc.bridge.res.util.json.JsonPathProperty.Group;
+import br.ufsc.bridge.res.util.json.ResJsonUtils;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -133,6 +135,18 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 
 	// não tem json
 	private List<String> encaminhamentos = new LinkedList<>();
+
+	public static ResABResumoConsulta readJsonBase64(String jsonBase64) {
+		ResABResumoConsulta resumoConsulta = ResJsonUtils.readJson(jsonBase64, ResABResumoConsulta.class);
+		List<String> descricoes = new ArrayList<>();
+		for (String medicamentoDescricao : resumoConsulta.getMedicamentosNaoEstruturados()) {
+			if (StringUtils.isNotBlank(medicamentoDescricao)) {
+				descricoes.addAll(Arrays.asList(medicamentoDescricao.split(";")));
+			}
+		}
+		resumoConsulta.setMedicamentosNaoEstruturados(descricoes);
+		return resumoConsulta;
+	}
 
 	public ResABResumoConsulta(String xml) throws ResABXMLParserException {
 		XPathFactoryAssist xPathRoot = this.getXPathRoot(xml);

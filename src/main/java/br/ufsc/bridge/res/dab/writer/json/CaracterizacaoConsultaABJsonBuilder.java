@@ -70,8 +70,8 @@ public class CaracterizacaoConsultaABJsonBuilder<T extends BaseJsonBuilder<?>> e
 			return this;
 		}
 
-		public ProfissionalAtendimentoJsonBuilder responsavel(boolean responsavel) {
-			this.document.set("$.items[?(@.name.value == 'É o responsável pelo atendimento?')].value.value", responsavel);
+		public ProfissionalAtendimentoJsonBuilder responsavel(Boolean responsavel) {
+			this.document.set("$.items[?(@.name.value == 'É o responsável pelo atendimento?')].value.value", responsavel.toString());
 			return this;
 		}
 	}
