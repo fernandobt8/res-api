@@ -7,17 +7,34 @@ import java.util.List;
 import javax.xml.xpath.XPathExpressionException;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import br.ufsc.bridge.res.dab.domain.ResABCriticidadeEnum;
+import br.ufsc.bridge.res.util.json.JsonPathProperty;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
+@Setter
+@NoArgsConstructor
 public class ResSumarioAltaAlergia implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+
+	@JsonPathProperty(value = "@.data.items[?(@.name.value == 'Agente/substância específica')]"
+			+ ".value.value")
 	private String agente;
+
+	@JsonPathProperty(value = "@.data.items[?(@.name.value == 'Categoria do agente causador da alergia ou reação adversa')]"
+			+ ".value.value")
 	private String categoria;
+
+	@JsonPathProperty(value = "@.data.items[?(@.name.value == 'Criticidade')]"
+			+ ".value.defining_code.code_string",
+			converter = ResABCriticidadeEnum.ResCriticidadeEnumJsonPathConveter.class)
 	private ResABCriticidadeEnum criticidade;
+
+	@JsonPathProperty(value = "@.data.items[?(@.name.value == 'Evento da reação')]")
 	private List<ResSumarioAltaEventoReacao> eventoReacao = new ArrayList<>();
 
 	public ResSumarioAltaAlergia(XPathFactoryAssist xPathAlergia) throws XPathExpressionException {

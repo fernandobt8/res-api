@@ -21,6 +21,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
+import br.ufsc.bridge.res.sumarioalta.dto.ResSumarioAlta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.DocumentContext;
@@ -49,6 +50,7 @@ public class ResJsonUtils {
 	static {
 		try {
 			readMetadata(ResABResumoConsulta.class);
+			readMetadata(ResSumarioAlta.class);
 		} catch (Exception e) {
 			new RuntimeException("erro ao carregar metadados da classe", e);
 		}
@@ -69,7 +71,6 @@ public class ResJsonUtils {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	private static <T> T readJsonInternal(Object value, SetDTO<T> field) throws Exception {
 		if (value instanceof JSONArray) {
 			if (!((JSONArray) value).isEmpty()) {
@@ -166,7 +167,6 @@ public class ResJsonUtils {
 		private boolean primitive;
 		private Constructor<T> constructor;
 		private Class<T> clazz;
-		@SuppressWarnings("rawtypes")
 		private JsonPathValueConverter converter;
 
 		SetDTO(Class<T> clazz) throws NoSuchMethodException {
@@ -174,7 +174,6 @@ public class ResJsonUtils {
 			this.constructor = clazz.getConstructor();
 		}
 
-		@SuppressWarnings("unchecked")
 		SetDTO(Field field, Class<?> fatherClass) throws Exception {
 			this.clazz = (Class<T>) field.getType();
 			this.method = fatherClass.getMethod("set" + StringUtils.capitalize(field.getName()), this.clazz);
@@ -191,7 +190,9 @@ public class ResJsonUtils {
 					this.list = true;
 					this.primitive = this.clazz.isAssignableFrom(String.class) || this.clazz.isEnum() || Date.class.isAssignableFrom(this.clazz) || this.clazz.isPrimitive();
 				}
-				this.constructor = this.clazz.getConstructor();
+				if (!this.primitive) {
+					this.constructor = this.clazz.getConstructor();
+				}
 			}
 		}
 	}
