@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import br.ufsc.bridge.res.domain.TipoDocumento;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,6 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Slf4j
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class RestRepositorySaveDTO {
 
 	private String resourceType = "DocumentReference";

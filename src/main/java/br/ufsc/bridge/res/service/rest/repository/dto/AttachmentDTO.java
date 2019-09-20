@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Getter
 @Setter
 @Builder
@@ -20,8 +22,10 @@ public class AttachmentDTO {
 	@Builder
 	@AllArgsConstructor
 	@NoArgsConstructor
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	public static class DataDTO {
 
+		@Builder.Default
 		private String contentType = "application/json";
 
 		private String data;

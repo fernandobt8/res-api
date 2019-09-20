@@ -7,10 +7,13 @@ import lombok.NoArgsConstructor;
 
 import br.ufsc.bridge.res.domain.TipoDocumento;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ItemDTO {
 
 	private String uuid;
