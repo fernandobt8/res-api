@@ -7,6 +7,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.IOException;
 import java.util.Date;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,15 +15,15 @@ import org.junit.Test;
 import br.ufsc.bridge.res.sumarioalta.dto.ResSumarioAlta;
 import br.ufsc.bridge.res.util.json.ResJsonUtils;
 
-import com.sun.org.apache.xml.internal.security.utils.Base64;
-
 public class ResSumarioAltaReadJsonTest {
 
 	private ResSumarioAlta form;
 
 	@Before
 	public void setup() throws IOException {
-		this.form = ResJsonUtils.readJson(Base64.encode(IOUtils.toString(ResSumarioAltaReadJsonTest.class.getResourceAsStream("/exemplo-sumario-alta.json")).getBytes()), ResSumarioAlta.class);
+		this.form = ResJsonUtils.readJson(
+				Base64.encodeBase64String(IOUtils.toString(ResSumarioAltaReadJsonTest.class.getResourceAsStream("/exemplo-sumario-alta.json")).getBytes()),
+				ResSumarioAlta.class);
 	}
 
 	@Test
@@ -63,6 +64,5 @@ public class ResSumarioAltaReadJsonTest {
 		assertEquals(new Date(1483228800000L), this.form.getDataAlta());
 
 	}
-
 
 }
