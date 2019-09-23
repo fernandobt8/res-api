@@ -31,7 +31,9 @@ public class PrescricaoAtendimentoJsonBuilder<T extends BaseJsonBuilder<?>> exte
 				value.append(medicamentoNaoEstruturado);
 				value.append("; ");
 			}
-			this.document.set("$.items.value.value", value.toString());
+			if (value.length() > 0) {
+				this.document.set("$.items.value.value", value.substring(0, value.length() - 2));
+			}
 			return this;
 		}
 	}

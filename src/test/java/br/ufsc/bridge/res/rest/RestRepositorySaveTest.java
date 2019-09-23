@@ -10,8 +10,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
-import javax.net.ssl.SSLContext;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -77,9 +75,9 @@ public class RestRepositorySaveTest {
 		// given
 		//		String uuid1 = this.service.save(this.dto);
 		//		String uuid2 = this.service.save(this.dto);
-		SSLContext context = SSLContext.getInstance("TLSv1.2");
-		context.init(null, null, null);
-		SSLContext.setDefault(context);
+		//		SSLContext context = SSLContext.getInstance("TLSv1.2");
+		//		context.init(null, null, null);
+		//		SSLContext.setDefault(context);
 		// when
 		List<ItemDTO> result = this.service.list(PACIENTE, Sort.ASC);
 
