@@ -1,7 +1,9 @@
 package br.ufsc.bridge.res.registroimunobiologico.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +23,7 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 	private CaracterizacaoAtendimento caracterizacaoAtendimento;
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Registro da imunização')]")
-	private RegistroImunizacao registroImunizacao;
+	private List<RegistroImunizacao> registroImunizacao = new ArrayList<>();
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Registro da imunização')]"
 			+ ".items[?(@.name.value == 'Sumário de Imunização')]"

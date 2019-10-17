@@ -37,15 +37,16 @@ public class ResRegistroImunobiologicoJsonTest {
 		assertEquals("701206094586019", this.form.getCaracterizacaoAtendimento().getCnsProfissional());
 		assertEquals("CAMILA DE SOUZA BARBOSA", this.form.getCaracterizacaoAtendimento().getNomeProfissional());
 		assertEquals("225142", this.form.getCaracterizacaoAtendimento().getCbo());
-		assertEquals(SituacaoCondicao.GESTANTE, this.form.getRegistroImunizacao().getSituacaoCondicao());
-		assertEquals("BCG", this.form.getRegistroImunizacao().getImunobiologico());
-		assertEquals(Estrategia.ROTINA, this.form.getRegistroImunizacao().getEstrategia());
-		assertEquals("DU", this.form.getRegistroImunizacao().getDose());
-		assertEquals(ViaAdministracao.ENDOVENOSA, this.form.getRegistroImunizacao().getViaAdministracao());
-		assertEquals("Rede venosa", this.form.getRegistroImunizacao().getLocalAplicacao());
-		assertEquals("078VFA039Z", this.form.getRegistroImunizacao().getLote());
-		assertEquals("FIOCRUZ", this.form.getRegistroImunizacao().getFabricante());
+		assertEquals(SituacaoCondicao.GESTANTE, this.form.getRegistroImunizacao().get(0).getSituacaoCondicao().get(0));
+		assertEquals("BCG", this.form.getRegistroImunizacao().get(0).getImunobiologico());
+		assertEquals(Estrategia.ROTINA, this.form.getRegistroImunizacao().get(0).getEstrategia());
+		assertEquals("DU", this.form.getRegistroImunizacao().get(0).getDose());
+		assertEquals(ViaAdministracao.ENDOVENOSA, this.form.getRegistroImunizacao().get(0).getViaAdministracao());
+		assertEquals("Rede venosa", this.form.getRegistroImunizacao().get(0).getLocalAplicacao());
+		assertEquals("078VFA039Z", this.form.getRegistroImunizacao().get(0).getLote());
+		assertEquals("FIOCRUZ", this.form.getRegistroImunizacao().get(0).getFabricante());
 		assertEquals(new Date(1568332800000L), this.form.getDataAdministracao());
-
+		assertEquals(1, this.form.getRegistroImunizacao().size());
+		assertEquals(1, this.form.getRegistroImunizacao().get(0).getSituacaoCondicao().size());
 	}
 }
