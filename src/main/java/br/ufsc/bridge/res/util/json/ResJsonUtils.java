@@ -21,6 +21,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.dab.dto.ResABResumoConsulta;
+import br.ufsc.bridge.res.registroimunobiologico.dto.RegistroImunobiologico;
 import br.ufsc.bridge.res.sumarioalta.dto.ResSumarioAlta;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,6 +52,7 @@ public class ResJsonUtils {
 		try {
 			readMetadata(ResABResumoConsulta.class);
 			readMetadata(ResSumarioAlta.class);
+			readMetadata(RegistroImunobiologico.class);
 		} catch (Exception e) {
 			new RuntimeException("erro ao carregar metadados da classe", e);
 		}

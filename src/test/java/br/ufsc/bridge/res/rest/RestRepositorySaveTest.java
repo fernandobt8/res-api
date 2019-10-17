@@ -27,7 +27,7 @@ public class RestRepositorySaveTest {
 
 	private SaveDTO dto;
 
-	private RestRepositoryService service = new RestRepositoryService(URL);
+	private RestRepositoryService service;
 
 	private static final String URL = "https://ehr-services.rnds.mbamobi.com.br/ehr-services/fhir/r4/DocumentReference";
 
@@ -38,7 +38,8 @@ public class RestRepositorySaveTest {
 	private static final String PACIENTE = "Patient/789";
 
 	@Before
-	public void setup() {
+	public void setup() throws KeyManagementException, NoSuchAlgorithmException {
+		this.service = new RestRepositoryService(URL);
 		this.dto = SaveDTO.builder()
 				.data(new Date())
 				.pacienteId(PACIENTE)
