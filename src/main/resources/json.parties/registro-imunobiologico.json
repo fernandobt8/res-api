@@ -1,0 +1,350 @@
+{
+  "_archetype_node_id": "openEHR-EHR-COMPOSITION.event_summary.v0",
+  "name": {
+    "value": "Registro de Imunobiológico"
+  },
+  "uid": {
+    "_type": "OBJECT_VERSION_ID",
+    "value": "ddf4dd1e-07ae-4372-bcb4-b7d405040298::example.ethercis.com::1"
+  },
+  "archetype_details": {
+    "archetype_id": {
+      "value": "openEHR-EHR-COMPOSITION.event_summary.v0"
+    },
+    "template_id": {
+      "value": "RegistroImunobiologico_v3"
+    },
+    "rm_version": "1.0.1"
+  },
+  "language": {
+    "terminology_id": {
+      "value": "ISO_639-1"
+    },
+    "code_string": "en"
+  },
+  "territory": {
+    "terminology_id": {
+      "value": "ISO_3166-1"
+    },
+    "code_string": "GB"
+  },
+  "category": {
+    "value": "event",
+    "defining_code": {
+      "terminology_id": {
+        "value": "openehr"
+      },
+      "code_string": "433"
+    }
+  },
+  "composer": {
+    "_type": "PARTY_IDENTIFIED",
+    "external_ref": {
+      "id": {
+        "_type": "GENERIC_ID",
+        "value": "1234-5678",
+        "scheme": "ETHERCIS-TEST"
+      },
+      "namespace": "DEMOGRAPHIC",
+      "type": "PARTY"
+    },
+    "name": "Composer",
+    "identifiers": {
+      "issuer": "ETHERCIS",
+      "assigner": "dummy",
+      "id": "1234-5678",
+      "type": "dummy"
+    }
+  },
+  "context": {
+    "start_time": {
+      "value": "2019-09-13T15:21:04.329Z"
+    },
+    "location": "TEST LAB",
+    "setting": {
+      "value": "Other Care",
+      "defining_code": {
+        "terminology_id": {
+          "value": "openehr"
+        },
+        "code_string": "238"
+      }
+    },
+    "health_care_facility": {
+      "external_ref": {
+        "id": {
+          "_type": "GENERIC_ID",
+          "value": "123456-123",
+          "scheme": "ETHERCIS-SCHEME"
+        },
+        "namespace": "DEMOGRAPHIC",
+        "type": "PARTY"
+      },
+      "name": "FACILITY"
+    }
+  },
+  "content": [
+
+    {
+      "_archetype_node_id": "openEHR-EHR-SECTION.immunisation_list.v0",
+      "_type": "SECTION",
+      "name": {
+        "value": "Registro da imunização"
+      },
+      "archetype_details": {
+        "archetype_id": {
+          "value": "openEHR-EHR-SECTION.immunisation_list.v0"
+        },
+        "rm_version": "1.0.1"
+      },
+      "items": [
+        {
+          "_archetype_node_id": "openEHR-EHR-ACTION.medication.v1",
+          "_type": "ACTION",
+          "name": {
+            "value": "Gestão de medicação"
+          },
+          "archetype_details": {
+            "archetype_id": {
+              "value": "openEHR-EHR-ACTION.medication.v1"
+            },
+            "rm_version": "1.0.1"
+          },
+          "language": {
+            "terminology_id": {
+              "value": "ISO_639-1"
+            },
+            "code_string": "en"
+          },
+          "encoding": {
+            "terminology_id": {
+              "value": "IANA_character-sets"
+            },
+            "code_string": "UTF-8"
+          },
+          "subject": {
+            "_type": "PARTY_SELF"
+          },
+          "time": {
+            "value": "2019-09-13T00:00:00Z"
+          },
+          "description": {
+            "_archetype_node_id": "at0017",
+            "_type": "ITEM_TREE",
+            "name": {
+              "value": "Tree"
+            },
+            "items": [
+              {
+                "_archetype_node_id": "openEHR-EHR-CLUSTER.medication.v1",
+                "_type": "CLUSTER",
+                "name": {
+                  "value": "Medicamento"
+                },
+                "archetype_details": {
+                  "archetype_id": {
+                    "value": "openEHR-EHR-CLUSTER.medication.v1"
+                  },
+                  "rm_version": "1.0.1"
+                },
+                "items": [
+                  {
+                    "_archetype_node_id": "at0132",
+                    "_type": "ELEMENT",
+                    "name": {
+                      "value": "Imunobiológico"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "BCG"
+                    }
+                  },
+                  {
+                    "_archetype_node_id": "at0151",
+                    "_type": "ELEMENT",
+                    "name": {
+                      "value": "Fabricante"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "FIOCRUZ"
+                    }
+                  },
+                  {
+                    "_archetype_node_id": "at0150",
+                    "_type": "ELEMENT",
+                    "name": {
+                      "value": "Lote"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "078VFA039Z"
+                    }
+                  },
+                  {
+                    "_archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v1",
+                    "_type": "CLUSTER",
+                    "name": {
+                      "value": "Dose"
+                    },
+                    "archetype_details": {
+                      "archetype_id": {
+                        "value": "openEHR-EHR-CLUSTER.dosage.v1"
+                      },
+                      "rm_version": "1.0.1"
+                    },
+                    "items": {
+                      "_archetype_node_id": "at0178",
+                      "_type": "ELEMENT",
+                      "name": {
+                        "value": "Dose"
+                      },
+                      "value": {
+                        "_type": "DV_TEXT",
+                        "value": "DU"
+                      }
+                    }
+                  }
+                ]
+              },
+              {
+                "_archetype_node_id": "at0140",
+                "_type": "CLUSTER",
+                "name": {
+                  "value": "Detalhes da administração"
+                },
+                "items": [
+                  {
+                    "_archetype_node_id": "at0147",
+                    "_type": "ELEMENT",
+                    "name": {
+                      "value": "Via de administração"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "Endovenosa"
+                    }
+                  },
+                  {
+                    "_archetype_node_id": "at0141",
+                    "_type": "ELEMENT",
+                    "name": {
+                      "value": "Local de aplicação"
+                    },
+                    "value": {
+                      "_type": "DV_TEXT",
+                      "value": "Rede venosa"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "ism_transition": {
+            "current_state": {
+              "value": "planned",
+              "defining_code": {
+                "terminology_id": {
+                  "value": "openehr"
+                },
+                "code_string": "526"
+              }
+            },
+            "careflow_step": {
+              "value": "Medicamento recomendado",
+              "defining_code": {
+                "terminology_id": {
+                  "value": "local"
+                },
+                "code_string": "at0109"
+              }
+            }
+          }
+        },
+        {
+          "_archetype_node_id": "openEHR-EHR-EVALUATION.immunisation_summary-ms_br.v1",
+          "_type": "EVALUATION",
+          "name": {
+            "value": "Sumário de Imunização"
+          },
+          "archetype_details": {
+            "archetype_id": {
+              "value": "openEHR-EHR-EVALUATION.immunisation_summary-ms_br.v1"
+            },
+            "rm_version": "1.0.1"
+          },
+          "language": {
+            "terminology_id": {
+              "value": "ISO_639-1"
+            },
+            "code_string": "en"
+          },
+          "encoding": {
+            "terminology_id": {
+              "value": "IANA_character-sets"
+            },
+            "code_string": "UTF-8"
+          },
+          "subject": {
+            "_type": "PARTY_SELF"
+          },
+          "data": {
+            "_archetype_node_id": "at0001",
+            "_type": "ITEM_TREE",
+            "name": {
+              "value": "Árvore"
+            },
+            "items": [
+              {
+                "_archetype_node_id": "at0016",
+                "_type": "CLUSTER",
+                "name": {
+                  "value": "Vacina específica"
+                },
+                "items": {
+                  "_archetype_node_id": "at0008",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "Data da administração"
+                  },
+                  "value": {
+                    "_type": "DV_DATE_TIME",
+                    "value": "2019-09-13T00:00:00Z"
+                  }
+                }
+              },
+              {
+                "_archetype_node_id": "at0.26",
+                "_type": "ELEMENT",
+                "name": {
+                  "value": "Estratégia"
+                },
+                "value": {
+                  "_type": "DV_CODED_TEXT",
+                  "value": "rotina",
+                  "defining_code": {
+                    "terminology_id": {
+                      "value": "local"
+                    },
+                    "code_string": "at0.48"
+                  }
+                }
+              },
+              {
+                "_archetype_node_id": "at0.40",
+                "_type": "ELEMENT",
+                "name": {
+                  "value": "Situação/condição"
+                },
+                "value": {
+                  "_type": "DV_TEXT",
+                  "value": "Gestante"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

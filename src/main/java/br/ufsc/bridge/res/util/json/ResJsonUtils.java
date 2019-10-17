@@ -140,6 +140,10 @@ public class ResJsonUtils {
 			alergia.delete("$.data.items[?(@.name.value == 'Evento da reação')]");
 			jsons.put("alergia", alergia.jsonString());
 			jsons.put("evento-alergia", eventoJson);
+
+			putJson("registro-imunobiologico", null, null);
+			putJson("caracterizacao-atendimento-imunobiologico", null, null);
+
 		} catch (IOException e) {
 			throw new RuntimeException("Erro ao carregar templates json", e);
 		}

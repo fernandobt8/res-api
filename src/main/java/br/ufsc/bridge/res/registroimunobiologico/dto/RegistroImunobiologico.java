@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import br.ufsc.bridge.res.dab.dto.CaracterizacaoAtendimento;
+import br.ufsc.bridge.res.dab.writer.json.RegistroImunobiologicoJsonBuilder;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
@@ -35,5 +36,22 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 	@Override
 	public Date getDataAtendimento() {
 		return this.caracterizacaoAtendimento.getHoraAtendimento();
+	}
+
+	public String getJson() {
+		CaracterizacaoAtendimento caracterizacaoAtendimento = this.getCaracterizacaoAtendimento();
+
+		//@formatter:off
+		return new RegistroImunobiologicoJsonBuilder()
+					.caracterizacaoAtendimento()
+					.horaAtendimento(caracterizacaoAtendimento.getHoraAtendimento())
+					.localAtendimento(caracterizacaoAtendimento.getLocalAtendimento())
+					.cnes((caracterizacaoAtendimento.getCnes()))
+					.ine(caracterizacaoAtendimento.getIne())
+					.cnsProfissionalResponsavel(caracterizacaoAtendimento.getCnsProfissional())
+					.nomeProfissionalResponsavel(caracterizacaoAtendimento.getNomeProfissional())
+					.cbo(caracterizacaoAtendimento.getCbo())
+					.close()
+				.getJsonString();
 	}
 }
