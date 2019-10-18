@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import br.ufsc.bridge.res.dab.dto.CaracterizacaoAtendimento;
+import br.ufsc.bridge.res.dab.writer.json.RegistroImunizacaoJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.RegistroImunobiologicoJsonBuilder;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
@@ -42,7 +43,7 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 		CaracterizacaoAtendimento caracterizacaoAtendimento = this.getCaracterizacaoAtendimento();
 
 		//@formatter:off
-		return new RegistroImunobiologicoJsonBuilder()
+		RegistroImunobiologicoJsonBuilder builder = new RegistroImunobiologicoJsonBuilder()
 					.caracterizacaoAtendimento()
 					.horaAtendimento(caracterizacaoAtendimento.getHoraAtendimento())
 					.localAtendimento(caracterizacaoAtendimento.getLocalAtendimento())
@@ -51,7 +52,27 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 					.cnsProfissionalResponsavel(caracterizacaoAtendimento.getCnsProfissional())
 					.nomeProfissionalResponsavel(caracterizacaoAtendimento.getNomeProfissional())
 					.cbo(caracterizacaoAtendimento.getCbo())
-					.close()
-				.getJsonString();
+				.close();
+
+		for (RegistroImunizacao registro : this.getRegistroImunizacao()) {
+
+			RegistroImunizacaoJsonBuilder<RegistroImunobiologicoJsonBuilder> registroBuilder = builder.registroImunizacao();
+//			for (SituacaoCondicao situacao : registro.getSituacaoCondicao()) {
+//				registroBuilder.situacaoCondicao()
+//						.situacao(situacao);
+//			}
+
+			registroBuilder
+//					.situacao(registro.getSituacaoCondicao())
+					.imunobiologico(registro.getImunobiologico())
+					.estrategia(registro.getEstrategia())
+					.dose(registro.getDose())
+					.viaAdministracao(registro.getViaAdministracao())
+					.localAplicacao(registro.getLocalAplicacao())
+					.lote(registro.getLote())
+					.fabricante(registro.getFabricante());
+		}
+
+		return builder.getJsonString();
 	}
 }

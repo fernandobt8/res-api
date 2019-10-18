@@ -1,10 +1,12 @@
 package br.ufsc.bridge.res.registroimunobiologico.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import br.ufsc.bridge.res.util.json.JsonPathValueConverter;
 
 @AllArgsConstructor
+@Getter
 public enum ViaAdministracao {
 
 	ENDOVENOSA("Endovenosa"),
@@ -20,11 +22,11 @@ public enum ViaAdministracao {
 
 		@Override
 		public ViaAdministracao convert(String value) {
-			if(value == null) {
+			if (value == null) {
 				return null;
 			}
-			for(ViaAdministracao viaAdministracao: ViaAdministracao.values()) {
-				if(viaAdministracao.value.toLowerCase().equals(value.toLowerCase())) {
+			for (ViaAdministracao viaAdministracao : ViaAdministracao.values()) {
+				if (viaAdministracao.value.toLowerCase().equals(value.toLowerCase())) {
 					return viaAdministracao;
 				}
 			}

@@ -1,10 +1,12 @@
 package br.ufsc.bridge.res.registroimunobiologico.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import br.ufsc.bridge.res.util.json.JsonPathValueConverter;
 
 @AllArgsConstructor
+@Getter
 public enum SituacaoCondicao {
 
 	GESTANTE("Gestante"),
@@ -19,11 +21,11 @@ public enum SituacaoCondicao {
 
 		@Override
 		public SituacaoCondicao convert(String value) {
-			if(value == null) {
+			if (value == null) {
 				return null;
 			}
-			for(SituacaoCondicao situacaoCondicao: SituacaoCondicao.values()) {
-				if(situacaoCondicao.value.toLowerCase().equals(value.toLowerCase())) {
+			for (SituacaoCondicao situacaoCondicao : SituacaoCondicao.values()) {
+				if (situacaoCondicao.value.toLowerCase().equals(value.toLowerCase())) {
 					return situacaoCondicao;
 				}
 			}

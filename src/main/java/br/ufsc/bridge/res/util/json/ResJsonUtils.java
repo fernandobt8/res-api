@@ -143,6 +143,8 @@ public class ResJsonUtils {
 
 			putJson("registro-imunobiologico", null, null);
 			putJson("caracterizacao-atendimento-imunobiologico", null, null);
+			putJson("registro-imunizacao", null, null);
+			putJson("situacao-condicao", null, null);
 
 		} catch (IOException e) {
 			throw new RuntimeException("Erro ao carregar templates json", e);

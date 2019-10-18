@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.read;
 
+import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
@@ -15,6 +16,7 @@ import org.junit.Test;
 
 import br.ufsc.bridge.res.dab.dto.CaracterizacaoAtendimento;
 import br.ufsc.bridge.res.registroimunobiologico.dto.Estrategia;
+import br.ufsc.bridge.res.registroimunobiologico.dto.RegistroImunizacao;
 import br.ufsc.bridge.res.registroimunobiologico.dto.RegistroImunobiologico;
 import br.ufsc.bridge.res.registroimunobiologico.dto.SituacaoCondicao;
 import br.ufsc.bridge.res.registroimunobiologico.dto.ViaAdministracao;
@@ -64,6 +66,28 @@ public class ResRegistroImunobiologicoJsonTest {
 		caracterizacaoAtendimento.setNomeProfissional("Carlos");
 		this.form.setCaracterizacaoAtendimento(caracterizacaoAtendimento);
 
+		RegistroImunizacao reg1 = new RegistroImunizacao();
+		reg1.setDose("Dose1");
+		reg1.setEstrategia(Estrategia.ROTINA);
+		reg1.setFabricante("Fab1");
+		reg1.setImunobiologico("Imun1");
+		reg1.setLocalAplicacao("Local1");
+		reg1.setLote("Lote1");
+		reg1.setSituacaoCondicao(asList(SituacaoCondicao.PUERPERA));
+		reg1.setViaAdministracao(ViaAdministracao.ENDOVENOSA);
+
+		RegistroImunizacao reg2 = new RegistroImunizacao();
+		reg2.setDose("Dose2");
+		reg2.setEstrategia(Estrategia.CAMPANHA);
+		reg2.setFabricante("Fab2");
+		reg2.setImunobiologico("Imun2");
+		reg2.setLocalAplicacao("Local2");
+		reg2.setLote("Lote2");
+		reg2.setSituacaoCondicao(asList(SituacaoCondicao.COMUNICANTE_HANSENIASE));
+		reg2.setViaAdministracao(ViaAdministracao.INTRAMUSCULAR);
+
+		this.form.setRegistroImunizacao(asList(reg1, reg2));
+
 		String json = this.form.getJson();
 		Files.write(Paths.get("/tmp/registro-imunobiologico.json"), json.getBytes());
 
@@ -78,6 +102,26 @@ public class ResRegistroImunobiologicoJsonTest {
 		assertEquals("0123456789", readJson.getCaracterizacaoAtendimento().getCnsProfissional());
 		assertEquals("Carlos", readJson.getCaracterizacaoAtendimento().getNomeProfissional());
 		assertEquals("123456", readJson.getCaracterizacaoAtendimento().getCbo());
+
+		assertEquals("Dose1", readJson.getRegistroImunizacao().get(0).getDose());
+		assertEquals(Estrategia.ROTINA, readJson.getRegistroImunizacao().get(0).getEstrategia());
+		assertEquals("Fab1", readJson.getRegistroImunizacao().get(0).getFabricante());
+		assertEquals("Imun1", readJson.getRegistroImunizacao().get(0).getImunobiologico());
+		assertEquals("Local1", readJson.getRegistroImunizacao().get(0).getLocalAplicacao());
+		assertEquals("Lote1", readJson.getRegistroImunizacao().get(0).getLote());
+		assertEquals(1, readJson.getRegistroImunizacao().get(0).getSituacaoCondicao().size());
+		//		assertEquals(SituacaoCondicao.PUERPERA, readJson.getRegistroImunizacao().get(0).getSituacaoCondicao().get(0));
+		assertEquals(ViaAdministracao.ENDOVENOSA, readJson.getRegistroImunizacao().get(0).getViaAdministracao());
+
+		assertEquals("Dose2", readJson.getRegistroImunizacao().get(1).getDose());
+		assertEquals(Estrategia.CAMPANHA, readJson.getRegistroImunizacao().get(1).getEstrategia());
+		assertEquals("Fab2", readJson.getRegistroImunizacao().get(1).getFabricante());
+		assertEquals("Imun2", readJson.getRegistroImunizacao().get(1).getImunobiologico());
+		assertEquals("Local2", readJson.getRegistroImunizacao().get(1).getLocalAplicacao());
+		assertEquals("Lote2", readJson.getRegistroImunizacao().get(1).getLote());
+		assertEquals(1, readJson.getRegistroImunizacao().get(1).getSituacaoCondicao().size());
+		assertEquals(ViaAdministracao.INTRAMUSCULAR, readJson.getRegistroImunizacao().get(1).getViaAdministracao());
+		//		assertEquals(SituacaoCondicao.COMUNICANTE_HANSENIASE, readJson.getRegistroImunizacao().get(1).getSituacaoCondicao().get(0));
 	}
 
 	@Test
@@ -90,6 +134,12 @@ public class ResRegistroImunobiologicoJsonTest {
 		caracterizacaoAtendimento.setIne("INE");
 		caracterizacaoAtendimento.setLocalAtendimento("UBS");
 		this.form.setCaracterizacaoAtendimento(caracterizacaoAtendimento);
+
+		RegistroImunizacao reg1 = new RegistroImunizacao();
+		reg1.setDose("Dose1");
+		reg1.setEstrategia(Estrategia.ROTINA);
+		reg1.setImunobiologico("Imun1");
+		this.form.setRegistroImunizacao(asList(reg1));
 
 		String json = this.form.getJson();
 		Files.write(Paths.get("/tmp/registro-imunobiologico.json"), json.getBytes());
@@ -107,6 +157,16 @@ public class ResRegistroImunobiologicoJsonTest {
 		assertEquals("0123456789", readJson.getCaracterizacaoAtendimento().getCnsProfissional());
 		assertNull(readJson.getCaracterizacaoAtendimento().getNomeProfissional());
 		assertEquals("123456", readJson.getCaracterizacaoAtendimento().getCbo());
+
+		//		assertFalse(json.contains("Situação/condição"));
+		assertFalse(json.contains("Via de administração"));
+		assertFalse(json.contains("Lote"));
+		assertFalse(json.contains("Fabricante"));
+		assertFalse(json.contains("Local de aplicação"));
+		assertEquals("Dose1", readJson.getRegistroImunizacao().get(0).getDose());
+		assertEquals(Estrategia.ROTINA, readJson.getRegistroImunizacao().get(0).getEstrategia());
+		assertEquals("Imun1", readJson.getRegistroImunizacao().get(0).getImunobiologico());
+		assertEquals(1, readJson.getRegistroImunizacao().get(0).getSituacaoCondicao().size());
 	}
 
 }

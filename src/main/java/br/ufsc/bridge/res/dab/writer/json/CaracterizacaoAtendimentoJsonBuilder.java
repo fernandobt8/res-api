@@ -13,11 +13,6 @@ public class CaracterizacaoAtendimentoJsonBuilder<T extends BaseJsonBuilder<?>> 
 		super(parent, "caracterizacao-atendimento-imunobiologico");
 	}
 
-	@Override
-	protected String childJsonPath() {
-		return "$.items.data.items";
-	}
-
 	public CaracterizacaoAtendimentoJsonBuilder<T> horaAtendimento(Date value) {
 		if (value != null) {
 			this.document.set("$.items[?(@.name.value == 'Admissão do paciente')]"
