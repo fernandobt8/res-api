@@ -11,12 +11,7 @@ public class SituacaoCondicaoJsonBuilder<T extends BaseJsonBuilder<?>> extends B
 
 	public SituacaoCondicaoJsonBuilder<T> situacao(SituacaoCondicao value) {
 		if (value != null) {
-			this.document.set("$.items[?(@.name.value == 'Sumário de Imunização')]"
-					+ ".data.items[?(@.name.value == 'Situação/condição')]"
-					+ ".value.value", value.getValue());
-		} else {
-			this.document.delete("$.items[?(@.name.value == 'Sumário de Imunização')]"
-					+ ".data.items[?(@.name.value == 'Situação/condição')]");
+			this.document.set("$.value.value", value.getValue());
 		}
 		return this;
 	}

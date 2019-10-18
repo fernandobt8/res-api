@@ -13,7 +13,6 @@ import br.ufsc.bridge.res.dab.dto.CaracterizacaoAtendimento;
 import br.ufsc.bridge.res.dab.writer.json.RegistroImunizacaoJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.RegistroImunobiologicoJsonBuilder;
 import br.ufsc.bridge.res.util.ResDocument;
-import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 
 @Getter
@@ -26,13 +25,6 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Registro da imunização')]")
 	private List<RegistroImunizacao> registroImunizacao = new ArrayList<>();
-
-	@JsonPathProperty(value = "$.content[?(@.name.value == 'Registro da imunização')]"
-			+ ".items[?(@.name.value == 'Sumário de Imunização')]"
-			+ ".data.items[?(@.name.value == 'Vacina específica')]"
-			+ ".items.value.value",
-			converter = DateJsonPathValueConverter.class)
-	private Date dataAdministracao;
 
 	@Override
 	public Date getDataAtendimento() {
@@ -57,10 +49,10 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 		for (RegistroImunizacao registro : this.getRegistroImunizacao()) {
 
 			RegistroImunizacaoJsonBuilder<RegistroImunobiologicoJsonBuilder> registroBuilder = builder.registroImunizacao();
-//			for (SituacaoCondicao situacao : registro.getSituacaoCondicao()) {
-//				registroBuilder.situacaoCondicao()
-//						.situacao(situacao);
-//			}
+			for (SituacaoCondicao situacao : registro.getSituacaoCondicao()) {
+				registroBuilder.situacaoCondicao()
+						.situacao(situacao);
+			}
 
 			registroBuilder
 //					.situacao(registro.getSituacaoCondicao())
@@ -70,7 +62,8 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 					.viaAdministracao(registro.getViaAdministracao())
 					.localAplicacao(registro.getLocalAplicacao())
 					.lote(registro.getLote())
-					.fabricante(registro.getFabricante());
+					.fabricante(registro.getFabricante())
+					.dataAdministracao(registro.getDataAdministracao());
 		}
 
 		return builder.getJsonString();

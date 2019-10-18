@@ -2,12 +2,14 @@ package br.ufsc.bridge.res.registroimunobiologico.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 
 @Getter
@@ -63,5 +65,11 @@ public class RegistroImunizacao implements Serializable {
 			+ ".items[?(@.name.value == 'Fabricante')]"
 			+ ".value.value")
 	private String fabricante;
+
+	@JsonPathProperty(value = ".items[?(@.name.value == 'Sumário de Imunização')]"
+			+ ".data.items[?(@.name.value == 'Vacina específica')]"
+			+ ".items.value.value",
+			converter = DateJsonPathValueConverter.class)
+	private Date dataAdministracao;
 
 }

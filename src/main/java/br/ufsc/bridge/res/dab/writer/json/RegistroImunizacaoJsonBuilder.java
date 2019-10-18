@@ -1,9 +1,12 @@
 package br.ufsc.bridge.res.dab.writer.json;
 
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 
 import br.ufsc.bridge.res.registroimunobiologico.dto.Estrategia;
 import br.ufsc.bridge.res.registroimunobiologico.dto.ViaAdministracao;
+import br.ufsc.bridge.res.util.RDateUtil;
 import br.ufsc.bridge.res.util.json.BaseJsonBuilder;
 
 public class RegistroImunizacaoJsonBuilder<T extends BaseJsonBuilder<?>> extends BaseJsonBuilder<T> {
@@ -12,23 +15,21 @@ public class RegistroImunizacaoJsonBuilder<T extends BaseJsonBuilder<?>> extends
 		super(parent, "registro-imunizacao");
 	}
 
-	//	public SituacaoCondicaoJsonBuilder<RegistroImunizacaoJsonBuilder<T>> situacaoCondicao() {
-	//		return new SituacaoCondicaoJsonBuilder<>(this);
-	//	}
+	@Override
+	protected String childJsonPath() {
+		return "$.items[?(@.name.value == 'Sumário de Imunização')].data.items";
+	}
 
-	//	public RegistroImunizacaoJsonBuilder<T> situacao(List<SituacaoCondicao> value) {
-	//		if (CollectionUtils.isEmpty(value)) {
-	//			this.document.delete("$.items[?(@.name.value == 'Sumário de Imunização')]"
-	//					+ ".data.items[?(@.name.value == 'Situação/condição')]");
-	//		} else {
-	//			for (SituacaoCondicao situacao : value) {
-	//				this.document.add("$.items[?(@.name.value == 'Sumário de Imunização')]"
-	//						+ ".data.items[?(@.name.value == 'Situação/condição')]"
-	//						+ ".value.value", situacao.getValue());
-	//			}
-	//		}
-	//		return this;
-	//	}
+	public SituacaoCondicaoJsonBuilder<RegistroImunizacaoJsonBuilder<T>> situacaoCondicao() {
+		return new SituacaoCondicaoJsonBuilder<>(this);
+	}
+
+	public RegistroImunizacaoJsonBuilder<T> dataAdministracao(Date value) {
+		this.document.set(".items[?(@.name.value == 'Sumário de Imunização')]"
+				+ ".data.items[?(@.name.value == 'Vacina específica')]"
+				+ ".items.value.value", RDateUtil.dateToISOEHR(value));
+		return this;
+	}
 
 	public RegistroImunizacaoJsonBuilder<T> imunobiologico(String value) {
 		this.document.set("$.items[?(@.name.value == 'Gestão de medicação')]"

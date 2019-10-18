@@ -242,17 +242,6 @@
                 "code_string": "at0.48"
               }
             }
-          },
-          {
-            "_archetype_node_id": "at0.40",
-            "_type": "ELEMENT",
-            "name": {
-              "value": "Situação/condição"
-            },
-            "value": {
-              "_type": "DV_TEXT",
-              "value": "Gestante"
-            }
           }
         ]
       }

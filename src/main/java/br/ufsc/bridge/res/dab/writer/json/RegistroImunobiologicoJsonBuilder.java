@@ -21,5 +21,4 @@ public class RegistroImunobiologicoJsonBuilder extends BaseJsonBuilder<RegistroI
 		return new RegistroImunizacaoJsonBuilder<>(this);
 	}
 
-	//dataAdministracao
 }
