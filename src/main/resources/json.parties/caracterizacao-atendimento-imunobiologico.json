@@ -1,0 +1,163 @@
+{
+  "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+  "_type": "SECTION",
+  "name": {
+    "value": "Caracterização do atendimento"
+  },
+  "archetype_details": {
+    "archetype_id": {
+      "value": "openEHR-EHR-SECTION.adhoc.v1"
+    },
+    "rm_version": "1.0.1"
+  },
+  "items": {
+    "_archetype_node_id": "openEHR-EHR-ADMIN_ENTRY.admission-ms_br.v1",
+    "_type": "ADMIN_ENTRY",
+    "name": {
+      "value": "Admissão do paciente"
+    },
+    "archetype_details": {
+      "archetype_id": {
+        "value": "openEHR-EHR-ADMIN_ENTRY.admission-ms_br.v1"
+      },
+      "template_id": {
+        "value": "RegistroImunobiologico_v3"
+      },
+      "rm_version": "1.0.1"
+    },
+    "language": {
+      "terminology_id": {
+        "value": "ISO_639-1"
+      },
+      "code_string": "en"
+    },
+    "encoding": {
+      "terminology_id": {
+        "value": "IANA_character-sets"
+      },
+      "code_string": "UTF-8"
+    },
+    "subject": {
+      "_type": "PARTY_SELF"
+    },
+    "data": {
+      "_archetype_node_id": "at0001",
+      "_type": "ITEM_TREE",
+      "name": {
+        "value": "Tree"
+      },
+      "items": [
+        {
+          "_archetype_node_id": "at0073",
+          "_type": "CLUSTER",
+          "name": {
+            "value": "Localização atribuída ao paciente"
+          },
+          "items": [
+            {
+              "_archetype_node_id": "at0074.1",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Local de atendimento"
+              },
+              "value": {
+                "_type": "DV_CODED_TEXT",
+                "value": "Unidade básica de saúde (UBS)",
+                "defining_code": {
+                  "terminology_id": {
+                    "value": "local"
+                  },
+                  "code_string": "at0.148"
+                }
+              }
+            },
+            {
+              "_archetype_node_id": "at0104",
+              "_type": "CLUSTER",
+              "name": {
+                "value": "Instituição"
+              },
+              "items": [
+                {
+                  "_archetype_node_id": "at0.158",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "CNES"
+                  },
+                  "value": {
+                    "_type": "DV_TEXT",
+                    "value": "2429837"
+                  }
+                },
+                {
+                  "_archetype_node_id": "at0.159",
+                  "_type": "ELEMENT",
+                  "name": {
+                    "value": "INE"
+                  },
+                  "value": {
+                    "_type": "DV_TEXT",
+                    "value": "0000151300"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "_archetype_node_id": "at0121",
+          "_type": "CLUSTER",
+          "name": {
+            "value": "Médico da consulta"
+          },
+          "items": [
+            {
+              "_archetype_node_id": "at0099",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "Nome do profissional responsável"
+              },
+              "value": {
+                "_type": "DV_TEXT",
+                "value": "CAMILA DE SOUZA BARBOSA"
+              }
+            },
+            {
+              "_archetype_node_id": "at0.165",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "CNS do profissional responsável"
+              },
+              "value": {
+                "_type": "DV_TEXT",
+                "value": "701206094586019"
+              }
+            },
+            {
+              "_archetype_node_id": "at0.166",
+              "_type": "ELEMENT",
+              "name": {
+                "value": "CBO"
+              },
+              "value": {
+                "_type": "DV_TEXT",
+                "value": "225142"
+              }
+            }
+          ]
+        },
+        {
+          "_archetype_node_id": "at0071",
+          "_type": "ELEMENT",
+          "name": {
+            "value": "Hora do atendimento"
+          },
+          "value": {
+            "_type": "DV_DATE_TIME",
+            "value": "2019-09-13T14:54:02Z"
+          }
+        }
+      ]
+    }
+  }
+}
