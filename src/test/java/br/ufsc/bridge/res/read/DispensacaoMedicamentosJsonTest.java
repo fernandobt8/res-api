@@ -42,7 +42,7 @@ public class DispensacaoMedicamentosJsonTest {
 		assertEquals("1234ABCD", this.form.getMedicamentos().get(0).getLote());
 		assertEquals("BR0267671U0042 - GLIBENCLAMIDA 5 MG COMPRIMIDO", this.form.getMedicamentos().get(0).getMedicamento());
 		assertEquals("Anemia falciforme", this.form.getMedicamentos().get(0).getProgramaSaude());
-		//		assertEquals("", this.form.getMedicamentos().get(0).getQuantidadeUnidadeFarmaceutica());
+		assertEquals(0.0, this.form.getMedicamentos().get(0).getQuantidadeUnidadeFarmaceutica(), 0.001);
 		assertEquals("R$0,10", this.form.getMedicamentos().get(0).getValorUnitario());
 		assertEquals(AssistenciaFarmaceutica.BASICO, this.form.getMedicamentos().get(0).getAssistenciaFarmaceutica());
 		assertEquals(new Date(1631156400000L), this.form.getMedicamentos().get(0).getDataValidade());

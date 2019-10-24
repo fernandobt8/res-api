@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import br.ufsc.bridge.res.util.json.DateJsonPathValueConverter;
+import br.ufsc.bridge.res.util.json.DoubleJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 
 @Getter
@@ -23,7 +24,11 @@ public class Medicamento {
 			+ ".value.value")
 	private String medicamento;
 
-	private String quantidadeUnidadeFarmaceutica;
+	@JsonPathProperty(value = "$.items.description.items[?(@.name.value == 'Item de medicação')]"
+			+ ".items[?(@.name.value == 'Dose estruturada')]"
+			+ ".items[?(@.name.value == 'Dose')]"
+			+ ".items.value.magnitude", converter = DoubleJsonPathValueConverter.class)
+	private double quantidadeUnidadeFarmaceutica;
 
 	@JsonPathProperty(value = "$.items.description.items[?(@.name.value == 'Item de medicação')]"
 			+ ".items[?(@.name.value == 'Frequência de uso do medicamento')]"
