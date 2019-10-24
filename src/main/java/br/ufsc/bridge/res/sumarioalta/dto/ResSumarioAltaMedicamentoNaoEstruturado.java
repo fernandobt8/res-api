@@ -11,8 +11,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.CollectionUtils;
 
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
+import br.ufsc.bridge.res.util.json.ListStringJsonPathValueConverter;
 import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 
 @Getter
@@ -25,8 +27,17 @@ public class ResSumarioAltaMedicamentoNaoEstruturado implements Serializable {
 	@JsonPathProperty(value = ".items[?(@.name.value == 'Recipiente')]"
 			+ ".data"
 			+ ".items.items"
-			+ ".value.value")
+			+ ".value.value", converter = ListStringJsonPathValueConverter.class)
 	private List<String> descricoes = new ArrayList<>();
+
+	//Workaround para não mexer no ResJsonUtils
+	public void setDescricoes(List<?> value) {
+		List<?> newValue = value;
+		if (!CollectionUtils.isEmpty(newValue) && newValue.get(0) instanceof List) {
+			newValue = (List<?>) value.get(0);
+		}
+		this.descricoes = (List<String>) newValue;
+	}
 
 	public ResSumarioAltaMedicamentoNaoEstruturado(XPathFactoryAssist xPathMedicamentoNaoEstruturado) throws XPathExpressionException {
 		String descricao = xPathMedicamentoNaoEstruturado

@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.rest;
 
+import static br.ufsc.bridge.res.domain.TipoDocumento.SUMARIO_ALTA;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -17,7 +18,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import br.ufsc.bridge.res.domain.Sort;
-import br.ufsc.bridge.res.domain.TipoDocumento;
 import br.ufsc.bridge.res.service.rest.repository.RestRepositoryService;
 import br.ufsc.bridge.res.service.rest.repository.dto.ItemDTO;
 import br.ufsc.bridge.res.service.rest.repository.dto.SaveDTO;
@@ -46,6 +46,7 @@ public class RestRepositorySaveTest {
 				.unidadeId(UNIDADE)
 				.profissionalId(PROFISSIONAL)
 				.documento(this.DATA)
+				.tipoDocumento(SUMARIO_ALTA)
 				.build();
 	}
 
@@ -100,8 +101,8 @@ public class RestRepositorySaveTest {
 
 		// then
 		assertTrue(result.size() >= 10);
-		assertThat(result, hasItem(new ItemDTO(uuid1, URL + "/" + uuid1, TipoDocumento.SUMARIO_ALTA)));
-		assertThat(result, hasItem(new ItemDTO(uuid2, URL + "/" + uuid2, TipoDocumento.SUMARIO_ALTA)));
+		assertThat(result, hasItem(new ItemDTO(uuid1, URL + "/" + uuid1, SUMARIO_ALTA)));
+		assertThat(result, hasItem(new ItemDTO(uuid2, URL + "/" + uuid2, SUMARIO_ALTA)));
 	}
 
 	private final String DATA =
