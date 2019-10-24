@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import br.ufsc.bridge.res.util.json.DoubleJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
 
 @Getter
@@ -21,11 +22,23 @@ public class DispensacaoMedicamentos {
 			+ ".items[?(@.name.value == 'Lista de medicamentos')]")
 	private List<Medicamento> medicamentos = new ArrayList<>();
 
+	@JsonPathProperty(value = "$.content[?(@.name.value == 'Dispensação')]"
+			+ ".items[?(@.name.value == 'Lista de medicamentos')]")
 	private List<Insumo> insumosSaude = new ArrayList<>();
 
-	private Double peso;
+	@JsonPathProperty(value = "$.content[?(@.name.value == 'Observações')]"
+			+ ".items[?(@.name.value == 'Peso corporal')]"
+			+ ".data.events"
+			+ ".data.items"
+			+ ".value.magnitude", converter = DoubleJsonPathValueConverter.class)
+	private double peso;
 
-	private Double altura;
+	@JsonPathProperty(value = "$.content[?(@.name.value == 'Observações')]"
+			+ ".items[?(@.name.value == 'Altura / comprimento')]"
+			+ ".data.events"
+			+ ".data.items"
+			+ ".value.magnitude", converter = DoubleJsonPathValueConverter.class)
+	private double altura;
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Observações')]"
 			+ ".items[?(@.name.value == 'Problema /Diagnóstico')]"

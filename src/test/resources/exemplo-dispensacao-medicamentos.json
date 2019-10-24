@@ -418,7 +418,7 @@
                                     },
                                     "value": {
                                        "_type": "DV_CODED_TEXT",
-                                       "value": "Ativa",
+                                       "value": "Ativo",
                                        "defining_code": {
                                           "terminology_id": {
                                              "value": "local"
