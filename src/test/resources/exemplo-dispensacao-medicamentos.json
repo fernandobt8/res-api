@@ -1,0 +1,1184 @@
+{
+   "_archetype_node_id": "openEHR-EHR-COMPOSITION.event_summary.v0",
+   "name": {
+      "value": "Sumário de dispensação de medicamentos"
+   },
+   "uid": {
+      "_type": "OBJECT_VERSION_ID",
+      "value": "0a85bc68-89c2-47e4-b0f0-86c6aa6c3fe1::example.ethercis.com::1"
+   },
+   "archetype_details": {
+      "archetype_id": {
+         "value": "openEHR-EHR-COMPOSITION.event_summary.v0"
+      },
+      "template_id": {
+         "value": "SumarioDispensacaoMedicamentosv1.0"
+      },
+      "rm_version": "1.0.1"
+   },
+   "language": {
+      "terminology_id": {
+         "value": "ISO_639-1"
+      },
+      "code_string": "en"
+   },
+   "territory": {
+      "terminology_id": {
+         "value": "ISO_3166-1"
+      },
+      "code_string": "GB"
+   },
+   "category": {
+      "value": "event",
+      "defining_code": {
+         "terminology_id": {
+            "value": "openehr"
+         },
+         "code_string": "433"
+      }
+   },
+   "composer": {
+      "_type": "PARTY_IDENTIFIED",
+      "external_ref": {
+         "id": {
+            "_type": "GENERIC_ID",
+            "value": "1234-5678",
+            "scheme": "ETHERCIS-TEST"
+         },
+         "namespace": "DEMOGRAPHIC",
+         "type": "PARTY"
+      },
+      "name": "Composer",
+      "identifiers": {
+         "issuer": "ETHERCIS",
+         "assigner": "dummy",
+         "id": "1234-5678",
+         "type": "dummy"
+      }
+   },
+   "context": {
+      "start_time": {
+         "value": "2019-09-10T20:21:23.105Z"
+      },
+      "location": "TEST LAB",
+      "setting": {
+         "value": "Other Care",
+         "defining_code": {
+            "terminology_id": {
+               "value": "openehr"
+            },
+            "code_string": "238"
+         }
+      },
+      "health_care_facility": {
+         "external_ref": {
+            "id": {
+               "_type": "GENERIC_ID",
+               "value": "123456-123",
+               "scheme": "ETHERCIS-SCHEME"
+            },
+            "namespace": "DEMOGRAPHIC",
+            "type": "PARTY"
+         },
+         "name": "FACILITY"
+      }
+   },
+   "content": [
+      {
+         "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+         "_type": "SECTION",
+         "name": {
+            "value": "Caracterização do atendimento"
+         },
+         "archetype_details": {
+            "archetype_id": {
+               "value": "openEHR-EHR-SECTION.adhoc.v1"
+            },
+            "rm_version": "1.0.1"
+         },
+         "items": [
+            {
+               "_archetype_node_id": "openEHR-EHR-ACTION.service.v0",
+               "_type": "ACTION",
+               "name": {
+                  "value": "Serviço"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-ACTION.service.v0"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "language": {
+                  "terminology_id": {
+                     "value": "ISO_639-1"
+                  },
+                  "code_string": "en"
+               },
+               "encoding": {
+                  "terminology_id": {
+                     "value": "IANA_character-sets"
+                  },
+                  "code_string": "UTF-8"
+               },
+               "subject": {
+                  "_type": "PARTY_SELF"
+               },
+               "time": {
+                  "value": "1900-01-01T00:00:00Z"
+               },
+               "description": {
+                  "_archetype_node_id": "at0001",
+                  "_type": "ITEM_TREE",
+                  "name": {
+                     "value": "Tree"
+                  },
+                  "items": [
+                     {
+                        "_archetype_node_id": "openEHR-EHR-CLUSTER.organisation-ms_br.v1",
+                        "_type": "CLUSTER",
+                        "name": {
+                           "value": "Organização"
+                        },
+                        "archetype_details": {
+                           "archetype_id": {
+                              "value": "openEHR-EHR-CLUSTER.organisation-ms_br.v1"
+                           },
+                           "rm_version": "1.0.1"
+                        },
+                        "items": [
+                           {
+                              "_archetype_node_id": "at0001",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Nome da organização"
+                              },
+                              "value": {
+                                 "_type": "DV_TEXT",
+                                 "value": "DEFAULT_TEXT_VALUE"
+                              }
+                           },
+                           {
+                              "_archetype_node_id": "at0011",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Estabelecimento de saúde"
+                              },
+                              "value": {
+                                 "_type": "DV_TEXT",
+                                 "value": "18264881000113"
+                              }
+                           }
+                        ]
+                     },
+                     {
+                        "_archetype_node_id": "at0025",
+                        "_type": "ELEMENT",
+                        "name": {
+                           "value": "Data e hora da dispensação"
+                        },
+                        "value": {
+                           "_type": "DV_DATE_TIME",
+                           "value": "2019-09-09T00:00:00Z"
+                        }
+                     }
+                  ]
+               },
+               "ism_transition": {
+                  "current_state": {
+                     "value": "planned",
+                     "defining_code": {
+                        "terminology_id": {
+                           "value": "openehr"
+                        },
+                        "code_string": "526"
+                     }
+                  },
+                  "careflow_step": {
+                     "value": "Serviço planejado",
+                     "defining_code": {
+                        "terminology_id": {
+                           "value": "local"
+                        },
+                        "code_string": "at0002"
+                     }
+                  }
+               }
+            },
+            {
+               "_archetype_node_id": "openEHR-EHR-EVALUATION.source.v1",
+               "_type": "EVALUATION",
+               "name": {
+                  "value": "Origem da informação"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-EVALUATION.source.v1"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "language": {
+                  "terminology_id": {
+                     "value": "ISO_639-1"
+                  },
+                  "code_string": "en"
+               },
+               "encoding": {
+                  "terminology_id": {
+                     "value": "IANA_character-sets"
+                  },
+                  "code_string": "UTF-8"
+               },
+               "subject": {
+                  "_type": "PARTY_SELF"
+               },
+               "data": {
+                  "_archetype_node_id": "at0001",
+                  "_type": "ITEM_TREE",
+                  "name": {
+                     "value": "Tree"
+                  },
+                  "items": {
+                     "_archetype_node_id": "at0002",
+                     "_type": "ELEMENT",
+                     "name": {
+                        "value": "Origem do registro"
+                     },
+                     "value": {
+                        "_type": "DV_TEXT",
+                        "value": "Município com sistema nacional gerenciador da assistência farmacêutica"
+                     }
+                  }
+               }
+            }
+         ]
+      },
+      {
+         "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+         "_type": "SECTION",
+         "name": {
+            "value": "Dispensação"
+         },
+         "archetype_details": {
+            "archetype_id": {
+               "value": "openEHR-EHR-SECTION.adhoc.v1"
+            },
+            "rm_version": "1.0.1"
+         },
+         "items": [
+            {
+               "_archetype_node_id": "openEHR-EHR-SECTION.medication_order_list.v0",
+               "_type": "SECTION",
+               "name": {
+                  "value": "Lista de medicamentos"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-SECTION.medication_order_list.v0"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "items": {
+                  "_archetype_node_id": "openEHR-EHR-ACTION.medication_dips-ms_br.v0",
+                  "_type": "ACTION",
+                  "name": {
+                     "value": "Medicação"
+                  },
+                  "archetype_details": {
+                     "archetype_id": {
+                        "value": "openEHR-EHR-ACTION.medication_dips-ms_br.v0"
+                     },
+                     "rm_version": "1.0.1"
+                  },
+                  "language": {
+                     "terminology_id": {
+                        "value": "ISO_639-1"
+                     },
+                     "code_string": "en"
+                  },
+                  "encoding": {
+                     "terminology_id": {
+                        "value": "IANA_character-sets"
+                     },
+                     "code_string": "UTF-8"
+                  },
+                  "subject": {
+                     "_type": "PARTY_SELF"
+                  },
+                  "time": {
+                     "value": "1900-01-01T00:00:00Z"
+                  },
+                  "description": {
+                     "_archetype_node_id": "at0017",
+                     "_type": "ITEM_TREE",
+                     "name": {
+                        "value": "Tree"
+                     },
+                     "items": [
+                        {
+                           "_archetype_node_id": "openEHR-EHR-CLUSTER.medication_item.v1",
+                           "_type": "CLUSTER",
+                           "name": {
+                              "value": "Item de medicação"
+                           },
+                           "archetype_details": {
+                              "archetype_id": {
+                                 "value": "openEHR-EHR-CLUSTER.medication_item.v1"
+                              },
+                              "rm_version": "1.0.1"
+                           },
+                           "items": [
+                              {
+                                 "_archetype_node_id": "at0001",
+                                 "_type": "ELEMENT",
+                                 "name": {
+                                    "value": "Medicamento"
+                                 },
+                                 "value": {
+                                    "_type": "DV_CODED_TEXT",
+                                    "value": "BR0267671U0042 - GLIBENCLAMIDA 5 MG COMPRIMIDO",
+                                    "defining_code": {
+                                       "terminology_id": {
+                                          "value": "local"
+                                       },
+                                       "code_string": "at9999"
+                                    }
+                                 }
+                              },
+                              {
+                                 "_archetype_node_id": "at0021",
+                                 "_type": "ELEMENT",
+                                 "name": {
+                                    "value": "Frequência de uso do medicamento"
+                                 },
+                                 "value": {
+                                    "_type": "DV_TEXT",
+                                    "value": "Tomar 1 comprimido todas as manhãs em jejum"
+                                 }
+                              },
+                              {
+                                 "_archetype_node_id": "at0045",
+                                 "_type": "CLUSTER",
+                                 "name": {
+                                    "value": "Dose estruturada"
+                                 },
+                                 "items": [
+                                    {
+                                       "_archetype_node_id": "openEHR-EHR-CLUSTER.dosage.v1",
+                                       "_type": "CLUSTER",
+                                       "name": {
+                                          "value": "Dose"
+                                       },
+                                       "archetype_details": {
+                                          "archetype_id": {
+                                             "value": "openEHR-EHR-CLUSTER.dosage.v1"
+                                          },
+                                          "rm_version": "1.0.1"
+                                       },
+                                       "items": {
+                                          "_archetype_node_id": "at0144",
+                                          "_type": "ELEMENT",
+                                          "name": {
+                                             "value": "Quantidade da unidade farmacotécnica"
+                                          },
+                                          "value": {
+                                             "_type": "DV_QUANTITY",
+                                             "accuracy": "0.0",
+                                             "magnitude": "0.0",
+                                             "units": null,
+                                             "precision": "0"
+                                          }
+                                       }
+                                    },
+                                    {
+                                       "_archetype_node_id": "at0037",
+                                       "_type": "ELEMENT",
+                                       "name": {
+                                          "value": "Duração de uso do medicamento"
+                                       },
+                                       "value": {
+                                          "_type": "DV_DURATION",
+                                          "accuracy": "0.0",
+                                          "value": "PT0S"
+                                       }
+                                    }
+                                 ]
+                              },
+                              {
+                                 "_archetype_node_id": "at0046",
+                                 "_type": "CLUSTER",
+                                 "name": {
+                                    "value": "Detalhes do processo medicação"
+                                 },
+                                 "items": {
+                                    "_archetype_node_id": "at0049",
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                       "value": "Estado do medicamento"
+                                    },
+                                    "value": {
+                                       "_type": "DV_CODED_TEXT",
+                                       "value": "Ativo",
+                                       "defining_code": {
+                                          "terminology_id": {
+                                             "value": "local"
+                                          },
+                                          "code_string": "at0050"
+                                       }
+                                    }
+                                 }
+                              }
+                           ]
+                        },
+                        {
+                           "_archetype_node_id": "at0082",
+                           "_type": "CLUSTER",
+                           "name": {
+                              "value": "Produto"
+                           },
+                           "items": [
+                              {
+                                 "_archetype_node_id": "at0130",
+                                 "_type": "ELEMENT",
+                                 "name": {
+                                    "value": "Fabricante do medicamento"
+                                 },
+                                 "value": {
+                                    "_type": "DV_TEXT",
+                                    "value": "99007027000173"
+                                 }
+                              },
+                              {
+                                 "_archetype_node_id": "at0083",
+                                 "_type": "ELEMENT",
+                                 "name": {
+                                    "value": "Lote do medicamento"
+                                 },
+                                 "value": {
+                                    "_type": "DV_TEXT",
+                                    "value": "1234ABCD"
+                                 }
+                              },
+                              {
+                                 "_archetype_node_id": "at0084",
+                                 "_type": "ELEMENT",
+                                 "name": {
+                                    "value": "Data de validade do medicamento"
+                                 },
+                                 "value": {
+                                    "_type": "DV_DATE",
+                                    "value": "2021-09-09"
+                                 }
+                              }
+                           ]
+                        },
+                        {
+                           "_archetype_node_id": "at0.145",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Valor unitário"
+                           },
+                           "value": {
+                              "_type": "DV_TEXT",
+                              "value": "R$0,10"
+                           }
+                        },
+                        {
+                           "_archetype_node_id": "at0.146",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Programa de saúde"
+                           },
+                           "value": {
+                              "_type": "DV_TEXT",
+                              "value": "Anemia falciforme"
+                           }
+                        },
+                        {
+                           "_archetype_node_id": "at0.147",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Componente Assistência Farmacêutica"
+                           },
+                           "value": {
+                              "_type": "DV_TEXT",
+                              "value": "Básico"
+                           }
+                        }
+                     ]
+                  },
+                  "ism_transition": {
+                     "current_state": {
+                        "value": "planned",
+                        "defining_code": {
+                           "terminology_id": {
+                              "value": "openehr"
+                           },
+                           "code_string": "526"
+                        }
+                     },
+                     "careflow_step": {
+                        "value": "Medicação recomendada",
+                        "defining_code": {
+                           "terminology_id": {
+                              "value": "local"
+                           },
+                           "code_string": "at0109"
+                        }
+                     }
+                  }
+               }
+            },
+            {
+               "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+               "_type": "SECTION",
+               "name": {
+                  "value": "Lista de insumos"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-SECTION.adhoc.v1"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "items": [
+                  {
+                     "_archetype_node_id": "openEHR-EHR-ACTION.medication.v1",
+                     "_type": "ACTION",
+                     "name": {
+                        "value": "Gestão de medicação"
+                     },
+                     "archetype_details": {
+                        "archetype_id": {
+                           "value": "openEHR-EHR-ACTION.medication.v1"
+                        },
+                        "rm_version": "1.0.1"
+                     },
+                     "language": {
+                        "terminology_id": {
+                           "value": "ISO_639-1"
+                        },
+                        "code_string": "en"
+                     },
+                     "encoding": {
+                        "terminology_id": {
+                           "value": "IANA_character-sets"
+                        },
+                        "code_string": "UTF-8"
+                     },
+                     "subject": {
+                        "_type": "PARTY_SELF"
+                     },
+                     "time": {
+                        "value": "1900-01-01T00:00:00Z"
+                     },
+                     "description": {
+                        "_archetype_node_id": "at0017",
+                        "_type": "ITEM_TREE",
+                        "name": {
+                           "value": "Tree"
+                        },
+                        "items": {
+                           "_archetype_node_id": "at0020",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Insumo de saúde"
+                           },
+                           "value": {
+                              "_type": "DV_TEXT",
+                              "value": "BR0338605U0140 - LANCETA, AÇO INOXIDÁVEL,PONTA AFIADA,TRIFACETADA, DESCARTÁVEL, ESTÉRIL, EMBALAGEM INDIVIDUAL, COM SISTEMA RETRÁTIL"
+                           }
+                        }
+                     },
+                     "ism_transition": {
+                        "current_state": {
+                           "value": "planned",
+                           "defining_code": {
+                              "terminology_id": {
+                                 "value": "openehr"
+                              },
+                              "code_string": "526"
+                           }
+                        },
+                        "careflow_step": {
+                           "value": "Medicamento recomendado",
+                           "defining_code": {
+                              "terminology_id": {
+                                 "value": "local"
+                              },
+                              "code_string": "at0109"
+                           }
+                        }
+                     }
+                  },
+                  {
+                     "_archetype_node_id": "openEHR-EHR-ACTION.medication_dips-ms_br.v0",
+                     "_type": "ACTION",
+                     "name": {
+                        "value": "Medicação #1"
+                     },
+                     "archetype_details": {
+                        "archetype_id": {
+                           "value": "openEHR-EHR-ACTION.medication_dips-ms_br.v0"
+                        },
+                        "rm_version": "1.0.1"
+                     },
+                     "language": {
+                        "terminology_id": {
+                           "value": "ISO_639-1"
+                        },
+                        "code_string": "en"
+                     },
+                     "encoding": {
+                        "terminology_id": {
+                           "value": "IANA_character-sets"
+                        },
+                        "code_string": "UTF-8"
+                     },
+                     "subject": {
+                        "_type": "PARTY_SELF"
+                     },
+                     "time": {
+                        "value": "1900-01-01T00:00:00Z"
+                     },
+                     "description": {
+                        "_archetype_node_id": "at0017",
+                        "_type": "ITEM_TREE",
+                        "name": {
+                           "value": "Tree"
+                        },
+                        "items": [
+                           {
+                              "_archetype_node_id": "at0082",
+                              "_type": "CLUSTER",
+                              "name": {
+                                 "value": "Produto"
+                              },
+                              "items": [
+                                 {
+                                    "_archetype_node_id": "at0130",
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                       "value": "Fabricante do insumo"
+                                    },
+                                    "value": {
+                                       "_type": "DV_TEXT",
+                                       "value": "87367416000120"
+                                    }
+                                 },
+                                 {
+                                    "_archetype_node_id": "at0083",
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                       "value": "Lote do insumo"
+                                    },
+                                    "value": {
+                                       "_type": "DV_TEXT",
+                                       "value": "4321DCBA"
+                                    }
+                                 },
+                                 {
+                                    "_archetype_node_id": "at0084",
+                                    "_type": "ELEMENT",
+                                    "name": {
+                                       "value": "Data de validade do insumo"
+                                    },
+                                    "value": {
+                                       "_type": "DV_DATE",
+                                       "value": "1900-01-01"
+                                    }
+                                 }
+                              ]
+                           },
+                           {
+                              "_archetype_node_id": "at0.145",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Valor unitário"
+                              },
+                              "value": {
+                                 "_type": "DV_TEXT",
+                                 "value": "R$ 2,50"
+                              }
+                           },
+                           {
+                              "_archetype_node_id": "at0.146",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Programa de saúde"
+                              },
+                              "value": {
+                                 "_type": "DV_TEXT",
+                                 "value": "Anemia falciforme"
+                              }
+                           }
+                        ]
+                     },
+                     "ism_transition": {
+                        "current_state": {
+                           "value": "planned",
+                           "defining_code": {
+                              "terminology_id": {
+                                 "value": "openehr"
+                              },
+                              "code_string": "526"
+                           }
+                        },
+                        "careflow_step": {
+                           "value": "Medicação recomendada",
+                           "defining_code": {
+                              "terminology_id": {
+                                 "value": "local"
+                              },
+                              "code_string": "at0109"
+                           }
+                        }
+                     }
+                  }
+               ]
+            }
+         ]
+      },
+      {
+         "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+         "_type": "SECTION",
+         "name": {
+            "value": "Observações"
+         },
+         "archetype_details": {
+            "archetype_id": {
+               "value": "openEHR-EHR-SECTION.adhoc.v1"
+            },
+            "rm_version": "1.0.1"
+         },
+         "items": [
+            {
+               "_archetype_node_id": "openEHR-EHR-OBSERVATION.body_weight.v2",
+               "_type": "OBSERVATION",
+               "name": {
+                  "value": "Peso corporal"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-OBSERVATION.body_weight.v2"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "language": {
+                  "terminology_id": {
+                     "value": "ISO_639-1"
+                  },
+                  "code_string": "en"
+               },
+               "encoding": {
+                  "terminology_id": {
+                     "value": "IANA_character-sets"
+                  },
+                  "code_string": "UTF-8"
+               },
+               "subject": {
+                  "_type": "PARTY_SELF"
+               },
+               "data": {
+                  "_archetype_node_id": "at0002",
+                  "name": {
+                     "value": "history"
+                  },
+                  "origin": {
+                     "value": "1900-01-01T00:00:00Z"
+                  },
+                  "events": {
+                     "_archetype_node_id": "at0003",
+                     "_type": "POINT_EVENT",
+                     "name": {
+                        "value": "Qualquer evento"
+                     },
+                     "time": {
+                        "value": "1900-01-01T00:00:00Z"
+                     },
+                     "data": {
+                        "_archetype_node_id": "at0001",
+                        "_type": "ITEM_TREE",
+                        "name": {
+                           "value": "Simple"
+                        },
+                        "items": {
+                           "_archetype_node_id": "at0004",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Peso"
+                           },
+                           "value": {
+                              "_type": "DV_QUANTITY",
+                              "accuracy": "0.0",
+                              "magnitude": "0.0",
+                              "units": "kg",
+                              "precision": "0"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            {
+               "_archetype_node_id": "openEHR-EHR-OBSERVATION.height.v2",
+               "_type": "OBSERVATION",
+               "name": {
+                  "value": "Altura / comprimento"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-OBSERVATION.height.v2"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "language": {
+                  "terminology_id": {
+                     "value": "ISO_639-1"
+                  },
+                  "code_string": "en"
+               },
+               "encoding": {
+                  "terminology_id": {
+                     "value": "IANA_character-sets"
+                  },
+                  "code_string": "UTF-8"
+               },
+               "subject": {
+                  "_type": "PARTY_SELF"
+               },
+               "data": {
+                  "_archetype_node_id": "at0001",
+                  "name": {
+                     "value": "history"
+                  },
+                  "origin": {
+                     "value": "1900-01-01T00:00:00Z"
+                  },
+                  "events": {
+                     "_archetype_node_id": "at0002",
+                     "_type": "POINT_EVENT",
+                     "name": {
+                        "value": "Qualquer evento"
+                     },
+                     "time": {
+                        "value": "1900-01-01T00:00:00Z"
+                     },
+                     "data": {
+                        "_archetype_node_id": "at0003",
+                        "_type": "ITEM_TREE",
+                        "name": {
+                           "value": "Simple"
+                        },
+                        "items": {
+                           "_archetype_node_id": "at0004",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Altura"
+                           },
+                           "value": {
+                              "_type": "DV_QUANTITY",
+                              "accuracy": "0.0",
+                              "magnitude": "0.0",
+                              "units": "cm",
+                              "precision": "0"
+                           }
+                        }
+                     }
+                  }
+               }
+            },
+            {
+               "_archetype_node_id": "openEHR-EHR-EVALUATION.problem_diagnosis.v1",
+               "_type": "EVALUATION",
+               "name": {
+                  "value": "Problema /Diagnóstico"
+               },
+               "archetype_details": {
+                  "archetype_id": {
+                     "value": "openEHR-EHR-EVALUATION.problem_diagnosis.v1"
+                  },
+                  "rm_version": "1.0.1"
+               },
+               "language": {
+                  "terminology_id": {
+                     "value": "ISO_639-1"
+                  },
+                  "code_string": "en"
+               },
+               "encoding": {
+                  "terminology_id": {
+                     "value": "IANA_character-sets"
+                  },
+                  "code_string": "UTF-8"
+               },
+               "subject": {
+                  "_type": "PARTY_SELF"
+               },
+               "data": {
+                  "_archetype_node_id": "at0001",
+                  "_type": "ITEM_TREE",
+                  "name": {
+                     "value": "structure"
+                  },
+                  "items": {
+                     "_archetype_node_id": "at0002",
+                     "_type": "ELEMENT",
+                     "name": {
+                        "value": "Diagnóstico"
+                     },
+                     "value": {
+                        "_type": "DV_TEXT",
+                        "value": "O241 - Diabetes mellitus pré-existente, não-insulino-dependente"
+                     }
+                  }
+               }
+            }
+         ]
+      },
+      {
+         "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+         "_type": "SECTION",
+         "name": {
+            "value": "Profissional responsável pela prescrição"
+         },
+         "archetype_details": {
+            "archetype_id": {
+               "value": "openEHR-EHR-SECTION.adhoc.v1"
+            },
+            "rm_version": "1.0.1"
+         },
+         "items": {
+            "_archetype_node_id": "openEHR-EHR-EVALUATION.container.v0",
+            "_type": "EVALUATION",
+            "name": {
+               "value": "Conteiner"
+            },
+            "archetype_details": {
+               "archetype_id": {
+                  "value": "openEHR-EHR-EVALUATION.container.v0"
+               },
+               "rm_version": "1.0.1"
+            },
+            "language": {
+               "terminology_id": {
+                  "value": "ISO_639-1"
+               },
+               "code_string": "en"
+            },
+            "encoding": {
+               "terminology_id": {
+                  "value": "IANA_character-sets"
+               },
+               "code_string": "UTF-8"
+            },
+            "subject": {
+               "_type": "PARTY_SELF"
+            },
+            "data": {
+               "_archetype_node_id": "at0001",
+               "_type": "ITEM_TREE",
+               "name": {
+                  "value": "Tree"
+               },
+               "items": {
+                  "_archetype_node_id": "openEHR-EHR-CLUSTER.individual_professional-ms_br.v1",
+                  "_type": "CLUSTER",
+                  "name": {
+                     "value": "Dados demográficos individuais do profissional"
+                  },
+                  "archetype_details": {
+                     "archetype_id": {
+                        "value": "openEHR-EHR-CLUSTER.individual_professional-ms_br.v1"
+                     },
+                     "rm_version": "1.0.1"
+                  },
+                  "items": [
+                     {
+                        "_archetype_node_id": "openEHR-EHR-CLUSTER.person_name.v1",
+                        "_type": "CLUSTER",
+                        "name": {
+                           "value": "Nome da pessoa"
+                        },
+                        "archetype_details": {
+                           "archetype_id": {
+                              "value": "openEHR-EHR-CLUSTER.person_name.v1"
+                           },
+                           "rm_version": "1.0.1"
+                        },
+                        "items": {
+                           "_archetype_node_id": "at0001",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Nome do profissional responsável pela prescrição"
+                           },
+                           "value": {
+                              "_type": "DV_TEXT",
+                              "value": "MARLI DOS SANTOS NEVES DAS NEVES"
+                           }
+                        }
+                     },
+                     {
+                        "_archetype_node_id": "at0.34",
+                        "_type": "ELEMENT",
+                        "name": {
+                           "value": "CNS do profissional responsável pela prescrição"
+                        },
+                        "value": {
+                           "_type": "DV_TEXT",
+                           "value": "203011369760008"
+                        }
+                     },
+                     {
+                        "_archetype_node_id": "at0.35",
+                        "_type": "ELEMENT",
+                        "name": {
+                           "value": "Código Brasileiro de Ocupação"
+                        },
+                        "value": {
+                           "_type": "DV_TEXT",
+                           "value": "225130 - Médico da família"
+                        }
+                     }
+                  ]
+               }
+            }
+         }
+      },
+      {
+         "_archetype_node_id": "openEHR-EHR-SECTION.adhoc.v1",
+         "_type": "SECTION",
+         "name": {
+            "value": "Farmacêutico responsável dispensação"
+         },
+         "archetype_details": {
+            "archetype_id": {
+               "value": "openEHR-EHR-SECTION.adhoc.v1"
+            },
+            "rm_version": "1.0.1"
+         },
+         "items": {
+            "_archetype_node_id": "openEHR-EHR-EVALUATION.container.v0",
+            "_type": "EVALUATION",
+            "name": {
+               "value": "Conteiner"
+            },
+            "archetype_details": {
+               "archetype_id": {
+                  "value": "openEHR-EHR-EVALUATION.container.v0"
+               },
+               "rm_version": "1.0.1"
+            },
+            "language": {
+               "terminology_id": {
+                  "value": "ISO_639-1"
+               },
+               "code_string": "en"
+            },
+            "encoding": {
+               "terminology_id": {
+                  "value": "IANA_character-sets"
+               },
+               "code_string": "UTF-8"
+            },
+            "subject": {
+               "_type": "PARTY_SELF"
+            },
+            "data": {
+               "_archetype_node_id": "at0001",
+               "_type": "ITEM_TREE",
+               "name": {
+                  "value": "Tree"
+               },
+               "items": {
+                  "_archetype_node_id": "openEHR-EHR-CLUSTER.individual_professional-ms_br.v1",
+                  "_type": "CLUSTER",
+                  "name": {
+                     "value": "Dados demográficos individuais do profissional"
+                  },
+                  "archetype_details": {
+                     "archetype_id": {
+                        "value": "openEHR-EHR-CLUSTER.individual_professional-ms_br.v1"
+                     },
+                     "rm_version": "1.0.1"
+                  },
+                  "items": [
+                     {
+                        "_archetype_node_id": "openEHR-EHR-CLUSTER.person_name.v1",
+                        "_type": "CLUSTER",
+                        "name": {
+                           "value": "Nome da pessoa"
+                        },
+                        "archetype_details": {
+                           "archetype_id": {
+                              "value": "openEHR-EHR-CLUSTER.person_name.v1"
+                           },
+                           "rm_version": "1.0.1"
+                        },
+                        "items": {
+                           "_archetype_node_id": "at0001",
+                           "_type": "ELEMENT",
+                           "name": {
+                              "value": "Nome do profissional"
+                           },
+                           "value": {
+                              "_type": "DV_TEXT",
+                              "value": "Fulano da Silva"
+                           }
+                        }
+                     },
+                     {
+                        "_archetype_node_id": "at0.20",
+                        "_type": "CLUSTER",
+                        "name": {
+                           "value": "Conselho profissional"
+                        },
+                        "items": [
+                           {
+                              "_archetype_node_id": "at0.21",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Tipo de conselho profissional"
+                              },
+                              "value": {
+                                 "_type": "DV_CODED_TEXT",
+                                 "value": "CRF",
+                                 "defining_code": {
+                                    "terminology_id": {
+                                       "value": "local"
+                                    },
+                                    "code_string": "at0.36"
+                                 }
+                              }
+                           },
+                           {
+                              "_archetype_node_id": "at0.22",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Unidade Federativa"
+                              },
+                              "value": {
+                                 "_type": "DV_TEXT",
+                                 "value": "DF"
+                              }
+                           },
+                           {
+                              "_archetype_node_id": "at0.23",
+                              "_type": "ELEMENT",
+                              "name": {
+                                 "value": "Número do registro"
+                              },
+                              "value": {
+                                 "_type": "DV_TEXT",
+                                 "value": "0000"
+                              }
+                           }
+                        ]
+                     }
+                  ]
+               }
+            }
+         }
+      }
+   ]
+}
