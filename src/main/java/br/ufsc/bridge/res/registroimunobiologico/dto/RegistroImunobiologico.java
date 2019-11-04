@@ -14,6 +14,7 @@ import br.ufsc.bridge.res.dab.writer.json.RegistroImunizacaoJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.RegistroImunobiologicoJsonBuilder;
 import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
+import br.ufsc.bridge.res.util.json.ResJsonUtils;
 
 @Getter
 @Setter
@@ -29,6 +30,11 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 	@Override
 	public Date getDataAtendimento() {
 		return this.caracterizacaoAtendimento.getHoraAtendimento();
+	}
+
+	public static RegistroImunobiologico readJsonBase64(String jsonBase64) {
+		RegistroImunobiologico registroImunobiologico = ResJsonUtils.readJson(jsonBase64, RegistroImunobiologico.class);
+		return registroImunobiologico;
 	}
 
 	public String getJson() {
@@ -55,7 +61,6 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 			}
 
 			registroBuilder
-//					.situacao(registro.getSituacaoCondicao())
 					.imunobiologico(registro.getImunobiologico())
 					.estrategia(registro.getEstrategia())
 					.dose(registro.getDose())

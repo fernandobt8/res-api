@@ -1,19 +1,22 @@
 package br.ufsc.bridge.res.dispensacaomedicamentos.dto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import br.ufsc.bridge.res.util.ResDocument;
 import br.ufsc.bridge.res.util.json.DoubleJsonPathValueConverter;
 import br.ufsc.bridge.res.util.json.JsonPathProperty;
+import br.ufsc.bridge.res.util.json.ResJsonUtils;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class DispensacaoMedicamentos {
+public class DispensacaoMedicamentos extends ResDocument {
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Caracterização do atendimento')]")
 	private CaracterizacaoAtendimento caracterizacaoAtendimento;
@@ -54,4 +57,13 @@ public class DispensacaoMedicamentos {
 			+ ".items.data.items")
 	private ResponsavelDispensacao profissionalResponsavelDispensacao;
 
+	@Override
+	public Date getDataAtendimento() {
+		return this.caracterizacaoAtendimento.getHoraDispensacao();
+	}
+
+	public static DispensacaoMedicamentos readJsonBase64(String jsonBase64) {
+		DispensacaoMedicamentos registroImunobiologico = ResJsonUtils.readJson(jsonBase64, DispensacaoMedicamentos.class);
+		return registroImunobiologico;
+	}
 }
