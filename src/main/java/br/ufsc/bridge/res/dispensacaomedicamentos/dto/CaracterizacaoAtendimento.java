@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dispensacaomedicamentos.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -12,7 +13,7 @@ import br.ufsc.bridge.res.util.json.JsonPathProperty;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CaracterizacaoAtendimento {
+public class CaracterizacaoAtendimento implements Serializable {
 
 	@JsonPathProperty(value = "$.items[?(@.name.value == 'Serviço')]"
 			+ ".description.items[?(@.name.value == 'Organização')]"

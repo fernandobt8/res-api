@@ -1,5 +1,7 @@
 package br.ufsc.bridge.res.dispensacaomedicamentos.dto;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +11,7 @@ import br.ufsc.bridge.res.util.json.JsonPathProperty;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ResponsavelDispensacao {
+public class ResponsavelDispensacao implements Serializable {
 
 	@JsonPathProperty(value = "$.items[?(@.name.value == 'Nome da pessoa')]"
 			+ ".items.value.value")

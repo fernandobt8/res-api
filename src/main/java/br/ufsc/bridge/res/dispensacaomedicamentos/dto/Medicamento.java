@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dispensacaomedicamentos.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -13,7 +14,7 @@ import br.ufsc.bridge.res.util.json.JsonPathProperty;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Medicamento {
+public class Medicamento implements Serializable {
 
 	@JsonPathProperty(value = "$.items.description.items[?(@.name.value == 'Componente Assistência Farmacêutica')]"
 			+ ".value.value", converter = AssistenciaFarmaceutica.JsonConverter.class)

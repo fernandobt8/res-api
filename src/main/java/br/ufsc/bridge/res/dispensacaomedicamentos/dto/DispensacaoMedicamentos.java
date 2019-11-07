@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dispensacaomedicamentos.dto;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +17,7 @@ import br.ufsc.bridge.res.util.json.ResJsonUtils;
 @Getter
 @Setter
 @NoArgsConstructor
-public class DispensacaoMedicamentos extends ResDocument {
+public class DispensacaoMedicamentos extends ResDocument implements Serializable {
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Caracterização do atendimento')]")
 	private CaracterizacaoAtendimento caracterizacaoAtendimento;

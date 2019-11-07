@@ -1,5 +1,6 @@
 package br.ufsc.bridge.res.dispensacaomedicamentos.dto;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import lombok.Getter;
@@ -12,7 +13,7 @@ import br.ufsc.bridge.res.util.json.JsonPathProperty;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Insumo {
+public class Insumo implements Serializable {
 
 	@JsonPathProperty(value = "$.items.description.items[?(@.name.value == 'Produto')]"
 			+ ".items[?(@.name.value == 'Lote do medicamento')]"
