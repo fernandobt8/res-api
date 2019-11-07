@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import br.ufsc.bridge.res.dab.dto.CaracterizacaoAtendimento;
+import br.ufsc.bridge.res.dab.dto.JsonDocument;
 import br.ufsc.bridge.res.dab.writer.json.RegistroImunizacaoJsonBuilder;
 import br.ufsc.bridge.res.dab.writer.json.RegistroImunobiologicoJsonBuilder;
 import br.ufsc.bridge.res.util.ResDocument;
@@ -19,7 +20,7 @@ import br.ufsc.bridge.res.util.json.ResJsonUtils;
 @Getter
 @Setter
 @NoArgsConstructor
-public class RegistroImunobiologico extends ResDocument implements Serializable {
+public class RegistroImunobiologico extends ResDocument implements Serializable, JsonDocument {
 
 	@JsonPathProperty(value = "$.content[?(@.name.value == 'Caracterização do atendimento')]")
 	private CaracterizacaoAtendimento caracterizacaoAtendimento;
@@ -37,6 +38,7 @@ public class RegistroImunobiologico extends ResDocument implements Serializable 
 		return registroImunobiologico;
 	}
 
+	@Override
 	public String getJson() {
 		CaracterizacaoAtendimento caracterizacaoAtendimento = this.getCaracterizacaoAtendimento();
 

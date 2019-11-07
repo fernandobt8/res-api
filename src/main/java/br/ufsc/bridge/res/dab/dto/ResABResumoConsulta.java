@@ -52,7 +52,7 @@ import br.ufsc.bridge.soap.xpath.XPathFactoryAssist;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @ToString
-public class ResABResumoConsulta extends ResDocument implements Serializable {
+public class ResABResumoConsulta extends ResDocument implements Serializable, JsonDocument {
 	private static final long serialVersionUID = 1L;
 
 	@JsonPathProperty(group = Group.ADMISSAO_DO_PACIENTE,
@@ -177,7 +177,8 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 			this.gestasPrevias = xPathSumarioObstetrico.getString("./Quantidade_de_gestas_prévias/value/magnitude");
 			this.partos = xPathSumarioObstetrico.getString("./Quantidade_de_partos/value/magnitude");
 
-			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum.getByDescricao(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
+			this.aleitamentoMaterno = ResABAleitamentoMaternoEnum
+					.getByDescricao(xPathInfoAdicionais.getString("./Alimentação_da_criança_menor_de_2_anos/data/Qualquer_evento_as_Point_Event/data//value/value"));
 
 			XPathFactoryAssist xPathProbleam = xPathRoot.getXPathAssist("//Problemas_fslash_Diagnósticos_avaliados");
 			for (XPathFactoryAssist xPathDiagnostico : xPathProbleam.iterable(".//Problema_Diagnóstico")) {
@@ -323,7 +324,8 @@ public class ResABResumoConsulta extends ResDocument implements Serializable {
 		return abBuilder.getXmlContent();
 	}
 
-	public String getJson() throws IOException{
+	@Override
+	public String getJson() throws IOException {
 		ResumoConsultaABJsonBuilder abBuilder = new ResumoConsultaABJsonBuilder().data(this.dataAtendimento);
 
 		//@formatter:off

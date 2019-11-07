@@ -9,16 +9,27 @@ import br.ufsc.bridge.res.util.json.JsonPathValueConverter;
 @Getter
 public enum Estrategia {
 
-	ROTINA("Rotina"),
-	ESPECIAL("Especial"),
-	BLOQUEIO("Bloqueio"),
-	INTENSIFICACAO("Intensificação"),
-	CAMPANHA("Campanha"),
-	SOROTERAPIA("Soroterapia"),
-	MULTIVACINACAO("Multivacinação"),
+	ROTINA(1L, "Rotina"),
+	ESPECIAL(2L, "Especial"),
+	BLOQUEIO(3L, "Bloqueio"),
+	INTENSIFICACAO(4L, "Intensificação"),
+	CAMPANHA(5L, "Campanha"),
+	SOROTERAPIA(7L, "Soroterapia"),
+	MULTIVACINACAO(10L, "Multivacinação"),
 	;
 
+	private Long id;
+
 	private String value;
+
+	public static Estrategia get(Long id) {
+		for (Estrategia estrategia : values()) {
+			if (estrategia.id.equals(id)) {
+				return estrategia;
+			}
+		}
+		return null;
+	}
 
 	public static class JsonConverter implements JsonPathValueConverter<Estrategia, String> {
 
