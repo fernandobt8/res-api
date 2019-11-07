@@ -7,8 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum TipoDocumento {
 
-	REGISTRO_ATENDIMENTO_CLINICO("cn4_registro_atendimento_clinico_v1.0"),
-	REGISTRO_IMUNOBIOLOGICO("cn6_registro_imunobiologico_v1.0"),
+	REGISTRO_ATENDIMENTO_CLINICO("RegistroAtendimentoClinico.v4.0"),
+	REGISTRO_IMUNOBIOLOGICO("RegistroImunobiologico_v3"),
 	SUMARIO_ALTA("cn2_sumario_alta_internacao_v1.0"),
 	DISPENSACAO_MEDICAMENTOS("cn10_dispensacao_medicamentos_v1.0");
 

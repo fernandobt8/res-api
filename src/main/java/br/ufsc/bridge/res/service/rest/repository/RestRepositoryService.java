@@ -8,11 +8,14 @@ import javax.net.ssl.SSLContext;
 
 import lombok.extern.slf4j.Slf4j;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.web.client.RestTemplate;
@@ -47,13 +50,13 @@ public class RestRepositoryService {
 		this.httpRequestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 	}
 
-	public String save(SaveDTO dto) {
+	public String save(SaveDTO dto, String cnsPaciente, String cnsProfissional) {
 		RestRepositorySaveDTO restDto = new RestRepositorySaveDTO(dto);
 		if (log.isDebugEnabled()) {
 			log.debug(restDto.stringfy());
 		}
 		ResponseEntity<RestRepositorySaveDTO> response = new RestTemplate(this.httpRequestFactory)
-				.exchange(this.url, HttpMethod.POST, new HttpEntity<>(restDto), RestRepositorySaveDTO.class);
+				.exchange(this.url, HttpMethod.POST, new HttpEntity<>(restDto, this.createHeader(cnsPaciente, cnsProfissional)), RestRepositorySaveDTO.class);
 		String docId = response.getHeaders().getLocation().getRawPath();
 
 		log.debug(docId);
@@ -61,18 +64,33 @@ public class RestRepositoryService {
 
 	}
 
-	public SaveDTO read(String uuid) {
+	public SaveDTO read(String uuid, String cnsPaciente, String cnsProfissional) {
 		ResponseEntity<RestRepositorySaveDTO> response = new RestTemplate(this.httpRequestFactory)
-				.getForEntity(this.url + "/" + uuid, RestRepositorySaveDTO.class);
+				.exchange(this.url + "/" + uuid, HttpMethod.GET, new HttpEntity<>(this.createHeader(cnsPaciente, cnsProfissional)), RestRepositorySaveDTO.class);
 		if (log.isDebugEnabled()) {
 			log.debug(response.getBody().stringfy());
 		}
 		return response.getBody().toDto();
 	}
 
-	public List<ItemDTO> list(String pacienteId, Sort sort) {
-		ResponseEntity<ResultDTO> response = new RestTemplate(this.httpRequestFactory)
-				.getForEntity(String.format(URL_TEMPLATE, this.url, pacienteId, sort.getCode()), ResultDTO.class);
+	private HttpHeaders createHeader(String cnsPaciente, String cnsProfissional) {
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		if (StringUtils.isNotEmpty(cnsPaciente)) {
+			headers.set("Authorization-Patient", cnsPaciente);
+		}
+		if (StringUtils.isNotEmpty(cnsProfissional)) {
+			headers.set("Authorization-Practitioner", cnsProfissional);
+		}
+		return headers;
+	}
+
+	public List<ItemDTO> list(String pacienteId, Sort sort, String cnsPaciente, String cnsProfissional) {
+		ResponseEntity<ResultDTO> response = new RestTemplate(this.httpRequestFactory).exchange(
+				String.format(URL_TEMPLATE, this.url, pacienteId, sort.getCode()),
+				HttpMethod.GET,
+				new HttpEntity<>(this.createHeader(cnsPaciente, cnsProfissional)),
+				ResultDTO.class);
 		return response.getBody().toItems();
 	}
 
